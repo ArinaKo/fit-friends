@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppConfigModule } from '@app/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AppConfigModule, getMongooseOptions } from '@app/config';
 
 @Module({
-  imports: [AppConfigModule],
+  imports: [
+    AppConfigModule, 
+    MongooseModule.forRootAsync(getMongooseOptions())
+  ],
   controllers: [],
   providers: [],
 })
