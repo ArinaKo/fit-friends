@@ -28,6 +28,12 @@
       ],
       "@app/helpers/*": [
         "libs/helpers/src/*"
+      ],
+      "@app/types": [
+        "libs/types/src"
+      ],
+      "@app/types/*": [
+        "libs/types/src/*"
       ]
     }
   }

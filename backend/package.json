@@ -76,7 +76,8 @@
     ],
     "moduleNameMapper": {
       "^@app/config(|/.*)$": "<rootDir>/libs/config/src/$1",
-      "^@app/helpers(|/.*)$": "<rootDir>/libs/helpers/src/$1"
+      "^@app/helpers(|/.*)$": "<rootDir>/libs/helpers/src/$1",
+      "^@app/types(|/.*)$": "<rootDir>/libs/types/src/$1"
     }
   }
 }
