@@ -13,7 +13,6 @@
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "noImplicitAny": true,
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -23,6 +22,12 @@
       ],
       "@app/config/*": [
         "libs/config/src/*"
+      ],
+      "@app/helpers": [
+        "libs/helpers/src"
+      ],
+      "@app/helpers/*": [
+        "libs/helpers/src/*"
       ]
     }
   }
