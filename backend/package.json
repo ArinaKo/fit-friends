@@ -16,7 +16,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "db": "docker compose --file ./docker-compose.dev.yml --env-file ./app.env --project-name \"fit-friends\" up -d"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
