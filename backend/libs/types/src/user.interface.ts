@@ -29,5 +29,5 @@ export interface CoachUser extends User {
 export interface DefaultUser extends User {
   caloriesToLose: number;
   caloriesPerDay: number;
-  timeForWorkout: (typeof WorkoutsDurations)[number];
+  timeForWorkout: WorkoutsDurations;
 }

@@ -9,7 +9,7 @@ export interface Workout {
   backgroundImage: string;
   level: UserLevel;
   type: WorkoutType;
-  duration: (typeof WorkoutsDurations)[number];
+  duration: WorkoutsDurations;
   price: number;
   calories: number;
   description: string;

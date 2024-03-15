@@ -4,26 +4,33 @@ import {
   UserRole,
   UserSex,
   WorkoutType,
+  WorkoutsDurations,
 } from '@app/types';
-import { generateDate, generateRandomValue, getRandomItem, getRandomItems } from '@app/helpers';
+import {
+  generateDate,
+  generateRandomValue,
+  getRandomItem,
+  getRandomItems,
+} from '@app/helpers';
 import {
   Descriptions,
   Emails,
   FemaleNames,
   MaleNames,
-  UsersIds,
 } from './mock-data';
 
 const AVATARS_NUMBER = 5;
+const COACHES_NUMBER = 4;
+const CERTIFICATES_NUMBER = 5;
 const WORKOUT_TYPES_NUMBER = 3;
 
-function generateUser(isMale: boolean) {
+function generateUser(isMale: boolean, isCoach: boolean) {
   return {
     name: getRandomItem(isMale ? MaleNames : FemaleNames),
     avatar: `photo-${generateRandomValue(1, AVATARS_NUMBER)}.png`,
     sex: isMale ? UserSex.Male : UserSex.Female,
     dateOfBirth: generateDate(),
-    role: getRandomItem(Object.values(UserRole)),
+    role: isCoach ? UserRole.Coach : UserRole.Default,
     description: getRandomItem(Descriptions),
     location: getRandomItem(Object.values(Location)),
     level: getRandomItem(Object.values(UserLevel)),
@@ -33,14 +40,29 @@ function generateUser(isMale: boolean) {
     ),
     isReady: Boolean(generateRandomValue(0, 1)),
     createdAt: generateDate(),
+    certificate: isCoach
+      ? `certificate-${generateRandomValue(1, CERTIFICATES_NUMBER)}.jpg`
+      : undefined,
+    achievements: isCoach ? '' : undefined,
+    caloriesToLose: isCoach
+      ? undefined
+      : generateRandomValue(1, AVATARS_NUMBER),
+    caloriesPerDay: isCoach
+      ? undefined
+      : generateRandomValue(1, AVATARS_NUMBER),
+    timeForWorkout: isCoach
+      ? undefined
+      : getRandomItem(Object.keys(WorkoutsDurations)),
   };
 }
 
-export function generateUsers(count: number) {
-  return Array.from({ length: count }).forEach((user, index) =>
-    Object.assign(generateUser(index % 2 === 0), {
-      id: UsersIds[index],
-      email: Emails[index],
-    }),
+export function generateUsers() {
+  return Array.from({ length: Emails.length }).forEach((_, index) => 
+    Object.assign(
+      generateUser(index % 2 === 0, index < COACHES_NUMBER),
+      {
+        email: Emails[index],
+      },
+    )
   );
 }
