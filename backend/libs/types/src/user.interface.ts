@@ -1,10 +1,11 @@
 import { UserLevel } from './user-level.enum';
 import { UserRole } from './user-role.enum';
 import { UserSex } from './user-sex.enum';
-import { WorkoutsTimes } from './workouts-times.const';
+import { WorkoutsDurations } from './workouts-durations.const';
 import { WorkoutType } from './workout-type.enum';
 
 export interface User {
+  id: string;
   name: string;
   email: string;
   avatar: string;
@@ -17,15 +18,16 @@ export interface User {
   level: UserLevel;
   workoutTypes: WorkoutType[];
   isReady: boolean;
+  createdAt: Date;
 }
 
-export interface CoachUser {
+export interface CoachUser extends User {
   certificate: string;
   achievements: string;
 }
 
-export interface DefaultUser {
+export interface DefaultUser extends User {
   caloriesToLose: number;
   caloriesPerDay: number;
-  timeForWorkout: (typeof WorkoutsTimes)[number];
+  timeForWorkout: (typeof WorkoutsDurations)[number];
 }
