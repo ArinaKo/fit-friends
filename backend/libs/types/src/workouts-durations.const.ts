@@ -1,4 +1,4 @@
-export enum WorkoutsDurations {
+export enum WorkoutDuration {
   '10-30 мин',
   '30-50 мин',
   '50-80 мин',

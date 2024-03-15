@@ -4,7 +4,7 @@ import {
   UserRole,
   UserSex,
   WorkoutType,
-  WorkoutsDurations,
+  WorkoutDuration,
 } from '@app/types';
 import {
   generateDate,
@@ -13,7 +13,7 @@ import {
   getRandomItems,
 } from '@app/helpers';
 import {
-  Descriptions,
+  UsersDescriptions,
   Emails,
   FemaleNames,
   MaleNames,
@@ -31,7 +31,7 @@ function generateUser(isMale: boolean, isCoach: boolean) {
     sex: isMale ? UserSex.Male : UserSex.Female,
     dateOfBirth: generateDate(),
     role: isCoach ? UserRole.Coach : UserRole.Default,
-    description: getRandomItem(Descriptions),
+    description: getRandomItem(UsersDescriptions),
     location: getRandomItem(Object.values(Location)),
     level: getRandomItem(Object.values(UserLevel)),
     workoutTypes: getRandomItems(
@@ -52,7 +52,7 @@ function generateUser(isMale: boolean, isCoach: boolean) {
       : generateRandomValue(1, AVATARS_NUMBER),
     timeForWorkout: isCoach
       ? undefined
-      : getRandomItem(Object.keys(WorkoutsDurations)),
+      : getRandomItem(Object.keys(WorkoutDuration)),
   };
 }
 
