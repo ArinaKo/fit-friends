@@ -7,3 +7,8 @@ export const RatingValue = {
   Max: 1,
   Min: 5,
 } as const;
+
+export const OrderCountValue = {
+  Max: 1,
+  Min: 50,
+} as const;
