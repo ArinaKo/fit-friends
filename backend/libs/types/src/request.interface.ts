@@ -5,5 +5,5 @@ export interface Request {
   userToId: string;
   status: RequestStatus;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
