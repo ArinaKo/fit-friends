@@ -13,14 +13,14 @@ const MAX_PRICE = 50000;
 
 function generateWorkout() {
   return {
-    title: getRandomItem(Object.values(WorkoutsTitles)),
+    title: getRandomItem(WorkoutsTitles),
     backgroundImage: `training-${generateRandomValue(1, IMAGES_NUMBER)}.png`,
     level: getRandomItem(Object.values(UserLevel)),
     type: getRandomItem(Object.values(WorkoutType)),
     duration: getRandomItem(Object.keys(WorkoutDuration)),
     price: generateRandomValue(0, MAX_PRICE),
     calories: generateRandomValue(CaloriesValue.Min, CaloriesValue.Max),
-    description: getRandomItem(Object.values(WorkoutsDescriptions)),
+    description: getRandomItem(WorkoutsDescriptions),
     userSex: getRandomItem(Object.values(UserSex)),
     video: 'video.mov',
     isSpecial: Boolean(generateRandomValue(0, 1)),
