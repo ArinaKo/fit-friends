@@ -1,4 +1,4 @@
-export enum Location {
+export enum MetroStation {
   Pionerskaya = 'Пионерская',
   Petrogadskaya = 'Петроградская',
   Udelnaya = 'Удельная',

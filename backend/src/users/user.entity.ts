@@ -2,6 +2,7 @@ import { genSalt, hash, compare } from 'bcrypt';
 import { Entity } from '@app/core';
 import {
   AuthUser,
+  MetroStation,
   UserLevel,
   UserRole,
   UserSex,
@@ -19,8 +20,8 @@ export class UserEntity implements AuthUser, Entity<string> {
   public role: UserRole;
   public sex: UserSex;
   public description: string;
-  public location: Location;
-  public backgroundImage: string;
+  public location: MetroStation;
+  public backgroundImage?: string;
   public level: UserLevel;
   public workoutTypes: WorkoutType[];
   public isReady: boolean;
