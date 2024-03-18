@@ -1,3 +1,4 @@
+import { genSalt, hash, compare } from 'bcrypt';
 import { Entity } from '@app/core';
 import {
   AuthUser,
@@ -7,6 +8,7 @@ import {
   WorkoutDuration,
   WorkoutType,
 } from '@app/types';
+import { SALT_ROUNDS } from './users.const';
 
 export class UserEntity implements AuthUser, Entity<string> {
   public id?: string;
@@ -79,5 +81,19 @@ export class UserEntity implements AuthUser, Entity<string> {
     this.caloriesToLose = data.caloriesToLose;
     this.caloriesPerDay = data.caloriesPerDay;
     this.timeForWorkout = data.timeForWorkout;
+  }
+
+  public async setPassword(password: string): Promise<UserEntity> {
+    const salt = await genSalt(SALT_ROUNDS);
+    this.passwordHash = await hash(password, salt);
+    return this;
+  }
+
+  public async comparePassword(password: string): Promise<boolean> {
+    return compare(password, this.passwordHash);
+  }
+
+  static fromObject(data: AuthUser): UserEntity {
+    return new UserEntity(data);
   }
 }
