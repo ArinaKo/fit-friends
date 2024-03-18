@@ -40,6 +40,12 @@
       ],
       "@app/mocks/*": [
         "libs/mocks/src/*"
+      ],
+      "@app/core": [
+        "libs/core/src"
+      ],
+      "@app/core/*": [
+        "libs/core/src/*"
       ]
     }
   }
