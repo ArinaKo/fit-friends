@@ -5,7 +5,7 @@ import { WorkoutDuration } from './workouts-durations.const';
 import { WorkoutType } from './workout-type.enum';
 
 export interface User {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   avatar: string;
@@ -22,12 +22,16 @@ export interface User {
 }
 
 export interface CoachUser extends User {
-  certificate: string;
-  achievements: string;
+  certificate?: string;
+  achievements?: string;
 }
 
 export interface DefaultUser extends User {
-  caloriesToLose: number;
-  caloriesPerDay: number;
-  timeForWorkout: WorkoutDuration;
+  caloriesToLose?: number;
+  caloriesPerDay?: number;
+  timeForWorkout?: WorkoutDuration;
+}
+
+export interface AuthUser extends CoachUser, DefaultUser {
+  passwordHash: string;
 }
