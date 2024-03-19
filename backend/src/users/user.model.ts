@@ -11,7 +11,7 @@ import {
 } from '@app/types';
 
 @Schema({
-  collection: 'accounts',
+  collection: 'users',
   timestamps: true,
 })
 export class UserModel extends Document implements AuthUser {

@@ -1,4 +1,3 @@
-import { UserLevel, UserSex, WorkoutType, WorkoutDuration } from '@app/types';
 import { generateDate, generateRandomValue, getRandomItem } from '@app/helpers';
 import { RatingValue } from 'src/const';
 import { CommentsTexts } from './mock-data';

@@ -1,6 +1,5 @@
 import { UserLevel, UserSex, WorkoutType, WorkoutDuration } from '@app/types';
 import {
-  generateDate,
   generateRandomValue,
   getRandomItem,
 } from '@app/helpers';

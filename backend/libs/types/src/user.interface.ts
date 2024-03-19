@@ -3,7 +3,7 @@ import { UserRole } from './user-role.enum';
 import { UserSex } from './user-sex.enum';
 import { WorkoutDuration } from './workouts-durations.const';
 import { WorkoutType } from './workout-type.enum';
-import { MetroStation } from './location.enum';
+import { MetroStation } from './metro-station.enum';
 
 export interface User {
   id?: string;

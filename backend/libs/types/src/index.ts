@@ -1,4 +1,4 @@
-export * from './location.enum';
+export * from './metro-station.enum';
 export * from './user-level.enum';
 export * from './user-role.enum';
 export * from './user-sex.enum';

@@ -1,5 +1,5 @@
 import {
-  Location,
+  MetroStation,
   UserLevel,
   UserRole,
   UserSex,
@@ -18,6 +18,7 @@ import {
   FemaleNames,
   MaleNames,
 } from './mock-data';
+import { CaloriesValue } from 'src/const';
 
 const AVATARS_NUMBER = 5;
 const COACHES_NUMBER = 4;
@@ -32,7 +33,7 @@ function generateUser(isMale: boolean, isCoach: boolean) {
     dateOfBirth: generateDate(),
     role: isCoach ? UserRole.Coach : UserRole.Default,
     description: getRandomItem(UsersDescriptions),
-    location: getRandomItem(Object.values(Location)),
+    location: getRandomItem(Object.values(MetroStation)),
     level: getRandomItem(Object.values(UserLevel)),
     workoutTypes: getRandomItems(
       Object.values(WorkoutType),
@@ -46,10 +47,10 @@ function generateUser(isMale: boolean, isCoach: boolean) {
     achievements: isCoach ? '' : undefined,
     caloriesToLose: isCoach
       ? undefined
-      : generateRandomValue(1, AVATARS_NUMBER),
+      : generateRandomValue(CaloriesValue.Min, CaloriesValue.Max),
     caloriesPerDay: isCoach
       ? undefined
-      : generateRandomValue(1, AVATARS_NUMBER),
+      : generateRandomValue(CaloriesValue.Min, CaloriesValue.Max),
     timeForWorkout: isCoach
       ? undefined
       : getRandomItem(Object.keys(WorkoutDuration)),
