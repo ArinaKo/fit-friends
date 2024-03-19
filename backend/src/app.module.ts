@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppConfigModule, getMongooseOptions } from '@app/config';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/user.module';
 
 @Module({
   imports: [
     AppConfigModule, 
     MongooseModule.forRootAsync(getMongooseOptions()),
-    UsersModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

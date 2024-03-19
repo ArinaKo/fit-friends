@@ -9,7 +9,7 @@ import {
   WorkoutDuration,
   WorkoutType,
 } from '@app/types';
-import { SALT_ROUNDS } from './users.const';
+import { SALT_ROUNDS } from './user.const';
 
 export class UserEntity implements AuthUser, Entity<string> {
   public id?: string;
