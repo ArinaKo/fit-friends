@@ -1,7 +1,7 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { UserEntity } from './user.entity';
-import { CreateUserDto } from './dto/index';
+import { CreateUserDto, LoginUserDto } from './dto/index';
 import dayjs from 'dayjs';
 import { UserMessage } from './user.const';
 
@@ -61,5 +61,20 @@ export class UserService {
     const userEntity = await new UserEntity(newUser).setPassword(password);
 
     return this.userRepository.save(userEntity);
+  }
+
+  public async verifyUser(dto: LoginUserDto) {
+    const {email, password} = dto;
+    const existUser = await this.userRepository.findByEmail(email);
+
+    if (!existUser) {
+      throw new NotFoundException(UserMessage.NotFound);
+    }
+
+    if (!await existUser.comparePassword(password)) {
+      throw new UnauthorizedException(UserMessage.PasswordWrong);
+    }
+
+    return existUser;
   }
 }
