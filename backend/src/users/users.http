@@ -1,0 +1,57 @@
+# Create a new user (default)
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.local",
+  "dateofBirth": "2012-02-22",
+  "name": "Keks",
+  "password": "123456",
+  "avatar": "photo-1.png",
+  "sex": "мужской",
+  "role": "пользователь",
+  "description": "Описание пользователя, описание пользователя.",
+  "location": "Петроградская",
+  "level": "профессионал",
+  "workoutTypes": ["йога", "бег"],
+  "isReady": true,
+  "caloriesToLose": 5000,
+  "caloriesPerDay": 1000,
+  "timeForWorkout": "10-30 мин"
+}
+
+###
+
+# Create a new user (coach)
+POST http://localhost:3000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@found.local",
+  "dateofBirth": "2012-02-22",
+  "name": "Keks",
+  "password": "123456",
+  "avatar": "photo-2.png",
+  "sex": "мужской",
+  "role": "тренер",
+  "description": "Описание тренера, описание тренера.",
+  "location": "Петроградская",
+  "level": "профессионал",
+  "workoutTypes": ["йога", "бег"],
+  "isReady": true,
+  "certificate": "certificate-1.jpg",
+  "achievements": "Я кот"
+}
+
+###
+
+# Login user
+POST http://localhost:3000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.local",
+  "password": "123456"
+}
+
+###
