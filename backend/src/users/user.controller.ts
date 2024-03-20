@@ -4,6 +4,8 @@ import { CreateUserDto, LoginUserDto } from './dto';
 import { fillDto } from '@app/helpers';
 import { FullUserRdo, LoggedUserRdo } from './rdo';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserDtoValidationPipe } from '@app/core';
+import { CreateUserDtoListing } from './user.const';
 
 @ApiTags('users')
 @Controller('users')
@@ -16,7 +18,7 @@ export class UserController {
     description: 'The new user has been successfully created.',
   })
   @Post('register')
-  public async create(@Body() dto: CreateUserDto) {
+  public async create(@Body(new UserDtoValidationPipe(CreateUserDtoListing)) dto: CreateUserDto) {
     const newUser = await this.userService.register(dto);
     return fillDto(FullUserRdo, newUser.toPOJO());
   }
