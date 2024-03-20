@@ -19,6 +19,7 @@ import {
   IsNumber,
   Min,
   Max,
+  IsOptional,
 } from 'class-validator';
 import {
   CaloriesValue,
@@ -42,6 +43,7 @@ class BaseUserDto {
     example: '1981-03-12',
   })
   @IsDate()
+  @IsOptional()
   public dateOfBirth?: Date;
 
   @ApiProperty({
@@ -109,6 +111,7 @@ class BaseUserDto {
     example: 'background-image.png',
   })
   @IsString()
+  @IsOptional()
   public backgroundImage?: string;
 
   @ApiProperty({
@@ -138,12 +141,6 @@ class BaseUserDto {
   })
   @IsBoolean()
   public isReady: boolean;
-
-  public certificate?: string;
-  public achievements?: string;
-  public caloriesToLose?: number;
-  public caloriesPerDay?: number;
-  public timeForWorkout?: WorkoutDuration;
 }
 
 export class CreateDefaultUserDto extends BaseUserDto {

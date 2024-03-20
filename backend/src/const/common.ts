@@ -1,18 +1,18 @@
 export const MAX_WORKOUTS_TYPES = 3;
 
 export enum CaloriesValue {
-  Max = 1000,
-  Min = 5000,
+  Min = 1000,
+  Max = 5000,
 }
 
 export enum RatingValue {
-  Max = 1,
-  Min = 5,
+  Min = 1,
+  Max = 5,
 }
 
 export enum OrderCountValue {
-  Max = 1,
-  Min = 50,
+  Min = 1,
+  Max = 50,
 }
 
 export enum UserNameLength {
