@@ -35,6 +35,7 @@ export class UserController {
   @Post('login')
   public async login(@Body() dto: LoginUserDto) {
     const verifiedUser = await this.userService.verifyUser(dto);
-    return fillDto(LoggedUserRdo, verifiedUser.toPOJO());
+    const userToken = await this.userService.createUserToken(verifiedUser);
+    return fillDto(LoggedUserRdo, { ...verifiedUser.toPOJO(), ...userToken });
   }
 }
