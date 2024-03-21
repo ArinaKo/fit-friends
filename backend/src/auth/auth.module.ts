@@ -7,6 +7,7 @@ import { getJwtOptions } from '@app/config';
 import { JwtAccessStrategy } from './strategies/jwt-access.strategy';
 import { UserModule } from '../users/user.module';
 import { LocalStrategy } from './strategies/local.strategy';
+import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 
 @Module({
   imports: [
@@ -16,7 +17,12 @@ import { LocalStrategy } from './strategies/local.strategy';
     }),
     UserModule,
   ],
-  providers: [AuthService, JwtAccessStrategy, LocalStrategy],
+  providers: [
+    AuthService,
+    JwtAccessStrategy,
+    JwtRefreshStrategy,
+    LocalStrategy,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}
