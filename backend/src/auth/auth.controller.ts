@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { fillDto } from '@app/helpers';
@@ -7,6 +7,12 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDtoValidationPipe } from '@app/core';
 import { CreateUserDtoListing } from './auth.const';
 import { Public } from '@app/core/decorators/public.decorator';
+import { UserEntity } from 'src/users/user.entity';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+
+interface RequestWithUser {
+  user: UserEntity;
+}
 
 @ApiTags('auth')
 @Controller('auth')
@@ -35,10 +41,10 @@ export class AuthController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Password or Login is wrong.',
   })
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  public async login(@Body() dto: LoginUserDto) {
-    const verifiedUser = await this.authService.verifyUser(dto);
-    const userToken = await this.authService.createUserToken(verifiedUser);
-    return fillDto(LoggedUserRdo, { ...verifiedUser.toPOJO(), ...userToken });
+  public async login(@Req() { user }: RequestWithUser) {
+    const userToken = await this.authService.createUserToken(user);
+    return fillDto(LoggedUserRdo, { ...user.toPOJO(), ...userToken });
   }
 }
