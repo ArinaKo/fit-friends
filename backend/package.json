@@ -92,7 +92,8 @@
       "^@app/helpers(|/.*)$": "<rootDir>/libs/helpers/src/$1",
       "^@app/types(|/.*)$": "<rootDir>/libs/types/src/$1",
       "^@app/mocks(|/.*)$": "<rootDir>/libs/mocks/src/$1",
-      "^@app/core(|/.*)$": "<rootDir>/libs/core/src/$1"
+      "^@app/core(|/.*)$": "<rootDir>/libs/core/src/$1",
+      "^@app/messages(|/.*)$": "<rootDir>/libs/messages/src/$1"
     }
   }
 }

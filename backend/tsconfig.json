@@ -46,6 +46,12 @@
       ],
       "@app/core/*": [
         "libs/core/src/*"
+      ],
+      "@app/messages": [
+        "libs/messages/src"
+      ],
+      "@app/messages/*": [
+        "libs/messages/src/*"
       ]
     }
   }

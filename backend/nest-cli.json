@@ -51,6 +51,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/core/tsconfig.lib.json"
       }
+    },
+    "messages": {
+      "type": "library",
+      "root": "libs/messages",
+      "entryFile": "index",
+      "sourceRoot": "libs/messages/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/messages/tsconfig.lib.json"
+      }
     }
   }
 }
