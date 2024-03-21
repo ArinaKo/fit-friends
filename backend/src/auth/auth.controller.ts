@@ -2,12 +2,12 @@ import { Body, Controller, HttpStatus, Post, Req, UseGuards } from '@nestjs/comm
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { fillDto } from '@app/helpers';
-import { FullUserRdo, LoggedUserRdo } from '../users/rdo';
+import { FullUserRdo, LoggedUserRdo } from './rdo/index';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDtoValidationPipe } from '@app/core';
 import { CreateUserDtoListing } from './auth.const';
 import { Public } from '@app/core/decorators/public.decorator';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from '../users/user.entity';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
 interface RequestWithUser {
