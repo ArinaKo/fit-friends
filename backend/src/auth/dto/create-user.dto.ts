@@ -29,7 +29,7 @@ import {
   UserNameLength,
   UserPasswordLength,
 } from 'src/const';
-import { UserValidationMessage } from './user-validation.messages';
+import { UserValidationMessage } from '@app/messages';
 
 class BaseUserDto {
   @ApiProperty({

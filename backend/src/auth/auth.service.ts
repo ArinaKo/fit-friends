@@ -7,8 +7,8 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserRepository } from './user.repository';
-import { UserEntity } from './user.entity';
+import { UserRepository } from '../users/user.repository';
+import { UserEntity } from '../users/user.entity';
 import {
   CreateCoachUserDto,
   CreateDefaultUserDto,
@@ -16,13 +16,13 @@ import {
   LoginUserDto,
 } from './dto/index';
 import dayjs from 'dayjs';
-import { UserMessage } from './user.const';
+import { UserMessage } from '@app/messages';
 import { Token, TokenPayload, User, UserRole } from '@app/types';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class UserService {
-  private readonly logger = new Logger(UserService.name);
+export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
   constructor(
     private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,

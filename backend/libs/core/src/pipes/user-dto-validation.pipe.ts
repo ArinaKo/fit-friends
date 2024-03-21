@@ -1,10 +1,8 @@
 import { ArgumentMetadata, BadRequestException, Injectable } from '@nestjs/common';
 import { PipeTransform } from '@nestjs/common';
-import { plainToClass, plainToInstance } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import { reduceValidationErrors } from '@app/helpers';
-import { CreateUserDto } from 'src/users/dto';
-import { UserRole } from '@app/types';
 
 type DtoListing = Record<string, any>;
 
