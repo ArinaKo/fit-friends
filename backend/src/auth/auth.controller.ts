@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -8,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto, LoginUserDto } from './dto';
+import { CreateUserDto } from './dto';
 import { fillDto } from '@app/helpers';
 import { FullUserRdo, LoggedUserRdo } from './rdo/index';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -17,13 +19,19 @@ import { CreateUserDtoListing } from './auth.const';
 import { Public } from '@app/core/decorators/public.decorator';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { UserService } from 'src/users/user.service';
+import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { RequestWithUser } from './requests/request-with-user.interface';
 import { RequestWithRefreshTokenPayload } from './requests/request-with-refresh-token-payload.interface';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+    private readonly refreshTokenService: RefreshTokenService,
+  ) {}
 
   @ApiResponse({
     type: FullUserRdo,
@@ -52,6 +60,30 @@ export class AuthController {
   public async login(@Req() { user }: RequestWithUser) {
     const userToken = await this.authService.createUserToken(user);
     return fillDto(LoggedUserRdo, { ...user.toPOJO(), ...userToken });
+  }
+
+  @ApiResponse({
+    type: LoggedUserRdo,
+    status: HttpStatus.OK,
+    description: 'User is authorized.',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'User is not authorized.',
+  })
+  @Get('login')
+  public async checkAuth(@Req() { payload }: RequestWithTokenPayload) {
+    const user = await this.userService.getUserByEmail(payload.email);
+    return fillDto(LoggedUserRdo, user.toPOJO());
+  }
+  
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'User has been successfully logged out.',
+  })
+  @Delete('logout')
+  public async logout(@Req() { payload }: RequestWithRefreshTokenPayload) {
+    const user = await this.refreshTokenService.deleteRefreshSession(payload.tokenId);
   }
 
   @ApiResponse({
