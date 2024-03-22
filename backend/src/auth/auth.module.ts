@@ -8,6 +8,7 @@ import { JwtAccessStrategy } from './strategies/jwt-access.strategy';
 import { UserModule } from '../users/user.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { RefreshTokenModule } from 'src/refresh-token/refresh-token.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
       useFactory: getJwtOptions,
     }),
     UserModule,
+    RefreshTokenModule,
   ],
   providers: [
     AuthService,
