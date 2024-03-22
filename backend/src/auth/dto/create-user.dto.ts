@@ -15,11 +15,11 @@ import {
   IsBoolean,
   IsEnum,
   Length,
-  IsDate,
   IsNumber,
   Min,
   Max,
   IsOptional,
+  IsISO8601,
 } from 'class-validator';
 import {
   CaloriesValue,
@@ -42,7 +42,7 @@ class BaseUserDto {
     description: 'User birth date',
     example: '1981-03-12',
   })
-  @IsDate()
+  @IsISO8601()
   @IsOptional()
   public dateOfBirth?: Date;
 

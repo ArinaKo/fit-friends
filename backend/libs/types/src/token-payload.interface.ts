@@ -1,7 +1,7 @@
 import { UserRole } from './user-role.enum';
 
 export interface TokenPayload {
-  id: string;
+  sub: string;
   email: string;
   role: UserRole;
   name: string;

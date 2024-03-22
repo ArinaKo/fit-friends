@@ -16,7 +16,7 @@ import {
   CreateUserDto,
   LoginUserDto,
 } from './dto/index';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 import { UserMessage } from '@app/messages';
 import { Token, UserRole } from '@app/types';
 import { JwtService } from '@nestjs/jwt';
@@ -76,8 +76,8 @@ export class AuthService {
       createdAt: new Date(),
     };
 
-    const defaultUserInfo =
-      role === UserRole.Default && dto instanceof CreateDefaultUserDto
+    const defaultUserInfo = 
+      dto instanceof CreateDefaultUserDto
         ? {
             caloriesToLose: dto.caloriesToLose,
             caloriesPerDay: dto.caloriesPerDay,
@@ -86,7 +86,7 @@ export class AuthService {
         : {};
 
     const coachUserInfo =
-      role === UserRole.Coach && dto instanceof CreateCoachUserDto
+      dto instanceof CreateCoachUserDto
         ? {
             certificate: dto.certificate,
             achievements: dto.achievements,

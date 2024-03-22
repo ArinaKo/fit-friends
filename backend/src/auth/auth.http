@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "email": "user@notfound.local",
-  "dateofBirth": "2012-02-22",
+  "dateOfBirth": "2012-02-22",
   "name": "Keks",
   "password": "123456",
   "avatar": "photo-1.png",
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 {
   "email": "user@found.local",
-  "dateofBirth": "2012-02-22",
+  "dateOfBirth": "2012-02-22",
   "name": "Keks",
   "password": "123456",
   "avatar": "photo-2.png",
@@ -40,7 +40,7 @@ Content-Type: application/json
   "workoutTypes": ["йога", "бег"],
   "isReady": true,
   "certificate": "certificate-1.jpg",
-  "achievements": "Я кот"
+  "achievements": "Я кот и этим все сказано"
 }
 
 ###

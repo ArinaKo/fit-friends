@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 import { jwtConfig } from '@app/config';
 import { RefreshTokenRepository } from './refresh-token.repository';
 import { RefreshTokenPayload } from '@app/types';
@@ -20,7 +20,7 @@ export class RefreshTokenService {
     const refreshToken = new RefreshTokenEntity({
       tokenId: payload.tokenId,
       createdAt: new Date(),
-      userId: payload.id,
+      userId: payload.sub,
       expiresIn: dayjs().add(timeValue.value, timeValue.unit).toDate(),
     });
 
