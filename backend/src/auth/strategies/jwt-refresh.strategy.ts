@@ -30,8 +30,6 @@ export class JwtRefreshStrategy extends PassportStrategy(
       throw new TokenNotExistsException(payload.tokenId);
     }
 
-    await this.refreshTokenService.deleteRefreshSession(payload.tokenId);
-
-    return this.userService.getUserByEmail(payload.email);
+    return payload;
   }
 }

@@ -18,18 +18,20 @@ import {
 } from './dto/index';
 import * as dayjs from 'dayjs';
 import { UserMessage } from '@app/messages';
-import { Token, UserRole } from '@app/types';
+import { RefreshTokenPayload, Token } from '@app/types';
 import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '@app/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { createJWTPayload } from '@app/helpers';
+import { UserService } from 'src/users/user.service';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly userService: UserService,
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
     private readonly jwtOptions: ConfigType<typeof jwtConfig>,
@@ -115,12 +117,19 @@ export class AuthService {
     return existUser;
   }
 
+  public async refreshUserToken(payload: RefreshTokenPayload) {
+    await this.refreshTokenService.deleteRefreshSession(payload.tokenId);
+    const user = await this.userService.getUserByEmail(payload.email);
+    return this.createUserToken(user);
+  }
+
   public async createUserToken(user: UserEntity): Promise<Token> {
     const accessTokenPayload = createJWTPayload(user);
     const refreshTokenPayload = {
       ...accessTokenPayload,
       tokenId: crypto.randomUUID(),
     };
+    await this.refreshTokenService.createRefreshSession(refreshTokenPayload);
 
     try {
       const accessToken = await this.jwtService.signAsync(accessTokenPayload);

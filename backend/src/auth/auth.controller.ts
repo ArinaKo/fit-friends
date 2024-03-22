@@ -15,15 +15,11 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDtoValidationPipe } from '@app/core';
 import { CreateUserDtoListing } from './auth.const';
 import { Public } from '@app/core/decorators/public.decorator';
-import { UserEntity } from '../users/user.entity';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { RequestWithUser } from './requests/request-with-user.interface';
+import { RequestWithRefreshTokenPayload } from './requests/request-with-refresh-token-payload.interface';
 
-interface RequestWithUser {
-  user: UserEntity;
-}
-
-@Public()
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
@@ -65,7 +61,7 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  public async refreshToken(@Req() { user }: RequestWithUser) {
-    return this.authService.createUserToken(user);
+  public async refreshToken(@Req() { payload }: RequestWithRefreshTokenPayload) {
+    return this.authService.refreshUserToken(payload);
   }
 }
