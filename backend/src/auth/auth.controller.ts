@@ -23,12 +23,12 @@ interface RequestWithUser {
   user: UserEntity;
 }
 
+@Public()
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Public()
   @ApiResponse({
     type: FullUserRdo,
     status: HttpStatus.CREATED,
@@ -42,7 +42,6 @@ export class AuthController {
     return fillDto(FullUserRdo, newUser.toPOJO());
   }
 
-  @Public()
   @ApiResponse({
     type: LoggedUserRdo,
     status: HttpStatus.OK,
