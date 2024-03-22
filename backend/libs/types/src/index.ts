@@ -16,3 +16,5 @@ export * from './notification.interface';
 export * from './balance.interface';
 export * from './token.interface';
 export * from './token-payload.interface';
+export * from './refresh-token.interface';
+export * from './refresh-token-payload.interface';
