@@ -77,8 +77,8 @@ export class AuthController {
     description: 'User is not authorized.',
   })
   @Get('login')
-  public async checkAuth(@Req() { payload }: RequestWithTokenPayload) {
-    const user = await this.userService.getUserByEmail(payload.email);
+  public async checkAuth(@Req() { tokenPayload }: RequestWithTokenPayload) {
+    const user = await this.userService.getUserByEmail(tokenPayload.email);
     return fillDto(LoggedUserRdo, user.toPOJO());
   }
   
@@ -89,8 +89,8 @@ export class AuthController {
   @Public()
   @UseGuards(JwtRefreshGuard)
   @Delete('logout')
-  public async logout(@Req() { payload }: RequestWithRefreshTokenPayload) {
-    const user = await this.refreshTokenService.deleteRefreshSession(payload.tokenId);
+  public async logout(@Req() { tokenPayload }: RequestWithRefreshTokenPayload) {
+    const user = await this.refreshTokenService.deleteRefreshSession(tokenPayload.tokenId);
   }
 
   @ApiResponse({
@@ -101,7 +101,7 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  public async refreshToken(@Req() { payload }: RequestWithRefreshTokenPayload) {
-    return this.authService.refreshUserToken(payload);
+  public async refreshToken(@Req() { tokenPayload }: RequestWithRefreshTokenPayload) {
+    return this.authService.refreshUserToken(tokenPayload);
   }
 }

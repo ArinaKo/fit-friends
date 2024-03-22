@@ -6,7 +6,9 @@ import { IS_PUBLIC_KEY } from '@app/core/decorators/public.decorator';
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
   constructor(private reflector: Reflector) {
-    super();
+    super({
+      property: 'tokenPayload',
+    });
   }
 
   canActivate(context: ExecutionContext) {
@@ -20,4 +22,3 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 }
-
