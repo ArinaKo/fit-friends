@@ -12,7 +12,7 @@ import {
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto';
 import { fillDto } from '@app/helpers';
-import { FullUserRdo, LoggedUserRdo } from './rdo/index';
+import { AuthUserRdo, LoggedUserRdo } from './rdo/index';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDtoValidationPipe } from '@app/core';
 import { CreateUserDtoListing } from './auth.const';
@@ -36,7 +36,7 @@ export class AuthController {
   ) {}
 
   @ApiResponse({
-    type: FullUserRdo,
+    type: AuthUserRdo,
     status: HttpStatus.CREATED,
     description: 'The new user has been successfully created.',
   })
@@ -47,7 +47,7 @@ export class AuthController {
     @Body(new UserDtoValidationPipe(CreateUserDtoListing)) dto: CreateUserDto,
   ) {
     const newUser = await this.authService.register(dto);
-    return fillDto(FullUserRdo, newUser.toPOJO());
+    return fillDto(AuthUserRdo, newUser.toPOJO());
   }
 
   @ApiResponse({

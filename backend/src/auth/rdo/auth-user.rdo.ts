@@ -3,9 +3,9 @@ import {
 } from '@app/types';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { UserRdo } from 'src/users/rdo/index';
+import { FullUserRdo } from 'src/users/rdo/index';
 
-export class FullUserRdo extends UserRdo {
+export class AuthUserRdo extends FullUserRdo {
   @ApiPropertyOptional({
     description: 'Calories to lose',
     example: '3200',
