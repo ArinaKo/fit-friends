@@ -28,14 +28,8 @@ export abstract class BaseMongoRepository<
     );
   }
 
-  protected createEntitiesFromDocuments(documents: Document[]): EntityType[] {
-    return documents.map((document) =>
-      this.createEntity(
-        Object.assign(document.toObject({ versionKey: false }), {
-          id: document._id.toString(),
-        }),
-      ),
-    );
+  protected createEntitiesFromDocuments(documents: DocumentType[]): EntityType[] {
+    return documents.map((document) => this.createEntity((document)));
   }
 
   public async findById(id: EntityType['id']): Promise<EntityType | null> {

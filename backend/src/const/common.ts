@@ -1,4 +1,12 @@
+import { SortDirection } from "@app/types";
+
 export const MAX_WORKOUTS_TYPES = 3;
+
+export const DEFAULT_SORTING = SortDirection.Down;
+
+export const LIST_LIMIT = 50;
+
+export const DEFAULT_PAGE = 1;
 
 export enum CaloriesValue {
   Min = 1000,

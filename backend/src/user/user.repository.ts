@@ -4,12 +4,19 @@ import { Model } from 'mongoose';
 import { BaseMongoRepository } from '@app/core';
 import { UserEntity } from './user.entity';
 import { UserModel } from './user.model';
+import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
+import { PaginationResult } from '@app/types';
 
 @Injectable()
 export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
   constructor(@InjectModel(UserModel.name) UserModel: Model<UserModel>) {
     super(UserModel, UserEntity.fromObject);
   }
+
+  private calculatePages(totalCount: number, limit: number): number {
+    return Math.ceil(totalCount / limit);
+  }
+
   public async findByEmail(email: string): Promise<UserEntity | null> {
     const document = await this.model.findOne({ email }).exec();
 
@@ -20,15 +27,25 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     return this.createEntityFromDocument(document);
   }
 
-  public async find(): Promise<UserEntity[]> {
-    const records = await this.model.find<UserModel>().exec();
+  public async find(): Promise<PaginationResult<UserEntity>> {
+    const records = await this.model.aggregate<UserModel>([
+        { $sort: { createdAt: DEFAULT_SORTING } },
+        { $limit: LIST_LIMIT },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+          },
+        },
+      ]).exec();
 
-    if (!records.length) {
-      return [];
-    }
+    const usersCount = records.length;
 
-    const usersEntities = this.createEntitiesFromDocuments(records);
-
-    return usersEntities;
+    return {
+      entities: this.createEntitiesFromDocuments(records),
+      currentPage: DEFAULT_PAGE,
+      totalPages: this.calculatePages(usersCount, LIST_LIMIT),
+      itemsPerPage: LIST_LIMIT,
+      totalItems: usersCount,
+    };
   }
 }

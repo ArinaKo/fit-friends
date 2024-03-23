@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { UpdateUserDto } from './dto';
 import { UserEntity } from './user.entity';
+import { PaginationResult } from '@app/types';
 
 @Injectable()
 export class UserService {
@@ -27,7 +28,7 @@ export class UserService {
     return existsUser;
   }
 
-  public async getAllUsers(): Promise<UserEntity[]> {
+  public async getAllUsers(): Promise<PaginationResult<UserEntity>> {
     return this.userRepository.find();
   }
 
