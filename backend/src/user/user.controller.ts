@@ -2,7 +2,7 @@ import { Body, Controller, Get, HttpStatus, Param, Patch } from '@nestjs/common'
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { fillDto } from '@app/helpers';
-import { FullUserRdo } from './rdo';
+import { FullUserRdo, UserRdo } from './rdo';
 import { MongoIdValidationPipe, UserDtoValidationPipe } from '@app/core';
 import { UpdateUserDto } from './dto';
 import { AuthUserRdo } from 'src/auth/rdo';
@@ -12,6 +12,17 @@ import { UpdateUserDtoListing } from './user.const';
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+  
+  @ApiResponse({
+    type: [UserRdo],
+    status: HttpStatus.OK,
+    description: 'Users list'
+  })
+  @Get('/')
+  public async index() {
+    const users = await this.userService.getAllUsers();
+    return fillDto(UserRdo, users.map((user) => user.toPOJO()));
+  }
   
   @ApiResponse({
     type: FullUserRdo,

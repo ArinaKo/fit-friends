@@ -19,4 +19,16 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
 
     return this.createEntityFromDocument(document);
   }
+
+  public async find(): Promise<UserEntity[]> {
+    const records = await this.model.find<UserModel>().exec();
+
+    if (!records.length) {
+      return [];
+    }
+
+    const usersEntities = this.createEntitiesFromDocuments(records);
+
+    return usersEntities;
+  }
 }

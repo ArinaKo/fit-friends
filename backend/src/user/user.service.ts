@@ -27,6 +27,10 @@ export class UserService {
     return existsUser;
   }
 
+  public async getAllUsers(): Promise<UserEntity[]> {
+    return this.userRepository.find();
+  }
+
   public async updateUser(
     userId: string,
     dto: UpdateUserDto,

@@ -21,7 +21,21 @@ export abstract class BaseMongoRepository<
       return null;
     }
 
-    return this.createEntity(Object.assign(document.toObject({ versionKey: false }), { id: document._id.toString() }));
+    return this.createEntity(
+      Object.assign(document.toObject({ versionKey: false }), {
+        id: document._id.toString(),
+      }),
+    );
+  }
+
+  protected createEntitiesFromDocuments(documents: Document[]): EntityType[] {
+    return documents.map((document) =>
+      this.createEntity(
+        Object.assign(document.toObject({ versionKey: false }), {
+          id: document._id.toString(),
+        }),
+      ),
+    );
   }
 
   public async findById(id: EntityType['id']): Promise<EntityType | null> {
@@ -30,7 +44,7 @@ export abstract class BaseMongoRepository<
     if (!document) {
       return null;
     }
-    
+
     return this.createEntityFromDocument(document);
   }
 
