@@ -3,7 +3,7 @@ import {
 } from '@app/types';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { FullUserRdo } from 'src/users/rdo/index';
+import { FullUserRdo } from 'src/user/rdo/index';
 
 export class AuthUserRdo extends FullUserRdo {
   @ApiPropertyOptional({

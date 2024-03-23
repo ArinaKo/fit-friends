@@ -20,7 +20,7 @@ import { Public } from '@app/core/decorators/public.decorator';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { NotAuthGuard } from './guards/not-auth.guard';
-import { UserService } from 'src/users/user.service';
+import { UserService } from 'src/user/user.service';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { RequestWithUser } from './requests/request-with-user.interface';
 import { RequestWithTokenPayload } from './requests/request-with-token-payload.interface';

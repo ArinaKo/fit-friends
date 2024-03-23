@@ -8,8 +8,8 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserRepository } from '../users/user.repository';
-import { UserEntity } from '../users/user.entity';
+import { UserRepository } from '../user/user.repository';
+import { UserEntity } from '../user/user.entity';
 import {
   CreateCoachUserDto,
   CreateDefaultUserDto,
@@ -24,7 +24,7 @@ import jwtConfig from '@app/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { createJWTPayload } from '@app/helpers';
-import { UserService } from 'src/users/user.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
