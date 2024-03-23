@@ -14,4 +14,14 @@ export class UserService {
 
     return existUser;
   }
+  
+  public async getUserById(userId: string) {
+    const existUser = await this.userRepository.findById(userId);
+
+    if (!existUser) {
+      throw new NotFoundException(`User with id ${userId} not found`);
+    }
+
+    return existUser;
+  }
 }
