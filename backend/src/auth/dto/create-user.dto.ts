@@ -30,12 +30,14 @@ import {
   UserPasswordLength,
 } from 'src/const';
 import { UserValidationMessage } from '@app/messages';
+import { Expose } from 'class-transformer';
 
 class BaseUserDto {
   @ApiProperty({
     description: 'User avatar url',
     example: 'image.jpg',
   })
+  @Expose()
   public avatar: string;
 
   @ApiPropertyOptional({
@@ -44,6 +46,7 @@ class BaseUserDto {
   })
   @IsISO8601()
   @IsOptional()
+  @Expose()
   public dateOfBirth?: Date;
 
   @ApiProperty({
@@ -51,6 +54,7 @@ class BaseUserDto {
     example: 'user@user.ru',
   })
   @IsEmail({}, { message: UserValidationMessage.email.invalidFormat })
+  @Expose()
   public email: string;
 
   @ApiProperty({
@@ -61,6 +65,7 @@ class BaseUserDto {
   @Length(UserNameLength.Min, UserNameLength.Max, {
     message: UserValidationMessage.name.length,
   })
+  @Expose()
   public name: string;
 
   @ApiProperty({
@@ -71,6 +76,7 @@ class BaseUserDto {
   @Length(UserPasswordLength.Min, UserPasswordLength.Max, {
     message: UserValidationMessage.password.length,
   })
+  @Expose()
   public password: string;
 
   @ApiProperty({
@@ -78,6 +84,7 @@ class BaseUserDto {
     example: 'пользователь',
   })
   @IsEnum(UserRole, { message: UserValidationMessage.role.invalidFormat })
+  @Expose()
   public role: UserRole;
 
   @ApiProperty({
@@ -85,6 +92,7 @@ class BaseUserDto {
     example: 'мужской',
   })
   @IsEnum(UserSex, { message: UserValidationMessage.sex.invalidFormat })
+  @Expose()
   public sex: UserSex;
 
   @ApiProperty({
@@ -95,6 +103,7 @@ class BaseUserDto {
   @Length(UserDescriptionLength.Min, UserDescriptionLength.Max, {
     message: UserValidationMessage.description.length,
   })
+  @Expose()
   public description: string;
 
   @ApiProperty({
@@ -104,6 +113,7 @@ class BaseUserDto {
   @IsEnum(MetroStation, {
     message: UserValidationMessage.location.invalidFormat,
   })
+  @Expose()
   public location: MetroStation;
 
   @ApiPropertyOptional({
@@ -112,6 +122,7 @@ class BaseUserDto {
   })
   @IsString()
   @IsOptional()
+  @Expose()
   public backgroundImage?: string;
 
   @ApiProperty({
@@ -119,6 +130,7 @@ class BaseUserDto {
     example: 'новичок',
   })
   @IsEnum(UserLevel, { message: UserValidationMessage.level.invalidFormat })
+  @Expose()
   public level: UserLevel;
 
   @ApiProperty({
@@ -133,6 +145,7 @@ class BaseUserDto {
     each: true,
     message: UserValidationMessage.workoutsTypes.invalidItems,
   })
+  @Expose()
   public workoutTypes: WorkoutType[];
 
   @ApiProperty({
@@ -140,6 +153,7 @@ class BaseUserDto {
     example: 'true',
   })
   @IsBoolean()
+  @Expose()
   public isReady: boolean;
 }
 
@@ -151,6 +165,7 @@ export class CreateDefaultUserDto extends BaseUserDto {
   @IsNumber()
   @Min(CaloriesValue.Min, { message: UserValidationMessage.calories.value })
   @Max(CaloriesValue.Max, { message: UserValidationMessage.calories.value })
+  @Expose()
   public caloriesToLose: number;
 
   @ApiProperty({
@@ -160,6 +175,7 @@ export class CreateDefaultUserDto extends BaseUserDto {
   @IsNumber()
   @Min(CaloriesValue.Min, { message: UserValidationMessage.calories.value })
   @Max(CaloriesValue.Max, { message: UserValidationMessage.calories.value })
+  @Expose()
   public caloriesPerDay: number;
 
   @ApiProperty({
@@ -169,6 +185,7 @@ export class CreateDefaultUserDto extends BaseUserDto {
   @IsEnum(WorkoutDuration, {
     message: UserValidationMessage.timeForWorkout.invalidFormat,
   })
+  @Expose()
   public timeForWorkout: WorkoutDuration;
 }
 
@@ -178,6 +195,7 @@ export class CreateCoachUserDto extends BaseUserDto {
     example: 'certificate.jpg',
   })
   @IsString()
+  @Expose()
   public certificate: string;
 
   @ApiProperty({
@@ -188,6 +206,7 @@ export class CreateCoachUserDto extends BaseUserDto {
   @Length(UserAchievementsLength.Min, UserAchievementsLength.Max, {
     message: UserValidationMessage.achievements.length,
   })
+  @Expose()
   public achievements: string;
 }
 

@@ -17,7 +17,10 @@ export class UserDtoValidationPipe implements PipeTransform {
   public async transform(value: any, { type }: ArgumentMetadata): Promise<any> {
     if (type === 'body') {
       const userRole = value.role;
-      const user = plainToInstance(this.dtoListing[userRole], value);
+      const user = plainToInstance(this.dtoListing[userRole], value, {
+        excludeExtraneousValues: true,
+        exposeUnsetFields: false
+      });
       const classAValidationErrors = await validate(user);
       if (classAValidationErrors.length > 0) {
         throw new BadRequestException(
