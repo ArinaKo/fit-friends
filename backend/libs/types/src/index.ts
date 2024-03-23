@@ -18,3 +18,5 @@ export * from './token.interface';
 export * from './token-payload.interface';
 export * from './refresh-token.interface';
 export * from './refresh-token-payload.interface';
+export * from './sort-direction.enum';
+export * from './pagination.interface';
