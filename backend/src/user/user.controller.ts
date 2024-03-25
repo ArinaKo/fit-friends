@@ -18,6 +18,7 @@ import { AuthUserRdo } from 'src/auth/rdo';
 import { UpdateUserDtoListing } from './user.const';
 import { UsersQuery } from './query';
 import { UserRole } from '@app/types';
+import { OwnerGuard } from '@app/core/guards/owner.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -56,6 +57,7 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'User`s info has been successfully updated',
   })
+  @UseGuards(OwnerGuard)
   @Patch('/:userId')
   public async update(
     @Param('userId', MongoIdValidationPipe) id: string,

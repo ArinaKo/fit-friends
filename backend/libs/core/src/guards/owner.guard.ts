@@ -8,15 +8,19 @@ import {
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
-export class RoleGuard implements CanActivate {
+export class OwnerGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const role = this.reflector.get<UserRole>('role', context.getHandler());
-    if (!role) {
+    const request = context.switchToHttp().getRequest();
+
+    const ownerId = request.params.userId;
+    const userId = request.tokenPayload.sub;
+
+    if (userId !== ownerId) {
       throw new ForbiddenException();
     }
-    const userRole = context.switchToHttp().getRequest().tokenPayload.role;
-    return userRole === role;
+
+    return true;
   }
 }

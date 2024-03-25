@@ -11,3 +11,4 @@ export * from './guards/jwt-refresh.guard';
 export * from './guards/local-auth.guard';
 export * from './guards/not-auth.guard';
 export * from './guards/role.guard';
+export * from './guards/owner.guard';
