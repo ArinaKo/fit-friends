@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
@@ -14,6 +15,7 @@ import { MongoIdValidationPipe, UserDtoValidationPipe } from '@app/core';
 import { UpdateUserDto } from './dto';
 import { AuthUserRdo } from 'src/auth/rdo';
 import { UpdateUserDtoListing } from './user.const';
+import { UsersQuery } from './query';
 
 @ApiTags('users')
 @Controller('users')
@@ -26,8 +28,8 @@ export class UserController {
     description: 'Users list',
   })
   @Get('/')
-  public async index() {
-    const usersWithPagination = await this.userService.getAllUsers();
+  public async index(@Query() query: UsersQuery) {
+    const usersWithPagination = await this.userService.getAllUsers(query);
     return fillDto(UsersWithPaginationRdo, {
       ...usersWithPagination,
       users: usersWithPagination.entities.map((entity) => entity.toPOJO()),

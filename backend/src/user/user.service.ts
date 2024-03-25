@@ -3,6 +3,7 @@ import { UserRepository } from './user.repository';
 import { UpdateUserDto } from './dto';
 import { UserEntity } from './user.entity';
 import { PaginationResult } from '@app/types';
+import { UsersQuery } from './query';
 
 @Injectable()
 export class UserService {
@@ -28,8 +29,8 @@ export class UserService {
     return existsUser;
   }
 
-  public async getAllUsers(): Promise<PaginationResult<UserEntity>> {
-    return this.userRepository.find();
+  public async getAllUsers(query?: UsersQuery): Promise<PaginationResult<UserEntity>> {
+    return this.userRepository.find(query);
   }
 
   public async updateUser(

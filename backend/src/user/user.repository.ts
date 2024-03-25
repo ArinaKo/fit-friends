@@ -6,6 +6,7 @@ import { UserEntity } from './user.entity';
 import { UserModel } from './user.model';
 import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
 import { PaginationResult } from '@app/types';
+import { UsersQuery } from './query';
 
 @Injectable()
 export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
@@ -27,25 +28,60 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     return this.createEntityFromDocument(document);
   }
 
-  public async find(): Promise<PaginationResult<UserEntity>> {
-    const records = await this.model.aggregate<UserModel>([
-        { $sort: { createdAt: DEFAULT_SORTING } },
-        { $limit: LIST_LIMIT },
-        {
-          $addFields: {
-            id: { $toString: '$_id' },
-          },
-        },
-      ]).exec();
+  public async find(query?: UsersQuery): Promise<PaginationResult<UserEntity>> {
+    const sorting = query?.sortDirection ?? DEFAULT_SORTING;
+    const limit = query?.limit ?? LIST_LIMIT;
+    const skip = query?.page ? (query.page - 1) * limit : 0;
 
-    const usersCount = records.length;
+    let filter = {};
+
+    if (query?.workoutTypes) {
+      Object.assign(filter, {
+        workoutTypes: { $in: query.workoutTypes },
+      });
+    }
+
+    if (query?.locations) {
+      Object.assign(filter, {
+        location: { $in: query.locations },
+      });
+    }
+
+    if (query?.level) {
+      Object.assign(filter, {
+        level: query.level,
+      });
+    }
+
+    if (query?.role) {
+      Object.assign(filter, {
+        role: query.role,
+      });
+    }
+
+    const [records, recordsCount] = await Promise.all([
+      this.model
+        .aggregate<UserModel>([
+          { $match: filter },
+          { $sort: { createdAt: sorting } },
+          { $skip: skip },
+          { $limit: limit },
+          {
+            $addFields: {
+              id: { $toString: '$_id' },
+            },
+          },
+        ])
+        .exec(),
+      this.model.countDocuments(filter),
+    ]);
 
     return {
       entities: this.createEntitiesFromDocuments(records),
-      currentPage: DEFAULT_PAGE,
-      totalPages: this.calculatePages(usersCount, LIST_LIMIT),
-      itemsPerPage: LIST_LIMIT,
-      totalItems: usersCount,
+      currentPage: query?.page ?? DEFAULT_PAGE,
+      totalPages: this.calculatePages(recordsCount, limit),
+      itemsPerPage: limit,
+      totalItems: recordsCount,
     };
   }
 }
