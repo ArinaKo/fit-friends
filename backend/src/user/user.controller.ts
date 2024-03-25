@@ -6,16 +6,18 @@ import {
   Param,
   Patch,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { fillDto } from '@app/helpers';
 import { FullUserRdo, UsersWithPaginationRdo } from './rdo';
-import { MongoIdValidationPipe, UserDtoValidationPipe } from '@app/core';
+import { MongoIdValidationPipe, Role, RoleGuard, UserDtoValidationPipe } from '@app/core';
 import { UpdateUserDto } from './dto';
 import { AuthUserRdo } from 'src/auth/rdo';
 import { UpdateUserDtoListing } from './user.const';
 import { UsersQuery } from './query';
+import { UserRole } from '@app/types';
 
 @ApiTags('users')
 @Controller('users')
@@ -27,6 +29,8 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'Users list',
   })
+  @Role(UserRole.Default)
+  @UseGuards(RoleGuard)
   @Get('/')
   public async index(@Query() query: UsersQuery) {
     const usersWithPagination = await this.userService.getAllUsers(query);

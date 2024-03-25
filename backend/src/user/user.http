@@ -1,6 +1,8 @@
-# Get user by ID
+# Get users list
 GET http://localhost:3000/users?limit=4&locations=петроградская&role=тренер HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyNGRkYmFjNzg5ZDMzMjE0NDciLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwibmFtZSI6Iktla3MiLCJhdmF0YXIiOiJwaG90by0xLnBuZyIsImlzUmVhZHkiOmZhbHNlLCJpYXQiOjE3MTEzNzA5NDgsImV4cCI6MTcxMTM3MTg0OH0.mXlYmV2hvTp_AgbSStgYEmwZpWn2mmvdCNlIkVqaO_I
+
+###
 
 # Get user by ID
 GET http://localhost:3000/users/65fb2224ddbac789d3321447 HTTP/1.1
