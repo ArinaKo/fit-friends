@@ -4,10 +4,12 @@ import { ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { getJwtOptions } from '@app/config';
-import { JwtAccessStrategy } from './strategies/jwt-access.strategy';
+import {
+  JwtAccessStrategy,
+  JwtRefreshStrategy,
+  LocalStrategy,
+} from '../strategies/index';
 import { UserModule } from '../user/user.module';
-import { LocalStrategy } from './strategies/local.strategy';
-import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 import { RefreshTokenModule } from 'src/refresh-token/refresh-token.module';
 
 @Module({

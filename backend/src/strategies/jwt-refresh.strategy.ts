@@ -5,7 +5,7 @@ import { ConfigType } from '@nestjs/config';
 import { jwtConfig } from '@app/config';
 import { RefreshTokenPayload } from '@app/types';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
-import { TokenNotExistsException } from '../exceptions/token-not-exists.exeption';
+import { TokenNotExistsException } from '@app/core';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(
