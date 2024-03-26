@@ -1,11 +1,20 @@
-import { Body, Controller, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
 import { FullWorkoutRdo } from './rdo';
 import { fillDto } from '@app/helpers';
 import { ApiResponse } from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/requests';
-import { Role, RoleGuard } from '@app/core';
+import { MongoIdValidationPipe, Role, RoleGuard } from '@app/core';
 import { UserRole } from '@app/types';
 
 @Controller('workouts')
@@ -20,8 +29,28 @@ export class WorkoutController {
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Post('/')
-  public async create(@Body() dto: CreateWorkoutDto, @Req() { tokenPayload }: RequestWithTokenPayload) {
-    const newWorkout = await this.workoutService.createWorkout(dto, tokenPayload.sub);
+  public async create(
+    @Body() dto: CreateWorkoutDto,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    const newWorkout = await this.workoutService.createWorkout(
+      dto,
+      tokenPayload.sub,
+    );
     return fillDto(FullWorkoutRdo, newWorkout.toPOJO());
+  }
+
+  @ApiResponse({
+    type: FullWorkoutRdo,
+    status: HttpStatus.FOUND,
+    description: 'Workout found',
+  })
+  @Get('/:workoutId')
+  public async show(@Param('workoutId', MongoIdValidationPipe) id: string) {
+    const { workout, coach } = await this.workoutService.getWorkout(id);
+    return fillDto(
+      FullWorkoutRdo,
+      Object.assign(workout.toPOJO(), { coach: coach.toPOJO() }),
+    );
   }
 }
