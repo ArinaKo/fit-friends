@@ -98,13 +98,6 @@ export class CreateWorkoutDto {
   public video: string;
 
   @ApiProperty({
-    description: 'Workout`s coach id',
-    example: '65fb2224ddbac789d3321447',
-  })
-  @IsMongoId()
-  public coachId: string;
-
-  @ApiProperty({
     description: 'Workout`s special offer flag',
     example: 'true',
   })
