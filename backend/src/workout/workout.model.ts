@@ -2,7 +2,6 @@ import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import {
   UserLevel,
-  UserSex,
   Workout,
   WorkoutDuration,
   WorkoutSexFor,
@@ -63,7 +62,7 @@ export class WorkoutModel extends Document implements Workout {
   @Prop({
     required: true,
     type: String,
-    enum: UserSex,
+    enum: WorkoutSexFor,
   })
   public userSex: WorkoutSexFor;
 

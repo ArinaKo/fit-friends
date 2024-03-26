@@ -9,7 +9,6 @@ import {
   IsNumber,
   Min,
   Max,
-  IsMongoId,
 } from 'class-validator';
 import { CaloriesValue, PriceValue, WorkoutDescriptionLength, WorkoutTitleLength } from 'src/const';
 
@@ -85,7 +84,7 @@ export class CreateWorkoutDto {
 
   @ApiProperty({
     description: 'Workout`s user sex',
-    example: 'женский',
+    example: 'для женщин',
   })
   @IsEnum(WorkoutSexFor, { message: DtoValidationMessage.workoutSexFor.invalidFormat })
   public userSex: WorkoutSexFor;

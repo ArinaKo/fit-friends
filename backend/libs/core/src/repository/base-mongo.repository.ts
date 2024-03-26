@@ -21,11 +21,7 @@ export abstract class BaseMongoRepository<
       return null;
     }
 
-    return this.createEntity(
-      Object.assign(document.toObject({ versionKey: false }), {
-        id: document._id.toString(),
-      }),
-    );
+    return this.createEntity(document);
   }
 
   protected createEntitiesFromDocuments(documents: DocumentType[]): EntityType[] {
