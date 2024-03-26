@@ -4,7 +4,7 @@ import { WorkoutType } from './workout-type.enum';
 import { WorkoutDuration } from './workouts-durations.const';
 
 export interface Workout {
-  id: string;
+  id?: string;
   title: string;
   backgroundImage: string;
   level: UserLevel;
@@ -17,4 +17,5 @@ export interface Workout {
   video: string;
   coachId: string;
   isSpecial: boolean;
+  rating?: number;
 }
