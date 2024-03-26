@@ -29,7 +29,7 @@ import {
   UserNameLength,
   UserPasswordLength,
 } from 'src/const';
-import { UserValidationMessage } from '@app/messages';
+import { DtoValidationMessage } from '@app/messages';
 import { Expose } from 'class-transformer';
 
 class BaseUserDto {
@@ -53,7 +53,7 @@ class BaseUserDto {
     description: 'User email',
     example: 'user@user.ru',
   })
-  @IsEmail({}, { message: UserValidationMessage.email.invalidFormat })
+  @IsEmail({}, { message: DtoValidationMessage.email.invalidFormat })
   @Expose()
   public email: string;
 
@@ -63,7 +63,7 @@ class BaseUserDto {
   })
   @IsString()
   @Length(UserNameLength.Min, UserNameLength.Max, {
-    message: UserValidationMessage.name.length,
+    message: DtoValidationMessage.name.length,
   })
   @Expose()
   public name: string;
@@ -74,7 +74,7 @@ class BaseUserDto {
   })
   @IsString()
   @Length(UserPasswordLength.Min, UserPasswordLength.Max, {
-    message: UserValidationMessage.password.length,
+    message: DtoValidationMessage.password.length,
   })
   @Expose()
   public password: string;
@@ -83,7 +83,7 @@ class BaseUserDto {
     description: 'User role',
     example: 'пользователь',
   })
-  @IsEnum(UserRole, { message: UserValidationMessage.role.invalidFormat })
+  @IsEnum(UserRole, { message: DtoValidationMessage.role.invalidFormat })
   @Expose()
   public role: UserRole;
 
@@ -91,7 +91,7 @@ class BaseUserDto {
     description: 'User sex',
     example: 'мужской',
   })
-  @IsEnum(UserSex, { message: UserValidationMessage.sex.invalidFormat })
+  @IsEnum(UserSex, { message: DtoValidationMessage.sex.invalidFormat })
   @Expose()
   public sex: UserSex;
 
@@ -101,7 +101,7 @@ class BaseUserDto {
   })
   @IsString()
   @Length(UserDescriptionLength.Min, UserDescriptionLength.Max, {
-    message: UserValidationMessage.description.length,
+    message: DtoValidationMessage.userDescription.length,
   })
   @Expose()
   public description: string;
@@ -111,7 +111,7 @@ class BaseUserDto {
     example: 'Пионерская',
   })
   @IsEnum(MetroStation, {
-    message: UserValidationMessage.location.invalidFormat,
+    message: DtoValidationMessage.location.invalidFormat,
   })
   @Expose()
   public location: MetroStation;
@@ -129,7 +129,7 @@ class BaseUserDto {
     description: 'User level',
     example: 'новичок',
   })
-  @IsEnum(UserLevel, { message: UserValidationMessage.level.invalidFormat })
+  @IsEnum(UserLevel, { message: DtoValidationMessage.level.invalidFormat })
   @Expose()
   public level: UserLevel;
 
@@ -139,11 +139,11 @@ class BaseUserDto {
   })
   @IsArray()
   @ArrayMaxSize(MAX_WORKOUTS_TYPES, {
-    message: UserValidationMessage.workoutsTypes.length,
+    message: DtoValidationMessage.workoutsTypes.length,
   })
   @IsEnum(WorkoutType, {
     each: true,
-    message: UserValidationMessage.workoutsTypes.invalidItems,
+    message: DtoValidationMessage.workoutsTypes.invalidItems,
   })
   @Expose()
   public workoutTypes: WorkoutType[];
@@ -163,8 +163,8 @@ export class CreateDefaultUserDto extends BaseUserDto {
     example: '3200',
   })
   @IsNumber()
-  @Min(CaloriesValue.Min, { message: UserValidationMessage.calories.value })
-  @Max(CaloriesValue.Max, { message: UserValidationMessage.calories.value })
+  @Min(CaloriesValue.Min, { message: DtoValidationMessage.calories.value })
+  @Max(CaloriesValue.Max, { message: DtoValidationMessage.calories.value })
   @Expose()
   public caloriesToLose: number;
 
@@ -173,8 +173,8 @@ export class CreateDefaultUserDto extends BaseUserDto {
     example: '1000',
   })
   @IsNumber()
-  @Min(CaloriesValue.Min, { message: UserValidationMessage.calories.value })
-  @Max(CaloriesValue.Max, { message: UserValidationMessage.calories.value })
+  @Min(CaloriesValue.Min, { message: DtoValidationMessage.calories.value })
+  @Max(CaloriesValue.Max, { message: DtoValidationMessage.calories.value })
   @Expose()
   public caloriesPerDay: number;
 
@@ -183,7 +183,7 @@ export class CreateDefaultUserDto extends BaseUserDto {
     example: '10-30 мин',
   })
   @IsEnum(WorkoutDuration, {
-    message: UserValidationMessage.timeForWorkout.invalidFormat,
+    message: DtoValidationMessage.timeForWorkout.invalidFormat,
   })
   @Expose()
   public timeForWorkout: WorkoutDuration;
@@ -204,7 +204,7 @@ export class CreateCoachUserDto extends BaseUserDto {
   })
   @IsString()
   @Length(UserAchievementsLength.Min, UserAchievementsLength.Max, {
-    message: UserValidationMessage.achievements.length,
+    message: DtoValidationMessage.achievements.length,
   })
   @Expose()
   public achievements: string;

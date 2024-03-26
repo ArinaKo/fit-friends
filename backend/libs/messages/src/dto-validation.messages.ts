@@ -1,8 +1,8 @@
 import { transformObjectValuesToString } from "@app/helpers";
-import { MetroStation, UserLevel, UserRole, UserSex, WorkoutDuration, WorkoutType } from "@app/types";
-import { CaloriesValue, MAX_WORKOUTS_TYPES, UserAchievementsLength, UserDescriptionLength, UserNameLength, UserPasswordLength } from "src/const";
+import { MetroStation, UserLevel, UserRole, UserSex, WorkoutDuration, WorkoutSexFor, WorkoutType } from "@app/types";
+import { CaloriesValue, MAX_WORKOUTS_TYPES, PriceValue, UserAchievementsLength, UserDescriptionLength, UserNameLength, UserPasswordLength, WorkoutDescriptionLength, WorkoutTitleLength } from "src/const";
 
-export const UserValidationMessage = {
+export const DtoValidationMessage = {
   name: {
     length: `Name length min is ${UserNameLength.Min}, max is ${UserNameLength.Max}`,
   },
@@ -18,7 +18,7 @@ export const UserValidationMessage = {
   role: {
     invalidFormat: `Field value must be from options: ${transformObjectValuesToString(UserRole)}`,
   },
-  description: {
+  userDescription: {
     length: `Description length min is ${UserDescriptionLength.Min}, max is ${UserDescriptionLength.Max}`,
   },
   location: {
@@ -39,5 +39,17 @@ export const UserValidationMessage = {
   },
   achievements: {
     length: `Text length min is ${UserAchievementsLength.Min}, max is ${UserAchievementsLength.Max}`,
+  },
+  workoutDescription: {
+    length: `Description length min is ${WorkoutDescriptionLength.Min}, max is ${WorkoutDescriptionLength.Max}`,
+  },
+  workoutTitle: {
+    length: `Title length min is ${WorkoutTitleLength.Min}, max is ${WorkoutTitleLength.Max}`,
+  },
+  workoutSexFor: {
+    invalidFormat: `Field value must be from options: ${transformObjectValuesToString(WorkoutSexFor)}`,
+  },
+  price: {
+    value: `Value must be greater then: ${PriceValue.Min}`,
   },
 };

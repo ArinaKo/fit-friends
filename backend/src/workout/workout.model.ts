@@ -5,6 +5,7 @@ import {
   UserSex,
   Workout,
   WorkoutDuration,
+  WorkoutSexFor,
   WorkoutType,
 } from '@app/types';
 
@@ -64,7 +65,7 @@ export class WorkoutModel extends Document implements Workout {
     type: String,
     enum: UserSex,
   })
-  public userSex: UserSex;
+  public userSex: WorkoutSexFor;
 
   @Prop({
     required: true,

@@ -1,9 +1,9 @@
 import { Entity } from '@app/core';
 import {
   UserLevel,
-  UserSex,
   Workout,
   WorkoutDuration,
+  WorkoutSexFor,
   WorkoutType,
 } from '@app/types';
 
@@ -17,7 +17,7 @@ export class WorkoutEntity implements Workout, Entity<string> {
   public price: number;
   public calories: number;
   public description: string;
-  public userSex: UserSex;
+  public userSex: WorkoutSexFor;
   public video: string;
   public coachId: string;
   public isSpecial: boolean;

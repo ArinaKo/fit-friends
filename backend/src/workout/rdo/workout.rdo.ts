@@ -1,4 +1,4 @@
-import { UserLevel, UserSex, WorkoutDuration, WorkoutType } from '@app/types';
+import { UserLevel, UserSex, WorkoutDuration, WorkoutSexFor, WorkoutType } from '@app/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
@@ -72,7 +72,7 @@ export class WorkoutRdo {
     example: 'женский',
   })
   @Expose()
-  public userSex: UserSex;
+  public userSex: WorkoutSexFor;
 
   @ApiProperty({
     description: 'Workout`s coach id',

@@ -1,2 +1,2 @@
 export * from './user-common.messages';
-export * from './user-validation.messages';
+export * from './dto-validation.messages';

@@ -13,6 +13,10 @@ export enum CaloriesValue {
   Max = 5000,
 }
 
+export enum PriceValue {
+  Min = 0,
+}
+
 export enum RatingValue {
   Min = 1,
   Max = 5,
@@ -39,6 +43,16 @@ export enum UserDescriptionLength {
 }
 
 export enum UserAchievementsLength {
+  Min = 10,
+  Max = 140,
+}
+
+export enum WorkoutTitleLength {
+  Min = 1,
+  Max = 15,
+}
+
+export enum WorkoutDescriptionLength {
   Min = 10,
   Max = 140,
 }
