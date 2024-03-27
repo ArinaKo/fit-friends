@@ -37,8 +37,9 @@ export class WorkoutRepository extends BaseMongoRepository<
     return this.createEntityFromDocument(document);
   }
 
-  public async find(): Promise<PaginationResult<WorkoutEntity>> {
+  public async find(coachId?: string): Promise<PaginationResult<WorkoutEntity>> {
     const records = await this.model.aggregate<WorkoutModel>([
+      { $match: { coachId } },
       { $sort: { createdAt: DEFAULT_SORTING } },
       { $limit: LIST_LIMIT },
       {

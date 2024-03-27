@@ -34,7 +34,23 @@ export class WorkoutController {
     return fillDto(WorkoutsWithPaginationRdo, {
       ...workoutsWithPagination,
       workouts: workoutsWithPagination.entities.map((workout) => workout.toPOJO())
-  });
+    });
+  }
+
+  @ApiResponse({
+    type: WorkoutsWithPaginationRdo,
+    status: HttpStatus.OK,
+    description: 'Coach workouts list'
+  })
+  @Role(UserRole.Coach)
+  @UseGuards(RoleGuard)
+  @Get('/coach')
+  public async indexByCoach(@Req() { tokenPayload }: RequestWithTokenPayload) {
+    const workoutsWithPagination = await this.workoutService.getCoachWorkouts(tokenPayload.sub);
+    return fillDto(WorkoutsWithPaginationRdo, {
+      ...workoutsWithPagination,
+      workouts: workoutsWithPagination.entities.map((workout) => workout.toPOJO())
+    });
   }
 
   @ApiResponse({

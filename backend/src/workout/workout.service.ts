@@ -78,4 +78,8 @@ export class WorkoutService {
   public async getAllWorkouts(): Promise<PaginationResult<WorkoutEntity>> {
     return this.workoutRepository.find();
   }
+
+  public async getCoachWorkouts(coachId: string): Promise<PaginationResult<WorkoutEntity>> {
+    return this.workoutRepository.find(coachId);
+  }
 }
