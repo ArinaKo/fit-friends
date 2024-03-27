@@ -1,7 +1,6 @@
 import { UserRole } from '@app/types';
 import {
   ExecutionContext,
-  ForbiddenException,
   Injectable,
   CanActivate,
 } from '@nestjs/common';
@@ -14,7 +13,7 @@ export class RoleGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const role = this.reflector.get<UserRole>('role', context.getHandler());
     if (!role) {
-      throw new ForbiddenException();
+      return true;
     }
     const userRole = context.switchToHttp().getRequest().tokenPayload.role;
     return userRole === role;

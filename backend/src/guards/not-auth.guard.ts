@@ -1,6 +1,5 @@
 import {
   ExecutionContext,
-  ForbiddenException,
   Injectable,
   CanActivate,
 } from '@nestjs/common';
@@ -11,10 +10,7 @@ export class NotAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    if (token) {
-      throw new ForbiddenException();
-    }
-    return true;
+    return !token;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
