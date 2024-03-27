@@ -1,4 +1,3 @@
-import { UserLevel, UserSex, WorkoutDuration, WorkoutType } from '@app/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
 import { UserRdo } from 'src/user/rdo';

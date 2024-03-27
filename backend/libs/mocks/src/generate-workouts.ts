@@ -16,7 +16,7 @@ function generateWorkout() {
     backgroundImage: `training-${generateRandomValue(1, IMAGES_NUMBER)}.png`,
     level: getRandomItem(Object.values(UserLevel)),
     type: getRandomItem(Object.values(WorkoutType)),
-    duration: getRandomItem(Object.keys(WorkoutDuration)),
+    duration: getRandomItem(Object.values(WorkoutDuration)),
     price: generateRandomValue(0, MAX_PRICE),
     calories: generateRandomValue(CaloriesValue.Min, CaloriesValue.Max),
     description: getRandomItem(WorkoutsDescriptions),

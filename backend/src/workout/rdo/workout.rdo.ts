@@ -1,4 +1,4 @@
-import { UserLevel, UserSex, WorkoutDuration, WorkoutSexFor, WorkoutType } from '@app/types';
+import { UserLevel, WorkoutDuration, WorkoutSexFor, WorkoutType } from '@app/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 

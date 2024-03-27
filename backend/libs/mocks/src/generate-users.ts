@@ -53,7 +53,7 @@ function generateUser(isMale: boolean, isCoach: boolean) {
       : generateRandomValue(CaloriesValue.Min, CaloriesValue.Max),
     timeForWorkout: isCoach
       ? undefined
-      : getRandomItem(Object.keys(WorkoutDuration)),
+      : getRandomItem(Object.values(WorkoutDuration)),
   };
 }
 
