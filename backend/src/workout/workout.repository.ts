@@ -35,4 +35,16 @@ export class WorkoutRepository extends BaseMongoRepository<
 
     return this.createEntityFromDocument(document);
   }
+
+  public async find(): Promise<WorkoutEntity[]> {
+    const records = await this.model.find().exec();
+
+    if (!records.length) {
+      return [];
+    }
+
+    const workoutsEntities = this.createEntitiesFromDocuments(records);
+
+    return workoutsEntities;
+  }
 }

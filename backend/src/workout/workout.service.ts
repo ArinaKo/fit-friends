@@ -73,4 +73,8 @@ export class WorkoutService {
 
     return existsWorkout.coachId;
   }
+
+  public async getAllWorkouts(): Promise<WorkoutEntity[]> {
+    return this.workoutRepository.find();
+  }
 }
