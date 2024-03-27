@@ -32,7 +32,6 @@ export class WorkoutRepository extends BaseMongoRepository<
       ])
       .exec()
       .then((r) => r.at(0) || null);
-    console.log(document);
 
     return this.createEntityFromDocument(document);
   }

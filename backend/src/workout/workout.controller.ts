@@ -4,18 +4,19 @@ import {
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { CreateWorkoutDto } from './dto';
+import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
 import { FullWorkoutRdo } from './rdo';
 import { fillDto } from '@app/helpers';
 import { ApiResponse } from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/requests';
 import { MongoIdValidationPipe, Role } from '@app/core';
-import { RoleGuard } from 'src/guards';
+import { RoleGuard, WorkoutOwnerGuard } from 'src/guards';
 import { UserRole } from '@app/types';
 
 @Controller('workouts')
@@ -39,6 +40,24 @@ export class WorkoutController {
       tokenPayload.sub,
     );
     return fillDto(FullWorkoutRdo, newWorkout.toPOJO());
+  }
+
+  @ApiResponse({
+    type: FullWorkoutRdo,
+    status: HttpStatus.CREATED,
+    description: 'The workout has been successfully updated',
+  })
+  @UseGuards(WorkoutOwnerGuard)
+  @Patch('/:workoutId')
+  public async update(
+    @Param('workoutId', MongoIdValidationPipe) workoutId: string,
+    @Body() dto: UpdateWorkoutDto,
+  ) {
+    const updatedWorkout = await this.workoutService.updateWorkout(
+      workoutId,
+      dto,
+    );
+    return fillDto(FullWorkoutRdo, updatedWorkout.toPOJO());
   }
 
   @ApiResponse({

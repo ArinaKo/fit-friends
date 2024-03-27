@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { WorkoutRepository } from './workout.repository';
-import { CreateWorkoutDto } from './dto';
+import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutEntity } from './workout.entity';
 import { UserService } from 'src/user/user.service';
 import { UserEntity } from 'src/user/user.entity';
@@ -22,6 +22,32 @@ export class WorkoutService {
     await this.workoutRepository.save(newWorkout);
 
     return newWorkout;
+  }
+
+  public async updateWorkout(
+    workoutId: string,
+    dto: UpdateWorkoutDto,
+  ): Promise<WorkoutEntity> {
+    const existsWorkout = await this.workoutRepository.findById(workoutId);
+
+    if (!existsWorkout) {
+      throw new NotFoundException(`User with id ${workoutId} not found`);
+    }
+
+    let hasChanges = false;
+
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined && existsWorkout[key] !== value) {
+        existsWorkout[key] = value;
+        hasChanges = true;
+      }
+    }
+
+    if (!hasChanges) {
+      return existsWorkout;
+    }
+
+    return this.workoutRepository.update(workoutId, existsWorkout);
   }
 
   public async getWorkout(
