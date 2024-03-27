@@ -1,32 +1,12 @@
-import { IsEnum, IsIn, IsNumber, IsOptional } from 'class-validator';
+import { IsEnum, IsIn, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
-import {
-  MetroStation,
-  SortDirection,
-  UserLevel,
-  UserRole,
-  WorkoutType,
-} from '@app/types';
+import { MetroStation, UserLevel, UserRole, WorkoutType } from '@app/types';
+import { BaseQuery } from 'src/query/base.query';
 import * as lodash from 'lodash';
 
-export class UsersQuery {
-  @Transform(({ value }) => +value)
-  @IsNumber()
-  @IsOptional()
-  public limit?: number;
-
-  @Transform(({ value }) => +value)
-  @IsEnum(SortDirection)
-  @IsOptional()
-  public sortDirection?: SortDirection;
-
-  @Transform(({ value }) => +value)
-  @IsNumber()
-  @IsOptional()
-  public page?: number;
-
+export class UsersQuery extends BaseQuery {
   @Transform(({ value }) => {
-    const locations = (typeof value === 'string') ? [value] : value;
+    const locations = typeof value === 'string' ? [value] : value;
     return locations.map((item: string) => lodash.lowerCase(item));
   })
   @IsIn(Object.values(WorkoutType), { each: true })
@@ -34,7 +14,7 @@ export class UsersQuery {
   public workoutTypes?: string[];
 
   @Transform(({ value }) => {
-    const locations = (typeof value === 'string') ? [value] : value;
+    const locations = typeof value === 'string' ? [value] : value;
     return locations.map((item: string) => lodash.capitalize(item));
   })
   @IsIn(Object.values(MetroStation), { each: true })
