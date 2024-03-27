@@ -5,7 +5,7 @@ import { BaseMongoRepository } from '@app/core';
 import { UserEntity } from './user.entity';
 import { UserModel } from './user.model';
 import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
-import { PaginationResult } from '@app/types';
+import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
 
 @Injectable()

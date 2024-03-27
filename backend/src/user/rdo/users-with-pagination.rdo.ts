@@ -1,19 +1,8 @@
 import { Expose } from 'class-transformer';
 import { UserRdo } from './user.rdo';
+import { BasePaginationRdo } from '@app/core';
 
-export class UsersWithPaginationRdo {
+export class UsersWithPaginationRdo extends BasePaginationRdo {
   @Expose()
   public users: UserRdo[];
-
-  @Expose()
-  public totalPages: number;
-
-  @Expose()
-  public totalItems: number;
-
-  @Expose()
-  public currentPage: number;
-
-  @Expose()
-  public itemsPerPage: number;
 }

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { UpdateUserDto } from './dto';
 import { UserEntity } from './user.entity';
-import { PaginationResult } from '@app/types';
+import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
 
 @Injectable()
