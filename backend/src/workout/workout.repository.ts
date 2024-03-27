@@ -5,6 +5,7 @@ import { BaseMongoRepository, PaginationResult } from '@app/core';
 import { WorkoutEntity } from './workout.entity';
 import { WorkoutModel } from './workout.model';
 import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
+import { FullWorkoutQuery } from './query';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   AddIdString: {
@@ -13,6 +14,51 @@ const PipelineStage: { [key: string]: PipelineStage } = {
     },
   },
 };
+
+function generateFilter(query: FullWorkoutQuery) {
+  let filter = {};
+
+  if (query?.minCalories || query?.maxCalories) {
+    let caloriesFilter = Object.assign(
+      query?.minCalories ? { $gte: query.minCalories } : {},
+      query?.maxCalories ? { $lte: query.maxCalories } : {},
+    );
+
+    Object.assign(filter, { calories: caloriesFilter });
+  }
+
+  if (query?.minPrice || query?.maxPrice) {
+    let priceFilter = Object.assign(
+      query?.minPrice ? { $gte: query.minPrice } : {},
+      query?.maxPrice ? { $lte: query.maxPrice } : {},
+    );
+
+    Object.assign(filter, { price: priceFilter });
+  }
+
+  if (query?.minRating || query?.maxRating) {
+    let ratingFilter = Object.assign(
+      query?.minRating ? { $gte: query.minRating } : {},
+      query?.maxRating ? { $lte: query.maxRating } : {},
+    );
+
+    Object.assign(filter, { rating: ratingFilter });
+  }
+
+  if (query?.workoutTypes) {
+    Object.assign(filter, {
+      type: { $in: query.workoutTypes },
+    });
+  }
+
+  if (query?.workoutDurations) {
+    Object.assign(filter, {
+      duration: { $in: query.workoutDurations },
+    });
+  }
+
+  return filter;
+}
 
 @Injectable()
 export class WorkoutRepository extends BaseMongoRepository<
@@ -37,25 +83,41 @@ export class WorkoutRepository extends BaseMongoRepository<
     return this.createEntityFromDocument(document);
   }
 
-  public async find(coachId?: string): Promise<PaginationResult<WorkoutEntity>> {
-    const records = await this.model.aggregate<WorkoutModel>([
-      { $match: { coachId } },
-      { $sort: { createdAt: DEFAULT_SORTING } },
-      { $limit: LIST_LIMIT },
-      {
-        $addFields: {
-          id: { $toString: '$_id' },
-        },
-      },
-    ]).exec();
+  public async find(
+    query?: FullWorkoutQuery,
+    coachId?: string,
+  ): Promise<PaginationResult<WorkoutEntity>> {
+    const sorting = query?.sortDirection ?? DEFAULT_SORTING;
+    const limit = query?.limit ?? LIST_LIMIT;
+    const skip = query?.page ? (query.page - 1) * limit : 0;
+    let filter = query ? generateFilter(query) : {};
 
-    const recordsCount = records.length;
+    if (coachId) {
+      Object.assign(filter, { coachId });
+    }
+
+    const [records, recordsCount] = await Promise.all([
+      this.model
+        .aggregate<WorkoutModel>([
+          { $match: filter },
+          { $sort: { price: sorting } },
+          { $skip: skip },
+          { $limit: limit },
+          {
+            $addFields: {
+              id: { $toString: '$_id' },
+            },
+          },
+        ])
+        .exec(),
+      this.model.countDocuments(filter),
+    ]);
 
     return {
       entities: this.createEntitiesFromDocuments(records),
-      currentPage: DEFAULT_PAGE,
-      totalPages: this.calculatePages(recordsCount, LIST_LIMIT),
-      itemsPerPage: LIST_LIMIT,
+      currentPage: query?.page ?? DEFAULT_PAGE,
+      totalPages: this.calculatePages(recordsCount, limit),
+      itemsPerPage: limit,
       totalItems: recordsCount,
     };
   }

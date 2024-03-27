@@ -5,6 +5,8 @@ import { WorkoutEntity } from './workout.entity';
 import { UserService } from 'src/user/user.service';
 import { UserEntity } from 'src/user/user.entity';
 import { PaginationResult } from '@app/core';
+import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
+import { DEFAULT_RATING } from 'src/const';
 
 @Injectable()
 export class WorkoutService {
@@ -18,7 +20,7 @@ export class WorkoutService {
     coachId: string,
   ): Promise<WorkoutEntity> {
     const newWorkout = WorkoutEntity.fromObject(
-      Object.assign(dto, { coachId }),
+      Object.assign(dto, { coachId, rating: DEFAULT_RATING }),
     );
     await this.workoutRepository.save(newWorkout);
 
@@ -75,11 +77,11 @@ export class WorkoutService {
     return existsWorkout.coachId;
   }
 
-  public async getAllWorkouts(): Promise<PaginationResult<WorkoutEntity>> {
-    return this.workoutRepository.find();
+  public async getAllWorkouts(query?: WorkoutsQuery): Promise<PaginationResult<WorkoutEntity>> {
+    return this.workoutRepository.find(query);
   }
 
-  public async getCoachWorkouts(coachId: string): Promise<PaginationResult<WorkoutEntity>> {
-    return this.workoutRepository.find(coachId);
+  public async getCoachWorkouts(coachId: string, query?: CoachWorkoutsQuery): Promise<PaginationResult<WorkoutEntity>> {
+    return this.workoutRepository.find(query, coachId);
   }
 }

@@ -17,5 +17,5 @@ export interface Workout {
   video: string;
   coachId: string;
   isSpecial: boolean;
-  rating?: number;
+  rating: number;
 }

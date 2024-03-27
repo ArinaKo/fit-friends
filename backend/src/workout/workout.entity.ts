@@ -21,7 +21,7 @@ export class WorkoutEntity implements Workout, Entity<string> {
   public video: string;
   public coachId: string;
   public isSpecial: boolean;
-  public rating?: number;
+  public rating: number;
 
   constructor(workout: Workout) {
     this.populate(workout);

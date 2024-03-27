@@ -8,6 +8,8 @@ export const LIST_LIMIT = 50;
 
 export const DEFAULT_PAGE = 1;
 
+export const DEFAULT_RATING = 0;
+
 export enum CaloriesValue {
   Min = 1000,
   Max = 5000,

@@ -80,6 +80,11 @@ export class WorkoutModel extends Document implements Workout {
     required: true,
   })
   public isSpecial: boolean;
+
+  @Prop({
+    required: true,
+  })
+  public rating: number;
 }
 
 export const WorkoutSchema = SchemaFactory.createForClass(WorkoutModel);

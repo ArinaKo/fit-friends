@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -18,6 +19,7 @@ import { RequestWithTokenPayload } from 'src/requests';
 import { MongoIdValidationPipe, Role } from '@app/core';
 import { RoleGuard, WorkoutOwnerGuard } from 'src/guards';
 import { UserRole } from '@app/types';
+import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
 
 @Controller('workouts')
 export class WorkoutController {
@@ -29,8 +31,8 @@ export class WorkoutController {
     description: 'Workouts list'
   })
   @Get('/')
-  public async index() {
-    const workoutsWithPagination = await this.workoutService.getAllWorkouts();
+  public async index(@Query() query: WorkoutsQuery) {
+    const workoutsWithPagination = await this.workoutService.getAllWorkouts(query);
     return fillDto(WorkoutsWithPaginationRdo, {
       ...workoutsWithPagination,
       workouts: workoutsWithPagination.entities.map((workout) => workout.toPOJO())
@@ -45,8 +47,8 @@ export class WorkoutController {
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Get('/coach')
-  public async indexByCoach(@Req() { tokenPayload }: RequestWithTokenPayload) {
-    const workoutsWithPagination = await this.workoutService.getCoachWorkouts(tokenPayload.sub);
+  public async indexByCoach(@Query() query: CoachWorkoutsQuery, @Req() { tokenPayload }: RequestWithTokenPayload) {
+    const workoutsWithPagination = await this.workoutService.getCoachWorkouts(tokenPayload.sub, query);
     return fillDto(WorkoutsWithPaginationRdo, {
       ...workoutsWithPagination,
       workouts: workoutsWithPagination.entities.map((workout) => workout.toPOJO())
