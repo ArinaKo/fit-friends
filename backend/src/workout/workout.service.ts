@@ -37,4 +37,14 @@ export class WorkoutService {
 
     return { workout: existsWorkout, coach };
   }
+
+  public async getCoachId(id: string): Promise<string> {
+    const existsWorkout = await this.workoutRepository.findById(id);
+
+    if (!existsWorkout) {
+      throw new NotFoundException(`Workout with id ${id} not found.`);
+    }
+
+    return existsWorkout.coachId;
+  }
 }

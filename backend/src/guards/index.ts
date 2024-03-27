@@ -4,3 +4,4 @@ export * from './local-auth.guard';
 export * from './not-auth.guard';
 export * from './role.guard';
 export * from './owner.guard';
+export * from './workout-owner.guard';
