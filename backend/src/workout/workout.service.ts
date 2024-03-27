@@ -4,6 +4,7 @@ import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutEntity } from './workout.entity';
 import { UserService } from 'src/user/user.service';
 import { UserEntity } from 'src/user/user.entity';
+import { PaginationResult } from '@app/core';
 
 @Injectable()
 export class WorkoutService {
@@ -74,7 +75,7 @@ export class WorkoutService {
     return existsWorkout.coachId;
   }
 
-  public async getAllWorkouts(): Promise<WorkoutEntity[]> {
+  public async getAllWorkouts(): Promise<PaginationResult<WorkoutEntity>> {
     return this.workoutRepository.find();
   }
 }

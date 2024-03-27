@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, PipelineStage } from 'mongoose';
-import { BaseMongoRepository } from '@app/core';
+import { BaseMongoRepository, PaginationResult } from '@app/core';
 import { WorkoutEntity } from './workout.entity';
 import { WorkoutModel } from './workout.model';
+import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   AddIdString: {
@@ -36,15 +37,25 @@ export class WorkoutRepository extends BaseMongoRepository<
     return this.createEntityFromDocument(document);
   }
 
-  public async find(): Promise<WorkoutEntity[]> {
-    const records = await this.model.find().exec();
+  public async find(): Promise<PaginationResult<WorkoutEntity>> {
+    const records = await this.model.aggregate<WorkoutModel>([
+      { $sort: { createdAt: DEFAULT_SORTING } },
+      { $limit: LIST_LIMIT },
+      {
+        $addFields: {
+          id: { $toString: '$_id' },
+        },
+      },
+    ]).exec();
 
-    if (!records.length) {
-      return [];
-    }
+    const recordsCount = records.length;
 
-    const workoutsEntities = this.createEntitiesFromDocuments(records);
-
-    return workoutsEntities;
+    return {
+      entities: this.createEntitiesFromDocuments(records),
+      currentPage: DEFAULT_PAGE,
+      totalPages: this.calculatePages(recordsCount, LIST_LIMIT),
+      itemsPerPage: LIST_LIMIT,
+      totalItems: recordsCount,
+    };
   }
 }

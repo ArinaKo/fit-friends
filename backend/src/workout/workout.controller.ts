@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
-import { FullWorkoutRdo, WorkoutRdo } from './rdo';
+import { FullWorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import { fillDto } from '@app/helpers';
 import { ApiResponse } from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/requests';
@@ -24,14 +24,17 @@ export class WorkoutController {
   constructor(private readonly workoutService: WorkoutService) {}
 
   @ApiResponse({
-    type: [WorkoutRdo],
+    type: WorkoutsWithPaginationRdo,
     status: HttpStatus.OK,
     description: 'Workouts list'
   })
   @Get('/')
   public async index() {
-    const workouts = await this.workoutService.getAllWorkouts();
-    return fillDto(WorkoutRdo, workouts.map((user) => user.toPOJO()));
+    const workoutsWithPagination = await this.workoutService.getAllWorkouts();
+    return fillDto(WorkoutsWithPaginationRdo, {
+      ...workoutsWithPagination,
+      workouts: workoutsWithPagination.entities.map((workout) => workout.toPOJO())
+  });
   }
 
   @ApiResponse({

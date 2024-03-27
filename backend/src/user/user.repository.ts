@@ -14,10 +14,6 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     super(UserModel, UserEntity.fromObject);
   }
 
-  private calculatePages(totalCount: number, limit: number): number {
-    return Math.ceil(totalCount / limit);
-  }
-
   public async findByEmail(email: string): Promise<UserEntity | null> {
     const document = await this.model.findOne({ email }).exec();
 

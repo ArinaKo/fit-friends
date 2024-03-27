@@ -28,6 +28,10 @@ export abstract class BaseMongoRepository<
     return documents.map((document) => this.createEntity((document)));
   }
 
+  protected calculatePages(totalCount: number, limit: number): number {
+    return Math.ceil(totalCount / limit);
+  }
+
   public async findById(id: EntityType['id']): Promise<EntityType | null> {
     const document = await this.model.findById(id).exec();
 
