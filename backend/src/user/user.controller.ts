@@ -12,13 +12,14 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { fillDto } from '@app/helpers';
 import { FullUserRdo, UsersWithPaginationRdo } from './rdo';
-import { MongoIdValidationPipe, Role, RoleGuard, UserDtoValidationPipe } from '@app/core';
+import { MongoIdValidationPipe, Role, UserDtoValidationPipe } from '@app/core';
+import { RoleGuard } from 'src/guards';
 import { UpdateUserDto } from './dto';
 import { AuthUserRdo } from 'src/auth/rdo';
 import { UpdateUserDtoListing } from './user.const';
 import { UsersQuery } from './query';
 import { UserRole } from '@app/types';
-import { OwnerGuard } from '@app/core/guards/owner.guard';
+import { OwnerGuard } from 'src/guards';
 
 @ApiTags('users')
 @Controller('users')

@@ -14,7 +14,8 @@ import { FullWorkoutRdo } from './rdo';
 import { fillDto } from '@app/helpers';
 import { ApiResponse } from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/requests';
-import { MongoIdValidationPipe, Role, RoleGuard } from '@app/core';
+import { MongoIdValidationPipe, Role } from '@app/core';
+import { RoleGuard } from 'src/guards';
 import { UserRole } from '@app/types';
 
 @Controller('workouts')
