@@ -15,9 +15,22 @@ export class FriendsService {
     private readonly userService: UserService,
   ) {}
 
-  public async createFriends(userId: string) {
+  private async checkUserInFriends(
+    userId: string,
+    friendId: string,
+  ): Promise<boolean> {
+    const friendsRecord = await this.getFriendsRecord(userId);
+    return friendsRecord?.friendsList.includes(friendId);
+  }
+
+  private async getFriendsRecord(userId: string): Promise<FriendsEntity> {
+    const existedRecord = await this.friendsRepository.findByUserId(userId);
+    if (existedRecord) {
+      return existedRecord;
+    }
+
     const friendsEntity = FriendsEntity.fromObject({ userId, friendsList: [] });
-    await this.friendsRepository.save(friendsEntity);
+    return this.friendsRepository.save(friendsEntity);
   }
 
   public async addFriend(userId: string, { friendId }: UpdateFriendsDto) {
@@ -27,11 +40,7 @@ export class FriendsService {
 
     const newFriend = await this.userService.getUserById(friendId);
 
-    const friendsRecord = await this.friendsRepository.findByUserId(userId);
-
-    if (
-      friendsRecord?.friendsList.map((friend) => friend.id).includes(friendId)
-    ) {
+    if (await this.checkUserInFriends(userId, friendId)) {
       throw new ConflictException(
         `User with id ${friendId} already in friends`,
       );
@@ -47,14 +56,8 @@ export class FriendsService {
   public async removeFriend(userId: string, { friendId }: UpdateFriendsDto) {
     await this.userService.getUserById(friendId);
 
-    const friendsRecord = await this.friendsRepository.findByUserId(userId);
-
-    if (
-      !friendsRecord?.friendsList.map((friend) => friend.id).includes(friendId)
-    ) {
-      throw new ConflictException(
-        `User with id ${friendId} is not in friends`,
-      );
+    if (!(await this.checkUserInFriends(userId, friendId))) {
+      throw new ConflictException(`User with id ${friendId} is not in friends`);
     }
 
     await this.friendsRepository.deleteFromFriends(userId, friendId);

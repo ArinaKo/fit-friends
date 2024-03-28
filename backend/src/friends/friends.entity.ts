@@ -1,18 +1,15 @@
-import { DefaultPojoType, Entity } from '@app/core';
+import { Entity } from '@app/core';
 import { Friends } from '@app/types';
-import { UserEntity } from 'src/user/user.entity';
 
-export class FriendsEntity implements Friends, Entity<string> {
+export class FriendsEntity implements Entity<string> {
   public id?: string;
   public userId: string;
-  public friendsList: UserEntity[];
+  public friendsList: string[];
 
   public populate(data: Friends): FriendsEntity {
     this.id = data.id;
     this.userId = data.userId;
-    this.friendsList = data.friendsList.map((user) =>
-      UserEntity.fromObject(user),
-    );
+    this.friendsList = data.friendsList
 
     return this;
   }
@@ -21,7 +18,7 @@ export class FriendsEntity implements Friends, Entity<string> {
     return {
       id: this.id,
       userId: this.userId,
-      friendsList: this.friendsList.map((userEntity) => userEntity.toPOJO()),
+      friendsList: this.friendsList,
     };
   }
 

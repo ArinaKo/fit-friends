@@ -30,7 +30,7 @@ export class FriendsRepository extends BaseMongoRepository<
     await this.model
       .findOneAndUpdate(
         { userId },
-        { $push: { friendList: friendId } },
+        { $push: { 'friendsList': friendId } },
         { new: true, upsert: true },
       )
       .exec();
@@ -40,7 +40,7 @@ export class FriendsRepository extends BaseMongoRepository<
     await this.model
       .findOneAndUpdate(
         { userId },
-        { $pull: { friendList: friendId } },
+        { $pull: { 'friendsList': friendId } },
         { new: true, upsert: true },
       )
       .exec();

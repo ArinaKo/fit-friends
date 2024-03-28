@@ -11,7 +11,6 @@ import {
 } from '../strategies/index';
 import { UserModule } from '../user/user.module';
 import { RefreshTokenModule } from 'src/refresh-token/refresh-token.module';
-import { FriendsModule } from 'src/friends/friends.module';
 
 @Module({
   imports: [
@@ -20,7 +19,6 @@ import { FriendsModule } from 'src/friends/friends.module';
       useFactory: getJwtOptions,
     }),
     UserModule,
-    FriendsModule,
     RefreshTokenModule,
   ],
   providers: [
