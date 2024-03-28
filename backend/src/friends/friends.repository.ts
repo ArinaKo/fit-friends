@@ -35,4 +35,14 @@ export class FriendsRepository extends BaseMongoRepository<
       )
       .exec();
   }
+
+  public async deleteFromFriends(userId: string, friendId: string) {
+    await this.model
+      .findOneAndUpdate(
+        { userId },
+        { $pull: { friendList: friendId } },
+        { new: true, upsert: true },
+      )
+      .exec();
+  }
 }

@@ -31,4 +31,16 @@ export class FriendsController {
   ) {
     await this.friendsService.addFriend(tokenPayload.sub, dto);
   }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The friend has been successfully removed',
+  })
+  @Patch('/remove')
+  public async removeFriend(
+    @Body() dto: UpdateFriendsDto,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    await this.friendsService.removeFriend(tokenPayload.sub, dto);
+  }
 }

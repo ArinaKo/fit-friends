@@ -43,4 +43,20 @@ export class FriendsService {
       await this.friendsRepository.addToFriends(friendId, userId);
     }
   }
+
+  public async removeFriend(userId: string, { friendId }: UpdateFriendsDto) {
+    await this.userService.getUserById(friendId);
+
+    const friendsRecord = await this.friendsRepository.findByUserId(userId);
+
+    if (
+      !friendsRecord?.friendsList.map((friend) => friend.id).includes(friendId)
+    ) {
+      throw new ConflictException(
+        `User with id ${friendId} is not in friends`,
+      );
+    }
+
+    await this.friendsRepository.deleteFromFriends(userId, friendId);
+  }
 }
