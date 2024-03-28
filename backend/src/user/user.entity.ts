@@ -1,7 +1,7 @@
 import { genSalt, hash, compare } from 'bcrypt';
 import { Entity } from '@app/core';
 import {
-  AuthUser,
+  FullUser,
   MetroStation,
   UserLevel,
   UserRole,
@@ -11,7 +11,7 @@ import {
 } from '@app/types';
 import { SALT_ROUNDS } from './user.const';
 
-export class UserEntity implements AuthUser, Entity<string> {
+export class UserEntity implements FullUser, Entity<string> {
   public id?: string;
   public name: string;
   public email: string;
@@ -26,14 +26,14 @@ export class UserEntity implements AuthUser, Entity<string> {
   public workoutTypes: WorkoutType[];
   public isReady: boolean;
   public createdAt: Date;
-  public passwordHash: string;
+  public passwordHash?: string;
   public certificate?: string;
   public achievements?: string;
   public caloriesToLose?: number;
   public caloriesPerDay?: number;
   public timeForWorkout?: WorkoutDuration;
 
-  constructor(user: AuthUser) {
+  constructor(user: FullUser) {
     this.populate(user);
   }
 
@@ -62,7 +62,7 @@ export class UserEntity implements AuthUser, Entity<string> {
     };
   }
 
-  public populate(data: AuthUser): void {
+  public populate(data: FullUser): void {
     this.id = data.id;
     this.email = data.email;
     this.name = data.name;
@@ -92,10 +92,10 @@ export class UserEntity implements AuthUser, Entity<string> {
   }
 
   public async comparePassword(password: string): Promise<boolean> {
-    return compare(password, this.passwordHash);
+    return compare(password, this.passwordHash!);
   }
 
-  static fromObject(data: AuthUser): UserEntity {
+  static fromObject(data: FullUser): UserEntity {
     return new UserEntity(data);
   }
 }

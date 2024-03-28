@@ -33,6 +33,10 @@ export interface DefaultUser extends User {
   timeForWorkout?: WorkoutDuration;
 }
 
-export interface AuthUser extends CoachUser, DefaultUser {
+export interface FullUser extends CoachUser, DefaultUser {
+  passwordHash?: string;
+}
+
+export interface AuthUser extends FullUser {
   passwordHash: string;
 }
