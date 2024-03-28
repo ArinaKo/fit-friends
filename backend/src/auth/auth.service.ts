@@ -25,6 +25,7 @@ import { ConfigType } from '@nestjs/config';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { createJWTPayload } from '@app/helpers';
 import { UserService } from 'src/user/user.service';
+import { FriendsService } from 'src/friends/friends.service';
 
 @Injectable()
 export class AuthService {
@@ -32,6 +33,7 @@ export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly userService: UserService,
+    private readonly friendsService: FriendsService,
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
     private readonly jwtOptions: ConfigType<typeof jwtConfig>,
@@ -99,7 +101,9 @@ export class AuthService {
       Object.assign(newUser, defaultUserInfo, coachUserInfo),
     ).setPassword(password);
 
-    return this.userRepository.save(userEntity);
+    const user = await this.userRepository.save(userEntity);
+    await this.friendsService.createFriends(user.id!);
+    return user;
   }
 
   public async verifyUser(dto: LoginUserDto) {
