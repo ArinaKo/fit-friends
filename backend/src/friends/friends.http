@@ -1,0 +1,27 @@
+# Add friend
+PATCH  http://localhost:3000/friends/add HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyNGRkYmFjNzg5ZDMzMjE0NDciLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwibmFtZSI6Iktla3MiLCJhdmF0YXIiOiJwaG90by0xLnBuZyIsImlzUmVhZHkiOmZhbHNlLCJpYXQiOjE3MTE2NDk0NjAsImV4cCI6MTcxMTY1MDM2MH0.r_PKy-Eb0SFWMtEpe32B66ITCxSVNwK7CSARiWONmaA
+
+{
+  "friendId": "65fb2c95e0f91e82a4d24b11"
+}
+
+###
+
+# Remove friend
+PATCH  http://localhost:3000/friends/remove HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyNGRkYmFjNzg5ZDMzMjE0NDciLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwibmFtZSI6Iktla3MiLCJhdmF0YXIiOiJwaG90by0xLnBuZyIsImlzUmVhZHkiOmZhbHNlLCJpYXQiOjE3MTE2NDk0NjAsImV4cCI6MTcxMTY1MDM2MH0.r_PKy-Eb0SFWMtEpe32B66ITCxSVNwK7CSARiWONmaA
+
+{
+  "friendId": "65fb2c95e0f91e82a4d24b11"
+}
+
+###
+
+# Get friends list
+GET http://localhost:3000/friends HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyNGRkYmFjNzg5ZDMzMjE0NDciLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwibmFtZSI6Iktla3MiLCJhdmF0YXIiOiJwaG90by0xLnBuZyIsImlzUmVhZHkiOmZhbHNlLCJpYXQiOjE3MTE2NDk0NjAsImV4cCI6MTcxMTY1MDM2MH0.r_PKy-Eb0SFWMtEpe32B66ITCxSVNwK7CSARiWONmaA
+
+###
