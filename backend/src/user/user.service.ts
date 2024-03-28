@@ -33,6 +33,10 @@ export class UserService {
     return this.userRepository.find(query);
   }
 
+  public async getUsersFromList(list: string[], query?: UsersQuery): Promise<PaginationResult<UserEntity>> {
+    return this.userRepository.find(query, list);
+  }
+
   public async updateUser(
     userId: string,
     dto: UpdateUserDto,

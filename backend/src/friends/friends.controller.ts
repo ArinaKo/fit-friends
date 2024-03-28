@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Get,
   HttpStatus,
   Patch,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -13,10 +15,33 @@ import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/guards';
 import { UpdateFriendsDto } from './dto';
 import { RequestWithTokenPayload } from 'src/requests';
+import { FriendsWithPaginationRdo } from './rdo';
+import { fillDto } from '@app/helpers';
+import { BaseQuery } from 'src/query/base.query';
 
 @Controller('friends')
 export class FriendsController {
   constructor(private readonly friendsService: FriendsService) {}
+
+  @ApiResponse({
+    type: FriendsWithPaginationRdo,
+    status: HttpStatus.OK,
+    description: 'Friends list',
+  })
+  @Get('/')
+  public async index(
+    @Query() query: BaseQuery,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    const friendsWithPagination = await this.friendsService.getFriendsList(
+      tokenPayload.sub,
+      query,
+    );
+    return fillDto(FriendsWithPaginationRdo, {
+      ...friendsWithPagination,
+      friends: friendsWithPagination.entities.map((entity) => entity.toPOJO()),
+    });
+  }
 
   @ApiResponse({
     status: HttpStatus.OK,

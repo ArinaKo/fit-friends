@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { BaseMongoRepository } from '@app/core';
 import { UserEntity } from './user.entity';
 import { UserModel } from './user.model';
@@ -8,7 +9,7 @@ import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
 import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
 
-function generateFilter(query: UsersQuery) {
+function generateFilter(query?: UsersQuery, idsList?: string[]) {
   let filter = {};
 
   if (query?.workoutTypes) {
@@ -35,6 +36,13 @@ function generateFilter(query: UsersQuery) {
     });
   }
 
+  if (idsList) {
+    const list = idsList.map((id) => new mongoose.Types.ObjectId(id));
+    Object.assign(filter, {
+      _id: { $in: list },
+    });
+  }
+
   return filter;
 }
 
@@ -54,11 +62,14 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     return this.createEntityFromDocument(document);
   }
 
-  public async find(query?: UsersQuery): Promise<PaginationResult<UserEntity>> {
+  public async find(
+    query?: UsersQuery,
+    idsList?: string[],
+  ): Promise<PaginationResult<UserEntity>> {
     const sorting = query?.sortDirection ?? DEFAULT_SORTING;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
-    const filter = query ? generateFilter(query) : {};
+    const filter = query || idsList ? generateFilter(query, idsList) : {};
 
     const [records, recordsCount] = await Promise.all([
       this.model

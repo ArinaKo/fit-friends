@@ -7,6 +7,9 @@ import { FriendsRepository } from './friends.repository';
 import { UpdateFriendsDto } from './dto';
 import { UserService } from 'src/user/user.service';
 import { UserRole } from '@app/types';
+import { UserEntity } from 'src/user/user.entity';
+import { PaginationResult } from '@app/core';
+import { BaseQuery } from 'src/query/base.query';
 
 @Injectable()
 export class FriendsService {
@@ -31,6 +34,14 @@ export class FriendsService {
 
     const friendsEntity = FriendsEntity.fromObject({ userId, friendsList: [] });
     return this.friendsRepository.save(friendsEntity);
+  }
+
+  public async getFriendsList(
+    userId: string,
+    query?: BaseQuery,
+  ): Promise<PaginationResult<UserEntity>> {
+    let friendsRecord = await this.getFriendsRecord(userId);
+    return this.userService.getUsersFromList(friendsRecord.friendsList, query);
   }
 
   public async addFriend(userId: string, { friendId }: UpdateFriendsDto) {
