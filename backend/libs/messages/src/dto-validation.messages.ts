@@ -1,6 +1,6 @@
 import { transformObjectValuesToString } from "@app/helpers";
-import { MetroStation, UserLevel, UserRole, UserSex, WorkoutDuration, WorkoutSexFor, WorkoutType } from "@app/types";
-import { CaloriesValue, MAX_WORKOUTS_TYPES, PriceValue, UserAchievementsLength, UserDescriptionLength, UserNameLength, UserPasswordLength, WorkoutDescriptionLength, WorkoutTitleLength } from "src/const";
+import { MetroStation, OrderType, PaymentType, UserLevel, UserRole, UserSex, WorkoutDuration, WorkoutSexFor, WorkoutType } from "@app/types";
+import { CaloriesValue, MAX_WORKOUTS_TYPES, OrderCountValue, PriceValue, UserAchievementsLength, UserDescriptionLength, UserNameLength, UserPasswordLength, WorkoutDescriptionLength, WorkoutTitleLength } from "src/const";
 
 export const DtoValidationMessage = {
   name: {
@@ -51,5 +51,14 @@ export const DtoValidationMessage = {
   },
   price: {
     value: `Value must be greater then: ${PriceValue.Min}`,
+  },
+  orderCount: {
+    value: `Value must be from range: ${OrderCountValue.Min}-${OrderCountValue.Max}`,
+  },
+  paymentType: {
+    invalidFormat: `Field value must be from options: ${transformObjectValuesToString(PaymentType)}`,
+  },
+  orderType: {
+    invalidFormat: `Field value must be from options: ${transformObjectValuesToString(OrderType)}`,
   },
 };
