@@ -2,6 +2,10 @@ import { Order, OrderType, PaymentType } from '@app/types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+@Schema({
+  collection: 'orders',
+  timestamps: true,
+})
 export class OrderModel extends Document implements Order {
   @Prop({
     required: true,

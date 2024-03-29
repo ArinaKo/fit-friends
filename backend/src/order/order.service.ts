@@ -3,6 +3,7 @@ import { CreateOrderDto } from './dto';
 import { OrderEntity } from './order.entity';
 import { OrderRepository } from './order.repository';
 import { WorkoutService } from 'src/workout/workout.service';
+import { WorkoutOrdersEntity } from './workout-orders.entity';
 
 @Injectable()
 export class OrderService {
@@ -19,5 +20,9 @@ export class OrderService {
     );
 
     await this.orderRepository.save(newOrder);
+  }
+
+  public async getCoachOrders(coachId: string): Promise<WorkoutOrdersEntity[]> {
+    return this.orderRepository.find(coachId);
   }
 }

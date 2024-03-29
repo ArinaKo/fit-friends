@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Expose } from "class-transformer";
 import { WorkoutRdo } from "src/workout/rdo";
 
-export class WorkoutOrdersDto {
+export class WorkoutOrdersRdo {
   @ApiProperty({
     description: 'Workout',
   })
