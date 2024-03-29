@@ -1,0 +1,21 @@
+# Create order
+POST  http://localhost:3000/orders HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyNGRkYmFjNzg5ZDMzMjE0NDciLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwibmFtZSI6Iktla3MiLCJhdmF0YXIiOiJwaG90by0xLnBuZyIsImlzUmVhZHkiOmZhbHNlLCJpYXQiOjE3MTE3MzY1ODIsImV4cCI6MTcxMTczNzQ4Mn0.vYjfEynLif2UuYQs57RMGY6Ot2SphFX9N4AI-oukpMc
+
+{
+  "type": "абонемент",
+  "workoutId": "660706fafd8ad5347a9e395d",
+  "workoutPrice": 600,
+  "count": 1,
+  "paymentType": "visa"
+}
+
+###
+
+
+# Get coach workout orders list
+GET http://localhost:3000/orders?sortingType=sum&sortDirection=1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjdlYzk3YmM3MGMzYThlMWY0ZmYiLCJlbWFpbCI6InVzZXJAZm91bmQubG9jYWwiLCJyb2xlIjoi0YLRgNC10L3QtdGAIiwibmFtZSI6Iktla3MiLCJhdmF0YXIiOiJwaG90by0yLnBuZyIsImlzUmVhZHkiOnRydWUsImlhdCI6MTcxMTczNjQyOCwiZXhwIjoxNzExNzM3MzI4fQ.0AAXBEW-atsIkWRmwqMFkXYmpP6qzvUFMm7sFara3OY
+
+###
