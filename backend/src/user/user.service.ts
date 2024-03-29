@@ -41,11 +41,7 @@ export class UserService {
     userId: string,
     dto: UpdateUserDto,
   ): Promise<UserEntity> {
-    const existsUser = await this.userRepository.findById(userId);
-
-    if (!existsUser) {
-      throw new NotFoundException(`User with id ${userId} not found`);
-    }
+    const existsUser = await this.getUserById(userId);
 
     let hasChanges = false;
 

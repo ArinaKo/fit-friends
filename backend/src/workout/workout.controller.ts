@@ -99,7 +99,7 @@ export class WorkoutController {
   })
   @Get('/:workoutId')
   public async show(@Param('workoutId', MongoIdValidationPipe) id: string) {
-    const { workout, coach } = await this.workoutService.getWorkout(id);
+    const { workout, coach } = await this.workoutService.getFullWorkout(id);
     return fillDto(
       FullWorkoutRdo,
       Object.assign(workout.toPOJO(), { coach: coach.toPOJO() }),
