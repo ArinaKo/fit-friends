@@ -6,7 +6,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyN
 {
   "type": "абонемент",
   "workoutId": "660706fafd8ad5347a9e395d",
-  "workoutPrice": 600,
   "count": 1,
   "paymentType": "visa"
 }

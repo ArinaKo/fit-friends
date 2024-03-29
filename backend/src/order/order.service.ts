@@ -15,11 +15,16 @@ export class OrderService {
   ) {}
 
   public async createOrder(dto: CreateOrderDto, userId: string) {
-    await this.workoutService.getWorkoutEntity(dto.workoutId);
+    const workout = await this.workoutService.getWorkoutEntity(dto.workoutId);
 
     const newOrder = OrderEntity.fromObject(
-      Object.assign(dto, { userId, totalPrice: dto.count * dto.workoutPrice }),
+      Object.assign(dto, {
+        userId,
+        workoutPrice: workout.price,
+        totalPrice: dto.count * workout.price,
+      }),
     );
+    console.log(newOrder);
 
     await this.orderRepository.save(newOrder);
   }

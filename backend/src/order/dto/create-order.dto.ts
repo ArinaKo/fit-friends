@@ -20,14 +20,6 @@ export class CreateOrderDto {
   public workoutId: string;
 
   @ApiProperty({
-    description: 'Workout price',
-    example: '2500',
-  })
-  @IsNumber()
-  @Min(PriceValue.Min, { message: DtoValidationMessage.price.value })
-  public workoutPrice: number;
-
-  @ApiProperty({
     description: 'Ordered workout`s count',
     example: '2',
   })

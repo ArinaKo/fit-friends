@@ -32,7 +32,7 @@ export class OrderRepository extends BaseMongoRepository<
         {
           $group: {
             _id: '$workoutId',
-            count: { $sum: 1 },
+            count: { $sum: '$count' },
             sum: { $sum: '$totalPrice' },
           },
         },
