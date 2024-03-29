@@ -4,6 +4,8 @@ import { OrderEntity } from './order.entity';
 import { OrderRepository } from './order.repository';
 import { WorkoutService } from 'src/workout/workout.service';
 import { WorkoutOrdersEntity } from './workout-orders.entity';
+import { WorkoutsOrdersQuery } from './query';
+import { PaginationResult } from '@app/core';
 
 @Injectable()
 export class OrderService {
@@ -22,7 +24,10 @@ export class OrderService {
     await this.orderRepository.save(newOrder);
   }
 
-  public async getCoachOrders(coachId: string): Promise<WorkoutOrdersEntity[]> {
-    return this.orderRepository.find(coachId);
+  public async getCoachOrders(
+    coachId: string,
+    query: WorkoutsOrdersQuery,
+  ): Promise<PaginationResult<WorkoutOrdersEntity>> {
+    return this.orderRepository.find(coachId, query);
   }
 }

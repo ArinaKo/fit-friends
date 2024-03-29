@@ -4,6 +4,7 @@ import {
   Get,
   HttpStatus,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -15,7 +16,8 @@ import { RoleGuard } from 'src/guards';
 import { CreateOrderDto } from './dto';
 import { RequestWithTokenPayload } from 'src/requests';
 import { fillDto } from '@app/helpers';
-import { WorkoutOrdersRdo } from './rdo';
+import { WorkoutsOrdersQuery } from './query';
+import { OrdersWithPaginationRdo } from './rdo/orders-with-pagination.rdo';
 
 @Controller('orders')
 export class OrderController {
@@ -36,23 +38,27 @@ export class OrderController {
   }
 
   @ApiResponse({
-    type: WorkoutOrdersRdo,
+    type: OrdersWithPaginationRdo,
     status: HttpStatus.OK,
     description: 'Coach workouts list',
   })
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Get('/')
-  public async indexByCoach(@Req() { tokenPayload }: RequestWithTokenPayload) {
-    const workoutsOrders = await this.orderService.getCoachOrders(
+  public async indexByCoach(
+    @Query() query: WorkoutsOrdersQuery,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    const ordersWithPagination = await this.orderService.getCoachOrders(
       tokenPayload.sub,
+      query,
     );
-    return fillDto(
-      WorkoutOrdersRdo,
-      workoutsOrders.map((workoutOrders) => ({
+    return fillDto(OrdersWithPaginationRdo, {
+      ...ordersWithPagination,
+      orders: ordersWithPagination.entities.map((workoutOrders) => ({
         ...workoutOrders,
         workout: workoutOrders.workout.toPOJO(),
       })),
-    );
+    });
   }
 }

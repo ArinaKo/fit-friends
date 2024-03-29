@@ -13,5 +13,6 @@ import { UserModule } from 'src/user/user.module';
   ],
   providers: [ WorkoutRepository, WorkoutService],
   controllers: [WorkoutController],
+  exports: [WorkoutService],
 })
 export class WorkoutModule {}
