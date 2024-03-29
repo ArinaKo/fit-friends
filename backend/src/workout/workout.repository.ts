@@ -103,11 +103,7 @@ export class WorkoutRepository extends BaseMongoRepository<
           { $sort: { price: sortDirection } },
           { $skip: skip },
           { $limit: limit },
-          {
-            $addFields: {
-              id: { $toString: '$_id' },
-            },
-          },
+          PipelineStage.AddIdString,
         ])
         .exec(),
       this.model.countDocuments(filter),

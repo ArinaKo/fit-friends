@@ -2,24 +2,26 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { UpdateUserDto } from './dto';
 import { UserEntity } from './user.entity';
-import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
+import { AuthUserRdo, LoggedUserRdo } from 'src/auth/rdo';
+import { fillDto } from '@app/helpers';
+import { FullUserRdo, UserRdo, UsersWithPaginationRdo } from './rdo';
 
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  public async getUserByEmail(email: string): Promise<UserEntity> {
+  public async getUserByEmail(email: string): Promise<LoggedUserRdo> {
     const existsUser = await this.userRepository.findByEmail(email);
 
     if (!existsUser) {
       throw new NotFoundException(`User with email ${email} not found`);
     }
 
-    return existsUser;
+    return fillDto(LoggedUserRdo, existsUser.toPOJO());
   }
 
-  public async getUserById(userId: string): Promise<UserEntity> {
+  public async getUserEntity(userId: string): Promise<UserEntity> {
     const existsUser = await this.userRepository.findById(userId);
 
     if (!existsUser) {
@@ -29,19 +31,28 @@ export class UserService {
     return existsUser;
   }
 
-  public async getAllUsers(query?: UsersQuery): Promise<PaginationResult<UserEntity>> {
-    return this.userRepository.find(query);
+  public async getFullUser(userId: string): Promise<FullUserRdo> {
+    const existsUser = await this.getUserEntity(userId);
+    return fillDto(FullUserRdo, existsUser.toPOJO());
   }
 
-  public async getUsersFromList(list: string[], query?: UsersQuery): Promise<PaginationResult<UserEntity>> {
-    return this.userRepository.find(query, list);
+  public async getAllUsers(
+    query?: UsersQuery,
+  ): Promise<UsersWithPaginationRdo> {
+    const usersWithPagination = await this.userRepository.find(query);
+    return fillDto(UsersWithPaginationRdo, {
+      ...usersWithPagination,
+      users: usersWithPagination.entities.map((entity) =>
+        fillDto(UserRdo, entity.toPOJO()),
+      ),
+    });
   }
 
   public async updateUser(
     userId: string,
     dto: UpdateUserDto,
-  ): Promise<UserEntity> {
-    const existsUser = await this.getUserById(userId);
+  ): Promise<AuthUserRdo> {
+    const existsUser = await this.getUserEntity(userId);
 
     let hasChanges = false;
 
@@ -53,9 +64,10 @@ export class UserService {
     }
 
     if (!hasChanges) {
-      return existsUser;
+      return fillDto(AuthUserRdo, existsUser.toPOJO());
     }
 
-    return this.userRepository.update(userId, existsUser);
+    const updatedUser = await this.userRepository.update(userId, existsUser);
+    return fillDto(AuthUserRdo, updatedUser.toPOJO());
   }
 }

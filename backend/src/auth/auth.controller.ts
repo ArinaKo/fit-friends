@@ -11,18 +11,10 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto';
-import { fillDto } from '@app/helpers';
 import { AuthUserRdo, LoggedUserRdo } from './rdo/index';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import {
-  Public,
-  UserDtoValidationPipe,
-} from '@app/core';
-import {
-  LocalAuthGuard,
-  JwtRefreshGuard,
-  NotAuthGuard,
-} from 'src/guards';
+import { Public, UserDtoValidationPipe } from '@app/core';
+import { LocalAuthGuard, JwtRefreshGuard, NotAuthGuard } from 'src/guards';
 import {
   RequestWithUser,
   RequestWithTokenPayload,
@@ -52,8 +44,7 @@ export class AuthController {
   public async create(
     @Body(new UserDtoValidationPipe(CreateUserDtoListing)) dto: CreateUserDto,
   ) {
-    const newUser = await this.authService.register(dto);
-    return fillDto(AuthUserRdo, newUser.toPOJO());
+    return this.authService.register(dto);
   }
 
   @ApiResponse({
@@ -69,8 +60,7 @@ export class AuthController {
   @UseGuards(NotAuthGuard, LocalAuthGuard)
   @Post('login')
   public async login(@Req() { user }: RequestWithUser) {
-    const userToken = await this.authService.createUserToken(user);
-    return fillDto(LoggedUserRdo, { ...user.toPOJO(), ...userToken });
+    return this.authService.createUserToken(user);
   }
 
   @ApiResponse({
@@ -84,8 +74,7 @@ export class AuthController {
   })
   @Get('login')
   public async checkAuth(@Req() { tokenPayload }: RequestWithTokenPayload) {
-    const user = await this.userService.getUserByEmail(tokenPayload.email);
-    return fillDto(LoggedUserRdo, user.toPOJO());
+    return this.userService.getUserByEmail(tokenPayload.email);
   }
 
   @ApiResponse({
@@ -96,12 +85,11 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   @Delete('logout')
   public async logout(@Req() { tokenPayload }: RequestWithRefreshTokenPayload) {
-    const user = await this.refreshTokenService.deleteRefreshSession(
-      tokenPayload.tokenId,
-    );
+    this.refreshTokenService.deleteRefreshSession(tokenPayload.tokenId);
   }
 
   @ApiResponse({
+    type: LoggedUserRdo,
     status: HttpStatus.OK,
     description: 'Get a new access/refresh tokens',
   })

@@ -1,20 +1,19 @@
-import {
-  ConflictException,
-  Injectable,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { FriendsEntity } from './friends.entity';
 import { FriendsRepository } from './friends.repository';
 import { UpdateFriendsDto } from './dto';
 import { UserService } from 'src/user/user.service';
 import { UserRole } from '@app/types';
-import { UserEntity } from 'src/user/user.entity';
-import { PaginationResult } from '@app/core';
 import { BaseQuery } from 'src/query/base.query';
+import { UserRepository } from 'src/user/user.repository';
+import { UserRdo, UsersWithPaginationRdo } from 'src/user/rdo';
+import { fillDto } from '@app/helpers';
 
 @Injectable()
 export class FriendsService {
   constructor(
     private readonly friendsRepository: FriendsRepository,
+    private readonly userRepository: UserRepository,
     private readonly userService: UserService,
   ) {}
 
@@ -22,11 +21,11 @@ export class FriendsService {
     userId: string,
     friendId: string,
   ): Promise<boolean> {
-    const friendsRecord = await this.getFriendsRecord(userId);
+    const friendsRecord = await this.getFriendsEntity(userId);
     return friendsRecord?.friendsList.includes(friendId);
   }
 
-  private async getFriendsRecord(userId: string): Promise<FriendsEntity> {
+  private async getFriendsEntity(userId: string): Promise<FriendsEntity> {
     const existedRecord = await this.friendsRepository.findByUserId(userId);
     if (existedRecord) {
       return existedRecord;
@@ -39,9 +38,18 @@ export class FriendsService {
   public async getFriendsList(
     userId: string,
     query?: BaseQuery,
-  ): Promise<PaginationResult<UserEntity>> {
-    let friendsRecord = await this.getFriendsRecord(userId);
-    return this.userService.getUsersFromList(friendsRecord.friendsList, query);
+  ): Promise<UsersWithPaginationRdo> {
+    let friendsRecord = await this.getFriendsEntity(userId);
+    const friendsWithPagination = await this.userRepository.find(
+      query,
+      friendsRecord.friendsList,
+    );
+    return fillDto(UsersWithPaginationRdo, {
+      ...friendsWithPagination,
+      users: friendsWithPagination.entities.map((entity) =>
+        fillDto(UserRdo, entity.toPOJO()),
+      ),
+    });
   }
 
   public async addFriend(userId: string, { friendId }: UpdateFriendsDto) {
@@ -49,7 +57,7 @@ export class FriendsService {
       throw new ConflictException(`You can not add yourself to friends`);
     }
 
-    const newFriend = await this.userService.getUserById(friendId);
+    const newFriend = await this.userService.getUserEntity(friendId);
 
     if (await this.checkUserInFriends(userId, friendId)) {
       throw new ConflictException(
@@ -65,7 +73,7 @@ export class FriendsService {
   }
 
   public async removeFriend(userId: string, { friendId }: UpdateFriendsDto) {
-    await this.userService.getUserById(friendId);
+    await this.userService.getUserEntity(friendId);
 
     if (!(await this.checkUserInFriends(userId, friendId))) {
       throw new ConflictException(`User with id ${friendId} is not in friends`);

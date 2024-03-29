@@ -12,8 +12,7 @@ import {
 } from '@nestjs/common';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
-import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
-import { fillDto } from '@app/helpers';
+import { FullWorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import { ApiResponse } from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/requests';
 import { MongoIdValidationPipe, Role } from '@app/core';
@@ -28,31 +27,26 @@ export class WorkoutController {
   @ApiResponse({
     type: WorkoutsWithPaginationRdo,
     status: HttpStatus.OK,
-    description: 'Workouts list'
+    description: 'Workouts list',
   })
   @Get('/')
   public async index(@Query() query: WorkoutsQuery) {
-    const workoutsWithPagination = await this.workoutService.getAllWorkouts(query);
-    return fillDto(WorkoutsWithPaginationRdo, {
-      ...workoutsWithPagination,
-      workouts: workoutsWithPagination.entities.map((workout) => fillDto(WorkoutRdo, workout.toPOJO()))
-    });
+    return this.workoutService.getAllWorkouts(query);
   }
 
   @ApiResponse({
     type: WorkoutsWithPaginationRdo,
     status: HttpStatus.OK,
-    description: 'Coach workouts list'
+    description: 'Coach workouts list',
   })
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Get('/coach')
-  public async indexByCoach(@Query() query: CoachWorkoutsQuery, @Req() { tokenPayload }: RequestWithTokenPayload) {
-    const workoutsWithPagination = await this.workoutService.getCoachWorkouts(tokenPayload.sub, query);
-    return fillDto(WorkoutsWithPaginationRdo, {
-      ...workoutsWithPagination,
-      workouts: workoutsWithPagination.entities.map((workout) =>fillDto(WorkoutRdo, workout.toPOJO()))
-    });
+  public async indexByCoach(
+    @Query() query: CoachWorkoutsQuery,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    return this.workoutService.getCoachWorkouts(tokenPayload.sub, query);
   }
 
   @ApiResponse({
@@ -67,11 +61,7 @@ export class WorkoutController {
     @Body() dto: CreateWorkoutDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    const newWorkout = await this.workoutService.createWorkout(
-      dto,
-      tokenPayload.sub,
-    );
-    return fillDto(FullWorkoutRdo, newWorkout.toPOJO());
+    return this.workoutService.createWorkout(dto, tokenPayload.sub);
   }
 
   @ApiResponse({
@@ -85,11 +75,7 @@ export class WorkoutController {
     @Param('workoutId', MongoIdValidationPipe) workoutId: string,
     @Body() dto: UpdateWorkoutDto,
   ) {
-    const updatedWorkout = await this.workoutService.updateWorkout(
-      workoutId,
-      dto,
-    );
-    return fillDto(FullWorkoutRdo, updatedWorkout.toPOJO());
+    return this.workoutService.updateWorkout(workoutId, dto);
   }
 
   @ApiResponse({
@@ -99,10 +85,6 @@ export class WorkoutController {
   })
   @Get('/:workoutId')
   public async show(@Param('workoutId', MongoIdValidationPipe) id: string) {
-    const { workout, coach } = await this.workoutService.getFullWorkout(id);
-    return fillDto(
-      FullWorkoutRdo,
-      Object.assign(workout.toPOJO(), { coach: coach.toPOJO() }),
-    );
+    return this.workoutService.getFullWorkout(id);
   }
 }

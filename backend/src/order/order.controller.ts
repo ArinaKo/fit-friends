@@ -15,7 +15,6 @@ import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/guards';
 import { CreateOrderDto } from './dto';
 import { RequestWithTokenPayload } from 'src/requests';
-import { fillDto } from '@app/helpers';
 import { WorkoutsOrdersQuery } from './query';
 import { OrdersWithPaginationRdo } from './rdo/orders-with-pagination.rdo';
 
@@ -34,7 +33,7 @@ export class OrderController {
     @Body() dto: CreateOrderDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    const newOrder = await this.orderService.createOrder(dto, tokenPayload.sub);
+    this.orderService.createOrder(dto, tokenPayload.sub);
   }
 
   @ApiResponse({
@@ -49,16 +48,6 @@ export class OrderController {
     @Query() query: WorkoutsOrdersQuery,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    const ordersWithPagination = await this.orderService.getCoachOrders(
-      tokenPayload.sub,
-      query,
-    );
-    return fillDto(OrdersWithPaginationRdo, {
-      ...ordersWithPagination,
-      orders: ordersWithPagination.entities.map((workoutOrders) => ({
-        ...workoutOrders,
-        workout: workoutOrders.workout.toPOJO(),
-      })),
-    });
+    return this.orderService.getCoachOrders(tokenPayload.sub, query);
   }
 }

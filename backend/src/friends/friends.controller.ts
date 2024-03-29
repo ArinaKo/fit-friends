@@ -15,17 +15,15 @@ import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/guards';
 import { UpdateFriendsDto } from './dto';
 import { RequestWithTokenPayload } from 'src/requests';
-import { FriendsWithPaginationRdo } from './rdo';
-import { fillDto } from '@app/helpers';
 import { BaseQuery } from 'src/query/base.query';
-import { UserRdo } from 'src/user/rdo';
+import { UsersWithPaginationRdo } from 'src/user/rdo';
 
 @Controller('friends')
 export class FriendsController {
   constructor(private readonly friendsService: FriendsService) {}
 
   @ApiResponse({
-    type: FriendsWithPaginationRdo,
+    type: UsersWithPaginationRdo,
     status: HttpStatus.OK,
     description: 'Friends list',
   })
@@ -34,14 +32,7 @@ export class FriendsController {
     @Query() query: BaseQuery,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    const friendsWithPagination = await this.friendsService.getFriendsList(
-      tokenPayload.sub,
-      query,
-    );
-    return fillDto(FriendsWithPaginationRdo, {
-      ...friendsWithPagination,
-      friends: friendsWithPagination.entities.map((entity) => fillDto(UserRdo, entity.toPOJO())),
-    });
+    return this.friendsService.getFriendsList(tokenPayload.sub, query);
   }
 
   @ApiResponse({
@@ -55,7 +46,7 @@ export class FriendsController {
     @Body() dto: UpdateFriendsDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    await this.friendsService.addFriend(tokenPayload.sub, dto);
+    this.friendsService.addFriend(tokenPayload.sub, dto);
   }
 
   @ApiResponse({
@@ -67,6 +58,6 @@ export class FriendsController {
     @Body() dto: UpdateFriendsDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    await this.friendsService.removeFriend(tokenPayload.sub, dto);
+    this.friendsService.removeFriend(tokenPayload.sub, dto);
   }
 }

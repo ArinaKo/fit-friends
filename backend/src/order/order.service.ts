@@ -3,9 +3,9 @@ import { CreateOrderDto } from './dto';
 import { OrderEntity } from './order.entity';
 import { OrderRepository } from './order.repository';
 import { WorkoutService } from 'src/workout/workout.service';
-import { WorkoutOrdersEntity } from './workout-orders.entity';
 import { WorkoutsOrdersQuery } from './query';
-import { PaginationResult } from '@app/core';
+import { OrdersWithPaginationRdo } from './rdo/orders-with-pagination.rdo';
+import { fillDto } from '@app/helpers';
 
 @Injectable()
 export class OrderService {
@@ -15,7 +15,7 @@ export class OrderService {
   ) {}
 
   public async createOrder(dto: CreateOrderDto, userId: string) {
-    await this.workoutService.getWorkout(dto.workoutId);
+    await this.workoutService.getWorkoutEntity(dto.workoutId);
 
     const newOrder = OrderEntity.fromObject(
       Object.assign(dto, { userId, totalPrice: dto.count * dto.workoutPrice }),
@@ -27,7 +27,17 @@ export class OrderService {
   public async getCoachOrders(
     coachId: string,
     query: WorkoutsOrdersQuery,
-  ): Promise<PaginationResult<WorkoutOrdersEntity>> {
-    return this.orderRepository.find(coachId, query);
+  ): Promise<OrdersWithPaginationRdo> {
+    const ordersWithPagination = await this.orderRepository.find(
+      coachId,
+      query,
+    );
+    return fillDto(OrdersWithPaginationRdo, {
+      ...ordersWithPagination,
+      orders: ordersWithPagination.entities.map((workoutOrders) => ({
+        ...workoutOrders,
+        workout: workoutOrders.workout.toPOJO(),
+      })),
+    });
   }
 }

@@ -18,13 +18,14 @@ import {
 } from './dto/index';
 import * as dayjs from 'dayjs';
 import { UserMessage } from '@app/messages';
-import { RefreshTokenPayload, Token } from '@app/types';
+import { RefreshTokenPayload } from '@app/types';
 import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '@app/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
-import { createJWTPayload } from '@app/helpers';
+import { createJWTPayload, fillDto } from '@app/helpers';
 import { UserService } from 'src/user/user.service';
+import { AuthUserRdo, LoggedUserRdo } from './rdo';
 
 @Injectable()
 export class AuthService {
@@ -38,7 +39,7 @@ export class AuthService {
     private readonly refreshTokenService: RefreshTokenService,
   ) {}
 
-  public async register(dto: CreateUserDto) {
+  public async register(dto: CreateUserDto): Promise<AuthUserRdo> {
     const {
       email,
       name,
@@ -78,7 +79,7 @@ export class AuthService {
       createdAt: new Date(),
     };
 
-    const defaultUserInfo = 
+    const defaultUserInfo =
       dto instanceof CreateDefaultUserDto
         ? {
             caloriesToLose: dto.caloriesToLose,
@@ -99,10 +100,11 @@ export class AuthService {
       Object.assign(newUser, defaultUserInfo, coachUserInfo),
     ).setPassword(password);
 
-    return this.userRepository.save(userEntity);
+    const user = await this.userRepository.save(userEntity);
+    return fillDto(AuthUserRdo, user.toPOJO());
   }
 
-  public async verifyUser(dto: LoginUserDto) {
+  public async verifyUser(dto: LoginUserDto): Promise<UserEntity> {
     const { email, password } = dto;
     const existUser = await this.userRepository.findByEmail(email);
 
@@ -117,13 +119,15 @@ export class AuthService {
     return existUser;
   }
 
-  public async refreshUserToken(payload: RefreshTokenPayload) {
+  public async refreshUserToken(
+    payload: RefreshTokenPayload,
+  ): Promise<LoggedUserRdo> {
     await this.refreshTokenService.deleteRefreshSession(payload.tokenId);
-    const user = await this.userService.getUserByEmail(payload.email);
+    const user = await this.userService.getUserEntity(payload.sub);
     return this.createUserToken(user);
   }
 
-  public async createUserToken(user: UserEntity): Promise<Token> {
+  public async createUserToken(user: UserEntity): Promise<LoggedUserRdo> {
     const accessTokenPayload = createJWTPayload(user);
     const refreshTokenPayload = {
       ...accessTokenPayload,
@@ -141,7 +145,11 @@ export class AuthService {
         },
       );
 
-      return { accessToken, refreshToken };
+      return fillDto(LoggedUserRdo, {
+        ...user.toPOJO(),
+        accessToken,
+        refreshToken,
+      });
     } catch (error) {
       this.logger.error('[Token generation error]: ' + error.message);
       throw new HttpException(

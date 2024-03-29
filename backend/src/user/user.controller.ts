@@ -10,8 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { fillDto } from '@app/helpers';
-import { FullUserRdo, UserRdo, UsersWithPaginationRdo } from './rdo';
+import { FullUserRdo, UsersWithPaginationRdo } from './rdo';
 import { MongoIdValidationPipe, Role, UserDtoValidationPipe } from '@app/core';
 import { RoleGuard } from 'src/guards';
 import { UpdateUserDto } from './dto';
@@ -35,11 +34,7 @@ export class UserController {
   @UseGuards(RoleGuard)
   @Get('/')
   public async index(@Query() query: UsersQuery) {
-    const usersWithPagination = await this.userService.getAllUsers(query);
-    return fillDto(UsersWithPaginationRdo, {
-      ...usersWithPagination,
-      users: usersWithPagination.entities.map((entity) => fillDto(UserRdo, entity.toPOJO())),
-    });
+    return this.userService.getAllUsers(query);
   }
 
   @ApiResponse({
@@ -49,8 +44,7 @@ export class UserController {
   })
   @Get('/:userId')
   public async show(@Param('userId', MongoIdValidationPipe) id: string) {
-    const existUser = await this.userService.getUserById(id);
-    return fillDto(FullUserRdo, existUser.toPOJO());
+    return this.userService.getFullUser(id);
   }
 
   @ApiResponse({
@@ -64,7 +58,6 @@ export class UserController {
     @Param('userId', MongoIdValidationPipe) id: string,
     @Body(new UserDtoValidationPipe(UpdateUserDtoListing)) dto: UpdateUserDto,
   ) {
-    const updatedUser = await this.userService.updateUser(id, dto);
-    return fillDto(AuthUserRdo, updatedUser.toPOJO());
+    return this.userService.updateUser(id, dto);
   }
 }
