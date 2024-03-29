@@ -24,7 +24,6 @@ export class OrderService {
         totalPrice: dto.count * workout.price,
       }),
     );
-    console.log(newOrder);
 
     await this.orderRepository.save(newOrder);
   }
