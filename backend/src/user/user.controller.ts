@@ -11,7 +11,7 @@ import {
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { fillDto } from '@app/helpers';
-import { FullUserRdo, UsersWithPaginationRdo } from './rdo';
+import { FullUserRdo, UserRdo, UsersWithPaginationRdo } from './rdo';
 import { MongoIdValidationPipe, Role, UserDtoValidationPipe } from '@app/core';
 import { RoleGuard } from 'src/guards';
 import { UpdateUserDto } from './dto';
@@ -38,7 +38,7 @@ export class UserController {
     const usersWithPagination = await this.userService.getAllUsers(query);
     return fillDto(UsersWithPaginationRdo, {
       ...usersWithPagination,
-      users: usersWithPagination.entities.map((entity) => entity.toPOJO()),
+      users: usersWithPagination.entities.map((entity) => fillDto(UserRdo, entity.toPOJO())),
     });
   }
 

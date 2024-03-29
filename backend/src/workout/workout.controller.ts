@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
-import { FullWorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
+import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import { fillDto } from '@app/helpers';
 import { ApiResponse } from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/requests';
@@ -35,7 +35,7 @@ export class WorkoutController {
     const workoutsWithPagination = await this.workoutService.getAllWorkouts(query);
     return fillDto(WorkoutsWithPaginationRdo, {
       ...workoutsWithPagination,
-      workouts: workoutsWithPagination.entities.map((workout) => workout.toPOJO())
+      workouts: workoutsWithPagination.entities.map((workout) => fillDto(WorkoutRdo, workout.toPOJO()))
     });
   }
 
@@ -51,7 +51,7 @@ export class WorkoutController {
     const workoutsWithPagination = await this.workoutService.getCoachWorkouts(tokenPayload.sub, query);
     return fillDto(WorkoutsWithPaginationRdo, {
       ...workoutsWithPagination,
-      workouts: workoutsWithPagination.entities.map((workout) => workout.toPOJO())
+      workouts: workoutsWithPagination.entities.map((workout) =>fillDto(WorkoutRdo, workout.toPOJO()))
     });
   }
 

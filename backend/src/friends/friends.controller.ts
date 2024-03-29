@@ -18,6 +18,7 @@ import { RequestWithTokenPayload } from 'src/requests';
 import { FriendsWithPaginationRdo } from './rdo';
 import { fillDto } from '@app/helpers';
 import { BaseQuery } from 'src/query/base.query';
+import { UserRdo } from 'src/user/rdo';
 
 @Controller('friends')
 export class FriendsController {
@@ -39,7 +40,7 @@ export class FriendsController {
     );
     return fillDto(FriendsWithPaginationRdo, {
       ...friendsWithPagination,
-      friends: friendsWithPagination.entities.map((entity) => entity.toPOJO()),
+      friends: friendsWithPagination.entities.map((entity) => fillDto(UserRdo, entity.toPOJO())),
     });
   }
 
