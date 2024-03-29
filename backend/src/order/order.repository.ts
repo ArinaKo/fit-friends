@@ -21,8 +21,8 @@ export class OrderRepository extends BaseMongoRepository<
         {
           $group: {
             _id: '$workoutId',
-            totalCount: { $sum: 1 },
-            totalSum: { $sum: '$totalPrice' },
+            count: { $sum: 1 },
+            sum: { $sum: '$totalPrice' },
           },
         },
         {

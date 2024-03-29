@@ -1,7 +1,7 @@
 import { Workout } from './workout.interface';
 
 export interface WorkoutOrders {
-  totalCount: number;
-  totalSum: number;
+  count: number;
+  sum: number;
   workout: Workout;
 }

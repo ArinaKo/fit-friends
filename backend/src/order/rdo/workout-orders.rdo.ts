@@ -14,12 +14,12 @@ export class WorkoutOrdersRdo {
     example: '2',
   })
   @Expose()
-  public totalCount: number;
+  public count: number;
 
   @ApiProperty({
     description: 'Workout sales amount',
     example: '5000',
   })
   @Expose()
-  public totalSum: number;
+  public sum: number;
 }
