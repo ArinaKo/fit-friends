@@ -26,6 +26,7 @@ export class WorkoutEntity implements Workout, Entity<string> {
   constructor(workout: Workout) {
     this.populate(workout);
   }
+
   public toPOJO() {
     return {
       id: this.id,

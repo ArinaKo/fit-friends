@@ -2,7 +2,7 @@ import { SortDirection } from "@app/types";
 
 export const MAX_WORKOUTS_TYPES = 3;
 
-export const DEFAULT_SORTING = SortDirection.Down;
+export const DEFAULT_SORT_DIRECTION = SortDirection.Down;
 
 export const LIST_LIMIT = 50;
 

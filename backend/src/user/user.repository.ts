@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 import { BaseMongoRepository } from '@app/core';
 import { UserEntity } from './user.entity';
 import { UserModel } from './user.model';
-import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
+import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/const';
 import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
 
@@ -66,7 +66,7 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     query?: UsersQuery,
     idsList?: string[],
   ): Promise<PaginationResult<UserEntity>> {
-    const sorting = query?.sortDirection ?? DEFAULT_SORTING;
+    const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
     const filter = query || idsList ? generateFilter(query, idsList) : {};
@@ -75,7 +75,7 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
       this.model
         .aggregate<UserModel>([
           { $match: filter },
-          { $sort: { createdAt: sorting } },
+          { $sort: { createdAt: sortDirection } },
           { $skip: skip },
           { $limit: limit },
           {

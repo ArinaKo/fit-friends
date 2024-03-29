@@ -3,4 +3,4 @@ export enum SortingType {
   Sum = 'sum',
 }
 
-export const DEFAULT_SORTING_TYPE = SortingType.Sum;
+export const DEFAULT_SORT_TYPE = SortingType.Sum;

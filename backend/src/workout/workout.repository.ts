@@ -4,7 +4,7 @@ import { Model, PipelineStage } from 'mongoose';
 import { BaseMongoRepository, PaginationResult } from '@app/core';
 import { WorkoutEntity } from './workout.entity';
 import { WorkoutModel } from './workout.model';
-import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
+import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/const';
 import { FullWorkoutQuery } from './query';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
@@ -87,7 +87,7 @@ export class WorkoutRepository extends BaseMongoRepository<
     query?: FullWorkoutQuery,
     coachId?: string,
   ): Promise<PaginationResult<WorkoutEntity>> {
-    const sorting = query?.sortDirection ?? DEFAULT_SORTING;
+    const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
     let filter = query ? generateFilter(query) : {};
@@ -100,7 +100,7 @@ export class WorkoutRepository extends BaseMongoRepository<
       this.model
         .aggregate<WorkoutModel>([
           { $match: filter },
-          { $sort: { price: sorting } },
+          { $sort: { price: sortDirection } },
           { $skip: skip },
           { $limit: limit },
           {

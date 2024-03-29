@@ -6,8 +6,8 @@ import { OrderEntity } from './order.entity';
 import { OrderModel } from './order.model';
 import { WorkoutOrdersEntity } from './workout-orders.entity';
 import { WorkoutsOrdersQuery } from './query';
-import { DEFAULT_PAGE, DEFAULT_SORTING, LIST_LIMIT } from 'src/const';
-import { DEFAULT_SORTING_TYPE } from './orders.const';
+import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/const';
+import { DEFAULT_SORT_TYPE } from './orders.const';
 
 @Injectable()
 export class OrderRepository extends BaseMongoRepository<
@@ -22,8 +22,8 @@ export class OrderRepository extends BaseMongoRepository<
     coachId: string,
     query?: WorkoutsOrdersQuery,
   ): Promise<PaginationResult<WorkoutOrdersEntity>> {
-    const sortDirection = query?.sortDirection ?? DEFAULT_SORTING;
-    const sortType = query?.sortingType ?? DEFAULT_SORTING_TYPE;
+    const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
+    const sortType = query?.sortingType ?? DEFAULT_SORT_TYPE;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
 
