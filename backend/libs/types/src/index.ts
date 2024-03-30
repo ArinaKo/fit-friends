@@ -14,7 +14,7 @@ export * from './request-status.enum';
 export * from './request.interface';
 export * from './notification.interface';
 export * from './balance.interface';
-export * from './user-balance.interface';
+export * from './workout-balance.interface';
 export * from './token.interface';
 export * from './token-payload.interface';
 export * from './refresh-token.interface';

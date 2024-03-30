@@ -15,4 +15,18 @@ export class BalanceRepository extends BaseMongoRepository<
   ) {
     super(BalanceModel, BalanceEntity.fromObject);
   }
+
+  public async findBalance(
+    userId: string,
+    workoutId: string,
+  ): Promise<BalanceEntity | null> {
+    const document = await this.model.findOne({ userId, workoutId }).exec();
+
+    if (!document) {
+      return null;
+    }
+
+    document.id = document._id.toString();
+    return this.createEntityFromDocument(document);
+  }
 }

@@ -1,5 +1,6 @@
 export interface Balance {
-  userId?: string;
+  id?: string;
+  userId: string;
   workoutId: string;
   count: number;
 }

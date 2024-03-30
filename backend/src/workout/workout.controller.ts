@@ -66,7 +66,7 @@ export class WorkoutController {
 
   @ApiResponse({
     type: FullWorkoutRdo,
-    status: HttpStatus.CREATED,
+    status: HttpStatus.OK,
     description: 'The workout has been successfully updated',
   })
   @UseGuards(WorkoutOwnerGuard)

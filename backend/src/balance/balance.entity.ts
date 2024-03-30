@@ -2,7 +2,8 @@ import { Entity } from '@app/core';
 import { Balance } from '@app/types';
 
 export class BalanceEntity implements Balance, Entity<string> {
-  public userId?: string;
+  public id?: string;
+  public userId: string;
   public count: number;
   public workoutId: string;
 
@@ -12,6 +13,7 @@ export class BalanceEntity implements Balance, Entity<string> {
 
   public toPOJO() {
     return {
+      id: this.id,
       userId: this.userId,
       count: this.count,
       workoutId: this.workoutId,
@@ -19,6 +21,7 @@ export class BalanceEntity implements Balance, Entity<string> {
   }
 
   public populate(data: Balance): void {
+    this.id = data.id;
     this.userId = data.userId;
     this.count = data.count;
     this.workoutId = data.workoutId;

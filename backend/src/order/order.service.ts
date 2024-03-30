@@ -6,12 +6,14 @@ import { WorkoutService } from 'src/workout/workout.service';
 import { WorkoutsOrdersQuery } from './query';
 import { OrdersWithPaginationRdo } from './rdo/orders-with-pagination.rdo';
 import { fillDto } from '@app/helpers';
+import { BalanceService } from 'src/balance/balance.service';
 
 @Injectable()
 export class OrderService {
   constructor(
     private readonly orderRepository: OrderRepository,
     private readonly workoutService: WorkoutService,
+    private readonly balanceService: BalanceService,
   ) {}
 
   public async createOrder(dto: CreateOrderDto, userId: string) {
@@ -26,6 +28,7 @@ export class OrderService {
     );
 
     await this.orderRepository.save(newOrder);
+    await this.balanceService.increaseBalance(userId, dto.workoutId, dto.count);
   }
 
   public async getCoachOrders(
