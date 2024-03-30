@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { BalanceRepository } from './balance.repository';
 import { BalanceEntity } from './balance.entity';
 import { WorkoutService } from 'src/workout/workout.service';
@@ -48,6 +48,19 @@ export class BalanceService {
   ) {
     const balance = await this.getBalance(userId, workoutId);
     balance.count += number;
+    await this.balanceRepository.update(balance.id, balance);
+  }
+
+  public async decreaseBalance(userId: string, workoutId: string) {
+    const balance = await this.getBalance(userId, workoutId);
+
+    if (!balance.count) {
+      throw new ConflictException(
+        `Balance of workout with id ${workoutId} is 0`,
+      );
+    }
+
+    balance.count--;
     await this.balanceRepository.update(balance.id, balance);
   }
 }
