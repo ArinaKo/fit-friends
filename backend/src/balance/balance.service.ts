@@ -2,6 +2,8 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { BalanceRepository } from './balance.repository';
 import { BalanceEntity } from './balance.entity';
 import { WorkoutService } from 'src/workout/workout.service';
+import { BalanceRdo } from './rdo/balance.rdo';
+import { fillDto } from '@app/helpers';
 
 @Injectable()
 export class BalanceService {
@@ -39,6 +41,12 @@ export class BalanceService {
     }
 
     return this.createBalance(userId, workoutId);
+  }
+
+  public async getUserBalance(userId: string): Promise<BalanceRdo[]> {
+    const balances = await this.balanceRepository.find(userId);
+
+    return balances.map((balance) => fillDto(BalanceRdo, balance.toPOJO()));
   }
 
   public async increaseBalance(
