@@ -11,8 +11,8 @@ export class OrderEntity implements Order, Entity<string> {
   public totalPrice: number;
   public paymentType: PaymentType;
 
-  constructor(Order: Order) {
-    this.populate(Order);
+  constructor(data: Order) {
+    this.populate(data);
   }
 
   public toPOJO() {
