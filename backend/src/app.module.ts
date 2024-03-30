@@ -8,6 +8,7 @@ import { JwtAuthGuard } from 'src/guards';
 import { WorkoutModule } from './workout/workout.module';
 import { FriendsModule } from './friends/friends.module';
 import { OrderModule } from './order/order.module';
+import { UserBalanceModule } from './user-balance/user-balance.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { OrderModule } from './order/order.module';
     WorkoutModule,
     FriendsModule,
     OrderModule,
+    UserBalanceModule,
   ],
   controllers: [],
   providers: [
