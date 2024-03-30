@@ -85,7 +85,7 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   @Delete('logout')
   public async logout(@Req() { tokenPayload }: RequestWithRefreshTokenPayload) {
-    this.refreshTokenService.deleteRefreshSession(tokenPayload.tokenId);
+    await this.refreshTokenService.deleteRefreshSession(tokenPayload.tokenId);
   }
 
   @ApiResponse({

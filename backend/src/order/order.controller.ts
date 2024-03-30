@@ -33,7 +33,7 @@ export class OrderController {
     @Body() dto: CreateOrderDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    this.orderService.createOrder(dto, tokenPayload.sub);
+    await this.orderService.createOrder(dto, tokenPayload.sub);
   }
 
   @ApiResponse({

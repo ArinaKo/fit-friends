@@ -48,6 +48,6 @@ export class BalanceController {
     @Body() dto: DecreaseBalanceDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    this.balanceService.decreaseBalance(tokenPayload.sub, dto.workoutId);
+    await this.balanceService.decreaseBalance(tokenPayload.sub, dto.workoutId);
   }
 }

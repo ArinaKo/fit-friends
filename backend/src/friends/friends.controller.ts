@@ -46,7 +46,7 @@ export class FriendsController {
     @Body() dto: UpdateFriendsDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    this.friendsService.addFriend(tokenPayload.sub, dto);
+    await this.friendsService.addFriend(tokenPayload.sub, dto);
   }
 
   @ApiResponse({
@@ -58,6 +58,6 @@ export class FriendsController {
     @Body() dto: UpdateFriendsDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    this.friendsService.removeFriend(tokenPayload.sub, dto);
+    await this.friendsService.removeFriend(tokenPayload.sub, dto);
   }
 }

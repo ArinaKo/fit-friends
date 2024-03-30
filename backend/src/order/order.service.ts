@@ -33,7 +33,7 @@ export class OrderService {
 
   public async getCoachOrders(
     coachId: string,
-    query: WorkoutsOrdersQuery,
+    query?: WorkoutsOrdersQuery,
   ): Promise<OrdersWithPaginationRdo> {
     const ordersWithPagination = await this.orderRepository.find(
       coachId,
