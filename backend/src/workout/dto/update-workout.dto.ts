@@ -1,5 +1,10 @@
-import { DtoValidationMessage } from '@app/messages';
-import { UserLevel, WorkoutDuration, WorkoutSexFor, WorkoutType } from '@app/types';
+import { DtoValidationMessage } from 'src/shared/messages';
+import {
+  UserLevel,
+  WorkoutDuration,
+  WorkoutSexFor,
+  WorkoutType,
+} from '@app/types';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsString,
@@ -9,10 +14,14 @@ import {
   IsNumber,
   Min,
   Max,
-  IsMongoId,
   IsOptional,
 } from 'class-validator';
-import { CaloriesValue, PriceValue, WorkoutDescriptionLength, WorkoutTitleLength } from 'src/const';
+import {
+  CaloriesValue,
+  PriceValue,
+  WorkoutDescriptionLength,
+  WorkoutTitleLength,
+} from 'src/shared/const';
 
 export class UpdateWorkoutDto {
   @ApiPropertyOptional({
@@ -83,7 +92,8 @@ export class UpdateWorkoutDto {
 
   @ApiPropertyOptional({
     description: 'Workout description',
-    example: 'Упражнения по хатха йоге, направленные на понижение нервной возбудимости.',
+    example:
+      'Упражнения по хатха йоге, направленные на понижение нервной возбудимости.',
   })
   @IsOptional()
   @IsString()
@@ -97,7 +107,9 @@ export class UpdateWorkoutDto {
     example: 'женский',
   })
   @IsOptional()
-  @IsEnum(WorkoutSexFor, { message: DtoValidationMessage.workoutSexFor.invalidFormat })
+  @IsEnum(WorkoutSexFor, {
+    message: DtoValidationMessage.workoutSexFor.invalidFormat,
+  })
   public userSex?: WorkoutSexFor;
 
   @ApiPropertyOptional({

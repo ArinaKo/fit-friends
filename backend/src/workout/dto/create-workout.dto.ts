@@ -1,5 +1,10 @@
-import { DtoValidationMessage } from '@app/messages';
-import { UserLevel, WorkoutDuration, WorkoutSexFor, WorkoutType } from '@app/types';
+import { DtoValidationMessage } from 'src/shared/messages';
+import {
+  UserLevel,
+  WorkoutDuration,
+  WorkoutSexFor,
+  WorkoutType,
+} from '@app/types';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
@@ -10,7 +15,12 @@ import {
   Min,
   Max,
 } from 'class-validator';
-import { CaloriesValue, PriceValue, WorkoutDescriptionLength, WorkoutTitleLength } from 'src/const';
+import {
+  CaloriesValue,
+  PriceValue,
+  WorkoutDescriptionLength,
+  WorkoutTitleLength,
+} from 'src/shared/const';
 
 export class CreateWorkoutDto {
   @ApiProperty({
@@ -74,7 +84,8 @@ export class CreateWorkoutDto {
 
   @ApiProperty({
     description: 'Workout description',
-    example: 'Упражнения по хатха йоге, направленные на понижение нервной возбудимости.',
+    example:
+      'Упражнения по хатха йоге, направленные на понижение нервной возбудимости.',
   })
   @IsString()
   @Length(WorkoutDescriptionLength.Min, WorkoutDescriptionLength.Max, {
@@ -86,7 +97,9 @@ export class CreateWorkoutDto {
     description: 'Workout`s user sex',
     example: 'для женщин',
   })
-  @IsEnum(WorkoutSexFor, { message: DtoValidationMessage.workoutSexFor.invalidFormat })
+  @IsEnum(WorkoutSexFor, {
+    message: DtoValidationMessage.workoutSexFor.invalidFormat,
+  })
   public userSex: WorkoutSexFor;
 
   @ApiProperty({

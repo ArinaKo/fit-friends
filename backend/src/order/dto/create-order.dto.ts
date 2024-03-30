@@ -1,8 +1,8 @@
-import { DtoValidationMessage } from "@app/messages";
-import { OrderType, PaymentType } from "@app/types";
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsMongoId, IsNumber, Max, Min } from "class-validator";
-import { OrderCountValue, PriceValue } from "src/const";
+import { DtoValidationMessage } from 'src/shared/messages';
+import { OrderType, PaymentType } from '@app/types';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEnum, IsMongoId, IsNumber, Max, Min } from 'class-validator';
+import { OrderCountValue, PriceValue } from 'src/shared/const';
 
 export class CreateOrderDto {
   @ApiProperty({
@@ -32,6 +32,8 @@ export class CreateOrderDto {
     description: 'Payment type',
     example: 'visa',
   })
-  @IsEnum(PaymentType, { message: DtoValidationMessage.paymentType.invalidFormat })
+  @IsEnum(PaymentType, {
+    message: DtoValidationMessage.paymentType.invalidFormat,
+  })
   public paymentType: PaymentType;
 }

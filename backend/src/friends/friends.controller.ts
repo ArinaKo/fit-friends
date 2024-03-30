@@ -12,10 +12,10 @@ import { FriendsService } from './friends.service';
 import { ApiResponse } from '@nestjs/swagger';
 import { Role } from '@app/core';
 import { UserRole } from '@app/types';
-import { RoleGuard } from 'src/guards';
+import { RoleGuard } from 'src/shared/guards';
 import { UpdateFriendsDto } from './dto';
-import { RequestWithTokenPayload } from 'src/requests';
-import { BaseQuery } from 'src/query/base.query';
+import { RequestWithTokenPayload } from 'src/shared/requests';
+import { BaseQuery } from 'src/shared/query/base.query';
 import { UsersWithPaginationRdo } from 'src/user/rdo';
 
 @Controller('friends')

@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 import { BaseMongoRepository } from '@app/core';
 import { UserEntity } from './user.entity';
 import { UserModel } from './user.model';
-import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/const';
+import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/shared/const';
 import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
 

@@ -1,7 +1,7 @@
 import { IsNumber, IsOptional, Max, Min } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { BaseQuery } from 'src/query/base.query';
-import { CaloriesValue, PriceValue, RatingValue } from 'src/const';
+import { BaseQuery } from 'src/shared/query/base.query';
+import { CaloriesValue, PriceValue, RatingValue } from 'src/shared/const';
 
 export class BaseWorkoutsQuery extends BaseQuery {
   @Transform(({ value }) => +value)

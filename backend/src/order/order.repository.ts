@@ -1,13 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, PipelineStage } from 'mongoose';
 import { BaseMongoRepository, PaginationResult } from '@app/core';
 import { OrderEntity } from './order.entity';
 import { OrderModel } from './order.model';
 import { WorkoutOrdersEntity } from './workout-orders.entity';
 import { WorkoutsOrdersQuery } from './query';
-import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/const';
+import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/shared/const';
 import { DEFAULT_SORT_TYPE } from './orders.const';
+
+const PipelineStage: { [key: string]: PipelineStage } = {
+  GroupeByWorkoutId: {
+    $group: {
+      _id: '$workoutId',
+      count: { $sum: '$count' },
+      sum: { $sum: '$totalPrice' },
+    },
+  },
+  LookupWorkouts: {
+    $lookup: {
+      from: 'workouts',
+      let: { workoutId: '$_id' },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ['$_id', { $toObjectId: '$$workoutId' }] },
+          },
+        },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+          },
+        },
+      ],
+      as: 'workout',
+    },
+  },
+};
 
 @Injectable()
 export class OrderRepository extends BaseMongoRepository<
@@ -29,32 +58,8 @@ export class OrderRepository extends BaseMongoRepository<
 
     const records = await this.model
       .aggregate([
-        {
-          $group: {
-            _id: '$workoutId',
-            count: { $sum: '$count' },
-            sum: { $sum: '$totalPrice' },
-          },
-        },
-        {
-          $lookup: {
-            from: 'workouts',
-            let: { workoutId: '$_id' },
-            pipeline: [
-              {
-                $match: {
-                  $expr: { $eq: ['$_id', { $toObjectId: '$$workoutId' }] },
-                },
-              },
-              {
-                $addFields: {
-                  id: { $toString: '$_id' },
-                },
-              },
-            ],
-            as: 'workout',
-          },
-        },
+        PipelineStage.GroupeByWorkoutId,
+        PipelineStage.LookupWorkouts,
         { $unwind: '$workout' },
         {
           $match: {

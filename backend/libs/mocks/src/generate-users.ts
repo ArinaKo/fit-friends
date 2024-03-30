@@ -18,7 +18,7 @@ import {
   FemaleNames,
   MaleNames,
 } from './mock-data';
-import { CaloriesValue } from 'src/const';
+import { CaloriesValue } from 'src/shared/const';
 
 const AVATARS_NUMBER = 5;
 const COACHES_NUMBER = 4;

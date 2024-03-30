@@ -1,5 +1,5 @@
 import { generateDate, generateRandomValue, getRandomItem } from '@app/helpers';
-import { RatingValue } from 'src/const';
+import { RatingValue } from 'src/shared/const';
 import { CommentsTexts } from './mock-data';
 
 const COMMENTS_NUMBER = 5;

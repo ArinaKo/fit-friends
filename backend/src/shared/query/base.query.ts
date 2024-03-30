@@ -1,7 +1,7 @@
 import { IsEnum, IsNumber, IsOptional, Max } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { SortDirection } from '@app/types';
-import { LIST_LIMIT } from 'src/const';
+import { LIST_LIMIT } from 'src/shared/const';
 
 export class BaseQuery {
   @Transform(({ value }) => +value)

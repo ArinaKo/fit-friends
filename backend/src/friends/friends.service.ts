@@ -4,7 +4,7 @@ import { FriendsRepository } from './friends.repository';
 import { UpdateFriendsDto } from './dto';
 import { UserService } from 'src/user/user.service';
 import { UserRole } from '@app/types';
-import { BaseQuery } from 'src/query/base.query';
+import { BaseQuery } from 'src/shared/query/base.query';
 import { UserRepository } from 'src/user/user.repository';
 import { UserRdo, UsersWithPaginationRdo } from 'src/user/rdo';
 import { fillDto } from '@app/helpers';

@@ -1,6 +1,6 @@
 import { IsBoolean, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
-import { BaseQuery } from "src/query/base.query";
+import { BaseQuery } from "src/shared/query/base.query";
 import * as lodash from 'lodash';
 
 export class UserBalanceQuery extends BaseQuery {

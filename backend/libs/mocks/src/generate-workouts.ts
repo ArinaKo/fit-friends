@@ -3,7 +3,7 @@ import {
   generateRandomValue,
   getRandomItem,
 } from '@app/helpers';
-import { CaloriesValue } from 'src/const';
+import { CaloriesValue } from 'src/shared/const';
 import { WorkoutsDescriptions, WorkoutsTitles } from './mock-data';
 
 const IMAGES_NUMBER = 5;

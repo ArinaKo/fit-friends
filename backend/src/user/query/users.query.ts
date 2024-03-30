@@ -1,7 +1,7 @@
 import { IsEnum, IsIn, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { MetroStation, UserLevel, UserRole, WorkoutType } from '@app/types';
-import { BaseQuery } from 'src/query/base.query';
+import { BaseQuery } from 'src/shared/query/base.query';
 import * as lodash from 'lodash';
 
 export class UsersQuery extends BaseQuery {

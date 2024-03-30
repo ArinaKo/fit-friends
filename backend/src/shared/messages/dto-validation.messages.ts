@@ -1,6 +1,27 @@
-import { transformObjectValuesToString } from "@app/helpers";
-import { MetroStation, OrderType, PaymentType, UserLevel, UserRole, UserSex, WorkoutDuration, WorkoutSexFor, WorkoutType } from "@app/types";
-import { CaloriesValue, MAX_WORKOUTS_TYPES, OrderCountValue, PriceValue, UserAchievementsLength, UserDescriptionLength, UserNameLength, UserPasswordLength, WorkoutDescriptionLength, WorkoutTitleLength } from "src/const";
+import { transformObjectValuesToString } from '@app/helpers';
+import {
+  MetroStation,
+  OrderType,
+  PaymentType,
+  UserLevel,
+  UserRole,
+  UserSex,
+  WorkoutDuration,
+  WorkoutSexFor,
+  WorkoutType,
+} from '@app/types';
+import {
+  CaloriesValue,
+  MAX_WORKOUTS_TYPES,
+  OrderCountValue,
+  PriceValue,
+  UserAchievementsLength,
+  UserDescriptionLength,
+  UserNameLength,
+  UserPasswordLength,
+  WorkoutDescriptionLength,
+  WorkoutTitleLength,
+} from 'src/shared/const';
 
 export const DtoValidationMessage = {
   name: {

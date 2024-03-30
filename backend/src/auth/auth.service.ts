@@ -17,7 +17,7 @@ import {
   LoginUserDto,
 } from './dto/index';
 import * as dayjs from 'dayjs';
-import { UserMessage } from '@app/messages';
+import { UserMessage } from 'src/shared/messages';
 import { RefreshTokenPayload } from '@app/types';
 import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '@app/config/jwt.config';

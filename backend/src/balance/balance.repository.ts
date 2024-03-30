@@ -1,12 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, PipelineStage } from 'mongoose';
 import { BaseMongoRepository, PaginationResult } from '@app/core';
 import { BalanceEntity } from './balance.entity';
 import { BalanceModel } from './balance.model';
 import { WorkoutBalanceEntity } from './workout-balance.entity';
 import { UserBalanceQuery } from './query';
-import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/const';
+import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/shared/const';
+
+const PipelineStage: { [key: string]: PipelineStage } = {
+  LookupWorkouts: {
+    $lookup: {
+      from: 'workouts',
+      let: { workoutId: '$workoutId' },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ['$_id', { $toObjectId: '$$workoutId' }] },
+          },
+        },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+          },
+        },
+      ],
+      as: 'workout',
+    },
+  },
+};
 
 @Injectable()
 export class BalanceRepository extends BaseMongoRepository<
@@ -45,31 +67,11 @@ export class BalanceRepository extends BaseMongoRepository<
     const [records, recordsCount] = await Promise.all([
       this.model
         .aggregate([
-          {
-            $match: filter ,
-          },
+          { $match: filter },
           { $sort: { createdAt: sortDirection } },
           { $skip: skip },
           { $limit: limit },
-          {
-            $lookup: {
-              from: 'workouts',
-              let: { workoutId: '$workoutId' },
-              pipeline: [
-                {
-                  $match: {
-                    $expr: { $eq: ['$_id', { $toObjectId: '$$workoutId' }] },
-                  },
-                },
-                {
-                  $addFields: {
-                    id: { $toString: '$_id' },
-                  },
-                },
-              ],
-              as: 'workout',
-            },
-          },
+          PipelineStage.LookupWorkouts,
           { $unwind: '$workout' },
         ])
         .exec(),

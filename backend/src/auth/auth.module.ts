@@ -8,7 +8,7 @@ import {
   JwtAccessStrategy,
   JwtRefreshStrategy,
   LocalStrategy,
-} from '../strategies/index';
+} from '../shared/strategies/index';
 import { UserModule } from '../user/user.module';
 import { RefreshTokenModule } from 'src/refresh-token/refresh-token.module';
 

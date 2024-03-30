@@ -10,11 +10,11 @@ import {
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { BalanceService } from './balance.service';
-import { RequestWithTokenPayload } from 'src/requests';
+import { RequestWithTokenPayload } from 'src/shared/requests';
 import { DecreaseBalanceDto } from './dto';
 import { Role } from '@app/core';
 import { UserRole } from '@app/types';
-import { RoleGuard } from 'src/guards';
+import { RoleGuard } from 'src/shared/guards';
 import { BalancesWithPaginationRdo } from './rdo';
 import { UserBalanceQuery } from './query';
 

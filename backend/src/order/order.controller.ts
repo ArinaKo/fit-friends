@@ -12,9 +12,9 @@ import { OrderService } from './order.service';
 import { ApiResponse } from '@nestjs/swagger';
 import { Role } from '@app/core';
 import { UserRole } from '@app/types';
-import { RoleGuard } from 'src/guards';
+import { RoleGuard } from 'src/shared/guards';
 import { CreateOrderDto } from './dto';
-import { RequestWithTokenPayload } from 'src/requests';
+import { RequestWithTokenPayload } from 'src/shared/requests';
 import { WorkoutsOrdersQuery } from './query';
 import { OrdersWithPaginationRdo } from './rdo/orders-with-pagination.rdo';
 

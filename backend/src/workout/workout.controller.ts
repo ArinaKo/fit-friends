@@ -14,9 +14,9 @@ import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
 import { FullWorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import { ApiResponse } from '@nestjs/swagger';
-import { RequestWithTokenPayload } from 'src/requests';
+import { RequestWithTokenPayload } from 'src/shared/requests';
 import { MongoIdValidationPipe, Role } from '@app/core';
-import { RoleGuard, WorkoutOwnerGuard } from 'src/guards';
+import { RoleGuard, WorkoutOwnerGuard } from 'src/shared/guards';
 import { UserRole } from '@app/types';
 import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
 

@@ -4,7 +4,7 @@ import { Model, PipelineStage } from 'mongoose';
 import { BaseMongoRepository, PaginationResult } from '@app/core';
 import { WorkoutEntity } from './workout.entity';
 import { WorkoutModel } from './workout.model';
-import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/const';
+import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/shared/const';
 import { FullWorkoutQuery } from './query';
 
 const PipelineStage: { [key: string]: PipelineStage } = {

@@ -14,12 +14,12 @@ import { CreateUserDto } from './dto';
 import { AuthUserRdo, LoggedUserRdo } from './rdo/index';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public, UserDtoValidationPipe } from '@app/core';
-import { LocalAuthGuard, JwtRefreshGuard, NotAuthGuard } from 'src/guards';
+import { LocalAuthGuard, JwtRefreshGuard, NotAuthGuard } from 'src/shared/guards';
 import {
   RequestWithUser,
   RequestWithTokenPayload,
   RequestWithRefreshTokenPayload,
-} from '../requests/index';
+} from '../shared/requests/index';
 import { CreateUserDtoListing } from './auth.const';
 import { UserService } from 'src/user/user.service';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';

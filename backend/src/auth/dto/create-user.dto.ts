@@ -28,8 +28,8 @@ import {
   UserDescriptionLength,
   UserNameLength,
   UserPasswordLength,
-} from 'src/const';
-import { DtoValidationMessage } from '@app/messages';
+} from 'src/shared/const';
+import { DtoValidationMessage } from 'src/shared/messages';
 import { Expose } from 'class-transformer';
 
 class BaseUserDto {
