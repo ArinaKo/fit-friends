@@ -3,6 +3,7 @@ import { BalanceController } from './balance.controller';
 import { BalanceService } from './balance.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BalanceModel, BalanceSchema } from './balance.model';
+import { BalanceRepository } from './balance.repository';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { BalanceModel, BalanceSchema } from './balance.model';
     ]),
   ],
   controllers: [BalanceController],
-  providers: [BalanceService],
+  providers: [BalanceRepository, BalanceService],
 })
 export class BalanceModule {}
