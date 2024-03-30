@@ -1,6 +1,5 @@
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { WorkoutModel } from 'src/workout/workout.model';
 import { Balance } from '@app/types';
 
 @Schema({
@@ -20,10 +19,8 @@ export class BalanceModel extends Document implements Balance {
 
   @Prop({
     required: true,
-    type: Types.ObjectId,
-    ref: 'WorkoutModel',
   })
-  public workout: WorkoutModel;
+  public workoutId: string;
 }
 
 export const BalanceSchema = SchemaFactory.createForClass(BalanceModel);
