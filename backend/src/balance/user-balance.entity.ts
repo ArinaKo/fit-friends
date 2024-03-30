@@ -1,10 +1,10 @@
 import { Entity } from '@app/core';
 import { UserBalance } from '@app/types';
-import { WorkoutBalanceEntity } from './workout-balance.entity';
+import { BalanceEntity } from './balance.entity';
 
 export class UserBalanceEntity implements Entity<string> {
   public userId?: string;
-  public workoutsBalance: WorkoutBalanceEntity[];
+  public balances: BalanceEntity[];
 
   constructor(data: UserBalance) {
     this.populate(data);
@@ -13,16 +13,14 @@ export class UserBalanceEntity implements Entity<string> {
   public toPOJO() {
     return {
       userId: this.userId,
-      workoutsBalance: this.workoutsBalance.map((workoutBalance) =>
-        workoutBalance.toPOJO(),
-      ),
+      workoutsBalance: this.balances.map((balance) => balance.toPOJO()),
     };
   }
 
   public populate(data: UserBalance): void {
     this.userId = data.userId;
-    this.workoutsBalance = data.workoutsBalance.map((workoutBalance) =>
-      WorkoutBalanceEntity.fromObject(workoutBalance),
+    this.balances = data.balances.map((balance) =>
+      BalanceEntity.fromObject(balance),
     );
   }
 

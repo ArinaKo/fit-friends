@@ -2,7 +2,7 @@ import { Entity } from '@app/core';
 import { Balance } from '@app/types';
 import { WorkoutEntity } from 'src/workout/workout.entity';
 
-export class WorkoutBalanceEntity implements Balance, Entity<string> {
+export class BalanceEntity implements Balance, Entity<string> {
   public userId?: string;
   public count: number;
   public workout: WorkoutEntity;
@@ -25,7 +25,7 @@ export class WorkoutBalanceEntity implements Balance, Entity<string> {
     this.workout = WorkoutEntity.fromObject(data.workout);
   }
 
-  static fromObject(data: Balance): WorkoutBalanceEntity {
-    return new WorkoutBalanceEntity(data);
+  static fromObject(data: Balance): BalanceEntity {
+    return new BalanceEntity(data);
   }
 }

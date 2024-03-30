@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { UserBalanceController } from './user-balance.controller';
-import { UserBalanceService } from './user-balance.service';
+import { BalanceController } from './balance.controller';
+import { BalanceService } from './balance.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BalanceModel, BalanceSchema } from './balance.model';
 
@@ -10,7 +10,7 @@ import { BalanceModel, BalanceSchema } from './balance.model';
       { name: BalanceModel.name, schema: BalanceSchema },
     ]),
   ],
-  controllers: [UserBalanceController],
-  providers: [UserBalanceService],
+  controllers: [BalanceController],
+  providers: [BalanceService],
 })
-export class UserBalanceModule {}
+export class BalanceModule {}
