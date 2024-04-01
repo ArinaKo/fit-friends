@@ -7,5 +7,5 @@ export class CreateWorkoutRequestDto {
     example: '660306ae5cdc417b17500eec',
   })
   @IsMongoId()
-  public userId: string;
+  public userToId: string;
 }

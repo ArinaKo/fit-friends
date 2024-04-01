@@ -17,14 +17,6 @@ export class FriendsService {
     private readonly userService: UserService,
   ) {}
 
-  private async checkUserInFriends(
-    userId: string,
-    friendId: string,
-  ): Promise<boolean> {
-    const friendsRecord = await this.getFriendsEntity(userId);
-    return friendsRecord?.friendsList.includes(friendId);
-  }
-
   private async getFriendsEntity(userId: string): Promise<FriendsEntity> {
     const existedRecord = await this.friendsRepository.findByUserId(userId);
     if (existedRecord) {
@@ -33,6 +25,14 @@ export class FriendsService {
 
     const friendsEntity = FriendsEntity.fromObject({ userId, friendsList: [] });
     return this.friendsRepository.save(friendsEntity);
+  }
+
+  public async checkUserInFriends(
+    userId: string,
+    friendId: string,
+  ): Promise<boolean> {
+    const friendsRecord = await this.getFriendsEntity(userId);
+    return friendsRecord?.friendsList.includes(friendId);
   }
 
   public async getFriendsList(
