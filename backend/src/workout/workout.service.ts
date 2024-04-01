@@ -63,6 +63,19 @@ export class WorkoutService {
     return fillDto(FullWorkoutRdo, updatedWorkout.toPOJO());
   }
 
+  public async updateWorkoutRating(workoutId: string) {
+    const workout = await this.getWorkoutEntity(workoutId);
+    const newRating = await this.workoutRepository.countRating(workoutId);
+
+    if (newRating === workout.rating) {
+      return;
+    }
+
+    workout.rating = newRating;
+
+    await this.workoutRepository.update(workoutId, workout);
+  }
+
   public async getFullWorkout(id: string): Promise<FullWorkoutRdo> {
     const workout = await this.getWorkoutEntity(id);
 

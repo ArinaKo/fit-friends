@@ -24,6 +24,8 @@ export class CommentService {
     const newComment = CommentEntity.fromObject(Object.assign(dto, { userId }));
     await this.commentRepository.save(newComment);
 
+    await this.workoutService.updateWorkoutRating(dto.workoutId);
+
     return fillDto(CommentRdo, newComment.toPOJO());
   }
 

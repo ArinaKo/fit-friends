@@ -4,13 +4,38 @@ import { Model, PipelineStage } from 'mongoose';
 import { BaseMongoRepository, PaginationResult } from '@app/core';
 import { WorkoutEntity } from './workout.entity';
 import { WorkoutModel } from './workout.model';
-import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/shared/const';
+import {
+  DEFAULT_PAGE,
+  DEFAULT_SORT_DIRECTION,
+  LIST_LIMIT,
+} from 'src/shared/const';
 import { FullWorkoutQuery } from './query';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   AddIdString: {
     $addFields: {
       id: { $toString: '$_id' },
+    },
+  },
+  LookupComments: {
+    $lookup: {
+      from: 'comments',
+      let: { workoutId: '$_id' },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: [{ $toObjectId: '$workoutId' }, '$$workoutId'] },
+          },
+        },
+      ],
+      as: 'comments',
+    },
+  },
+  CountRating: {
+    $addFields: {
+      newRating: {
+        $cond: [{ $size: '$comments' }, { $avg: '$comments.rating' }, 0],
+      },
     },
   },
 };
@@ -69,6 +94,19 @@ export class WorkoutRepository extends BaseMongoRepository<
     @InjectModel(WorkoutModel.name) WorkoutModel: Model<WorkoutModel>,
   ) {
     super(WorkoutModel, WorkoutEntity.fromObject);
+  }
+
+  public async countRating(id: string): Promise<number> {
+    const document = await this.model
+      .aggregate([
+        { $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } } },
+        PipelineStage.LookupComments,
+        PipelineStage.CountRating,
+      ])
+      .exec()
+      .then((r) => r.at(0) || null);
+
+    return document.newRating;
   }
 
   public async findById(id: string): Promise<WorkoutEntity | null> {
