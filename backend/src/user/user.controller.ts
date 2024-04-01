@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -18,7 +19,7 @@ import { AuthUserRdo } from 'src/auth/rdo';
 import { UpdateUserDtoListing } from './user.const';
 import { UsersQuery } from './query';
 import { UserRole } from '@app/types';
-import { OwnerGuard } from 'src/shared/guards';
+import { RequestWithTokenPayload } from 'src/shared/requests';
 
 @ApiTags('users')
 @Controller('users')
@@ -52,12 +53,11 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'User`s info has been successfully updated',
   })
-  @UseGuards(OwnerGuard)
-  @Patch('/:userId')
+  @Patch('/')
   public async update(
-    @Param('userId', MongoIdValidationPipe) id: string,
     @Body(new UserDtoValidationPipe(UpdateUserDtoListing)) dto: UpdateUserDto,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    return this.userService.updateUser(id, dto);
+    return this.userService.updateUser(tokenPayload.sub, dto);
   }
 }
