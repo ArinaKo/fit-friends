@@ -15,7 +15,7 @@ import {
   IsBoolean,
   IsEnum,
   Length,
-  IsNumber,
+  IsInt,
   Min,
   Max,
   IsOptional,
@@ -162,7 +162,7 @@ export class CreateDefaultUserDto extends BaseUserDto {
     description: 'Calories to lose',
     example: '3200',
   })
-  @IsNumber()
+  @IsInt()
   @Min(CaloriesValue.Min, { message: DtoValidationMessage.calories.value })
   @Max(CaloriesValue.Max, { message: DtoValidationMessage.calories.value })
   @Expose()
@@ -172,7 +172,7 @@ export class CreateDefaultUserDto extends BaseUserDto {
     description: 'Calories to lose per day',
     example: '1000',
   })
-  @IsNumber()
+  @IsInt()
   @Min(CaloriesValue.Min, { message: DtoValidationMessage.calories.value })
   @Max(CaloriesValue.Max, { message: DtoValidationMessage.calories.value })
   @Expose()

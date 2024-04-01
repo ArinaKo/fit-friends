@@ -1,8 +1,8 @@
 import { DtoValidationMessage } from 'src/shared/messages';
 import { OrderType, PaymentType } from '@app/types';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsMongoId, IsNumber, Max, Min } from 'class-validator';
-import { OrderCountValue, PriceValue } from 'src/shared/const';
+import { IsEnum, IsMongoId, IsInt, Max, Min } from 'class-validator';
+import { OrderCountValue } from 'src/shared/const';
 
 export class CreateOrderDto {
   @ApiProperty({
@@ -23,7 +23,7 @@ export class CreateOrderDto {
     description: 'Ordered workout`s count',
     example: '2',
   })
-  @IsNumber()
+  @IsInt()
   @Min(OrderCountValue.Min, { message: DtoValidationMessage.orderCount.value })
   @Max(OrderCountValue.Max, { message: DtoValidationMessage.orderCount.value })
   public count: number;

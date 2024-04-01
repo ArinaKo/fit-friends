@@ -1,11 +1,11 @@
-import { IsEnum, IsNumber, IsOptional, Max } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, Max } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { SortDirection } from '@app/types';
 import { LIST_LIMIT } from 'src/shared/const';
 
 export class BaseQuery {
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsInt()
   @Max(LIST_LIMIT)
   @IsOptional()
   public limit?: number;
@@ -16,7 +16,7 @@ export class BaseQuery {
   public sortDirection?: SortDirection;
 
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsInt()
   @IsOptional()
   public page?: number;
 }

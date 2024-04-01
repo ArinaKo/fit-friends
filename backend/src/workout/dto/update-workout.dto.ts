@@ -11,7 +11,7 @@ import {
   IsBoolean,
   IsEnum,
   Length,
-  IsNumber,
+  IsInt,
   Min,
   Max,
   IsOptional,
@@ -76,7 +76,7 @@ export class UpdateWorkoutDto {
     example: '5500',
   })
   @IsOptional()
-  @IsNumber()
+  @IsInt()
   @Min(PriceValue.Min, { message: DtoValidationMessage.price.value })
   public price?: number;
 
@@ -85,7 +85,7 @@ export class UpdateWorkoutDto {
     example: '2300',
   })
   @IsOptional()
-  @IsNumber()
+  @IsInt()
   @Min(CaloriesValue.Min, { message: DtoValidationMessage.calories.value })
   @Max(CaloriesValue.Max, { message: DtoValidationMessage.calories.value })
   public calories?: number;

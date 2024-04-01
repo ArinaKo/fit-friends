@@ -8,10 +8,12 @@ import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: WorkoutModel.name, schema: WorkoutSchema }]),
+    MongooseModule.forFeature([
+      { name: WorkoutModel.name, schema: WorkoutSchema },
+    ]),
     UserModule,
   ],
-  providers: [ WorkoutRepository, WorkoutService],
+  providers: [WorkoutRepository, WorkoutService],
   controllers: [WorkoutController],
   exports: [WorkoutService],
 })
