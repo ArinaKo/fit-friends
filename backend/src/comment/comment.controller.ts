@@ -5,32 +5,35 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { CommentService } from './comment.service';
-import { CommentRdo } from './rdo';
+import { CommentRdo, CommentsWithPaginationRdo } from './rdo';
 import { ApiResponse } from '@nestjs/swagger';
 import { MongoIdValidationPipe, Role } from '@app/core';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
 import { CreateCommentDto } from './dto';
 import { RequestWithTokenPayload } from 'src/shared/requests';
+import { BaseQuery } from 'src/shared/query/base.query';
 
 @Controller('comments')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @ApiResponse({
-    type: [CommentRdo],
+    type: CommentsWithPaginationRdo,
     status: HttpStatus.OK,
     description: 'Comments list',
   })
   @Get('/:workoutId')
   public async index(
     @Param('workoutId', MongoIdValidationPipe) workoutId: string,
+    @Query() query: BaseQuery,
   ) {
-    return this.commentService.getComments(workoutId);
+    return this.commentService.getComments(workoutId, query);
   }
 
   @ApiResponse({

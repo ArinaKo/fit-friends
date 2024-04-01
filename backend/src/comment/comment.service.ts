@@ -2,13 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { fillDto } from '@app/helpers';
 import { CreateCommentDto } from './dto';
-import { CommentRdo } from './rdo';
+import { CommentRdo, CommentsWithPaginationRdo } from './rdo';
 import { CommentEntity } from './comment.entity';
 import { WorkoutService } from 'src/workout/workout.service';
+import { BaseQuery } from 'src/shared/query/base.query';
+import { UserRdo } from 'src/user/rdo';
 
 @Injectable()
 export class CommentService {
-  constructor(private readonly commentRepository: CommentRepository, private readonly workoutService: WorkoutService) {}
+  constructor(
+    private readonly commentRepository: CommentRepository,
+    private readonly workoutService: WorkoutService,
+  ) {}
 
   public async createComment(
     dto: CreateCommentDto,
@@ -24,8 +29,15 @@ export class CommentService {
 
   public async getComments(
     workoutId: string,
-  ): Promise<CommentRdo[]> {
-    const comments = await this.commentRepository.find(workoutId);
-    return fillDto(CommentRdo, comments.map((comment) => comment.toPOJO()));
+    query?: BaseQuery,
+  ): Promise<CommentsWithPaginationRdo> {
+    const commentsWithPagination = await this.commentRepository.find(workoutId);
+    return fillDto(CommentsWithPaginationRdo, {
+      ...commentsWithPagination,
+      comments: commentsWithPagination.entities.map((comment) => ({
+        ...comment,
+        user: fillDto( UserRdo, comment.user!.toPOJO()),
+      })),
+    });
   }
 }
