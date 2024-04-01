@@ -1,8 +1,10 @@
-import { SortDirection } from "@app/types";
+import { RequestStatus, SortDirection } from "@app/types";
 
 export const MAX_WORKOUTS_TYPES = 3;
 
 export const DEFAULT_SORT_DIRECTION = SortDirection.Down;
+
+export const DEFAULT_REQUEST_STATUS = RequestStatus.Default;
 
 export const LIST_LIMIT = 50;
 
