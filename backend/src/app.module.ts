@@ -10,6 +10,7 @@ import { FriendsModule } from './friends/friends.module';
 import { OrderModule } from './order/order.module';
 import { BalanceModule } from './balance/balance.module';
 import { CommentModule } from './comment/comment.module';
+import { WorkoutRequestModule } from './workout-request/workout-request.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CommentModule } from './comment/comment.module';
     OrderModule,
     BalanceModule,
     CommentModule,
+    WorkoutRequestModule,
   ],
   controllers: [],
   providers: [
