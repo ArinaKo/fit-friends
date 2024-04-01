@@ -58,3 +58,8 @@ export enum WorkoutDescriptionLength {
   Min = 10,
   Max = 140,
 }
+
+export enum CommentTextLength {
+  Min = 10,
+  Max = 140,
+}

@@ -15,6 +15,7 @@ import {
   MAX_WORKOUTS_TYPES,
   OrderCountValue,
   PriceValue,
+  RatingValue,
   UserAchievementsLength,
   UserDescriptionLength,
   UserNameLength,
@@ -81,5 +82,8 @@ export const DtoValidationMessage = {
   },
   orderType: {
     invalidFormat: `Field value must be from options: ${transformObjectValuesToString(OrderType)}`,
+  },
+  rating: {
+    value: `Value must be from range: ${RatingValue.Min}-${RatingValue.Max}`,
   },
 };
