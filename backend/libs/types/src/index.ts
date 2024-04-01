@@ -11,7 +11,7 @@ export * from './payment-type.enum';
 export * from './order-type.enum';
 export * from './order.interface';
 export * from './request-status.enum';
-export * from './request.interface';
+export * from './workout-request.interface';
 export * from './notification.interface';
 export * from './balance.interface';
 export * from './workout-balance.interface';
