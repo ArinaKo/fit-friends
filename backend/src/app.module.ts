@@ -9,6 +9,7 @@ import { WorkoutModule } from './workout/workout.module';
 import { FriendsModule } from './friends/friends.module';
 import { OrderModule } from './order/order.module';
 import { BalanceModule } from './balance/balance.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BalanceModule } from './balance/balance.module';
     FriendsModule,
     OrderModule,
     BalanceModule,
+    CommentModule,
   ],
   controllers: [],
   providers: [
