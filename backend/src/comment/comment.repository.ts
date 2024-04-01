@@ -15,4 +15,18 @@ export class CommentRepository extends BaseMongoRepository<
   ) {
     super(CommentModel, CommentEntity.fromObject);
   }
+
+  public async find(workoutId: string): Promise<CommentEntity[]> {
+    const records = await this.model.aggregate([
+      { $match: { workoutId }}
+    ]).exec();
+
+    if (!records.length) {
+      return [];
+    }
+
+    const commentsEntities = this.createEntitiesFromDocuments(records);
+
+    return commentsEntities;
+  }
 }

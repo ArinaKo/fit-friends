@@ -15,10 +15,17 @@ export class CommentService {
     userId: string,
   ): Promise<CommentRdo> {
     await this.workoutService.getWorkoutEntity(dto.workoutId);
-    
+
     const newComment = CommentEntity.fromObject(Object.assign(dto, { userId }));
     await this.commentRepository.save(newComment);
 
     return fillDto(CommentRdo, newComment.toPOJO());
+  }
+
+  public async getComments(
+    workoutId: string,
+  ): Promise<CommentRdo[]> {
+    const comments = await this.commentRepository.find(workoutId);
+    return fillDto(CommentRdo, comments.map((comment) => comment.toPOJO()));
   }
 }
