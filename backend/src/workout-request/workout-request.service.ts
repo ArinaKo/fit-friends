@@ -1,7 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { WorkoutRequestRepository } from './workout-request.repository';
 import { UserService } from 'src/user/user.service';
-import { CreateWorkoutRequestDto } from './dto';
+import { CreateWorkoutRequestDto, UpdateRequestStatusDto } from './dto';
 import { WorkoutRequestEntity } from './workout-request.entity';
 import { DEFAULT_REQUEST_STATUS } from 'src/shared/const';
 import { FriendsService } from 'src/friends/friends.service';
@@ -47,5 +51,29 @@ export class WorkoutRequestService {
       status: DEFAULT_REQUEST_STATUS,
     });
     await this.requestRepository.save(newWorkoutRequest);
+  }
+
+  public async updateRequestStatus(
+    dto: UpdateRequestStatusDto,
+    userId: string,
+  ) {
+    const workoutRequest = await this.requestRepository.findByUsersIds(
+      dto.userFromId,
+      userId,
+    );
+
+    if (!workoutRequest) {
+      throw new NotFoundException(
+        `Workout request from user with id ${dto.userFromId} not found.`,
+      );
+    }
+
+    if (workoutRequest.status === dto.status) {
+      return;
+    }
+
+    workoutRequest.status = dto.status;
+
+    await this.requestRepository.update(workoutRequest.id, workoutRequest);
   }
 }
