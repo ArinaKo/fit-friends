@@ -3,6 +3,7 @@ import {
   MetroStation,
   OrderType,
   PaymentType,
+  RequestStatus,
   UserLevel,
   UserRole,
   UserSex,
@@ -85,5 +86,8 @@ export const DtoValidationMessage = {
   },
   rating: {
     value: `Value must be from range: ${RatingValue.Min}-${RatingValue.Max}`,
+  },
+  requestStatus: {
+    invalidFormat: `Field value must be from options: ${transformObjectValuesToString(RequestStatus)}`,
   },
 };
