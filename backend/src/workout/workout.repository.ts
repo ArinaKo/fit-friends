@@ -106,7 +106,7 @@ export class WorkoutRepository extends BaseMongoRepository<
       .exec()
       .then((r) => r.at(0) || null);
 
-    return document.newRating;
+    return Math.round(document.newRating);
   }
 
   public async findById(id: string): Promise<WorkoutEntity | null> {

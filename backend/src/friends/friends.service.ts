@@ -5,7 +5,6 @@ import { UpdateFriendsDto } from './dto';
 import { UserService } from 'src/user/user.service';
 import { UserRole } from '@app/types';
 import { BaseQuery } from 'src/shared/query/base.query';
-import { UserRepository } from 'src/user/user.repository';
 import { UserRdo, UsersWithPaginationRdo } from 'src/user/rdo';
 import { fillDto } from '@app/helpers';
 
@@ -13,7 +12,6 @@ import { fillDto } from '@app/helpers';
 export class FriendsService {
   constructor(
     private readonly friendsRepository: FriendsRepository,
-    private readonly userRepository: UserRepository,
     private readonly userService: UserService,
   ) {}
 
@@ -39,10 +37,9 @@ export class FriendsService {
     userId: string,
     query?: BaseQuery,
   ): Promise<UsersWithPaginationRdo> {
-    let friendsRecord = await this.getFriendsEntity(userId);
-    const friendsWithPagination = await this.userRepository.find(
+    const friendsWithPagination = await this.friendsRepository.find(
+      userId,
       query,
-      friendsRecord.friendsList,
     );
     return fillDto(UsersWithPaginationRdo, {
       ...friendsWithPagination,
