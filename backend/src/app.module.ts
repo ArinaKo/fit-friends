@@ -11,6 +11,7 @@ import { OrderModule } from './order/order.module';
 import { BalanceModule } from './balance/balance.module';
 import { CommentModule } from './comment/comment.module';
 import { WorkoutRequestModule } from './workout-request/workout-request.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { WorkoutRequestModule } from './workout-request/workout-request.module';
     BalanceModule,
     CommentModule,
     WorkoutRequestModule,
+    NotificationModule,
   ],
   controllers: [],
   providers: [
