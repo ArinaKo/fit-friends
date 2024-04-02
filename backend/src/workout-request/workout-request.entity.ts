@@ -7,8 +7,8 @@ export class WorkoutRequestEntity implements WorkoutRequest, Entity<string> {
   public userToId: string;
   public status: RequestStatus;
 
-  constructor(WorkoutRequest: WorkoutRequest) {
-    this.populate(WorkoutRequest);
+  constructor(data: WorkoutRequest) {
+    this.populate(data);
   }
 
   public toPOJO() {

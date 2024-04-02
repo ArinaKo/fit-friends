@@ -3,18 +3,21 @@ import { FriendsEntity } from './friends.entity';
 import { FriendsRepository } from './friends.repository';
 import { UpdateFriendsDto } from './dto';
 import { UserService } from 'src/user/user.service';
-import { UserRole } from '@app/types';
+import { TokenPayload, UserRole } from '@app/types';
 import { BaseQuery } from 'src/shared/query/base.query';
 import { UserRdo } from 'src/user/rdo';
 import { fillDto } from '@app/helpers';
 import { FriendsWithPaginationRdo } from './rdo';
 import { WorkoutRequestRdo } from 'src/workout-request/rdo';
+import { NotificationService } from 'src/notification/notification.service';
+import { NotificationText } from 'src/notification/notification.const';
 
 @Injectable()
 export class FriendsService {
   constructor(
     private readonly friendsRepository: FriendsRepository,
     private readonly userService: UserService,
+    private readonly notificationService: NotificationService,
   ) {}
 
   private async getFriendsEntity(userId: string): Promise<FriendsEntity> {
@@ -45,8 +48,8 @@ export class FriendsService {
     );
     return fillDto(FriendsWithPaginationRdo, {
       ...friendsWithPagination,
-      friends: friendsWithPagination.entities.map(({ user, workoutRequest }) =>
-        ({
+      friends: friendsWithPagination.entities.map(
+        ({ user, workoutRequest }) => ({
           user: fillDto(UserRdo, user.toPOJO()),
           workoutRequest: fillDto(WorkoutRequestRdo, workoutRequest?.toPOJO()),
         }),
@@ -54,7 +57,12 @@ export class FriendsService {
     });
   }
 
-  public async addFriend(userId: string, { friendId }: UpdateFriendsDto) {
+  public async addFriend(
+    tokenPayload: TokenPayload,
+    { friendId }: UpdateFriendsDto,
+  ) {
+    const { sub: userId, name: userName } = tokenPayload;
+
     if (userId === friendId) {
       throw new ConflictException(`You can not add yourself to friends`);
     }
@@ -72,6 +80,11 @@ export class FriendsService {
     if (newFriend.role === UserRole.Coach) {
       await this.friendsRepository.addToFriends(friendId, userId);
     }
+
+    await this.notificationService.createNotification(
+      friendId,
+      NotificationText.getNewFriendMessage(userName),
+    );
   }
 
   public async removeFriend(userId: string, { friendId }: UpdateFriendsDto) {

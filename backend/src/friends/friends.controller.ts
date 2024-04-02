@@ -46,7 +46,7 @@ export class FriendsController {
     @Body() dto: UpdateFriendsDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    await this.friendsService.addFriend(tokenPayload.sub, dto);
+    await this.friendsService.addFriend(tokenPayload, dto);
   }
 
   @ApiResponse({

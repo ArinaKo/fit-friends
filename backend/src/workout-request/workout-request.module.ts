@@ -9,6 +9,7 @@ import {
 import { WorkoutRequestRepository } from './workout-request.repository';
 import { UserModule } from 'src/user/user.module';
 import { FriendsModule } from 'src/friends/friends.module';
+import { NotificationModule } from 'src/notification/notification.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { FriendsModule } from 'src/friends/friends.module';
     ]),
     UserModule,
     FriendsModule,
+    NotificationModule,
   ],
   controllers: [WorkoutRequestController],
   providers: [WorkoutRequestRepository, WorkoutRequestService],

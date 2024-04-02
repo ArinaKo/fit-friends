@@ -31,7 +31,7 @@ export class WorkoutRequestController {
     @Body() dto: CreateWorkoutRequestDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    await this.requestService.createWorkoutRequest(dto, tokenPayload.sub);
+    await this.requestService.createWorkoutRequest(dto, tokenPayload);
   }
 
   @ApiResponse({
