@@ -15,7 +15,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjdlYzk3YmM3MGMzYThlMWY0ZmYiLCJlbWFpbCI6InVzZXJAZm91bmQubG9jYWwiLCJyb2xlIjoi0YLRgNC10L3QtdGAIiwibmFtZSI6Iktla3MiLCJhdmF0YXIiOiJwaG90by0yLnBuZyIsImlzUmVhZHkiOnRydWUsImlhdCI6MTcxMjAwNDUyNywiZXhwIjoxNzEyMDA1NDI3fQ.tdfpJpbDdEnLDqM3f6JCnopz3WJ3VznRxqGK6yxxqqA
 
 {
-  "userFromId": "65fb2224ddbac789d3321447",
+  "requestId": "65fb2224ddbac789d3321447",
   "status": "принят"
 }
 

@@ -39,6 +39,7 @@ export abstract class BaseMongoRepository<
       return null;
     }
 
+    document.id = document._id.toString();
     return this.createEntityFromDocument(document);
   }
 

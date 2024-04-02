@@ -89,9 +89,6 @@ export class UserModel extends Document implements AuthUser {
   public isReady: boolean;
 
   @Prop()
-  public createdAt: Date;
-
-  @Prop()
   public certificate?: string;
 
   @Prop()

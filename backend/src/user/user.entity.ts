@@ -25,7 +25,6 @@ export class UserEntity implements FullUser, Entity<string> {
   public level: UserLevel;
   public workoutTypes: WorkoutType[];
   public isReady: boolean;
-  public createdAt: Date;
   public passwordHash?: string;
   public certificate?: string;
   public achievements?: string;
@@ -52,7 +51,6 @@ export class UserEntity implements FullUser, Entity<string> {
       level: this.level,
       workoutTypes: this.workoutTypes,
       isReady: this.isReady,
-      createdAt: this.createdAt,
       passwordHash: this.passwordHash,
       certificate: this.certificate,
       achievements: this.achievements,
@@ -76,7 +74,6 @@ export class UserEntity implements FullUser, Entity<string> {
     this.level = data.level;
     this.workoutTypes = data.workoutTypes;
     this.isReady = data.isReady;
-    this.createdAt = data.createdAt;
     this.passwordHash = data.passwordHash;
     this.certificate = data.certificate;
     this.achievements = data.achievements;

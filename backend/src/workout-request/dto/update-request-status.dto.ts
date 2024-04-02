@@ -5,11 +5,11 @@ import { IsEnum, IsMongoId } from 'class-validator';
 
 export class UpdateRequestStatusDto {
   @ApiProperty({
-    description: 'User request from id',
+    description: 'Request id',
     example: '660306ae5cdc417b17500eec',
   })
   @IsMongoId()
-  public userFromId: string;
+  public requestId: string;
 
   @ApiProperty({
     description: 'Request status',

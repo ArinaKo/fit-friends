@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -57,15 +58,16 @@ export class WorkoutRequestService {
     dto: UpdateRequestStatusDto,
     userId: string,
   ) {
-    const workoutRequest = await this.requestRepository.findByUsersIds(
-      dto.userFromId,
-      userId,
-    );
+    const workoutRequest = await this.requestRepository.findById(dto.requestId);
 
     if (!workoutRequest) {
       throw new NotFoundException(
-        `Workout request from user with id ${dto.userFromId} not found.`,
+        `Workout request with id ${dto.requestId} not found.`,
       );
+    }
+
+    if (workoutRequest.userToId !== userId) {
+      throw new ForbiddenException();
     }
 
     if (workoutRequest.status === dto.status) {

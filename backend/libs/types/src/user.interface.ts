@@ -19,7 +19,6 @@ export interface User {
   level: UserLevel;
   workoutTypes: WorkoutType[];
   isReady: boolean;
-  createdAt: Date;
 }
 
 export interface CoachUser extends User {
