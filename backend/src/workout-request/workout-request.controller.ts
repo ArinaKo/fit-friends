@@ -36,7 +36,7 @@ export class WorkoutRequestController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'The workout status has been successfully updated',
+    description: 'The workout request status has been successfully updated',
   })
   @Patch('/')
   public async update(
