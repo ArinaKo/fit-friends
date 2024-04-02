@@ -11,6 +11,7 @@ import {
   DEFAULT_SORT_DIRECTION,
   LIST_LIMIT,
 } from 'src/shared/const';
+import { WorkoutRequestEntity } from 'src/workout-request/workout-request.entity';
 
 @Injectable()
 export class FriendsRepository extends BaseMongoRepository<
@@ -56,7 +57,9 @@ export class FriendsRepository extends BaseMongoRepository<
   public async find(
     userId: string,
     query?: BaseQuery,
-  ): Promise<PaginationResult<UserEntity>> {
+  ): Promise<
+    PaginationResult<{ user: UserEntity; workoutRequest: WorkoutRequestEntity }>
+  > {
     const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
@@ -84,6 +87,30 @@ export class FriendsRepository extends BaseMongoRepository<
               { $sort: { createdAt: sortDirection } },
               { $skip: skip },
               { $limit: limit },
+              {
+                $lookup: {
+                  from: 'workout-requests',
+                  let: { userFromId: '$id' },
+                  pipeline: [
+                    {
+                      $match: {
+                        $expr: {
+                          $and: [
+                            { $eq: ['$userFromId', '$$userFromId'] },
+                            { $eq: ['$userToId', userId] },
+                          ],
+                        },
+                      },
+                    },
+                    {
+                      $addFields: {
+                        id: { $toString: '$_id' },
+                      },
+                    },
+                  ],
+                  as: 'request',
+                },
+              },
             ],
             as: 'friends',
           },
@@ -94,8 +121,15 @@ export class FriendsRepository extends BaseMongoRepository<
 
     const friendsAmount = record.friendsList.length;
 
+    const records = record.friends.map((friend) => ({
+      user: UserEntity.fromObject(friend),
+      workoutRequest: friend.request.at(0)
+        ? WorkoutRequestEntity.fromObject(friend.request.at(0))
+        : undefined,
+    }));
+
     return {
-      entities: record.friends.map((friend) => UserEntity.fromObject(friend)),
+      entities: records,
       currentPage: query?.page ?? DEFAULT_PAGE,
       totalPages: this.calculatePages(friendsAmount, limit),
       itemsPerPage: limit,

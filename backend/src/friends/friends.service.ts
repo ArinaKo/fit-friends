@@ -5,8 +5,10 @@ import { UpdateFriendsDto } from './dto';
 import { UserService } from 'src/user/user.service';
 import { UserRole } from '@app/types';
 import { BaseQuery } from 'src/shared/query/base.query';
-import { UserRdo, UsersWithPaginationRdo } from 'src/user/rdo';
+import { UserRdo } from 'src/user/rdo';
 import { fillDto } from '@app/helpers';
+import { FriendsWithPaginationRdo } from './rdo';
+import { WorkoutRequestRdo } from 'src/workout-request/rdo';
 
 @Injectable()
 export class FriendsService {
@@ -36,15 +38,18 @@ export class FriendsService {
   public async getFriendsList(
     userId: string,
     query?: BaseQuery,
-  ): Promise<UsersWithPaginationRdo> {
+  ): Promise<FriendsWithPaginationRdo> {
     const friendsWithPagination = await this.friendsRepository.find(
       userId,
       query,
     );
-    return fillDto(UsersWithPaginationRdo, {
+    return fillDto(FriendsWithPaginationRdo, {
       ...friendsWithPagination,
-      users: friendsWithPagination.entities.map((entity) =>
-        fillDto(UserRdo, entity.toPOJO()),
+      friends: friendsWithPagination.entities.map(({ user, workoutRequest }) =>
+        ({
+          user: fillDto(UserRdo, user.toPOJO()),
+          workoutRequest: fillDto(WorkoutRequestRdo, workoutRequest?.toPOJO()),
+        }),
       ),
     });
   }
