@@ -35,13 +35,13 @@ export class WorkoutRequestService {
       );
     }
 
-    const isUserAFriend = await this.friendsService.checkUserInFriends(
-      userId,
-      userToId,
-    );
-    if (!isUserAFriend) {
+    const areUsersFriends =
+      (await this.friendsService.checkUserInFriends(userId, userToId)) &&
+      (await this.friendsService.checkUserInFriends(userToId, userId));
+      
+    if (!areUsersFriends) {
       throw new BadRequestException(
-        `Workout request can be send only for friends`,
+        `Workout request can be send only between friends`,
       );
     }
 

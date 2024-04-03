@@ -3,7 +3,7 @@ import { FriendsEntity } from './friends.entity';
 import { FriendsRepository } from './friends.repository';
 import { UpdateFriendsDto } from './dto';
 import { UserService } from 'src/user/user.service';
-import { TokenPayload, UserRole } from '@app/types';
+import { TokenPayload } from '@app/types';
 import { BaseQuery } from 'src/shared/query/base.query';
 import { UserRdo } from 'src/user/rdo';
 import { fillDto } from '@app/helpers';
@@ -76,10 +76,7 @@ export class FriendsService {
     }
 
     await this.friendsRepository.addToFriends(userId, friendId);
-
-    if (newFriend.role === UserRole.Coach) {
-      await this.friendsRepository.addToFriends(friendId, userId);
-    }
+    await this.friendsRepository.addToFriends(friendId, userId);
 
     await this.notificationService.createNotification(
       friendId,

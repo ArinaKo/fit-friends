@@ -8,6 +8,7 @@ import { BaseQuery } from 'src/shared/query/base.query';
 import { UserEntity } from 'src/user/user.entity';
 import {
   DEFAULT_PAGE,
+  DEFAULT_REQUEST_STATUS,
   DEFAULT_SORT_DIRECTION,
   LIST_LIMIT,
 } from 'src/shared/const';
@@ -98,6 +99,7 @@ export class FriendsRepository extends BaseMongoRepository<
                           $and: [
                             { $eq: ['$userFromId', '$$userFromId'] },
                             { $eq: ['$userToId', userId] },
+                            { $eq: ['$status', DEFAULT_REQUEST_STATUS] },
                           ],
                         },
                       },
