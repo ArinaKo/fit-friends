@@ -23,3 +23,5 @@ export * from './sort-direction.enum';
 export * from './workout-sex-for.enum';
 export * from './friends.interface';
 export * from './workout-orders.interface';
+export * from './file.interface';
+export * from './stored-file.interface';
