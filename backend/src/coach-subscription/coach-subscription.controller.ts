@@ -1,9 +1,8 @@
 import {
   Controller,
-  Delete,
   HttpStatus,
   Param,
-  Post,
+  Patch,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -15,7 +14,7 @@ import { RoleGuard } from 'src/shared/guards';
 import { RequestWithTokenPayload } from 'src/shared/requests';
 
 @Controller('coach-subscription')
-export class SubscriptionController {
+export class CoachSubscriptionController {
   constructor(private readonly subscriptionService: CoachSubscriptionService) {}
 
   @ApiResponse({
@@ -24,12 +23,13 @@ export class SubscriptionController {
   })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
-  @Post('/:coachId')
+  @Patch('/:coachId')
   public async create(
     @Param('coachId', MongoIdValidationPipe) coachId: string,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
     await this.subscriptionService.addNewSubscriber(coachId, tokenPayload.sub);
+    
   }
 
   @ApiResponse({
@@ -38,7 +38,7 @@ export class SubscriptionController {
   })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
-  @Delete('/:coachId')
+  @Patch('/:coachId')
   public async delete(
     @Param('coachId', MongoIdValidationPipe) coachId: string,
     @Req() { tokenPayload }: RequestWithTokenPayload,
