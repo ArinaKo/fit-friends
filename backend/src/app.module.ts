@@ -13,7 +13,7 @@ import { CommentModule } from './comment/comment.module';
 import { WorkoutRequestModule } from './workout-request/workout-request.module';
 import { NotificationModule } from './notification/notification.module';
 import { FileVaultModule } from './file-vault/file-vault.module';
-import { SubscriptionModule } from './subscription/subscription.module';
+import { CoachSubscriptionModule } from './coach-subscription/coach-subscription.module';
 import { MailModule } from './mail/mail.module';
 
 @Module({
@@ -30,7 +30,7 @@ import { MailModule } from './mail/mail.module';
     WorkoutRequestModule,
     NotificationModule,
     FileVaultModule,
-    SubscriptionModule,
+    CoachSubscriptionModule,
     MailModule,
   ],
   controllers: [],
