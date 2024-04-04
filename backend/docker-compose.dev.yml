@@ -33,5 +33,13 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
       ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@fit-friends_mongo:${MONGO_PORT}/
 
+  typoteka.notify.fakesmtp:
+    image: gessnerfl/fake-smtp-server:2.2.0
+    container_name: "typoteka.notify.fakesmtp"
+    hostname: "typoteka.notify.fakesmtp"
+    ports:
+      - "${MAIL_SMTP_PORT}:8025"
+      - "1083:8080"
+
 volumes:
   fit-friends_mongo:

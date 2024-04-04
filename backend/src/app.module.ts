@@ -14,6 +14,7 @@ import { WorkoutRequestModule } from './workout-request/workout-request.module';
 import { NotificationModule } from './notification/notification.module';
 import { FileVaultModule } from './file-vault/file-vault.module';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
     NotificationModule,
     FileVaultModule,
     SubscriptionModule,
+    MailModule,
   ],
   controllers: [],
   providers: [
