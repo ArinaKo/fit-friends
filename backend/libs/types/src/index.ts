@@ -25,3 +25,5 @@ export * from './friends.interface';
 export * from './workout-orders.interface';
 export * from './file.interface';
 export * from './stored-file.interface';
+export * from './subscriber.interface';
+export * from './coach-subscription.interface';
