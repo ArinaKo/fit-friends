@@ -31,4 +31,13 @@ export class SubscriptionRepository extends BaseMongoRepository<
 
     return this.createEntityFromDocument(document);
   }
+
+  public async deleteByUsersIds(
+    userId: string,
+    coachId: string,
+  ): Promise<void> {
+    this.model
+      .findOneAndDelete({ 'coachId': coachId, 'subscriber.userId': userId })
+      .exec();
+  }
 }

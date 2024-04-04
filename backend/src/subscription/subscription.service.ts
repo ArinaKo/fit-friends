@@ -11,9 +11,9 @@ export class SubscriptionService {
     private readonly userService: UserService,
   ) {}
 
-  public async createSubscription(coachId: string, tokenPayload: TokenPayload) {
+  public async createSubscription(coachId: string, tokenPayload: TokenPayload): Promise<void> {
     await this.userService.getUserEntity(coachId);
-    
+
     const { sub, email } = tokenPayload;
 
     const existsSubscription = await this.subscriptionRepository.findByUsersIds(
@@ -22,7 +22,9 @@ export class SubscriptionService {
     );
 
     if (existsSubscription) {
-      throw new BadRequestException('You are already coach`s workouts subscriber');
+      throw new BadRequestException(
+        'You are already coach`s workouts subscriber',
+      );
     }
 
     const newSubscription = new SubscriptionEntity({
@@ -30,6 +32,21 @@ export class SubscriptionService {
       subscriber: { userId: sub, email },
     });
 
-    await this.subscriptionRepository.save(newSubscription);
+    this.subscriptionRepository.save(newSubscription);
+  }
+
+  public async deleteSubscription(coachId: string, userId: string): Promise<void> {
+    const existsSubscription = await this.subscriptionRepository.findByUsersIds(
+      userId,
+      coachId,
+    );
+
+    if (!existsSubscription) {
+      throw new BadRequestException(
+        'You are not coach`s workouts subscriber',
+      );
+    }
+
+    this.subscriptionRepository.deleteByUsersIds(userId, coachId);
   }
 }

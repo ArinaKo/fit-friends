@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   HttpStatus,
   Param,
   Post,
@@ -29,5 +30,19 @@ export class SubscriptionController {
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
     await this.subscriptionService.createSubscription(coachId, tokenPayload);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The subscription has been successfully deleted',
+  })
+  @Role(UserRole.Default)
+  @UseGuards(RoleGuard)
+  @Delete('/:coachId')
+  public async delete(
+    @Param('coachId', MongoIdValidationPipe) coachId: string,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    await this.subscriptionService.deleteSubscription(coachId, tokenPayload.sub);
   }
 }
