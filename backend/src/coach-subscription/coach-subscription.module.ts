@@ -6,15 +6,19 @@ import {
   CoachSubscriptionSchema,
 } from './coach-subscription.model';
 import { CoachSubscriptionRepository } from './coach-subscription.repository';
-import { UserService } from 'src/user/user.service';
+import { MailModule } from 'src/mail/mail.module';
+import { UserModule } from 'src/user/user.module';
+import { CoachSubscriptionController } from './coach-subscription.controller';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: CoachSubscriptionModel.name, schema: CoachSubscriptionSchema },
     ]),
-    UserService,
+    UserModule,
+    MailModule,
   ],
+  controllers: [CoachSubscriptionController],
   providers: [CoachSubscriptionRepository, CoachSubscriptionService],
 })
 export class CoachSubscriptionModule {}

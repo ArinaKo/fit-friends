@@ -16,22 +16,20 @@ export class MailService {
   @Inject(mailConfig.KEY)
   private readonly mailConfig: ConfigType<typeof mailConfig>;
 
-  public async sendNotifyNewSubscription(subscription: CoachSubscription) {
+  public async sendNotifyNewCoachSubscription(coachId: string, userId: string) {
     const coachName = (
-      await this.userService.getUserEntity(subscription.coachId)
+      await this.userService.getUserEntity(coachId)
     ).name;
-    const userName = (
-      await this.userService.getUserEntity(subscription.subscriber.userId)
-    ).name;
+    const user = await this.userService.getUserEntity(userId);
 
     await this.mailerService.sendMail({
       from: this.mailConfig.from,
-      to: subscription.subscriber.email,
+      to: user.email,
       subject: EmailSubject.NewSubscription,
       template: './new-subscription',
       context: {
         coachName,
-        userName,
+        userName: user.name,
       },
     });
   }

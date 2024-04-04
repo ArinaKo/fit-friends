@@ -1,18 +1,19 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
 } from '@nestjs/common';
 import { CoachSubscriptionRepository } from './coach-subscription.repository';
 import { CoachSubscriptionEntity } from './coach-subscription.entity';
-import { TokenPayload, UserRole } from '@app/types';
+import { UserRole } from '@app/types';
 import { UserService } from 'src/user/user.service';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class CoachSubscriptionService {
   constructor(
     private readonly subscriptionRepository: CoachSubscriptionRepository,
     private readonly userService: UserService,
+    private readonly mailService: MailService,
   ) {}
 
   private async createSubscription(
@@ -73,7 +74,8 @@ export class CoachSubscriptionService {
       throw new ConflictException(`You are already subscriber`);
     }
 
-    this.subscriptionRepository.addNewSubscriber(coachId, userId);
+    await this.subscriptionRepository.addNewSubscriber(coachId, userId);
+    await this.mailService.sendNotifyNewCoachSubscription(coachId, userId);
   }
 
   public async removeSubscriber(
