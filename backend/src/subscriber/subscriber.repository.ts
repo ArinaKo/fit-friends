@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { BaseMongoRepository } from '@app/core';
 import { SubscriberEntity } from './subscriber.entity';
 import { SubscriberModel } from './subscriber.model';
+import { WorkoutEntity } from 'src/workout/workout.entity';
 
 @Injectable()
 export class SubscriberRepository extends BaseMongoRepository<
@@ -17,9 +18,7 @@ export class SubscriberRepository extends BaseMongoRepository<
     super(SubscriberModel, SubscriberEntity.fromObject);
   }
 
-  public async findByUserId(
-    userId: string,
-  ): Promise<SubscriberEntity | null> {
+  public async findByUserId(userId: string): Promise<SubscriberEntity | null> {
     const document = await this.model.findOne({ userId }).exec();
 
     if (!document) {
@@ -30,9 +29,21 @@ export class SubscriberRepository extends BaseMongoRepository<
     return this.createEntityFromDocument(document);
   }
 
-  public async addNewWorkout(coachId: string, workoutId: string) {
+  public async addNewWorkout(
+    coachId: string,
+    workout: WorkoutEntity,
+    coachName: string,
+  ) {
+    const { title, description, calories, type } = workout;
     this.model
-      .updateMany({ coaches: coachId }, { $push: { newWorkouts: workoutId } })
+      .updateMany(
+        { coaches: coachId },
+        {
+          $push: {
+            notifications: { title, description, calories, type, coachName },
+          },
+        },
+      )
       .exec();
   }
 

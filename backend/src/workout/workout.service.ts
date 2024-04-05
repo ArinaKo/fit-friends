@@ -35,7 +35,7 @@ export class WorkoutService {
       Object.assign(dto, { coachId, rating: DEFAULT_RATING }),
     );
     const newWorkout = await this.workoutRepository.save(newEntity);
-    await this.subscriberService.addNewWorkout(coachId, newWorkout.id!)
+    await this.subscriberService.addNewWorkout(coachId, newWorkout)
 
     return fillDto(FullWorkoutRdo, newWorkout.toPOJO());
   }

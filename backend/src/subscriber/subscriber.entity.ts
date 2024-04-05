@@ -1,11 +1,11 @@
 import { Entity } from '@app/core';
-import { Subscriber } from '@app/types';
+import { Subscriber, WorkoutNotification } from '@app/types';
 
 export class SubscriberEntity implements Subscriber, Entity<string> {
   public id?: string;
   public userId: string;
   public coaches: string[];
-  public newWorkouts: string[];
+  public notifications: WorkoutNotification[];
 
   constructor(data: Subscriber) {
     this.populate(data);
@@ -16,7 +16,7 @@ export class SubscriberEntity implements Subscriber, Entity<string> {
       id: this.id,
       userId: this.userId,
       coaches: this.coaches,
-      newWorkouts: this.newWorkouts,
+      notifications: this.notifications,
     };
   }
 
@@ -24,7 +24,7 @@ export class SubscriberEntity implements Subscriber, Entity<string> {
     this.id = data.id;
     this.userId = data.userId;
     this.coaches = data.coaches;
-    this.newWorkouts = data.newWorkouts;
+    this.notifications = data.notifications;
   }
 
   static fromObject(data: Subscriber): SubscriberEntity {

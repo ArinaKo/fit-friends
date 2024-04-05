@@ -4,6 +4,7 @@ import { SubscriberEntity } from './subscriber.entity';
 import { UserRole } from '@app/types';
 import { UserService } from 'src/user/user.service';
 import { MailService } from 'src/mail/mail.service';
+import { WorkoutEntity } from 'src/workout/workout.entity';
 
 @Injectable()
 export class SubscriberService {
@@ -24,7 +25,7 @@ export class SubscriberService {
       new SubscriberEntity({
         userId,
         coaches: [],
-        newWorkouts: [],
+        notifications: [],
       }),
     );
 
@@ -44,9 +45,10 @@ export class SubscriberService {
 
   public async addNewWorkout(
     coachId: string,
-    workoutId: string,
+    workout: WorkoutEntity,
   ): Promise<void> {
-    this.subscriberRepository.addNewWorkout(coachId, workoutId);
+    const coach = await this.userService.getUserEntity(coachId);
+    this.subscriberRepository.addNewWorkout(coachId, workout, coach.name);
   }
 
   public async addNewSubscription(
@@ -82,10 +84,10 @@ export class SubscriberService {
     this.subscriberRepository.removeSubscription(userId, coachId);
   }
 
-  public async clearWorkouts(userId: string): Promise<void> {
+  public async clearNotifications(userId: string): Promise<void> {
     const subscriber = await this.getSubscriber(userId);
 
-    subscriber.newWorkouts = [];
+    subscriber.notifications = [];
     this.subscriberRepository.update(subscriber.id, subscriber);
   }
 }
