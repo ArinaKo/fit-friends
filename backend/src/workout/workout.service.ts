@@ -7,12 +7,14 @@ import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
 import { DEFAULT_RATING } from 'src/shared/const';
 import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import { fillDto } from '@app/helpers';
+import { SubscriberService } from 'src/subscriber/subscriber.service';
 
 @Injectable()
 export class WorkoutService {
   constructor(
     private readonly workoutRepository: WorkoutRepository,
     private readonly userService: UserService,
+    private readonly subscriberService: SubscriberService,
   ) {}
 
   public async getWorkoutEntity(id: string): Promise<WorkoutEntity> {
@@ -29,10 +31,11 @@ export class WorkoutService {
     dto: CreateWorkoutDto,
     coachId: string,
   ): Promise<FullWorkoutRdo> {
-    const newWorkout = WorkoutEntity.fromObject(
+    const newEntity = WorkoutEntity.fromObject(
       Object.assign(dto, { coachId, rating: DEFAULT_RATING }),
     );
-    await this.workoutRepository.save(newWorkout);
+    const newWorkout = await this.workoutRepository.save(newEntity);
+    await this.subscriberService.addNewWorkout(coachId, newWorkout.id!)
 
     return fillDto(FullWorkoutRdo, newWorkout.toPOJO());
   }

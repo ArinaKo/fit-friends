@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { WorkoutModel, WorkoutSchema } from './workout.model';
 import { WorkoutRepository } from './workout.repository';
 import { UserModule } from 'src/user/user.module';
+import { SubscriberModule } from 'src/subscriber/subscriber.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UserModule } from 'src/user/user.module';
       { name: WorkoutModel.name, schema: WorkoutSchema },
     ]),
     UserModule,
+    SubscriberModule,
   ],
   providers: [WorkoutRepository, WorkoutService],
   controllers: [WorkoutController],
