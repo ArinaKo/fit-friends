@@ -1,16 +1,16 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { CoachSubscription } from '@app/types';
+import { Subscriber } from '@app/types';
 
 @Schema({
   collection: 'coach-subscriptions',
   timestamps: true,
 })
-export class CoachSubscriptionModel extends Document implements CoachSubscription {
+export class SubscriberModel extends Document implements Subscriber {
   @Prop({
     required: true,
   })
-  public coachId: string;
+  public userId: string;
 
   @Prop({
     required: true,
@@ -20,8 +20,8 @@ export class CoachSubscriptionModel extends Document implements CoachSubscriptio
   @Prop({
     required: true,
   })
-  public subscribers: string[];
+  public coaches: string[];
 }
 
-export const CoachSubscriptionSchema =
-  SchemaFactory.createForClass(CoachSubscriptionModel);
+export const SubscriberSchema =
+  SchemaFactory.createForClass(SubscriberModel);

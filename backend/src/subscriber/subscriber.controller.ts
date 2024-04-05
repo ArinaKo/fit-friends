@@ -6,16 +6,16 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { CoachSubscriptionService } from './coach-subscription.service';
+import { SubscriberService } from './subscriber.service';
 import { ApiResponse } from '@nestjs/swagger';
 import { MongoIdValidationPipe, Role } from '@app/core';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
 import { RequestWithTokenPayload } from 'src/shared/requests';
 
-@Controller('coach-subscription')
-export class CoachSubscriptionController {
-  constructor(private readonly subscriptionService: CoachSubscriptionService) {}
+@Controller('subscribe')
+export class SubscriberController {
+  constructor(private readonly subscriberService: SubscriberService) {}
 
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -28,8 +28,7 @@ export class CoachSubscriptionController {
     @Param('coachId', MongoIdValidationPipe) coachId: string,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    await this.subscriptionService.addNewSubscriber(coachId, tokenPayload.sub);
-    
+    await this.subscriberService.addNewSubscription(tokenPayload.sub, coachId);
   }
 
   @ApiResponse({
@@ -43,6 +42,6 @@ export class CoachSubscriptionController {
     @Param('coachId', MongoIdValidationPipe) coachId: string,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    await this.subscriptionService.removeSubscriber(coachId, tokenPayload.sub);
+    await this.subscriberService.removeSubscription(tokenPayload.sub, coachId);
   }
 }
