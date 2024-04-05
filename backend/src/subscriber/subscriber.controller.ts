@@ -33,12 +33,12 @@ export class SubscriberController {
   })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
-  @Patch('/:coachId')
+  @Patch('add/:coachId')
   public async create(
     @Param('coachId', MongoIdValidationPipe) coachId: string,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    await this.subscriberService.addNewSubscription(tokenPayload.sub, coachId);
+    await this.subscriberService.addNewSubscription(tokenPayload, coachId);
   }
 
   @ApiResponse({
@@ -47,7 +47,7 @@ export class SubscriberController {
   })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
-  @Patch('/:coachId')
+  @Patch('remove/:coachId')
   public async delete(
     @Param('coachId', MongoIdValidationPipe) coachId: string,
     @Req() { tokenPayload }: RequestWithTokenPayload,

@@ -3,24 +3,18 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { EmailSubject } from './mail.const';
 import { mailConfig } from '@app/config';
-import { UserService } from 'src/user/user.service';
 import { WorkoutNotification } from '@app/types';
 
 @Injectable()
 export class MailService {
   constructor(
     private readonly mailerService: MailerService,
-    private readonly userService: UserService,
   ) {}
 
   @Inject(mailConfig.KEY)
   private readonly mailConfig: ConfigType<typeof mailConfig>;
 
-  public async sendNotifyNewSubscription(coachId: string, userId: string) {
-    const { name: coachName } = await this.userService.getUserEntity(coachId);
-    const { email, name: userName } =
-      await this.userService.getUserEntity(userId);
-
+  public async sendNotifyNewSubscription(email: string, userName: string, coachName: string) {
     await this.mailerService.sendMail({
       from: this.mailConfig.from,
       to: email,

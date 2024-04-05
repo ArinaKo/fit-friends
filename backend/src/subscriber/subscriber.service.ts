@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { SubscriberRepository } from './subscriber.repository';
 import { SubscriberEntity } from './subscriber.entity';
-import { UserRole } from '@app/types';
+import { TokenPayload, UserRole } from '@app/types';
 import { UserService } from 'src/user/user.service';
 import { MailService } from 'src/mail/mail.service';
 import { WorkoutEntity } from 'src/workout/workout.entity';
@@ -65,7 +65,7 @@ export class SubscriberService {
   }
 
   public async addNewSubscription(
-    userId: string,
+    { sub, email, name }: TokenPayload,
     coachId: string,
   ): Promise<void> {
     const coach = await this.userService.getUserEntity(coachId);
@@ -74,14 +74,14 @@ export class SubscriberService {
       throw new ConflictException(`You can subscribe only to coaches`);
     }
 
-    const existsSubscriber = await this.getSubscriber(userId);
+    const existsSubscriber = await this.getSubscriber(sub);
 
     if (existsSubscriber.coaches.includes(coachId)) {
       throw new ConflictException(`You are already subscribed`);
     }
 
-    await this.subscriberRepository.addNewSubscription(userId, coachId);
-    await this.mailService.sendNotifyNewSubscription(coachId, userId);
+    await this.subscriberRepository.addNewSubscription(sub, coachId);
+    await this.mailService.sendNotifyNewSubscription(email, name, coach.name);
   }
 
   public async removeSubscription(
