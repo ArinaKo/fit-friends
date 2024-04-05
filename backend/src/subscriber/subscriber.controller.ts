@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { SubscriberService } from './subscriber.service';
 import { ApiResponse } from '@nestjs/swagger';
-import { MongoIdValidationPipe, Role } from '@app/core';
+import { MongoIdValidationPipe, Public, Role } from '@app/core';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
 import { RequestWithTokenPayload } from 'src/shared/requests';
@@ -16,6 +16,16 @@ import { RequestWithTokenPayload } from 'src/shared/requests';
 @Controller('subscribe')
 export class SubscriberController {
   constructor(private readonly subscriberService: SubscriberService) {}
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Notifications have been successfully dispatched',
+  })
+  @Public()
+  @Patch('/dispatch')
+  public async dispatch() {
+    await this.subscriberService.dispatchNotifications();
+  }
 
   @ApiResponse({
     status: HttpStatus.CREATED,

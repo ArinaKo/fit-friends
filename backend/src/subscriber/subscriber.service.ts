@@ -43,6 +43,19 @@ export class SubscriberService {
     return this.createSubscriber(userId);
   }
 
+  public async dispatchNotifications(): Promise<void> {
+    const subscribers = await this.subscriberRepository.find();
+
+    subscribers.forEach(async (subscriber) => {
+      const { userId, notifications } = subscriber;
+      const { name, email } = await this.userService.getUserEntity(userId);
+      notifications.forEach(async (notification) => {
+        await this.mailService.sendNotifyNewWorkout(email, name, notification);
+      });
+      await this.clearNotifications(userId);
+    });
+  }
+
   public async addNewWorkout(
     coachId: string,
     workout: WorkoutEntity,

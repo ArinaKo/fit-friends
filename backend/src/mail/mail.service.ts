@@ -4,6 +4,7 @@ import { ConfigType } from '@nestjs/config';
 import { EmailSubject } from './mail.const';
 import { mailConfig } from '@app/config';
 import { UserService } from 'src/user/user.service';
+import { WorkoutNotification } from '@app/types';
 
 @Injectable()
 export class MailService {
@@ -28,6 +29,22 @@ export class MailService {
       context: {
         coachName,
         userName,
+      },
+    });
+  }
+
+  public async sendNotifyNewWorkout(email: string, userName: string, notification: WorkoutNotification) {
+    const { title, type, description, calories, coachName } = notification;
+
+    await this.mailerService.sendMail({
+      from: this.mailConfig.from,
+      to: email,
+      subject: EmailSubject.NewWorkout,
+      template: './new-workout',
+      context: {
+        userName,
+        coachName,
+        title, type, description, calories,
       },
     });
   }

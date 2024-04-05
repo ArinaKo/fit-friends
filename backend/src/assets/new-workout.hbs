@@ -1,0 +1,24 @@
+<html>
+  <h2>Привет, {{userName}}</h2>
+  <p>{{coachName}} добавил(а) новую тренировку!</p>
+  <div>
+    <h3 class='title'>{{title}}</h3>
+    <ul class='hashtags-list'>
+      <li class='hashtags-item'>
+        <div><span>#{{type}}</span></div>
+      </li>
+      <li class='hashtags-item'>
+        <div><span>#{{calories}}ккал</span></div>
+      </li>
+    </ul>
+    <p class='text'>{{description}}</p>
+  </div>
+</html>
+<style>
+  .title { margin: 0 0 17px; font-size: 20px; font-weight: 500; line-height:
+  1.1; letter-spacing: .01em; text-transform: uppercase; color: #181818; }
+  .hashtags-list { padding: 0; list-style-type: none; display: flex; flex-wrap:
+  wrap; margin: 0 15px 0 0; } .hashtags-item { margin-right: 7px; margin-bottom:
+  8px; } .text { margin: 0 0 5px; margin-bottom: 24px; font-size: 14px;
+  line-height: 1.3; }
+</style>

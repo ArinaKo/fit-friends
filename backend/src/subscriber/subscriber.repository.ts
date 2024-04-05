@@ -18,6 +18,10 @@ export class SubscriberRepository extends BaseMongoRepository<
     super(SubscriberModel, SubscriberEntity.fromObject);
   }
 
+  public async find(): Promise<SubscriberEntity[]> {
+    return this.model.find();
+  }
+
   public async findByUserId(userId: string): Promise<SubscriberEntity | null> {
     const document = await this.model.findOne({ userId }).exec();
 
