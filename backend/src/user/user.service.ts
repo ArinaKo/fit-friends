@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -12,7 +11,7 @@ import { AuthUserRdo, LoggedUserRdo } from 'src/auth/rdo';
 import { fillDto } from '@app/helpers';
 import { FullUserRdo, UserRdo, UsersWithPaginationRdo } from './rdo';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
-import { DocumentFile, ImageFile } from 'src/file-vault/file-vault.const';
+import { FileMessage } from 'src/shared/messages';
 
 @Injectable()
 export class UserService {
@@ -70,18 +69,14 @@ export class UserService {
     const existsUser = await this.getUserEntity(userId);
 
     if (dto.avatar && !(await this.fileVaultService.isFileImage(dto.avatar))) {
-      throw new BadRequestException(
-        `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
-      );
+      throw new BadRequestException(FileMessage.UploadedImageType);
     }
 
     if (
       dto.backgroundImage &&
       !(await this.fileVaultService.isFileImage(dto.backgroundImage))
     ) {
-      throw new BadRequestException(
-        `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
-      );
+      throw new BadRequestException(FileMessage.UploadedImageType);
     }
 
     if (
@@ -89,9 +84,7 @@ export class UserService {
       dto.certificate &&
       !(await this.fileVaultService.isFileDocument(dto.certificate))
     ) {
-      throw new ConflictException(
-        `Uploaded file type is not matching: ${DocumentFile.MimeTypes.join(', ')}`,
-      );
+      throw new BadRequestException(FileMessage.UploadedDocumentType);
     }
 
     let hasChanges = false;

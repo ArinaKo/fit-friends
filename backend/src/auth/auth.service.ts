@@ -17,7 +17,7 @@ import {
   LoginUserDto,
 } from './dto/index';
 import * as dayjs from 'dayjs';
-import { UserMessage } from 'src/shared/messages';
+import { FileMessage, UserMessage } from 'src/shared/messages';
 import { RefreshTokenPayload } from '@app/types';
 import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '@app/config/jwt.config';
@@ -27,7 +27,6 @@ import { createJWTPayload, fillDto } from '@app/helpers';
 import { UserService } from 'src/user/user.service';
 import { AuthUserRdo, LoggedUserRdo } from './rdo';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
-import { DocumentFile, ImageFile } from 'src/file-vault/file-vault.const';
 
 @Injectable()
 export class AuthService {
@@ -63,15 +62,14 @@ export class AuthService {
     }
 
     if (!(await this.fileVaultService.isFileImage(avatar))) {
-      throw new BadRequestException(
-        `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
-      );
+      throw new BadRequestException(FileMessage.UploadedImageType);
     }
 
-    if (dto.backgroundImage && !(await this.fileVaultService.isFileImage(dto.backgroundImage))) {
-      throw new BadRequestException(
-        `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
-      );
+    if (
+      dto.backgroundImage &&
+      !(await this.fileVaultService.isFileImage(dto.backgroundImage))
+    ) {
+      throw new BadRequestException(FileMessage.UploadedImageType);
     }
 
     const newUser = {
@@ -94,9 +92,7 @@ export class AuthService {
     let extraInfo = {};
     if (dto instanceof CreateCoachUserDto) {
       if (!(await this.fileVaultService.isFileDocument(dto.certificate))) {
-        throw new BadRequestException(
-          `Uploaded file type is not matching: ${DocumentFile.MimeTypes.join(', ')}`,
-        );
+        throw new BadRequestException(FileMessage.UploadedDocumentType);
       }
       extraInfo = {
         certificate: dto.certificate,

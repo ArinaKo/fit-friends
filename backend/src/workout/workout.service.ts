@@ -14,7 +14,7 @@ import { fillDto, generateRandomValue } from '@app/helpers';
 import { SubscriberService } from 'src/subscriber/subscriber.service';
 import { WORKOUT_IMAGES_COUNT } from './workout.const';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
-import { VideoFile } from 'src/file-vault/file-vault.const';
+import { FileMessage } from 'src/shared/messages';
 
 @Injectable()
 export class WorkoutService {
@@ -40,9 +40,7 @@ export class WorkoutService {
     coachId: string,
   ): Promise<FullWorkoutRdo> {
     if (!(await this.fileVaultService.isFileVideo(dto.video))) {
-      throw new BadRequestException(
-        `Uploaded file type is not matching: ${VideoFile.MimeTypes.join(', ')}`,
-      );
+      throw new BadRequestException(FileMessage.UploadedVideoType);
     }
 
     const newEntity = WorkoutEntity.fromObject(
@@ -63,9 +61,7 @@ export class WorkoutService {
     dto: UpdateWorkoutDto,
   ): Promise<FullWorkoutRdo> {
     if (dto.video && !(await this.fileVaultService.isFileVideo(dto.video))) {
-      throw new BadRequestException(
-        `Uploaded file type is not matching: ${VideoFile.MimeTypes.join(', ')}`,
-      );
+      throw new BadRequestException(FileMessage.UploadedVideoType);
     }
 
     const workout = await this.getWorkoutEntity(workoutId);

@@ -10,7 +10,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileVaultService } from './file-vault.service';
 import { FileFilter, ParseFile, Public, Role } from '@app/core';
-import { DocumentFile, ImageFile, VideoFile } from './file-vault.const';
+import { DocumentFile, ImageFile, VideoFile } from '../shared/const/index';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
 

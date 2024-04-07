@@ -11,7 +11,7 @@ import { StoredFile } from '@app/types';
 import { FileEntity } from './file.entity';
 import { FileVaultRepository } from './file-vault.repository';
 import { extension } from 'mime-types';
-import { DocumentFile, ImageFile, VideoFile } from './file-vault.const';
+import { DocumentFile, ImageFile, VideoFile } from '../shared/const/index';
 
 @Injectable()
 export class FileVaultService {
