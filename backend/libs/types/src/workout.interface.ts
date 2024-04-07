@@ -1,3 +1,4 @@
+import { FileData } from './file-data.interface';
 import { UserLevel } from './user-level.enum';
 import { WorkoutSexFor } from './workout-sex-for.enum';
 import { WorkoutType } from './workout-type.enum';
@@ -14,7 +15,7 @@ export interface Workout {
   calories: number;
   description: string;
   userSex: WorkoutSexFor;
-  video: string;
+  video: string | FileData;
   coachId: string;
   isSpecial: boolean;
   rating: number;

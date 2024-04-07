@@ -6,6 +6,7 @@ import {
   WorkoutSexFor,
   WorkoutType,
 } from '@app/types';
+import { FileEntity } from 'src/file-vault/file.entity';
 
 export class WorkoutEntity implements Workout, Entity<string> {
   public id?: string;
@@ -18,7 +19,7 @@ export class WorkoutEntity implements Workout, Entity<string> {
   public calories: number;
   public description: string;
   public userSex: WorkoutSexFor;
-  public video: string;
+  public video: string | FileEntity;
   public coachId: string;
   public isSpecial: boolean;
   public rating: number;
@@ -39,7 +40,8 @@ export class WorkoutEntity implements Workout, Entity<string> {
       calories: this.calories,
       description: this.description,
       userSex: this.userSex,
-      video: this.video,
+      video:
+        this.video instanceof FileEntity ? this.video.toPOJO() : this.video,
       coachId: this.coachId,
       isSpecial: this.isSpecial,
       rating: this.rating,
@@ -57,7 +59,10 @@ export class WorkoutEntity implements Workout, Entity<string> {
     this.calories = data.calories;
     this.description = data.description;
     this.userSex = data.userSex;
-    this.video = data.video;
+    this.video =
+      typeof data.video === 'object'
+        ? FileEntity.fromObject(data.video)
+        : data.video;
     this.coachId = data.coachId;
     this.isSpecial = data.isSpecial;
     this.rating = data.rating;

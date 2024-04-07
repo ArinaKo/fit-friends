@@ -15,6 +15,7 @@ import {
   Min,
   Max,
   IsOptional,
+  IsMongoId,
 } from 'class-validator';
 import {
   CaloriesValue,
@@ -34,14 +35,6 @@ export class UpdateWorkoutDto {
     message: DtoValidationMessage.workoutTitle.length,
   })
   public title?: string;
-
-  @ApiPropertyOptional({
-    description: 'Workout background image',
-    example: 'image.jpg',
-  })
-  @IsOptional()
-  @IsString()
-  public backgroundImage?: string;
 
   @ApiPropertyOptional({
     description: 'Workout level',
@@ -114,10 +107,10 @@ export class UpdateWorkoutDto {
 
   @ApiPropertyOptional({
     description: 'Workout video',
-    example: 'video.mov',
+    example: '65fb2c95e0f91e82a4d24b11',
   })
   @IsOptional()
-  @IsString()
+  @IsMongoId()
   public video?: string;
 
   @ApiPropertyOptional({
