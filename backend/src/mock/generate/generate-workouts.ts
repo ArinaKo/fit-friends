@@ -1,33 +1,51 @@
-import { UserLevel, UserSex, WorkoutType, WorkoutDuration } from '@app/types';
 import {
-  generateRandomValue,
-  getRandomItem,
-} from '@app/helpers';
-import { CaloriesValue } from 'src/shared/const';
+  UserLevel,
+  WorkoutType,
+  WorkoutDuration,
+  WorkoutSexFor,
+} from '@app/types';
+import { generateRandomValue, getRandomItem } from '@app/helpers';
+import { CaloriesValue, DEFAULT_RATING } from 'src/shared/const';
 import { WorkoutsDescriptions, WorkoutsTitles } from './mock-data';
-
-const IMAGES_NUMBER = 5;
-const WORKOUTS_NUMBER = 5;
-const MAX_PRICE = 50000;
+import { WORKOUT_IMAGES_COUNT } from 'src/workout/workout.const';
+import { WorkoutEntity } from 'src/workout/workout.entity';
+import { GeneratedDataAmount, MAX_PRICE } from '../mock.const';
 
 function generateWorkout() {
   return {
     title: getRandomItem(WorkoutsTitles),
-    backgroundImage: `training-${generateRandomValue(1, IMAGES_NUMBER)}.png`,
+    backgroundImage: `/workouts/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.png`,
     level: getRandomItem(Object.values(UserLevel)),
     type: getRandomItem(Object.values(WorkoutType)),
     duration: getRandomItem(Object.values(WorkoutDuration)),
     price: generateRandomValue(0, MAX_PRICE),
     calories: generateRandomValue(CaloriesValue.Min, CaloriesValue.Max),
     description: getRandomItem(WorkoutsDescriptions),
-    userSex: getRandomItem(Object.values(UserSex)),
-    video: 'video.mov',
+    userSex: getRandomItem(Object.values(WorkoutSexFor)),
     isSpecial: Boolean(generateRandomValue(0, 1)),
   };
 }
 
-export function generatesWorkout(coachId: string) {
-  return Array.from({ length: WORKOUTS_NUMBER }).forEach(() =>
-    Object.assign(generateWorkout(), { coachId })
+function generatesWorkoutsForCoach(
+  coachId: string,
+  videosIds: string[],
+): WorkoutEntity[] {
+  return Array.from({ length: GeneratedDataAmount.Workouts }).map(() =>
+    WorkoutEntity.fromObject(
+      Object.assign(generateWorkout(), {
+        coachId,
+        video: getRandomItem(videosIds),
+        rating: DEFAULT_RATING,
+      }),
+    ),
   );
+}
+
+export function generatesWorkoutsEntities(
+  coachesIds: string[],
+  videosIds: string[],
+): WorkoutEntity[] {
+  return coachesIds
+    .map((coach) => generatesWorkoutsForCoach(coach, videosIds))
+    .flat();
 }
