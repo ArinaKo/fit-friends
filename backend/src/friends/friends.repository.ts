@@ -113,7 +113,12 @@ export class FriendsRepository extends BaseMongoRepository<
                   as: 'request',
                 },
               },
-              { $unwind: '$request'},
+              {
+                $unwind: {
+                  path: '$request',
+                  preserveNullAndEmptyArrays: true
+                }
+              },
               {
                 $lookup: {
                   from: 'files',
@@ -146,8 +151,8 @@ export class FriendsRepository extends BaseMongoRepository<
 
     const records = record.friends.map((friend) => ({
       user: UserEntity.fromObject(friend),
-      workoutRequest: friend.request.at(0)
-        ? WorkoutRequestEntity.fromObject(friend.request.at(0))
+      workoutRequest: friend.request
+        ? WorkoutRequestEntity.fromObject(friend.request)
         : undefined,
     }));
 

@@ -13,7 +13,7 @@ import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
-  AddIdString: {
+  AddStringId: {
     $addFields: {
       id: { $toString: '$_id' },
     },
@@ -105,13 +105,18 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     const document = await this.model
       .aggregate([
         { $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } } },
-        PipelineStage.AddIdString,
+        PipelineStage.AddStringId,
         PipelineStage.LookupAvatars,
         { $unwind: '$avatar'},
         PipelineStage.LookupBackgroundImages,
         { $unwind: '$backgroundImage'},
         PipelineStage.LookupCertificate,
-        { $unwind: '$certificate'},
+        {
+          $unwind: {
+            path: '$certificate',
+            preserveNullAndEmptyArrays: true
+          }
+        }
       ])
       .exec()
       .then((r) => r.at(0) || null);
@@ -142,7 +147,7 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
           { $sort: { createdAt: sortDirection } },
           { $skip: skip },
           { $limit: limit },
-          PipelineStage.AddIdString,
+          PipelineStage.AddStringId,
           PipelineStage.LookupAvatars,
           { $unwind: '$avatar'},
         ])
