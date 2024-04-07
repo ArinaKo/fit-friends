@@ -15,6 +15,7 @@ import { NotificationModule } from './notification/notification.module';
 import { FileVaultModule } from './file-vault/file-vault.module';
 import { SubscriberModule } from './subscriber/subscriber.module';
 import { MailModule } from './mail/mail.module';
+import { MockModule } from './mock/mock.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { MailModule } from './mail/mail.module';
     FileVaultModule,
     SubscriberModule,
     MailModule,
+    MockModule,
   ],
   controllers: [],
   providers: [

@@ -1,0 +1,4 @@
+# Generate mocks
+POST http://localhost:3000/mocks HTTP/1.1
+
+###

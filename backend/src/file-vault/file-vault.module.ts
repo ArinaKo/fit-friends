@@ -30,6 +30,6 @@ import { FileVaultController } from './file-vault.controller';
   ],
   controllers: [FileVaultController],
   providers: [FileVaultRepository, FileVaultService],
-  exports: [FileVaultService],
+  exports: [FileVaultService, FileVaultRepository],
 })
 export class FileVaultModule {}
