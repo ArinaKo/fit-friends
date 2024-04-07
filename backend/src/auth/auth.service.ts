@@ -11,11 +11,7 @@ import {
 } from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
 import { UserEntity } from '../user/user.entity';
-import {
-  CreateCoachUserDto,
-  CreateUserDto,
-  LoginUserDto,
-} from './dto/index';
+import { CreateCoachUserDto, CreateUserDto, LoginUserDto } from './dto/index';
 import * as dayjs from 'dayjs';
 import { FileMessage, UserMessage } from 'src/shared/messages';
 import { RefreshTokenPayload } from '@app/types';
@@ -72,7 +68,7 @@ export class AuthService {
       throw new BadRequestException(FileMessage.UploadedImageType);
     }
 
-    const newUser = {
+    const userInfo = {
       email,
       name,
       avatar,
@@ -107,11 +103,12 @@ export class AuthService {
     }
 
     const userEntity = await new UserEntity(
-      Object.assign(newUser, extraInfo),
+      Object.assign(userInfo, extraInfo),
     ).setPassword(password);
 
-    const user = await this.userRepository.save(userEntity);
-    return fillDto(AuthUserRdo, user.toPOJO());
+    const userId = (await this.userRepository.save(userEntity)).id!;
+    const fullUser = await this.userRepository.findFullUser(userId);
+    return fillDto(AuthUserRdo, fullUser!.toPOJO());
   }
 
   public async verifyUser(dto: LoginUserDto): Promise<UserEntity> {

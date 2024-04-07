@@ -51,7 +51,10 @@ export class WorkoutService {
     const newWorkout = await this.workoutRepository.save(newEntity);
     await this.subscriberService.addNewWorkout(coachId, newWorkout);
 
-    return fillDto(FullWorkoutRdo, newWorkout.toPOJO());
+    const fullWorkout = await this.workoutRepository.findFullWorkout(
+      newWorkout.id!,
+    );
+    return fillDto(FullWorkoutRdo, fullWorkout!.toPOJO());
   }
 
   public async updateWorkout(
@@ -77,11 +80,10 @@ export class WorkoutService {
       return fillDto(FullWorkoutRdo, workout.toPOJO());
     }
 
-    const updatedWorkout = await this.workoutRepository.update(
-      workoutId,
-      workout,
-    );
-    return fillDto(FullWorkoutRdo, updatedWorkout.toPOJO());
+    await this.workoutRepository.update(workoutId, workout);
+
+    const fullWorkout = await this.workoutRepository.findFullWorkout(workoutId);
+    return fillDto(FullWorkoutRdo, fullWorkout!.toPOJO());
   }
 
   public async updateWorkoutRating(workoutId: string) {
