@@ -1,12 +1,12 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { File } from '@app/types';
+import { FileData } from '@app/types';
 
 @Schema({
   collection: 'files',
   timestamps: true,
 })
-export class FileModel extends Document implements File {
+export class FileModel extends Document implements FileData {
   @Prop({
     required: true,
   })

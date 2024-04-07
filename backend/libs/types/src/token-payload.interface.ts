@@ -5,6 +5,5 @@ export interface TokenPayload {
   email: string;
   role: UserRole;
   name: string;
-  avatar: string;
   isReady: boolean;
 }

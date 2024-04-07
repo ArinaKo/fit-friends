@@ -6,7 +6,6 @@ export function createJWTPayload(user: User): TokenPayload {
     email: user.email,
     role: user.role,
     name: user.name,
-    avatar: user.avatar,
     isReady: user.isReady,
   };
 }
