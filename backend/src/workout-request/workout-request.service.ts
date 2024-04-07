@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -38,10 +39,16 @@ export class WorkoutRequestService {
     const areUsersFriends =
       (await this.friendsService.checkUserInFriends(userId, userToId)) &&
       (await this.friendsService.checkUserInFriends(userToId, userId));
-      
+
     if (!areUsersFriends) {
       throw new BadRequestException(
         `Workout request can be send only between friends`,
+      );
+    }
+
+    if (await this.requestRepository.isRequestPending(userId, userToId)) {
+      throw new ConflictException(
+        `Previous request is still waiting for a response`,
       );
     }
 
