@@ -1,15 +1,25 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserRepository } from './user.repository';
-import { UpdateUserDto } from './dto';
+import { UpdateCoachUserDto, UpdateUserDto } from './dto';
 import { UserEntity } from './user.entity';
 import { UsersQuery } from './query';
 import { AuthUserRdo, LoggedUserRdo } from 'src/auth/rdo';
 import { fillDto } from '@app/helpers';
 import { FullUserRdo, UserRdo, UsersWithPaginationRdo } from './rdo';
+import { FileVaultService } from 'src/file-vault/file-vault.service';
+import { DocumentFile, ImageFile } from 'src/file-vault/file-vault.const';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly fileVaultService: FileVaultService,
+  ) {}
 
   public async getUserByEmail(email: string): Promise<LoggedUserRdo> {
     const existsUser = await this.userRepository.findByEmail(email);
@@ -32,7 +42,12 @@ export class UserService {
   }
 
   public async getFullUser(userId: string): Promise<FullUserRdo> {
-    const existsUser = await this.getUserEntity(userId);
+    const existsUser = await this.userRepository.findFullUser(userId);
+
+    if (!existsUser) {
+      throw new NotFoundException(`User with id ${userId} not found`);
+    }
+
     return fillDto(FullUserRdo, existsUser.toPOJO());
   }
 
@@ -54,6 +69,31 @@ export class UserService {
   ): Promise<AuthUserRdo> {
     const existsUser = await this.getUserEntity(userId);
 
+    if (dto.avatar && !(await this.fileVaultService.isFileImage(dto.avatar))) {
+      throw new BadRequestException(
+        `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
+      );
+    }
+
+    if (
+      dto.backgroundImage &&
+      !(await this.fileVaultService.isFileImage(dto.backgroundImage))
+    ) {
+      throw new BadRequestException(
+        `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
+      );
+    }
+
+    if (
+      dto instanceof UpdateCoachUserDto &&
+      dto.certificate &&
+      !(await this.fileVaultService.isFileDocument(dto.certificate))
+    ) {
+      throw new ConflictException(
+        `Uploaded file type is not matching: ${DocumentFile.MimeTypes.join(', ')}`,
+      );
+    }
+
     let hasChanges = false;
 
     for (const [key, value] of Object.entries(dto)) {
@@ -67,7 +107,9 @@ export class UserService {
       return fillDto(AuthUserRdo, existsUser.toPOJO());
     }
 
-    const updatedUser = await this.userRepository.update(userId, existsUser);
-    return fillDto(AuthUserRdo, updatedUser.toPOJO());
+    await this.userRepository.update(userId, existsUser);
+
+    const updatedUser = await this.userRepository.findFullUser(userId);
+    return fillDto(AuthUserRdo, updatedUser!.toPOJO());
   }
 }

@@ -11,6 +11,7 @@ import {
 } from '../shared/strategies/index';
 import { UserModule } from '../user/user.module';
 import { RefreshTokenModule } from 'src/refresh-token/refresh-token.module';
+import { FileVaultModule } from 'src/file-vault/file-vault.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RefreshTokenModule } from 'src/refresh-token/refresh-token.module';
     }),
     UserModule,
     RefreshTokenModule,
+    FileVaultModule,
   ],
   providers: [
     AuthService,

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   HttpException,
   HttpStatus,
@@ -26,6 +27,7 @@ import { createJWTPayload, fillDto } from '@app/helpers';
 import { UserService } from 'src/user/user.service';
 import { AuthUserRdo, LoggedUserRdo } from './rdo';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
+import { DocumentFile, ImageFile } from 'src/file-vault/file-vault.const';
 
 @Injectable()
 export class AuthService {
@@ -56,10 +58,20 @@ export class AuthService {
       password,
     } = dto;
 
-    const existedUser = await this.userRepository.findByEmail(email);
-
-    if (existedUser) {
+    if (await this.userRepository.findByEmail(email)) {
       throw new ConflictException(UserMessage.Exists);
+    }
+
+    if (!(await this.fileVaultService.isFileImage(avatar))) {
+      throw new BadRequestException(
+        `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
+      );
+    }
+
+    if (dto.backgroundImage && !(await this.fileVaultService.isFileImage(dto.backgroundImage))) {
+      throw new BadRequestException(
+        `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
+      );
     }
 
     const newUser = {
@@ -81,6 +93,11 @@ export class AuthService {
 
     let extraInfo = {};
     if (dto instanceof CreateCoachUserDto) {
+      if (!(await this.fileVaultService.isFileDocument(dto.certificate))) {
+        throw new BadRequestException(
+          `Uploaded file type is not matching: ${DocumentFile.MimeTypes.join(', ')}`,
+        );
+      }
       extraInfo = {
         certificate: dto.certificate,
         achievements: dto.achievements,
