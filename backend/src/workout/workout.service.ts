@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { WorkoutRepository } from './workout.repository';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutEntity } from './workout.entity';
@@ -9,6 +13,8 @@ import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import { fillDto, generateRandomValue } from '@app/helpers';
 import { SubscriberService } from 'src/subscriber/subscriber.service';
 import { WORKOUT_IMAGES_COUNT } from './workout.const';
+import { FileVaultService } from 'src/file-vault/file-vault.service';
+import { VideoFile } from 'src/file-vault/file-vault.const';
 
 @Injectable()
 export class WorkoutService {
@@ -16,6 +22,7 @@ export class WorkoutService {
     private readonly workoutRepository: WorkoutRepository,
     private readonly userService: UserService,
     private readonly subscriberService: SubscriberService,
+    private readonly fileVaultService: FileVaultService,
   ) {}
 
   public async getWorkoutEntity(id: string): Promise<WorkoutEntity> {
@@ -32,6 +39,12 @@ export class WorkoutService {
     dto: CreateWorkoutDto,
     coachId: string,
   ): Promise<FullWorkoutRdo> {
+    if (!(await this.fileVaultService.isFileVideo(dto.video))) {
+      throw new BadRequestException(
+        `Uploaded file type is not matching: ${VideoFile.MimeTypes.join(', ')}`,
+      );
+    }
+
     const newEntity = WorkoutEntity.fromObject(
       Object.assign(dto, {
         coachId,
@@ -49,6 +62,12 @@ export class WorkoutService {
     workoutId: string,
     dto: UpdateWorkoutDto,
   ): Promise<FullWorkoutRdo> {
+    if (dto.video && !(await this.fileVaultService.isFileVideo(dto.video))) {
+      throw new BadRequestException(
+        `Uploaded file type is not matching: ${VideoFile.MimeTypes.join(', ')}`,
+      );
+    }
+
     const workout = await this.getWorkoutEntity(workoutId);
 
     let hasChanges = false;
