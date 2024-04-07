@@ -20,6 +20,7 @@ import {
   Max,
   IsOptional,
   IsISO8601,
+  IsMongoId,
 } from 'class-validator';
 import {
   CaloriesValue,
@@ -34,9 +35,10 @@ import { Expose } from 'class-transformer';
 
 class BaseUserDto {
   @ApiProperty({
-    description: 'User avatar url',
-    example: 'image.jpg',
+    description: 'User avatar',
+    example: '660306ae5cdc417b17500eec',
   })
+  @IsMongoId()
   @Expose()
   public avatar: string;
 
@@ -118,9 +120,9 @@ class BaseUserDto {
 
   @ApiPropertyOptional({
     description: 'User image for background',
-    example: 'background-image.png',
+    example: '660306ae5cdc417b17500eec',
   })
-  @IsString()
+  @IsMongoId()
   @IsOptional()
   @Expose()
   public backgroundImage?: string;
@@ -192,9 +194,9 @@ export class CreateDefaultUserDto extends BaseUserDto {
 export class CreateCoachUserDto extends BaseUserDto {
   @ApiProperty({
     description: 'Coach certificate',
-    example: 'certificate.jpg',
+    example: '660306ae5cdc417b17500eec',
   })
-  @IsString()
+  @IsMongoId()
   @Expose()
   public certificate: string;
 

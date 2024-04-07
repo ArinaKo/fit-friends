@@ -4,25 +4,26 @@ import { UserSex } from './user-sex.enum';
 import { WorkoutDuration } from './workouts-durations.const';
 import { WorkoutType } from './workout-type.enum';
 import { MetroStation } from './metro-station.enum';
+import { FileData } from './file-data.interface';
 
 export interface User {
   id?: string;
   name: string;
   email: string;
-  avatar: string;
+  avatar: string | FileData;
   sex: UserSex;
   dateOfBirth?: Date;
   role: UserRole;
   description: string;
   location: MetroStation;
-  backgroundImage?: string;
+  backgroundImage: string | FileData;
   level: UserLevel;
   workoutTypes: WorkoutType[];
   isReady: boolean;
 }
 
 export interface CoachUser extends User {
-  certificate?: string;
+  certificate?: string | FileData;
   achievements?: string;
 }
 

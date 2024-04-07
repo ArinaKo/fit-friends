@@ -12,7 +12,6 @@ import { UserRepository } from '../user/user.repository';
 import { UserEntity } from '../user/user.entity';
 import {
   CreateCoachUserDto,
-  CreateDefaultUserDto,
   CreateUserDto,
   LoginUserDto,
 } from './dto/index';
@@ -26,6 +25,7 @@ import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { createJWTPayload, fillDto } from '@app/helpers';
 import { UserService } from 'src/user/user.service';
 import { AuthUserRdo, LoggedUserRdo } from './rdo';
+import { FileVaultService } from 'src/file-vault/file-vault.service';
 
 @Injectable()
 export class AuthService {
@@ -37,6 +37,7 @@ export class AuthService {
     @Inject(jwtConfig.KEY)
     private readonly jwtOptions: ConfigType<typeof jwtConfig>,
     private readonly refreshTokenService: RefreshTokenService,
+    private readonly fileVaultService: FileVaultService,
   ) {}
 
   public async register(dto: CreateUserDto): Promise<AuthUserRdo> {
@@ -49,7 +50,6 @@ export class AuthService {
       role,
       description,
       location,
-      backgroundImage,
       level,
       workoutTypes,
       isReady,
@@ -71,7 +71,7 @@ export class AuthService {
       role,
       description,
       location,
-      backgroundImage: backgroundImage ?? avatar,
+      backgroundImage: dto.backgroundImage ?? avatar,
       level,
       workoutTypes,
       isReady,
@@ -79,25 +79,22 @@ export class AuthService {
       createdAt: new Date(),
     };
 
-    const defaultUserInfo =
-      dto instanceof CreateDefaultUserDto
-        ? {
-            caloriesToLose: dto.caloriesToLose,
-            caloriesPerDay: dto.caloriesPerDay,
-            timeForWorkout: dto.timeForWorkout,
-          }
-        : {};
-
-    const coachUserInfo =
-      dto instanceof CreateCoachUserDto
-        ? {
-            certificate: dto.certificate,
-            achievements: dto.achievements,
-          }
-        : {};
+    let extraInfo = {};
+    if (dto instanceof CreateCoachUserDto) {
+      extraInfo = {
+        certificate: dto.certificate,
+        achievements: dto.achievements,
+      };
+    } else {
+      extraInfo = {
+        caloriesToLose: dto.caloriesToLose,
+        caloriesPerDay: dto.caloriesPerDay,
+        timeForWorkout: dto.timeForWorkout,
+      };
+    }
 
     const userEntity = await new UserEntity(
-      Object.assign(newUser, defaultUserInfo, coachUserInfo),
+      Object.assign(newUser, extraInfo),
     ).setPassword(password);
 
     const user = await this.userRepository.save(userEntity);

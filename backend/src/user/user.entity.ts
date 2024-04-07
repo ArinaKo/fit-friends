@@ -10,23 +10,24 @@ import {
   WorkoutType,
 } from '@app/types';
 import { SALT_ROUNDS } from './user.const';
+import { FileEntity } from 'src/file-vault/file.entity';
 
 export class UserEntity implements FullUser, Entity<string> {
   public id?: string;
   public name: string;
   public email: string;
-  public avatar: string;
+  public avatar: string | FileEntity;
   public dateOfBirth?: Date;
   public role: UserRole;
   public sex: UserSex;
   public description: string;
   public location: MetroStation;
-  public backgroundImage?: string;
+  public backgroundImage: string | FileEntity;
   public level: UserLevel;
   public workoutTypes: WorkoutType[];
   public isReady: boolean;
   public passwordHash?: string;
-  public certificate?: string;
+  public certificate?: string | FileEntity;
   public achievements?: string;
   public caloriesToLose?: number;
   public caloriesPerDay?: number;
@@ -41,18 +42,25 @@ export class UserEntity implements FullUser, Entity<string> {
       id: this.id,
       email: this.email,
       name: this.name,
-      avatar: this.avatar,
+      avatar:
+        this.avatar instanceof FileEntity ? this.avatar.toPOJO() : this.avatar,
       dateOfBirth: this.dateOfBirth,
       role: this.role,
       sex: this.sex,
       description: this.description,
       location: this.location,
-      backgroundImage: this.backgroundImage,
+      backgroundImage:
+        this.backgroundImage instanceof FileEntity
+          ? this.backgroundImage.toPOJO()
+          : this.backgroundImage,
       level: this.level,
       workoutTypes: this.workoutTypes,
       isReady: this.isReady,
       passwordHash: this.passwordHash,
-      certificate: this.certificate,
+      certificate:
+        this.certificate instanceof FileEntity
+          ? this.certificate.toPOJO()
+          : this.certificate,
       achievements: this.achievements,
       caloriesToLose: this.caloriesToLose,
       caloriesPerDay: this.caloriesPerDay,
@@ -64,18 +72,27 @@ export class UserEntity implements FullUser, Entity<string> {
     this.id = data.id;
     this.email = data.email;
     this.name = data.name;
-    this.avatar = data.avatar;
+    this.avatar =
+      typeof data.avatar === 'object'
+        ? FileEntity.fromObject(data.avatar)
+        : data.avatar;
     this.dateOfBirth = data.dateOfBirth;
     this.role = data.role;
     this.sex = data.sex;
     this.description = data.description;
     this.location = data.location;
-    this.backgroundImage = data.backgroundImage;
+    this.backgroundImage =
+      typeof data.backgroundImage === 'object'
+        ? FileEntity.fromObject(data.backgroundImage)
+        : data.backgroundImage;
     this.level = data.level;
     this.workoutTypes = data.workoutTypes;
     this.isReady = data.isReady;
     this.passwordHash = data.passwordHash;
-    this.certificate = data.certificate;
+    this.certificate =
+      typeof data.certificate === 'object'
+        ? FileEntity.fromObject(data.certificate)
+        : data.certificate;
     this.achievements = data.achievements;
     this.caloriesToLose = data.caloriesToLose;
     this.caloriesPerDay = data.caloriesPerDay;

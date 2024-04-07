@@ -66,8 +66,10 @@ export class UserModel extends Document implements AuthUser {
   })
   public location: MetroStation;
 
-  @Prop()
-  public backgroundImage?: string;
+  @Prop({
+    required: true,
+  })
+  public backgroundImage: string;
 
   @Prop({
     required: true,
