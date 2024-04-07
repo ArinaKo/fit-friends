@@ -6,7 +6,6 @@ import {
 import { WorkoutRepository } from './workout.repository';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutEntity } from './workout.entity';
-import { UserService } from 'src/user/user.service';
 import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
 import { DEFAULT_RATING } from 'src/shared/const';
 import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
@@ -20,7 +19,6 @@ import { FileMessage } from 'src/shared/messages';
 export class WorkoutService {
   constructor(
     private readonly workoutRepository: WorkoutRepository,
-    private readonly userService: UserService,
     private readonly subscriberService: SubscriberService,
     private readonly fileVaultService: FileVaultService,
   ) {}
@@ -106,12 +104,7 @@ export class WorkoutService {
       throw new NotFoundException(`Workout with id ${id} not found.`);
     }
 
-    const coach = await this.userService.getUserEntity(workout.coachId);
-
-    return fillDto(
-      FullWorkoutRdo,
-      Object.assign(workout.toPOJO(), { coach: coach.toPOJO() }),
-    );
+    return fillDto(FullWorkoutRdo, workout.toPOJO());
   }
 
   public async getCoachId(id: string): Promise<string> {

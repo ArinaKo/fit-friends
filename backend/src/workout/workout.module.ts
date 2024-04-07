@@ -4,7 +4,6 @@ import { WorkoutService } from './workout.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { WorkoutModel, WorkoutSchema } from './workout.model';
 import { WorkoutRepository } from './workout.repository';
-import { UserModule } from 'src/user/user.module';
 import { SubscriberModule } from 'src/subscriber/subscriber.module';
 import { FileVaultModule } from 'src/file-vault/file-vault.module';
 
@@ -13,7 +12,6 @@ import { FileVaultModule } from 'src/file-vault/file-vault.module';
     MongooseModule.forFeature([
       { name: WorkoutModel.name, schema: WorkoutSchema },
     ]),
-    UserModule,
     SubscriberModule,
     FileVaultModule,
   ],

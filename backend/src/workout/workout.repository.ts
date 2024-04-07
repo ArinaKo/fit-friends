@@ -53,6 +53,39 @@ const PipelineStage: { [key: string]: PipelineStage } = {
       as: 'video',
     },
   },
+  LookupCoach:  {
+    $lookup: {
+      from: 'users',
+      let: { userId: '$coachId' },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ['$_id', { $toObjectId: '$$userId' }] },
+          },
+        },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+          },
+        },
+        { $lookup: {
+          from: 'files',
+          let: { imageId: '$avatar' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] } } },
+            {
+              $addFields: {
+                id: { $toString: '$_id' },
+              },
+            },
+          ],
+          as: 'avatar',
+        },
+      },
+      ],
+      as: 'coach',
+    },
+  }
 };
 
 function generateFilter(query: FullWorkoutQuery) {
@@ -143,6 +176,8 @@ export class WorkoutRepository extends BaseMongoRepository<
         PipelineStage.AddStringId,
         PipelineStage.LookupVideos,
         { $unwind: '$video'},
+        PipelineStage.LookupCoach,
+        { $unwind: '$coach'},
       ])
       .exec()
       .then((r) => r.at(0) || null);
