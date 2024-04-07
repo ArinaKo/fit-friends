@@ -5,6 +5,7 @@ import {
   UserSex,
   WorkoutType,
   WorkoutDuration,
+  FullUser,
 } from '@app/types';
 import {
   generateDate,
@@ -12,37 +13,25 @@ import {
   getRandomItem,
   getRandomItems,
 } from '@app/helpers';
-import {
-  UsersDescriptions,
-  Emails,
-  FemaleNames,
-  MaleNames,
-} from './mock-data';
-import { CaloriesValue } from 'src/shared/const';
-
-const AVATARS_NUMBER = 5;
-const COACHES_NUMBER = 10;
-const CERTIFICATES_NUMBER = 6;
-const WORKOUT_TYPES_NUMBER = 3;
+import { UsersDescriptions, Emails, FemaleNames, MaleNames } from './mock-data';
+import { CaloriesValue, MAX_WORKOUTS_TYPES } from 'src/shared/const';
+import { UserEntity } from 'src/user/user.entity';
+import { DEFAULT_PASSWORD, GeneratedDataAmount } from '../mock.const';
 
 function generateUser(isMale: boolean, isCoach: boolean) {
   return {
     name: getRandomItem(isMale ? MaleNames : FemaleNames),
-    avatar: `photo-${generateRandomValue(1, AVATARS_NUMBER)}.png`,
     sex: isMale ? UserSex.Male : UserSex.Female,
-    dateOfBirth: generateDate(),
+    dateOfBirth: new Date(generateDate()),
     role: isCoach ? UserRole.Coach : UserRole.Default,
     description: getRandomItem(UsersDescriptions),
     location: getRandomItem(Object.values(MetroStation)),
     level: getRandomItem(Object.values(UserLevel)),
     workoutTypes: getRandomItems(
       Object.values(WorkoutType),
-      WORKOUT_TYPES_NUMBER,
+      MAX_WORKOUTS_TYPES,
     ),
     isReady: Boolean(generateRandomValue(0, 1)),
-    certificate: isCoach
-      ? `certificate-${generateRandomValue(1, CERTIFICATES_NUMBER)}.jpg`
-      : undefined,
     achievements: isCoach ? 'Я отличный тренер' : undefined,
     caloriesToLose: isCoach
       ? undefined
@@ -56,13 +45,34 @@ function generateUser(isMale: boolean, isCoach: boolean) {
   };
 }
 
-export function generateUsers() {
-  return Array.from({ length: Emails.length }).forEach((_, index) => 
-    Object.assign(
-      generateUser(index % 2 === 0, index < COACHES_NUMBER),
+function generateUsers(
+  avatarsIds: string[],
+  certificateIds: string[],
+): FullUser[] {
+  return [...Emails].map((_, index) => {
+    const avatar = getRandomItem(avatarsIds);
+    return Object.assign(
+      generateUser(index % 2 === 0, index < GeneratedDataAmount.Coaches),
       {
         email: Emails[index],
+        avatar,
+        backgroundImage: avatar,
+        certificate:
+          index < GeneratedDataAmount.Coaches
+            ? getRandomItem(certificateIds)
+            : undefined,
       },
-    )
+    );
+  });
+}
+
+export async function generateUsersEntities(
+  avatarsIds: string[],
+  certificateIds: string[],
+): Promise<UserEntity[]> {
+  return Promise.all(
+    generateUsers(avatarsIds, certificateIds).map(
+      async (user) => await new UserEntity(user).setPassword(DEFAULT_PASSWORD),
+    ),
   );
 }
