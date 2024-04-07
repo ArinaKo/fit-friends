@@ -12,7 +12,7 @@ import {
 import { FullWorkoutQuery } from './query';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
-  AddIdString: {
+  AddStringId: {
     $addFields: {
       id: { $toString: '$_id' },
     },
@@ -36,6 +36,21 @@ const PipelineStage: { [key: string]: PipelineStage } = {
       newRating: {
         $cond: [{ $size: '$comments' }, { $avg: '$comments.rating' }, 0],
       },
+    },
+  },
+  LookupVideos: {
+    $lookup: {
+      from: 'files',
+      let: { videoId: '$video' },
+      pipeline: [
+        { $match: { $expr: { $eq: ['$_id', { $toObjectId: '$$videoId' }] } } },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+          },
+        },
+      ],
+      as: 'video',
     },
   },
 };
@@ -113,7 +128,21 @@ export class WorkoutRepository extends BaseMongoRepository<
     const document = await this.model
       .aggregate([
         { $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } } },
-        PipelineStage.AddIdString,
+        PipelineStage.AddStringId,
+      ])
+      .exec()
+      .then((r) => r.at(0) || null);
+
+    return this.createEntityFromDocument(document);
+  }
+
+  public async findFullWorkout(id: string): Promise<WorkoutEntity | null> {
+    const document = await this.model
+      .aggregate([
+        { $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } } },
+        PipelineStage.AddStringId,
+        PipelineStage.LookupVideos,
+        { $unwind: '$video'},
       ])
       .exec()
       .then((r) => r.at(0) || null);
@@ -141,7 +170,7 @@ export class WorkoutRepository extends BaseMongoRepository<
           { $sort: { price: sortDirection } },
           { $skip: skip },
           { $limit: limit },
-          PipelineStage.AddIdString,
+          PipelineStage.AddStringId,
         ])
         .exec(),
       this.model.countDocuments(filter),

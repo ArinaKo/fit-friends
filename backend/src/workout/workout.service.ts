@@ -6,8 +6,9 @@ import { UserService } from 'src/user/user.service';
 import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
 import { DEFAULT_RATING } from 'src/shared/const';
 import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
-import { fillDto } from '@app/helpers';
+import { fillDto, generateRandomValue } from '@app/helpers';
 import { SubscriberService } from 'src/subscriber/subscriber.service';
+import { WORKOUT_IMAGES_COUNT } from './workout.const';
 
 @Injectable()
 export class WorkoutService {
@@ -32,10 +33,14 @@ export class WorkoutService {
     coachId: string,
   ): Promise<FullWorkoutRdo> {
     const newEntity = WorkoutEntity.fromObject(
-      Object.assign(dto, { coachId, rating: DEFAULT_RATING }),
+      Object.assign(dto, {
+        coachId,
+        rating: DEFAULT_RATING,
+        backgroundImage: `/workouts/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.png`,
+      }),
     );
     const newWorkout = await this.workoutRepository.save(newEntity);
-    await this.subscriberService.addNewWorkout(coachId, newWorkout)
+    await this.subscriberService.addNewWorkout(coachId, newWorkout);
 
     return fillDto(FullWorkoutRdo, newWorkout.toPOJO());
   }
@@ -80,7 +85,11 @@ export class WorkoutService {
   }
 
   public async getFullWorkout(id: string): Promise<FullWorkoutRdo> {
-    const workout = await this.getWorkoutEntity(id);
+    const workout = await this.workoutRepository.findFullWorkout(id);
+
+    if (!workout) {
+      throw new NotFoundException(`Workout with id ${id} not found.`);
+    }
 
     const coach = await this.userService.getUserEntity(workout.coachId);
 
