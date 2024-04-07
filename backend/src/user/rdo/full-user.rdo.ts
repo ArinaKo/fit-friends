@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import { UserRdo } from './user.rdo';
+import { FileRdo } from 'src/file-vault/rdo';
 
 export class FullUserRdo extends UserRdo {
   @ApiPropertyOptional({
@@ -28,13 +29,15 @@ export class FullUserRdo extends UserRdo {
     description: 'User image for background',
     example: 'background-image.png',
   })
+  @Type(() => FileRdo)
   @Expose()
-  public backgroundImage: string;
+  public backgroundImage: FileRdo;
 
   @ApiPropertyOptional({
     description: 'Coach certificate',
     example: 'certificate.jpg',
   })
+  @Type(() => FileRdo)
   @Expose()
-  public certificate?: string;
+  public certificate?: FileRdo;
 }

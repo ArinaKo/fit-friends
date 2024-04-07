@@ -113,6 +113,27 @@ export class FriendsRepository extends BaseMongoRepository<
                   as: 'request',
                 },
               },
+              { $unwind: '$request'},
+              {
+                $lookup: {
+                  from: 'files',
+                  let: { imageId: '$avatar' },
+                  pipeline: [
+                    {
+                      $match: {
+                        $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] },
+                      },
+                    },
+                    {
+                      $addFields: {
+                        id: { $toString: '$_id' },
+                      },
+                    },
+                  ],
+                  as: 'avatar',
+                },
+              },
+              { $unwind: '$avatar'},
             ],
             as: 'friends',
           },

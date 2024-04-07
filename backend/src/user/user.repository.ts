@@ -1,12 +1,69 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, PipelineStage } from 'mongoose';
 import { BaseMongoRepository } from '@app/core';
 import { UserEntity } from './user.entity';
 import { UserModel } from './user.model';
-import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/shared/const';
+import {
+  DEFAULT_PAGE,
+  DEFAULT_SORT_DIRECTION,
+  LIST_LIMIT,
+} from 'src/shared/const';
 import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
+
+const PipelineStage: { [key: string]: PipelineStage } = {
+  AddIdString: {
+    $addFields: {
+      id: { $toString: '$_id' },
+    },
+  },
+  LookupAvatars: {
+    $lookup: {
+      from: 'files',
+      let: { imageId: '$avatar' },
+      pipeline: [
+        { $match: { $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] } } },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+          },
+        },
+      ],
+      as: 'avatar',
+    },
+  },
+  LookupCertificate: {
+    $lookup: {
+      from: 'files',
+      let: { imageId: '$certificate' },
+      pipeline: [
+        { $match: { $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] } } },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+          },
+        },
+      ],
+      as: 'certificate',
+    },
+  },
+  LookupBackgroundImages: {
+    $lookup: {
+      from: 'files',
+      let: { imageId: '$backgroundImage' },
+      pipeline: [
+        { $match: { $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] } } },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+          },
+        },
+      ],
+      as: 'backgroundImage',
+    },
+  },
+};
 
 function generateFilter(query?: UsersQuery) {
   let filter = {};
@@ -44,6 +101,24 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     super(UserModel, UserEntity.fromObject);
   }
 
+  public async findFullUser(id: string): Promise<UserEntity | null> {
+    const document = await this.model
+      .aggregate([
+        { $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } } },
+        PipelineStage.AddIdString,
+        PipelineStage.LookupAvatars,
+        { $unwind: '$avatar'},
+        PipelineStage.LookupBackgroundImages,
+        { $unwind: '$backgroundImage'},
+        PipelineStage.LookupCertificate,
+        { $unwind: '$certificate'},
+      ])
+      .exec()
+      .then((r) => r.at(0) || null);
+
+    return this.createEntityFromDocument(document);
+  }
+
   public async findByEmail(email: string): Promise<UserEntity | null> {
     const document = await this.model.findOne({ email }).exec();
 
@@ -54,9 +129,7 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     return this.createEntityFromDocument(document);
   }
 
-  public async find(
-    query?: UsersQuery,
-  ): Promise<PaginationResult<UserEntity>> {
+  public async find(query?: UsersQuery): Promise<PaginationResult<UserEntity>> {
     const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
@@ -69,11 +142,9 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
           { $sort: { createdAt: sortDirection } },
           { $skip: skip },
           { $limit: limit },
-          {
-            $addFields: {
-              id: { $toString: '$_id' },
-            },
-          },
+          PipelineStage.AddIdString,
+          PipelineStage.LookupAvatars,
+          { $unwind: '$avatar'},
         ])
         .exec(),
       this.model.countDocuments(filter),

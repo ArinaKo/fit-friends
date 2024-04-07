@@ -6,7 +6,8 @@ import {
   WorkoutType,
 } from '@app/types';
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { FileRdo } from 'src/file-vault/rdo';
 
 export class UserRdo {
   @ApiProperty({
@@ -20,8 +21,9 @@ export class UserRdo {
     description: 'User avatar url',
     example: 'image.jpg',
   })
+  @Type(() => FileRdo)
   @Expose()
-  public avatar: string;
+  public avatar: FileRdo;
 
   @ApiProperty({
     description: 'User name',
