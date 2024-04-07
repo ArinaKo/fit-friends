@@ -5,6 +5,7 @@ import { FileModel, FileSchema } from './file.model';
 import { FileVaultRepository } from './file-vault.repository';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigService } from '@nestjs/config';
+import { FileVaultController } from './file-vault.controller';
 
 @Module({
   imports: [
@@ -31,6 +32,8 @@ import { ConfigService } from '@nestjs/config';
     }),
     MongooseModule.forFeature([{ name: FileModel.name, schema: FileSchema }]),
   ],
+  controllers: [FileVaultController],
   providers: [FileVaultRepository, FileVaultService],
+  exports: [FileVaultService],
 })
 export class FileVaultModule {}
