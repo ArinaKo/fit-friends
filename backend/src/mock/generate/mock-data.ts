@@ -12,7 +12,17 @@ export const Emails = [
   'author@mir.local',
   'test@lost.local',
   'kujo-fan@story.local',
-  'team@building.local',
+  'person@building.local',
+  'snow@snow.local',
+  'user@local.local',
+  'cat@dog.local',
+  'test@test.local',
+  'aloha@pisem.local',
+  'jimmm@pochta.local',
+  'summer@day.local',
+  'spring@day.local',
+  'winter@day.local',
+  'autumn@day.local',
 ];
 
 export const UsersDescriptions = [

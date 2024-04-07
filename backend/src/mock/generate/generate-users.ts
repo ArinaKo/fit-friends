@@ -21,8 +21,8 @@ import {
 import { CaloriesValue } from 'src/shared/const';
 
 const AVATARS_NUMBER = 5;
-const COACHES_NUMBER = 4;
-const CERTIFICATES_NUMBER = 5;
+const COACHES_NUMBER = 10;
+const CERTIFICATES_NUMBER = 6;
 const WORKOUT_TYPES_NUMBER = 3;
 
 function generateUser(isMale: boolean, isCoach: boolean) {
@@ -40,11 +40,10 @@ function generateUser(isMale: boolean, isCoach: boolean) {
       WORKOUT_TYPES_NUMBER,
     ),
     isReady: Boolean(generateRandomValue(0, 1)),
-    createdAt: generateDate(),
     certificate: isCoach
       ? `certificate-${generateRandomValue(1, CERTIFICATES_NUMBER)}.jpg`
       : undefined,
-    achievements: isCoach ? '' : undefined,
+    achievements: isCoach ? 'Я отличный тренер' : undefined,
     caloriesToLose: isCoach
       ? undefined
       : generateRandomValue(CaloriesValue.Min, CaloriesValue.Max),

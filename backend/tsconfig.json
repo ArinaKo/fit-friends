@@ -35,12 +35,6 @@
       "@app/types/*": [
         "libs/types/src/*"
       ],
-      "@app/mocks": [
-        "libs/mocks/src"
-      ],
-      "@app/mocks/*": [
-        "libs/mocks/src/*"
-      ],
       "@app/core": [
         "libs/core/src"
       ],

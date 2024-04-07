@@ -34,15 +34,6 @@
         "tsConfigPath": "libs/types/tsconfig.lib.json"
       }
     },
-    "mocks": {
-      "type": "library",
-      "root": "libs/mocks",
-      "entryFile": "index",
-      "sourceRoot": "libs/mocks/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/mocks/tsconfig.lib.json"
-      }
-    },
     "core": {
       "type": "library",
       "root": "libs/core",
@@ -50,15 +41,6 @@
       "sourceRoot": "libs/core/src",
       "compilerOptions": {
         "tsConfigPath": "libs/core/tsconfig.lib.json"
-      }
-    },
-    "messages": {
-      "type": "library",
-      "root": "libs/messages",
-      "entryFile": "index",
-      "sourceRoot": "libs/messages/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/messages/tsconfig.lib.json"
       }
     }
   }

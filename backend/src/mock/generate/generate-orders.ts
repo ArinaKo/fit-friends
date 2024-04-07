@@ -3,7 +3,7 @@ import {
   PaymentType,
 } from '@app/types';
 import { generateDate, generateRandomValue, getRandomItem } from '@app/helpers';
-import { OrderCountValue, RatingValue } from 'src/shared/const';
+import { OrderCountValue } from 'src/shared/const';
 
 const ORDERS_NUMBER = 5;
 
