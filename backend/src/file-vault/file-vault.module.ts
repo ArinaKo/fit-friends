@@ -12,12 +12,8 @@ import { FileVaultController } from './file-vault.controller';
     ServeStaticModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const rootPath = configService.get<string>(
-          'application.uploadDirectory',
-        );
-        const serveRoot = configService.get<string>(
-          'application.filesServePath',
-        );
+        const rootPath = configService.get<string>('app.uploadDirectory');
+        const serveRoot = configService.get<string>('app.filesServePath');
         return [
           {
             rootPath,

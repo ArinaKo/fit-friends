@@ -1,7 +1,7 @@
 import { Entity } from '@app/core';
-import { File } from '@app/types';
+import { FileData } from '@app/types';
 
-export class FileEntity implements File, Entity<string> {
+export class FileEntity implements FileData, Entity<string> {
   public id?: string;
   public originalName: string;
   public subDirectory: string;
@@ -9,6 +9,10 @@ export class FileEntity implements File, Entity<string> {
   public mimetype: string;
   public hashName: string;
   public path: string;
+
+  constructor(data: FileData) {
+    this.populate(data);
+  }
 
   public toPOJO() {
     return {
@@ -22,7 +26,7 @@ export class FileEntity implements File, Entity<string> {
     };
   }
 
-  public populate(data: File): FileEntity {
+  public populate(data: FileData): void {
     this.id = data.id;
     this.originalName = data.originalName;
     this.size = data.size;
@@ -30,11 +34,9 @@ export class FileEntity implements File, Entity<string> {
     this.hashName = data.hashName;
     this.subDirectory = data.subDirectory;
     this.path = data.path;
-
-    return this;
   }
 
-  static fromObject(data: File): FileEntity {
-    return new FileEntity().populate(data);
+  static fromObject(data: FileData): FileEntity {
+    return new FileEntity(data);
   }
 }

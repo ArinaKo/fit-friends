@@ -5,12 +5,13 @@ import { ensureDir } from 'fs-extra';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
-import { extension } from 'mime-types';
 import appConfig from '@app/config/app.config';
 import * as dayjs from 'dayjs';
 import { StoredFile } from '@app/types';
 import { FileEntity } from './file.entity';
 import { FileVaultRepository } from './file-vault.repository';
+import { extension } from 'mime-types';
+import { DocumentFile, ImageFile, VideoFile } from './file-vault.const';
 
 @Injectable()
 export class FileVaultService {
@@ -37,26 +38,25 @@ export class FileVaultService {
 
   private getSubUploadDirectoryPath(): string {
     const [year, month] = dayjs().format(this.DATE_FORMAT).split(' ');
-    return join(year, month);
+    return join('uploads', year, month);
   }
 
-  public async writeFile(file: Express.Multer.File): Promise<StoredFile> {
+  private async writeFile(file: Express.Multer.File): Promise<StoredFile> {
     try {
       const uploadDirectoryPath = this.getUploadDirectoryPath();
       const subDirectory = this.getSubUploadDirectoryPath();
       const fileExtension = extension(file.mimetype);
       const filename = `${randomUUID()}.${fileExtension}`;
 
-      const path = this.getDestinationFilePath(filename);
+      const filePath = this.getDestinationFilePath(filename);
 
       await ensureDir(join(uploadDirectoryPath, subDirectory));
-      await writeFile(path, file.buffer);
+      await writeFile(filePath, file.buffer);
 
       return {
-        fileExtension,
         filename,
-        path,
-        subDirectory,
+        filePath: filePath.replace(/\\/g, '/'),
+        subDirectory: subDirectory.replace(/\\/g, '/'),
       };
     } catch (error) {
       this.logger.error(`Error while saving file: ${error.message}`);
@@ -70,7 +70,7 @@ export class FileVaultService {
       hashName: storedFile.filename,
       mimetype: file.mimetype,
       originalName: file.originalname,
-      path: storedFile.path,
+      path: storedFile.filePath,
       size: file.size,
       subDirectory: storedFile.subDirectory,
     });
@@ -81,10 +81,25 @@ export class FileVaultService {
   public async getFile(fileId: string): Promise<FileEntity> {
     const existFile = await this.fileVaultRepository.findById(fileId);
 
-    if (! existFile) {
+    if (!existFile) {
       throw new NotFoundException(`File with ${fileId} not found.`);
     }
 
     return existFile;
+  }
+
+  public async isFileImage(fileId: string): Promise<boolean> {
+    const file = await this.getFile(fileId);
+    return ImageFile.MimeTypes.includes(file.mimetype);
+  }
+
+  public async isFileVideo(fileId: string): Promise<boolean> {
+    const file = await this.getFile(fileId);
+    return VideoFile.MimeTypes.includes(file.mimetype);
+  }
+
+  public async isFileDocument(fileId: string): Promise<boolean> {
+    const file = await this.getFile(fileId);
+    return DocumentFile.MimeTypes.includes(file.mimetype);
   }
 }

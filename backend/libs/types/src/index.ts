@@ -23,7 +23,7 @@ export * from './sort-direction.enum';
 export * from './workout-sex-for.enum';
 export * from './friends.interface';
 export * from './workout-orders.interface';
-export * from './file.interface';
+export * from './file-data.interface';
 export * from './stored-file.interface';
 export * from './subscriber.interface';
 export * from './workout-notification.interface';
