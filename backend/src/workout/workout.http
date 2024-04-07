@@ -1,3 +1,17 @@
+# Upload workout video
+POST http://localhost:3000/upload/video HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExZjMxN2NjZjk0MjY5YjUzMzg2OGMiLCJlbWFpbCI6ImNvYWNoQGZvdW5kLmxvY2FsIiwicm9sZSI6ItGC0YDQtdC90LXRgCIsIm5hbWUiOiJLZWtzIiwiaXNSZWFkeSI6dHJ1ZSwiaWF0IjoxNzEyNDk3MTE5LCJleHAiOjE3MTI0OTgwMTl9.TVF081HH-s07anWUAdfBkrdA8lphkPdwhKxiSuNQ4lA
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="video.mp4"
+Content-Type: video/mp4
+
+< ./video.mp4
+--boundary--
+
+###
+
 # Create a new workout
 POST http://localhost:3000/workouts HTTP/1.1
 Content-Type: application/json
@@ -5,7 +19,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjdlY
 
 {
   "title": "hatha",
-  "backgroundImage": "image.jpg",
   "level": "любитель",
   "type": "йога",
   "duration": "30-50 мин", 
@@ -13,7 +26,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjdlY
   "calories": 2300,
   "description": "Упражнения по хатха йоге, направленные на понижение нервной возбудимости.",
   "userSex": "для женщин",
-  "video": "video.mov",
+  "video": "6612a216dc30630e42c88b48",
   "isSpecial": false
 }
 
@@ -26,7 +39,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyN
 
 {
   "title": "Обновлено",
-  "backgroundImage": "image.jpg",
   "level": "новичок",
   "isSpecial": true
 }
