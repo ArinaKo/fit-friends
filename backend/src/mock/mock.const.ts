@@ -10,6 +10,7 @@ export enum GeneratedDataAmount {
   Friends = 5,
   Subscriptions = 3,
   WorkoutNotifications = 2,
+  Notifications = 40,
 }
 
 export enum FilesAmount {
