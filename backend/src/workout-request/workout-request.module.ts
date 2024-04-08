@@ -22,5 +22,6 @@ import { NotificationModule } from 'src/notification/notification.module';
   ],
   controllers: [WorkoutRequestController],
   providers: [WorkoutRequestRepository, WorkoutRequestService],
+  exports: [WorkoutRequestRepository],
 })
 export class WorkoutRequestModule {}

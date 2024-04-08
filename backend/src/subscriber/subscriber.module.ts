@@ -17,6 +17,6 @@ import { SubscriberController } from './subscriber.controller';
   ],
   controllers: [SubscriberController],
   providers: [SubscriberRepository, SubscriberService],
-  exports: [SubscriberService],
+  exports: [SubscriberService, SubscriberRepository],
 })
 export class SubscriberModule {}

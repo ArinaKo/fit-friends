@@ -24,8 +24,10 @@ export abstract class BaseMongoRepository<
     return this.createEntity(document);
   }
 
-  protected createEntitiesFromDocuments(documents: DocumentType[]): EntityType[] {
-    return documents.map((document) => this.createEntity((document)));
+  protected createEntitiesFromDocuments(
+    documents: DocumentType[],
+  ): EntityType[] {
+    return documents.map((document) => this.createEntity(document));
   }
 
   protected calculatePages(totalCount: number, limit: number): number {
@@ -74,5 +76,18 @@ export abstract class BaseMongoRepository<
     if (!deletedDocument) {
       throw new NotFoundException(`Entity with id ${id} not found.`);
     }
+  }
+
+  public async saveMany(entities: EntityType[]): Promise<EntityType[]> {
+    const documents = entities.map((entity) => new this.model(entity.toPOJO()));
+    await Promise.allSettled(
+      documents.map(async (document) => {
+        await document.save();
+      }),
+    );
+    documents.map((document) => {
+      document.id = document._id.toString();
+    });
+    return this.createEntitiesFromDocuments(documents);
   }
 }

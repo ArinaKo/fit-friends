@@ -15,5 +15,6 @@ import { BalanceModule } from 'src/balance/balance.module';
   ],
   providers: [OrderRepository, OrderService],
   controllers: [OrderController],
+  exports: [OrderRepository],
 })
 export class OrderModule {}

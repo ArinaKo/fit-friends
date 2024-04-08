@@ -17,6 +17,6 @@ import { FileVaultModule } from 'src/file-vault/file-vault.module';
   ],
   providers: [WorkoutRepository, WorkoutService],
   controllers: [WorkoutController],
-  exports: [WorkoutService],
+  exports: [WorkoutService, WorkoutRepository],
 })
 export class WorkoutModule {}

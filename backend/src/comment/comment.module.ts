@@ -15,5 +15,6 @@ import { WorkoutModule } from 'src/workout/workout.module';
   ],
   providers: [CommentRepository, CommentService],
   controllers: [CommentController],
+  exports: [CommentRepository],
 })
 export class CommentModule {}

@@ -13,6 +13,6 @@ import { NotificationRepository } from './notification.repository';
   ],
   controllers: [NotificationController],
   providers: [NotificationRepository, NotificationService],
-  exports: [NotificationService],
+  exports: [NotificationService, NotificationRepository],
 })
 export class NotificationModule {}

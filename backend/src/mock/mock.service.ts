@@ -6,6 +6,10 @@ import { FriendsRepository } from 'src/friends/friends.repository';
 import { OrderRepository } from 'src/order/order.repository';
 import { WorkoutRequestRepository } from 'src/workout-request/workout-request.repository';
 import { WorkoutRepository } from 'src/workout/workout.repository';
+import { NotificationRepository } from 'src/notification/notification.repository';
+import { SubscriberRepository } from 'src/subscriber/subscriber.repository';
+import { WorkoutService } from 'src/workout/workout.service';
+import { BalanceService } from 'src/balance/balance.service';
 
 @Injectable()
 export class MockService {
@@ -17,6 +21,10 @@ export class MockService {
     private readonly commentRepository: CommentRepository,
     private readonly workoutRequestRepository: WorkoutRequestRepository,
     private readonly fileVaultRepository: FileVaultRepository,
+    private readonly notificationRepository: NotificationRepository,
+    private readonly subscriberRepository: SubscriberRepository,
+    private readonly workoutService: WorkoutService,
+    private readonly balanceService: BalanceService,
   ) {}
 
   public async generateMocks(): Promise<void> {}
