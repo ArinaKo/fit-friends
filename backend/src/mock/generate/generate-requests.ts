@@ -1,18 +1,40 @@
 import { RequestStatus } from '@app/types';
-import { generateDate, getRandomItem } from '@app/helpers';
+import { generateDate, getRandomItems } from '@app/helpers';
+import { GeneratedDataAmount } from '../mock.const';
+import { WorkoutRequestEntity } from 'src/workout-request/workout-request.entity';
 
-const REQUESTS_NUMBER = 3;
-
-function generateRequest(usersIds: string[]) {
+function generateRequest(userToId: string) {
   return {
-    userToId: getRandomItem(usersIds),
+    userToId: userToId,
     status: RequestStatus.Default,
     createdAt: generateDate(),
   };
 }
 
-export function generatesRequests(userId: string, otherUsersIds: string[]) {
-  return Array.from({ length: REQUESTS_NUMBER }).forEach(() =>
-    Object.assign(generateRequest(otherUsersIds), { userFromId: userId }),
+function generatesRequestsFromUser(
+  userId: string,
+  usersToIds: string[],
+): WorkoutRequestEntity[] {
+  return usersToIds.map((userToId: string) =>
+    WorkoutRequestEntity.fromObject(
+      Object.assign(generateRequest(userToId), { userFromId: userId }),
+    ),
   );
+}
+
+export function generatesRequestsEntities(
+  usersId: string[],
+  allUsersIds: string[],
+): WorkoutRequestEntity[] {
+  return usersId
+    .map((userId) =>
+      generatesRequestsFromUser(
+        userId,
+        getRandomItems(
+          allUsersIds.filter((id) => id !== userId),
+          GeneratedDataAmount.WorkoutRequests,
+        ),
+      ),
+    )
+    .flat();
 }
