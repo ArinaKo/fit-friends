@@ -3,12 +3,14 @@ import { OrderType, PaymentType } from '@app/types';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsMongoId, IsInt, Max, Min } from 'class-validator';
 import { OrderCountValue } from 'src/shared/const';
+import { Transform } from 'class-transformer';
 
 export class CreateOrderDto {
   @ApiProperty({
     description: 'Order type',
     example: 'абонемент',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsEnum(OrderType, { message: DtoValidationMessage.orderType.invalidFormat })
   public type: OrderType;
 
@@ -16,6 +18,7 @@ export class CreateOrderDto {
     description: 'Workout id',
     example: '660306ae5cdc417b17500eec',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsMongoId()
   public workoutId: string;
 
@@ -32,6 +35,7 @@ export class CreateOrderDto {
     description: 'Payment type',
     example: 'visa',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsEnum(PaymentType, {
     message: DtoValidationMessage.paymentType.invalidFormat,
   })

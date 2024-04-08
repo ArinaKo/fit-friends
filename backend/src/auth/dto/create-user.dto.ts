@@ -21,6 +21,7 @@ import {
   IsOptional,
   IsISO8601,
   IsMongoId,
+  Matches,
 } from 'class-validator';
 import {
   CaloriesValue,
@@ -31,13 +32,14 @@ import {
   UserPasswordLength,
 } from 'src/shared/const';
 import { DtoValidationMessage } from 'src/shared/messages';
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 class BaseUserDto {
   @ApiProperty({
     description: 'User avatar',
     example: '660306ae5cdc417b17500eec',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsMongoId()
   @Expose()
   public avatar: string;
@@ -55,6 +57,7 @@ class BaseUserDto {
     description: 'User email',
     example: 'user@user.ru',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsEmail({}, { message: DtoValidationMessage.email.invalidFormat })
   @Expose()
   public email: string;
@@ -63,10 +66,12 @@ class BaseUserDto {
     description: 'User name',
     example: 'John',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsString()
   @Length(UserNameLength.Min, UserNameLength.Max, {
     message: DtoValidationMessage.name.length,
   })
+  @Matches(/^[a-zа-яё]+$/i)
   @Expose()
   public name: string;
 
@@ -74,6 +79,7 @@ class BaseUserDto {
     description: 'User password',
     example: '123456',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsString()
   @Length(UserPasswordLength.Min, UserPasswordLength.Max, {
     message: DtoValidationMessage.password.length,
@@ -85,6 +91,7 @@ class BaseUserDto {
     description: 'User role',
     example: 'пользователь',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsEnum(UserRole, { message: DtoValidationMessage.role.invalidFormat })
   @Expose()
   public role: UserRole;
@@ -93,6 +100,7 @@ class BaseUserDto {
     description: 'User sex',
     example: 'мужской',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsEnum(UserSex, { message: DtoValidationMessage.sex.invalidFormat })
   @Expose()
   public sex: UserSex;
@@ -101,6 +109,7 @@ class BaseUserDto {
     description: 'User description',
     example: 'Описание пользователя текстом',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsString()
   @Length(UserDescriptionLength.Min, UserDescriptionLength.Max, {
     message: DtoValidationMessage.userDescription.length,
@@ -112,6 +121,7 @@ class BaseUserDto {
     description: 'User location - metro station',
     example: 'Пионерская',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsEnum(MetroStation, {
     message: DtoValidationMessage.location.invalidFormat,
   })
@@ -122,6 +132,7 @@ class BaseUserDto {
     description: 'User image for background',
     example: '660306ae5cdc417b17500eec',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsMongoId()
   @IsOptional()
   @Expose()
@@ -131,6 +142,7 @@ class BaseUserDto {
     description: 'User level',
     example: 'новичок',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsEnum(UserLevel, { message: DtoValidationMessage.level.invalidFormat })
   @Expose()
   public level: UserLevel;
@@ -138,6 +150,16 @@ class BaseUserDto {
   @ApiProperty({
     description: 'User`s workouts types',
     example: 'йога, бег',
+  })
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      return [value.trim()];
+    }
+    if (Array.isArray(value)) {
+      return value.map((item) =>
+        typeof item === 'string' ? item.trim() : item,
+      );
+    }
   })
   @IsArray()
   @ArrayMaxSize(MAX_WORKOUTS_TYPES, {
@@ -184,6 +206,7 @@ export class CreateDefaultUserDto extends BaseUserDto {
     description: 'User`s preferable workout duration',
     example: '10-30 мин',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsEnum(WorkoutDuration, {
     message: DtoValidationMessage.timeForWorkout.invalidFormat,
   })
@@ -196,6 +219,7 @@ export class CreateCoachUserDto extends BaseUserDto {
     description: 'Coach certificate',
     example: '660306ae5cdc417b17500eec',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsMongoId()
   @Expose()
   public certificate: string;
@@ -204,6 +228,7 @@ export class CreateCoachUserDto extends BaseUserDto {
     description: 'User`s achievements',
     example: 'Мой список достижений',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsString()
   @Length(UserAchievementsLength.Min, UserAchievementsLength.Max, {
     message: DtoValidationMessage.achievements.length,

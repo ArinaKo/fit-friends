@@ -6,7 +6,7 @@ import {
 import { PipeTransform } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { reduceValidationErrors } from '@app/helpers';
+import { transformValidationErrors } from '@app/helpers';
 
 type DtoListing = Record<string, any>;
 
@@ -28,7 +28,7 @@ export class UserDtoValidationPipe implements PipeTransform {
       const classAValidationErrors = await validate(user);
       if (classAValidationErrors.length > 0) {
         throw new BadRequestException(
-          reduceValidationErrors(classAValidationErrors)
+          transformValidationErrors(classAValidationErrors),
         );
       }
       return user;

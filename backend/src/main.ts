@@ -1,8 +1,10 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { transformValidationErrors } from '@app/helpers';
+import { ValidationError } from 'class-validator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +21,9 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       whitelist: true,
+      exceptionFactory: (errors: ValidationError[]) => {
+        throw new BadRequestException(transformValidationErrors(errors));
+      },
     }),
   );
 

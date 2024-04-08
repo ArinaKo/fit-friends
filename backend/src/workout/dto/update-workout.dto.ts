@@ -23,12 +23,14 @@ import {
   WorkoutDescriptionLength,
   WorkoutTitleLength,
 } from 'src/shared/const';
+import { Transform } from 'class-transformer';
 
 export class UpdateWorkoutDto {
   @ApiPropertyOptional({
     description: 'Workout  title',
     example: 'hatha',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsString()
   @Length(WorkoutTitleLength.Min, WorkoutTitleLength.Max, {
@@ -40,6 +42,7 @@ export class UpdateWorkoutDto {
     description: 'Workout level',
     example: 'любитель',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsEnum(UserLevel, { message: DtoValidationMessage.level.invalidFormat })
   public level?: UserLevel;
@@ -48,6 +51,7 @@ export class UpdateWorkoutDto {
     description: 'Workout type',
     example: 'йога',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsEnum(WorkoutType, {
     message: DtoValidationMessage.workoutsTypes.invalidItems,
@@ -58,6 +62,7 @@ export class UpdateWorkoutDto {
     description: 'Workout duration',
     example: '30-50 мин',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsEnum(WorkoutDuration, {
     message: DtoValidationMessage.timeForWorkout.invalidFormat,
@@ -93,12 +98,14 @@ export class UpdateWorkoutDto {
   @Length(WorkoutDescriptionLength.Min, WorkoutDescriptionLength.Max, {
     message: DtoValidationMessage.workoutDescription.length,
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   public description?: string;
 
   @ApiPropertyOptional({
     description: 'Workout`s user sex',
     example: 'женский',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsEnum(WorkoutSexFor, {
     message: DtoValidationMessage.workoutSexFor.invalidFormat,
@@ -109,6 +116,7 @@ export class UpdateWorkoutDto {
     description: 'Workout video',
     example: '65fb2c95e0f91e82a4d24b11',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsMongoId()
   public video?: string;

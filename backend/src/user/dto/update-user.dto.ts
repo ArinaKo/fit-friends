@@ -19,6 +19,7 @@ import {
   IsOptional,
   IsISO8601,
   IsMongoId,
+  Matches,
 } from 'class-validator';
 import {
   CaloriesValue,
@@ -28,13 +29,14 @@ import {
   UserNameLength,
 } from 'src/shared/const';
 import { DtoValidationMessage } from 'src/shared/messages';
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 class BaseUserDto {
   @ApiPropertyOptional({
     description: 'User avatar file id',
     example: '65fb2c95e0f91e82a4d24b11',
   })
+  @Transform(({ value }) => (value.trim() === 'string' ? value.trim() : value))
   @IsMongoId()
   @IsOptional()
   @Expose()
@@ -53,11 +55,13 @@ class BaseUserDto {
     description: 'User name',
     example: 'John',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsString()
   @Length(UserNameLength.Min, UserNameLength.Max, {
     message: DtoValidationMessage.name.length,
   })
+  @Matches(/^[a-zа-яё]+$/i)
   @Expose()
   public name?: string;
 
@@ -65,6 +69,7 @@ class BaseUserDto {
     description: 'User sex',
     example: 'мужской',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsEnum(UserSex, { message: DtoValidationMessage.sex.invalidFormat })
   @Expose()
@@ -74,6 +79,7 @@ class BaseUserDto {
     description: 'User description',
     example: 'Описание пользователя текстом',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsString()
   @Length(UserDescriptionLength.Min, UserDescriptionLength.Max, {
@@ -86,6 +92,7 @@ class BaseUserDto {
     description: 'User location - metro station',
     example: 'Пионерская',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsEnum(MetroStation, {
     message: DtoValidationMessage.location.invalidFormat,
@@ -97,6 +104,7 @@ class BaseUserDto {
     description: 'User image for background',
     example: '660306ae5cdc417b17500eec',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsMongoId()
   @Expose()
@@ -106,6 +114,7 @@ class BaseUserDto {
     description: 'User level',
     example: 'новичок',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsEnum(UserLevel, { message: DtoValidationMessage.level.invalidFormat })
   @Expose()
@@ -114,6 +123,16 @@ class BaseUserDto {
   @ApiPropertyOptional({
     description: 'User`s workouts types',
     example: 'йога, бег',
+  })
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      return [value.trim()];
+    }
+    if (Array.isArray(value)) {
+      return value.map((item) =>
+        typeof item === 'string' ? item.trim() : item,
+      );
+    }
   })
   @IsOptional()
   @IsArray()
@@ -177,6 +196,7 @@ export class UpdateCoachUserDto extends BaseUserDto {
     description: 'Coach certificate file id',
     example: '65fb2c95e0f91e82a4d24b11',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsMongoId()
   @IsOptional()
   @Expose()
@@ -186,6 +206,7 @@ export class UpdateCoachUserDto extends BaseUserDto {
     description: 'User`s achievements',
     example: 'Мой список достижений',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsString()
   @Length(UserAchievementsLength.Min, UserAchievementsLength.Max, {
