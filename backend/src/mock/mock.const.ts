@@ -7,6 +7,7 @@ export enum GeneratedDataAmount {
   Comments = 5,
   Orders = 3,
   WorkoutRequests = 3,
+  Friends = 5,
 }
 
 export enum FilesAmount {
