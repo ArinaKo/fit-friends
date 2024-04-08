@@ -15,7 +15,6 @@ const validationSchema = Joi.object({
   refreshTokenExpiresIn: Joi.string().required(),
 });
 
-
 function validateConfig(config: JWTConfig): void {
   const { error } = validationSchema.validate(config, { abortEarly: true });
   if (error) {

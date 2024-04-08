@@ -1,4 +1,4 @@
-import { RequestStatus, SortDirection } from "@app/types";
+import { RequestStatus, SortDirection } from '@app/types';
 
 export const MAX_WORKOUTS_TYPES = 3;
 

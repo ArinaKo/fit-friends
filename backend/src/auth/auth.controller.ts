@@ -14,7 +14,11 @@ import { CreateUserDto } from './dto';
 import { AuthUserRdo, LoggedUserRdo } from './rdo/index';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public, UserDtoValidationPipe } from '@app/core';
-import { LocalAuthGuard, JwtRefreshGuard, NotAuthGuard } from 'src/shared/guards';
+import {
+  LocalAuthGuard,
+  JwtRefreshGuard,
+  NotAuthGuard,
+} from 'src/shared/guards';
 import {
   RequestWithUser,
   RequestWithTokenPayload,

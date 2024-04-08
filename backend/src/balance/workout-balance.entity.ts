@@ -22,7 +22,7 @@ export class WorkoutBalanceEntity implements Entity<string> {
     this.workout = WorkoutEntity.fromObject(data.workout);
   }
 
-  static fromObject(data: WorkoutBalance):  WorkoutBalanceEntity {
-    return new  WorkoutBalanceEntity(data);
+  static fromObject(data: WorkoutBalance): WorkoutBalanceEntity {
+    return new WorkoutBalanceEntity(data);
   }
 }

@@ -1,9 +1,5 @@
 import { UserRole } from '@app/types';
-import {
-  ExecutionContext,
-  Injectable,
-  CanActivate,
-} from '@nestjs/common';
+import { ExecutionContext, Injectable, CanActivate } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()

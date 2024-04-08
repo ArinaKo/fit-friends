@@ -1,7 +1,7 @@
-import { IsEnum, IsOptional } from "class-validator";
-import { Transform } from "class-transformer";
-import { BaseQuery } from "src/shared/query/base.query";
-import { SortingType } from "../orders.const";
+import { IsEnum, IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { BaseQuery } from 'src/shared/query/base.query';
+import { SortingType } from '../orders.const';
 import * as lodash from 'lodash';
 
 export class WorkoutsOrdersQuery extends BaseQuery {

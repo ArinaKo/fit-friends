@@ -116,8 +116,8 @@ export class FriendsRepository extends BaseMongoRepository<
               {
                 $unwind: {
                   path: '$request',
-                  preserveNullAndEmptyArrays: true
-                }
+                  preserveNullAndEmptyArrays: true,
+                },
               },
               {
                 $lookup: {
@@ -138,7 +138,7 @@ export class FriendsRepository extends BaseMongoRepository<
                   as: 'avatar',
                 },
               },
-              { $unwind: '$avatar'},
+              { $unwind: '$avatar' },
             ],
             as: 'friends',
           },

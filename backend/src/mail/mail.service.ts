@@ -7,14 +7,16 @@ import { WorkoutNotification } from '@app/types';
 
 @Injectable()
 export class MailService {
-  constructor(
-    private readonly mailerService: MailerService,
-  ) {}
+  constructor(private readonly mailerService: MailerService) {}
 
   @Inject(mailConfig.KEY)
   private readonly mailConfig: ConfigType<typeof mailConfig>;
 
-  public async sendNotifyNewSubscription(email: string, userName: string, coachName: string) {
+  public async sendNotifyNewSubscription(
+    email: string,
+    userName: string,
+    coachName: string,
+  ) {
     await this.mailerService.sendMail({
       from: this.mailConfig.from,
       to: email,
@@ -27,7 +29,11 @@ export class MailService {
     });
   }
 
-  public async sendNotifyNewWorkout(email: string, userName: string, notification: WorkoutNotification) {
+  public async sendNotifyNewWorkout(
+    email: string,
+    userName: string,
+    notification: WorkoutNotification,
+  ) {
     const { title, type, description, calories, coachName } = notification;
 
     await this.mailerService.sendMail({
@@ -38,7 +44,10 @@ export class MailService {
       context: {
         userName,
         coachName,
-        title, type, description, calories,
+        title,
+        type,
+        description,
+        calories,
       },
     });
   }

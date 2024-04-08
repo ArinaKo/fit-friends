@@ -1,4 +1,4 @@
-import { WorkoutType } from "./workout-type.enum";
+import { WorkoutType } from './workout-type.enum';
 
 export interface WorkoutNotification {
   coachName: string;

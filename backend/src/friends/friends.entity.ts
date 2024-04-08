@@ -9,7 +9,7 @@ export class FriendsEntity implements Entity<string> {
   public populate(data: Friends): FriendsEntity {
     this.id = data.id;
     this.userId = data.userId;
-    this.friendsList = data.friendsList
+    this.friendsList = data.friendsList;
 
     return this;
   }

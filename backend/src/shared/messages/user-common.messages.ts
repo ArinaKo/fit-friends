@@ -1,4 +1,4 @@
-import { DocumentFile, ImageFile, VideoFile } from "../const";
+import { DocumentFile, ImageFile, VideoFile } from '../const';
 
 export const UserMessage = {
   Exists: 'User with this email exists',

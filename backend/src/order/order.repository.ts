@@ -6,7 +6,11 @@ import { OrderEntity } from './order.entity';
 import { OrderModel } from './order.model';
 import { WorkoutOrdersEntity } from './workout-orders.entity';
 import { WorkoutsOrdersQuery } from './query';
-import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/shared/const';
+import {
+  DEFAULT_PAGE,
+  DEFAULT_SORT_DIRECTION,
+  LIST_LIMIT,
+} from 'src/shared/const';
 import { DEFAULT_SORT_TYPE } from './orders.const';
 
 const PipelineStage: { [key: string]: PipelineStage } = {

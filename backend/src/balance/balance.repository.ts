@@ -6,7 +6,11 @@ import { BalanceEntity } from './balance.entity';
 import { BalanceModel } from './balance.model';
 import { WorkoutBalanceEntity } from './workout-balance.entity';
 import { UserBalanceQuery } from './query';
-import { DEFAULT_PAGE, DEFAULT_SORT_DIRECTION, LIST_LIMIT } from 'src/shared/const';
+import {
+  DEFAULT_PAGE,
+  DEFAULT_SORT_DIRECTION,
+  LIST_LIMIT,
+} from 'src/shared/const';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   LookupWorkouts: {
@@ -62,7 +66,7 @@ export class BalanceRepository extends BaseMongoRepository<
     const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
-    let filter = query?.active ? { userId, count: { $ne: 0 } } : { userId };
+    const filter = query?.active ? { userId, count: { $ne: 0 } } : { userId };
 
     const [records, recordsCount] = await Promise.all([
       this.model

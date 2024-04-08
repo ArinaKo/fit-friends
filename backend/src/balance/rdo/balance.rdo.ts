@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Expose } from "class-transformer";
-import { WorkoutRdo } from "src/workout/rdo";
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
+import { WorkoutRdo } from 'src/workout/rdo';
 
 export class BalanceRdo {
   @ApiProperty({

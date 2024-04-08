@@ -66,7 +66,7 @@ const PipelineStage: { [key: string]: PipelineStage } = {
 };
 
 function generateFilter(query?: UsersQuery) {
-  let filter = {};
+  const filter = {};
 
   if (query?.workoutTypes) {
     Object.assign(filter, {
@@ -107,16 +107,16 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
         { $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } } },
         PipelineStage.AddStringId,
         PipelineStage.LookupAvatars,
-        { $unwind: '$avatar'},
+        { $unwind: '$avatar' },
         PipelineStage.LookupBackgroundImages,
-        { $unwind: '$backgroundImage'},
+        { $unwind: '$backgroundImage' },
         PipelineStage.LookupCertificate,
         {
           $unwind: {
             path: '$certificate',
-            preserveNullAndEmptyArrays: true
-          }
-        }
+            preserveNullAndEmptyArrays: true,
+          },
+        },
       ])
       .exec()
       .then((r) => r.at(0) || null);
@@ -149,7 +149,7 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
           { $limit: limit },
           PipelineStage.AddStringId,
           PipelineStage.LookupAvatars,
-          { $unwind: '$avatar'},
+          { $unwind: '$avatar' },
         ])
         .exec(),
       this.model.countDocuments(filter),

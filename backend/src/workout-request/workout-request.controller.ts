@@ -1,9 +1,8 @@
-import { MongoIdValidationPipe, Role } from '@app/core';
+import { Role } from '@app/core';
 import {
   Body,
   Controller,
   HttpStatus,
-  Param,
   Patch,
   Post,
   Req,

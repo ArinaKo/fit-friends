@@ -53,7 +53,7 @@ const PipelineStage: { [key: string]: PipelineStage } = {
       as: 'video',
     },
   },
-  LookupCoach:  {
+  LookupCoach: {
     $lookup: {
       from: 'users',
       let: { userId: '$coachId' },
@@ -68,31 +68,36 @@ const PipelineStage: { [key: string]: PipelineStage } = {
             id: { $toString: '$_id' },
           },
         },
-        { $lookup: {
-          from: 'files',
-          let: { imageId: '$avatar' },
-          pipeline: [
-            { $match: { $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] } } },
-            {
-              $addFields: {
-                id: { $toString: '$_id' },
+        {
+          $lookup: {
+            from: 'files',
+            let: { imageId: '$avatar' },
+            pipeline: [
+              {
+                $match: {
+                  $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] },
+                },
               },
-            },
-          ],
-          as: 'avatar',
+              {
+                $addFields: {
+                  id: { $toString: '$_id' },
+                },
+              },
+            ],
+            as: 'avatar',
+          },
         },
-      },
       ],
       as: 'coach',
     },
-  }
+  },
 };
 
 function generateFilter(query: FullWorkoutQuery) {
-  let filter = {};
+  const filter = {};
 
   if (query?.minCalories || query?.maxCalories) {
-    let caloriesFilter = Object.assign(
+    const caloriesFilter = Object.assign(
       query?.minCalories ? { $gte: query.minCalories } : {},
       query?.maxCalories ? { $lte: query.maxCalories } : {},
     );
@@ -101,7 +106,7 @@ function generateFilter(query: FullWorkoutQuery) {
   }
 
   if (query?.minPrice || query?.maxPrice) {
-    let priceFilter = Object.assign(
+    const priceFilter = Object.assign(
       query?.minPrice ? { $gte: query.minPrice } : {},
       query?.maxPrice ? { $lte: query.maxPrice } : {},
     );
@@ -110,7 +115,7 @@ function generateFilter(query: FullWorkoutQuery) {
   }
 
   if (query?.minRating || query?.maxRating) {
-    let ratingFilter = Object.assign(
+    const ratingFilter = Object.assign(
       query?.minRating ? { $gte: query.minRating } : {},
       query?.maxRating ? { $lte: query.maxRating } : {},
     );
@@ -175,9 +180,9 @@ export class WorkoutRepository extends BaseMongoRepository<
         { $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } } },
         PipelineStage.AddStringId,
         PipelineStage.LookupVideos,
-        { $unwind: '$video'},
+        { $unwind: '$video' },
         PipelineStage.LookupCoach,
-        { $unwind: '$coach'},
+        { $unwind: '$coach' },
       ])
       .exec()
       .then((r) => r.at(0) || null);
@@ -192,7 +197,7 @@ export class WorkoutRepository extends BaseMongoRepository<
     const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
-    let filter = query ? generateFilter(query) : {};
+    const filter = query ? generateFilter(query) : {};
 
     if (coachId) {
       Object.assign(filter, { coachId });

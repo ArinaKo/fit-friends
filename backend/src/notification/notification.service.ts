@@ -29,7 +29,10 @@ export class NotificationService {
     );
   }
 
-  public async deleteNotification(notificationsId: string, userId: string): Promise<void> {
+  public async deleteNotification(
+    notificationsId: string,
+    userId: string,
+  ): Promise<void> {
     const existsNotification =
       await this.notificationRepository.findById(notificationsId);
 

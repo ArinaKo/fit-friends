@@ -32,20 +32,25 @@ const PipelineStage: { [key: string]: PipelineStage } = {
             id: { $toString: '$_id' },
           },
         },
-        { $lookup: {
-          from: 'files',
-          let: { imageId: '$avatar' },
-          pipeline: [
-            { $match: { $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] } } },
-            {
-              $addFields: {
-                id: { $toString: '$_id' },
+        {
+          $lookup: {
+            from: 'files',
+            let: { imageId: '$avatar' },
+            pipeline: [
+              {
+                $match: {
+                  $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] },
+                },
               },
-            },
-          ],
-          as: 'avatar',
+              {
+                $addFields: {
+                  id: { $toString: '$_id' },
+                },
+              },
+            ],
+            as: 'avatar',
+          },
         },
-      },
       ],
       as: 'user',
     },

@@ -1,6 +1,4 @@
-import {
-  WorkoutDuration,
-} from '@app/types';
+import { WorkoutDuration } from '@app/types';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 import { FullUserRdo } from 'src/user/rdo/index';

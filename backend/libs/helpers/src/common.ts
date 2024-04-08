@@ -15,10 +15,7 @@ export function generateDate() {
     .toISOString();
 }
 
-export function generateRandomValue(
-  min: number,
-  max: number,
-) {
+export function generateRandomValue(min: number, max: number) {
   return Math.floor(Math.random() * (max + 1 - min) + min);
 }
 
@@ -44,13 +41,11 @@ export function getMongoConnectionString({
   return `mongodb://${username}:${password}@${host}:${port}/${databaseName}?authSource=${authDatabase}`;
 }
 
-export function transformObjectValuesToString(items: Object) {
+export function transformObjectValuesToString(items: object) {
   return Object.values(items).join(', ');
 }
 
-export function reduceValidationErrors(
-  errors: ValidationError[]
-) {
+export function transformValidationErrors(errors: ValidationError[]) {
   return errors.map(({ property, value, constraints }) => ({
     property,
     value,

@@ -1,8 +1,4 @@
-import {
-  ExecutionContext,
-  Injectable,
-  CanActivate,
-} from '@nestjs/common';
+import { ExecutionContext, Injectable, CanActivate } from '@nestjs/common';
 import { Request } from 'express';
 
 @Injectable()

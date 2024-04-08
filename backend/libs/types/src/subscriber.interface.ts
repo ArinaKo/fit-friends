@@ -1,4 +1,4 @@
-import { WorkoutNotification } from "./workout-notification.interface";
+import { WorkoutNotification } from './workout-notification.interface';
 
 export interface Subscriber {
   id?: string;

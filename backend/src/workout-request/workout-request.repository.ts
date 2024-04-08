@@ -18,11 +18,14 @@ export class WorkoutRequestRepository extends BaseMongoRepository<
     super(WorkoutRequestModel, WorkoutRequestEntity.fromObject);
   }
 
-  public async isRequestPending(userFromId: string, userToId: string): Promise<boolean> {
+  public async isRequestPending(
+    userFromId: string,
+    userToId: string,
+  ): Promise<boolean> {
     const request = await this.model.findOne({
       userFromId,
       userToId,
-      status: DEFAULT_REQUEST_STATUS
+      status: DEFAULT_REQUEST_STATUS,
     });
 
     return Boolean(request);

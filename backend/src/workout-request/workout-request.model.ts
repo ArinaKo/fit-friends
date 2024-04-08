@@ -25,4 +25,5 @@ export class WorkoutRequestModel extends Document implements WorkoutRequest {
   public status: RequestStatus;
 }
 
-export const WorkoutRequestSchema = SchemaFactory.createForClass(WorkoutRequestModel);
+export const WorkoutRequestSchema =
+  SchemaFactory.createForClass(WorkoutRequestModel);

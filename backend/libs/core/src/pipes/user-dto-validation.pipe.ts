@@ -1,4 +1,8 @@
-import { ArgumentMetadata, BadRequestException, Injectable } from '@nestjs/common';
+import {
+  ArgumentMetadata,
+  BadRequestException,
+  Injectable,
+} from '@nestjs/common';
 import { PipeTransform } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
@@ -19,7 +23,7 @@ export class UserDtoValidationPipe implements PipeTransform {
       const userRole = value.role;
       const user = plainToInstance(this.dtoListing[userRole], value, {
         excludeExtraneousValues: true,
-        exposeUnsetFields: false
+        exposeUnsetFields: false,
       });
       const classAValidationErrors = await validate(user);
       if (classAValidationErrors.length > 0) {
