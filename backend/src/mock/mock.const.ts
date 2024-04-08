@@ -8,6 +8,8 @@ export enum GeneratedDataAmount {
   Orders = 3,
   WorkoutRequests = 3,
   Friends = 5,
+  Subscriptions = 3,
+  WorkoutNotifications = 2,
 }
 
 export enum FilesAmount {
