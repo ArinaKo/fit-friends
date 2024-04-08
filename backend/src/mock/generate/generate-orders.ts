@@ -1,32 +1,38 @@
-import {
-  OrderType,
-  PaymentType,
-} from '@app/types';
+import { OrderType, PaymentType } from '@app/types';
 import { generateDate, generateRandomValue, getRandomItem } from '@app/helpers';
 import { OrderCountValue } from 'src/shared/const';
+import { GeneratedDataAmount } from '../mock.const';
+import { WorkoutEntity } from 'src/workout/workout.entity';
+import { OrderEntity } from 'src/order/order.entity';
 
-const ORDERS_NUMBER = 5;
-
-function generateOrder(workouts: { id: string; price: number }[]) {
+function generateOrder(workouts: WorkoutEntity[]) {
   const workout = getRandomItem(workouts);
-  let order = {
+  const count = generateRandomValue(OrderCountValue.Min, OrderCountValue.Max);
+  return {
     type: getRandomItem(Object.values(OrderType)),
-    workoutId: workout.id,
+    workoutId: workout.id!,
     workoutPrice: workout.price,
-    count: generateRandomValue(OrderCountValue.Min, OrderCountValue.Max),
+    count: count * workout.price,
     totalPrice: 0,
     paymentType: getRandomItem(Object.values(PaymentType)),
     createdAt: generateDate(),
   };
-  order.totalPrice = order.count * order.workoutPrice;
-  return order;
 }
 
-export function generatesOrders(
+function generateOrdersFromUser(
   userId: string,
-  workouts: { id: string; price: number }[],
-) {
-  return Array.from({ length: ORDERS_NUMBER }).forEach(() =>
-    Object.assign(generateOrder(workouts), { userId }),
+  workouts: WorkoutEntity[],
+): OrderEntity[] {
+  return Array.from({ length: GeneratedDataAmount.Orders }).map(() =>
+    OrderEntity.fromObject(Object.assign(generateOrder(workouts), { userId })),
   );
+}
+
+export function generateOrdersEntities(
+  usersIds: string[],
+  workouts: WorkoutEntity[],
+): OrderEntity[] {
+  return usersIds
+    .map((userId) => generateOrdersFromUser(userId, workouts))
+    .flat();
 }
