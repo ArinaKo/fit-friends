@@ -26,7 +26,7 @@ function generateWorkout() {
   };
 }
 
-function generatesWorkoutsForCoach(
+function generateWorkoutsForCoach(
   coachId: string,
   videosIds: string[],
 ): WorkoutEntity[] {
@@ -41,11 +41,11 @@ function generatesWorkoutsForCoach(
   );
 }
 
-export function generatesWorkoutsEntities(
+export function generateWorkoutsEntities(
   coachesIds: string[],
   videosIds: string[],
 ): WorkoutEntity[] {
   return coachesIds
-    .map((coach) => generatesWorkoutsForCoach(coach, videosIds))
+    .map((coach) => generateWorkoutsForCoach(coach, videosIds))
     .flat();
 }

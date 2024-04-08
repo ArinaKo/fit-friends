@@ -1,5 +1,5 @@
 import { ValidationError } from 'class-validator';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 
 enum DateDiffNumber {
   Min = 1,

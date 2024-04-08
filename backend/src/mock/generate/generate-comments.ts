@@ -12,7 +12,7 @@ function generateComment(usersIds: string[]) {
   };
 }
 
-function generatesCommentsForWorkout(
+function generateCommentsForWorkout(
   workoutId: string,
   usersIds: string[],
 ): CommentEntity[] {
@@ -23,11 +23,11 @@ function generatesCommentsForWorkout(
   );
 }
 
-export function generatesCommentsEntities(
+export function generateCommentsEntities(
   workoutsIds: string[],
   usersIds: string[],
 ): CommentEntity[] {
   return workoutsIds
-    .map((workoutId) => generatesCommentsForWorkout(workoutId, usersIds))
+    .map((workoutId) => generateCommentsForWorkout(workoutId, usersIds))
     .flat();
 }

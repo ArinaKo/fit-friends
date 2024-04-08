@@ -3,7 +3,7 @@ import { MockService } from './mock.service';
 import { Public } from '@app/core';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('mock')
+@Controller('mocks')
 export class MockController {
   constructor(private readonly mockService: MockService) {}
 

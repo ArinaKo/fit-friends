@@ -45,7 +45,7 @@ export class WorkoutService {
       Object.assign(dto, {
         coachId,
         rating: DEFAULT_RATING,
-        backgroundImage: `/workouts/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.png`,
+        backgroundImage: `/mocks/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.png`,
       }),
     );
     const newWorkout = await this.workoutRepository.save(newEntity);

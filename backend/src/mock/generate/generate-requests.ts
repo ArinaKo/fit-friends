@@ -11,7 +11,7 @@ function generateRequest(userToId: string) {
   };
 }
 
-function generatesRequestsFromUser(
+function generateRequestsFromUser(
   userId: string,
   usersToIds: string[],
 ): WorkoutRequestEntity[] {
@@ -22,13 +22,13 @@ function generatesRequestsFromUser(
   );
 }
 
-export function generatesRequestsEntities(
+export function generateRequestsEntities(
   usersId: string[],
   allUsersIds: string[],
 ): WorkoutRequestEntity[] {
   return usersId
     .map((userId) =>
-      generatesRequestsFromUser(
+      generateRequestsFromUser(
         userId,
         getRandomItems(
           allUsersIds.filter((id) => id !== userId),

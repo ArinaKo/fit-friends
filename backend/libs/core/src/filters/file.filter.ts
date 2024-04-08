@@ -6,7 +6,6 @@ export function FileFilter(mimetypes: string[], maxSize?: number) {
     file: Express.Multer.File,
     callback: (error: Error | null, acceptFile: boolean) => void,
   ) => {
-    console.log(file.originalname);
     if (!mimetypes.includes(file.mimetype)) {
       callback(
         new UnsupportedMediaTypeException(
