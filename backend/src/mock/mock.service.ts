@@ -24,6 +24,8 @@ import {
   generateSubscribersEntities,
 } from './generate';
 import { WorkoutEntity } from 'src/workout/workout.entity';
+import { GeneratedDataAmount } from './mock.const';
+import { Emails } from './generate/mock-data';
 
 @Injectable()
 export class MockService {
@@ -132,5 +134,31 @@ export class MockService {
     );
   }
 
-  public async generateMocks(): Promise<void> {}
+  public async generateMocks(): Promise<void> {
+    if (await this.userRepository.findByEmail(Emails[0])) {
+      throw new ConflictException(
+        `Before generating more data, change emails in file 'mock-data.ts' to prevent errors`,
+      );
+    }
+
+    const { avatarsIds, certificatesIds, videosIds } =
+      await this.registerFilesInfo();
+    const allUsersIds = await this.registerUsers(avatarsIds, certificatesIds);
+    const coachesIds = allUsersIds.slice(0, GeneratedDataAmount.Coaches);
+    const usersIds = allUsersIds.slice(GeneratedDataAmount.Coaches);
+    const workouts = await this.registerWorkouts(coachesIds, videosIds);
+    const workoutsIds = workouts.map((entity) => entity.id!);
+    await this.registerComments(workoutsIds, usersIds);
+    await this.registerRequests(usersIds, allUsersIds);
+    await this.registerOrders(usersIds, workouts);
+    await this.registerFriends(allUsersIds);
+    await this.registerSubscribers(usersIds, coachesIds);
+    await this.registerNotifications(allUsersIds);
+
+    await Promise.allSettled(
+      workoutsIds.map(async (workoutId) => {
+        await this.workoutService.updateWorkoutRating(workoutId);
+      }),
+    );
+  }
 }
