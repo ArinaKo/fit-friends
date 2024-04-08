@@ -5,6 +5,7 @@ import { WorkoutRdo } from 'src/workout/rdo';
 export class WorkoutOrdersRdo {
   @ApiProperty({
     description: 'Workout',
+    type: WorkoutRdo,
   })
   @Expose()
   public workout: WorkoutRdo;

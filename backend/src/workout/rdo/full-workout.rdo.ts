@@ -7,7 +7,7 @@ import { FileRdo } from 'src/file-vault/rdo';
 export class FullWorkoutRdo extends WorkoutRdo {
   @ApiProperty({
     description: 'Workout video',
-    example: 'video.mov',
+    type: FileRdo,
   })
   @Type(() => FileRdo)
   @Expose()
@@ -15,6 +15,7 @@ export class FullWorkoutRdo extends WorkoutRdo {
 
   @ApiProperty({
     description: 'Workout`s coach',
+    type: UserRdo,
   })
   @Type(() => UserRdo)
   @Expose()

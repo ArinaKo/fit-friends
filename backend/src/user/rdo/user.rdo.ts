@@ -19,7 +19,7 @@ export class UserRdo {
 
   @ApiProperty({
     description: 'User avatar url',
-    example: 'image.jpg',
+    type: FileRdo,
   })
   @Type(() => FileRdo)
   @Expose()

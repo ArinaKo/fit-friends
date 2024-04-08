@@ -27,7 +27,7 @@ export class FullUserRdo extends UserRdo {
 
   @ApiProperty({
     description: 'User image for background',
-    example: 'background-image.png',
+    type: FileRdo,
   })
   @Type(() => FileRdo)
   @Expose()
@@ -35,7 +35,7 @@ export class FullUserRdo extends UserRdo {
 
   @ApiPropertyOptional({
     description: 'Coach certificate',
-    example: 'certificate.jpg',
+    type: FileRdo,
   })
   @Type(() => FileRdo)
   @Expose()

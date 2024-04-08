@@ -5,6 +5,7 @@ import { UserRdo } from 'src/user/rdo';
 export class CommentRdo {
   @ApiProperty({
     description: 'Workout`s coach',
+    type: UserRdo,
   })
   @Type(() => UserRdo)
   @Expose()

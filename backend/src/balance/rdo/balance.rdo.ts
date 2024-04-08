@@ -12,6 +12,7 @@ export class BalanceRdo {
 
   @ApiProperty({
     description: 'Workout',
+    type: WorkoutRdo,
   })
   @Expose()
   public workout: WorkoutRdo;

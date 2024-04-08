@@ -6,6 +6,7 @@ import { WorkoutRequestRdo } from 'src/workout-request/rdo';
 export class FriendRdo extends UserRdo {
   @ApiPropertyOptional({
     description: 'Workout request',
+    type: [WorkoutRequestRdo],
   })
   @Expose()
   public workoutRequest: WorkoutRequestRdo;
