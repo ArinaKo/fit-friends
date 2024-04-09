@@ -13,13 +13,14 @@ import {
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
 import { FullWorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/shared/requests';
 import { MongoIdValidationPipe, Role } from '@app/core';
 import { RoleGuard, WorkoutOwnerGuard } from 'src/shared/guards';
 import { UserRole } from '@app/types';
 import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
 
+@ApiTags('workouts')
 @Controller('workouts')
 export class WorkoutController {
   constructor(private readonly workoutService: WorkoutService) {}
@@ -29,6 +30,7 @@ export class WorkoutController {
     status: HttpStatus.OK,
     description: 'Workouts list',
   })
+  @ApiQuery({ type: WorkoutsQuery })
   @Get('/')
   public async index(@Query() query: WorkoutsQuery) {
     return this.workoutService.getAllWorkouts(query);
@@ -39,6 +41,7 @@ export class WorkoutController {
     status: HttpStatus.OK,
     description: 'Coach workouts list',
   })
+  @ApiQuery({ type: CoachWorkoutsQuery })
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Get('/coach')
@@ -54,6 +57,7 @@ export class WorkoutController {
     status: HttpStatus.CREATED,
     description: 'The new workout has been successfully created',
   })
+  @ApiBody({ type: CreateWorkoutDto })
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Post('/')
@@ -69,6 +73,7 @@ export class WorkoutController {
     status: HttpStatus.OK,
     description: 'The workout has been successfully updated',
   })
+  @ApiBody({ type: UpdateWorkoutDto })
   @UseGuards(WorkoutOwnerGuard)
   @Patch('/:workoutId')
   public async update(

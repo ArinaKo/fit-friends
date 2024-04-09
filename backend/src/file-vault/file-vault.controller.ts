@@ -2,6 +2,7 @@ import 'multer';
 import { Express } from 'express';
 import {
   Controller,
+  HttpStatus,
   Post,
   UploadedFile,
   UseGuards,
@@ -13,11 +14,31 @@ import { FileFilter, ParseFile, Public, Role } from '@app/core';
 import { DocumentFile, ImageFile, VideoFile } from '../shared/const/index';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
+import { FileRdo } from './rdo';
+import { ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('uploads')
 @Controller('upload')
 export class FileVaultController {
   constructor(private readonly fileVaultService: FileVaultService) {}
 
+  @ApiResponse({
+    type: FileRdo,
+    status: HttpStatus.CREATED,
+    description: 'The file has been successfully uploaded',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Public()
   @Post('/image')
   @UseInterceptors(
@@ -29,6 +50,23 @@ export class FileVaultController {
     return this.fileVaultService.saveFile(file);
   }
 
+  @ApiResponse({
+    type: FileRdo,
+    status: HttpStatus.CREATED,
+    description: 'The file has been successfully uploaded',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Public()
   @Post('/document')
   @UseInterceptors(
@@ -42,6 +80,23 @@ export class FileVaultController {
     return this.fileVaultService.saveFile(file);
   }
 
+  @ApiResponse({
+    type: FileRdo,
+    status: HttpStatus.CREATED,
+    description: 'The file has been successfully uploaded',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Post('/video')

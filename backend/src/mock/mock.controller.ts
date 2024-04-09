@@ -1,8 +1,9 @@
 import { Controller, HttpStatus, Logger, Post } from '@nestjs/common';
 import { MockService } from './mock.service';
 import { Public } from '@app/core';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('mocks')
 @Controller('mocks')
 export class MockController {
   constructor(private readonly mockService: MockService) {}

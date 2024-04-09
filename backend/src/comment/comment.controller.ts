@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CommentRdo, CommentsWithPaginationRdo } from './rdo';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoIdValidationPipe, Role } from '@app/core';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
@@ -19,6 +19,7 @@ import { CreateCommentDto } from './dto';
 import { RequestWithTokenPayload } from 'src/shared/requests';
 import { BaseQuery } from 'src/shared/query/base.query';
 
+@ApiTags('comments')
 @Controller('comments')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
@@ -28,6 +29,7 @@ export class CommentController {
     status: HttpStatus.OK,
     description: 'Comments list',
   })
+  @ApiQuery({ type: BaseQuery })
   @Get('/:workoutId')
   public async index(
     @Param('workoutId', MongoIdValidationPipe) workoutId: string,
@@ -41,6 +43,7 @@ export class CommentController {
     status: HttpStatus.CREATED,
     description: 'The new comment has been successfully created',
   })
+  @ApiBody({ type: CreateCommentDto })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
   @Post('/')

@@ -7,12 +7,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { SubscriberService } from './subscriber.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MongoIdValidationPipe, Public, Role } from '@app/core';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
 import { RequestWithTokenPayload } from 'src/shared/requests';
 
+@ApiTags('subscribe')
 @Controller('subscribe')
 export class SubscriberController {
   constructor(private readonly subscriberService: SubscriberService) {}

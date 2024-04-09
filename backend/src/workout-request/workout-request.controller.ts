@@ -13,8 +13,9 @@ import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
 import { CreateWorkoutRequestDto, UpdateRequestStatusDto } from './dto';
 import { RequestWithTokenPayload } from 'src/shared/requests';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('workout-requests')
 @Controller('workout-requests')
 export class WorkoutRequestController {
   constructor(private readonly requestService: WorkoutRequestService) {}
@@ -23,6 +24,7 @@ export class WorkoutRequestController {
     status: HttpStatus.CREATED,
     description: 'The new workout request has been successfully created',
   })
+  @ApiBody({ type: CreateWorkoutRequestDto })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
   @Post('/')
@@ -37,6 +39,7 @@ export class WorkoutRequestController {
     status: HttpStatus.OK,
     description: 'The workout request status has been successfully updated',
   })
+  @ApiBody({ type: UpdateRequestStatusDto })
   @Patch('/')
   public async update(
     @Body() dto: UpdateRequestStatusDto,

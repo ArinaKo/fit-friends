@@ -7,11 +7,12 @@ import {
   Req,
 } from '@nestjs/common';
 import { NotificationService } from './notification.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/shared/requests';
 import { NotificationRdo } from './rdo';
 import { MongoIdValidationPipe } from '@app/core';
 
+@ApiTags('notifications')
 @Controller('notifications')
 export class NotificationController {
   constructor(private readonly notificationService: NotificationService) {}

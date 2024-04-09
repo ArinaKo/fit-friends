@@ -9,12 +9,12 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { FullUserRdo, UsersWithPaginationRdo } from './rdo';
 import { MongoIdValidationPipe, Role, UserDtoValidationPipe } from '@app/core';
 import { RoleGuard } from 'src/shared/guards';
-import { UpdateUserDto } from './dto';
+import { UpdateDefaultUserDto, UpdateUserDto } from './dto';
 import { AuthUserRdo } from 'src/auth/rdo';
 import { UpdateUserDtoListing } from './user.const';
 import { UsersQuery } from './query';
@@ -31,6 +31,7 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'Users list',
   })
+  @ApiQuery({ type: UsersQuery })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
   @Get('/')
@@ -53,6 +54,7 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'User`s info has been successfully updated',
   })
+  @ApiBody({ type: UpdateDefaultUserDto })
   @Patch('/')
   public async update(
     @Body(new UserDtoValidationPipe(UpdateUserDtoListing)) dto: UpdateUserDto,

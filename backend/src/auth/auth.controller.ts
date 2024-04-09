@@ -10,9 +10,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from './dto';
+import { CreateDefaultUserDto, CreateUserDto, LoginUserDto } from './dto';
 import { AuthUserRdo, LoggedUserRdo } from './rdo/index';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public, UserDtoValidationPipe } from '@app/core';
 import {
   LocalAuthGuard,
@@ -42,6 +42,7 @@ export class AuthController {
     status: HttpStatus.CREATED,
     description: 'The new user has been successfully created.',
   })
+  @ApiBody({ type: CreateDefaultUserDto })
   @Public()
   @UseGuards(NotAuthGuard)
   @Post('register')
@@ -60,6 +61,7 @@ export class AuthController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Password or Login is wrong.',
   })
+  @ApiBody({ type: LoginUserDto })
   @Public()
   @UseGuards(NotAuthGuard, LocalAuthGuard)
   @Post('login')

@@ -8,7 +8,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BalanceService } from './balance.service';
 import { RequestWithTokenPayload } from 'src/shared/requests';
 import { DecreaseBalanceDto } from './dto';
@@ -18,6 +18,7 @@ import { RoleGuard } from 'src/shared/guards';
 import { BalancesWithPaginationRdo } from './rdo';
 import { UserBalanceQuery } from './query';
 
+@ApiTags('balances')
 @Controller('balance')
 export class BalanceController {
   constructor(private readonly balanceService: BalanceService) {}
@@ -27,6 +28,7 @@ export class BalanceController {
     status: HttpStatus.OK,
     description: 'User balance',
   })
+  @ApiQuery({ type: UserBalanceQuery })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
   @Get('/')
@@ -41,10 +43,11 @@ export class BalanceController {
     status: HttpStatus.OK,
     description: 'The balance has been successfully updated',
   })
+  @ApiBody({ type: DecreaseBalanceDto })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
   @Patch('/decrease')
-  public async decreaseBalance(
+  public async decrease(
     @Body() dto: DecreaseBalanceDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {

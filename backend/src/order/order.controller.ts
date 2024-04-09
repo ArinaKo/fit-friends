@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Role } from '@app/core';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
@@ -18,6 +18,7 @@ import { RequestWithTokenPayload } from 'src/shared/requests';
 import { WorkoutsOrdersQuery } from './query';
 import { OrdersWithPaginationRdo } from './rdo/orders-with-pagination.rdo';
 
+@ApiTags('orders')
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
@@ -26,6 +27,7 @@ export class OrderController {
     status: HttpStatus.CREATED,
     description: 'The new order has been successfully created',
   })
+  @ApiBody({ type: CreateOrderDto })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
   @Post('/')
@@ -39,8 +41,9 @@ export class OrderController {
   @ApiResponse({
     type: OrdersWithPaginationRdo,
     status: HttpStatus.OK,
-    description: 'Coach workouts list',
+    description: 'Coach workout`s orders list',
   })
+  @ApiQuery({ type: WorkoutsOrdersQuery })
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Get('/')
