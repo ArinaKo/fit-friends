@@ -68,7 +68,7 @@ export class BalanceService {
     number: number,
   ) {
     const balance = await this.getBalance(userId, workoutId);
-    balance.count += number;
+    balance.count = balance.count + number;
     await this.balanceRepository.update(balance.id, balance);
   }
 
@@ -80,8 +80,7 @@ export class BalanceService {
         `Balance of workout with id ${workoutId} is 0`,
       );
     }
-
-    balance.count--;
+    balance.count = balance.count - 1;
     await this.balanceRepository.update(balance.id, balance);
   }
 }

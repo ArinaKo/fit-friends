@@ -33,12 +33,17 @@ export class CommentService {
     workoutId: string,
     query?: BaseQuery,
   ): Promise<CommentsWithPaginationRdo> {
-    const commentsWithPagination = await this.commentRepository.find(workoutId);
+    await this.workoutService.getWorkoutEntity(workoutId);
+
+    const commentsWithPagination = await this.commentRepository.find(
+      workoutId,
+      query,
+    );
     return fillDto(CommentsWithPaginationRdo, {
       ...commentsWithPagination,
       comments: commentsWithPagination.entities.map((comment) => ({
         ...comment,
-        user: fillDto( UserRdo, comment.user!.toPOJO()),
+        user: fillDto(UserRdo, comment.user!.toPOJO()),
       })),
     });
   }

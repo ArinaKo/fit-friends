@@ -12,6 +12,8 @@ import { FileEntity } from './file.entity';
 import { FileVaultRepository } from './file-vault.repository';
 import { extension } from 'mime-types';
 import { DocumentFile, ImageFile, VideoFile } from '../shared/const/index';
+import { fillDto } from '@app/helpers';
+import { FileRdo } from './rdo';
 
 @Injectable()
 export class FileVaultService {
@@ -64,7 +66,7 @@ export class FileVaultService {
     }
   }
 
-  public async saveFile(file: Express.Multer.File): Promise<FileEntity> {
+  public async saveFile(file: Express.Multer.File): Promise<FileRdo> {
     const storedFile = await this.writeFile(file);
     const fileEntity = FileEntity.fromObject({
       hashName: storedFile.filename,
@@ -75,17 +77,18 @@ export class FileVaultService {
       subDirectory: storedFile.subDirectory,
     });
 
-    return this.fileVaultRepository.save(fileEntity);
+    const savedFile = await this.fileVaultRepository.save(fileEntity);
+    return fillDto(FileRdo, savedFile);
   }
 
-  public async getFile(fileId: string): Promise<FileEntity> {
+  public async getFile(fileId: string): Promise<FileRdo> {
     const existFile = await this.fileVaultRepository.findById(fileId);
 
     if (!existFile) {
       throw new NotFoundException(`File with ${fileId} not found.`);
     }
 
-    return existFile;
+    return fillDto(FileRdo, existFile);
   }
 
   public async isFileImage(fileId: string): Promise<boolean> {

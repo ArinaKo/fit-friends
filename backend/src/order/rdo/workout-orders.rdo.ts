@@ -7,6 +7,7 @@ export class WorkoutOrdersRdo {
     description: 'Workout',
     type: WorkoutRdo,
   })
+  @Type(() => WorkoutRdo)
   @Expose()
   public workout: WorkoutRdo;
 

@@ -51,6 +51,7 @@ const PipelineStage: { [key: string]: PipelineStage } = {
             as: 'avatar',
           },
         },
+        { $unwind: '$avatar' },
       ],
       as: 'user',
     },

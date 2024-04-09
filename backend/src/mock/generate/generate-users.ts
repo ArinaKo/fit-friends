@@ -51,18 +51,17 @@ function generateUsers(
 ): FullUser[] {
   return [...Emails].map((_, index) => {
     const avatar = getRandomItem(avatarsIds);
-    return Object.assign(
-      generateUser(index % 2 === 0, index < GeneratedDataAmount.Coaches),
-      {
-        email: Emails[index],
-        avatar,
-        backgroundImage: avatar,
-        certificate:
-          index < GeneratedDataAmount.Coaches
-            ? getRandomItem(certificateIds)
-            : undefined,
-      },
-    );
+    const isMale = index % 2 === 0;
+    const isCoach = index < GeneratedDataAmount.Coaches;
+    return Object.assign(generateUser(isMale, isCoach), {
+      email: Emails[index],
+      avatar,
+      backgroundImage: avatar,
+      certificate:
+        index < GeneratedDataAmount.Coaches
+          ? getRandomItem(certificateIds)
+          : undefined,
+    });
   });
 }
 

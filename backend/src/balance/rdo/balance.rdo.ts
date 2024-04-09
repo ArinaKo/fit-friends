@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import { WorkoutRdo } from 'src/workout/rdo';
 
 export class BalanceRdo {
@@ -14,6 +14,7 @@ export class BalanceRdo {
     description: 'Workout',
     type: WorkoutRdo,
   })
+  @Type(() => WorkoutRdo)
   @Expose()
   public workout: WorkoutRdo;
 }

@@ -20,9 +20,12 @@ export function generateRandomValue(min: number, max: number) {
 }
 
 export function getRandomItems<T>(items: T[], count?: number): T[] {
-  const startPosition = generateRandomValue(0, count ? count : items.length - 1);
-  const endPosition =
-    startPosition + generateRandomValue(startPosition, items.length);
+  const startPosition = count
+    ? generateRandomValue(0, items.length - count)
+    : generateRandomValue(0, items.length - 1);
+  const endPosition = count
+    ? startPosition + count
+    : generateRandomValue(startPosition + 1, items.length);
   return items.slice(startPosition, endPosition);
 }
 

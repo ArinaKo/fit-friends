@@ -35,13 +35,14 @@ export class FriendsService {
     friendId: string,
   ): Promise<boolean> {
     const friendsRecord = await this.getFriendsEntity(userId);
-    return friendsRecord?.friendsList.includes(friendId);
+    return friendsRecord.friendsList.includes(friendId);
   }
 
   public async getFriendsList(
     userId: string,
     query?: BaseQuery,
   ): Promise<FriendsWithPaginationRdo> {
+    await this.getFriendsEntity(userId);
     const friendsWithPagination = await this.friendsRepository.find(
       userId,
       query,
@@ -67,7 +68,7 @@ export class FriendsService {
       throw new ConflictException(`You can not add yourself to friends`);
     }
 
-    const newFriend = await this.userService.getUserEntity(friendId);
+    await this.userService.getUserEntity(friendId);
 
     if (await this.checkUserInFriends(userId, friendId)) {
       throw new ConflictException(
@@ -76,7 +77,10 @@ export class FriendsService {
     }
 
     await this.friendsRepository.addToFriends(userId, friendId);
-    await this.friendsRepository.addToFriends(friendId, userId);
+
+    if (!await this.checkUserInFriends(friendId, userId)) {
+      await this.friendsRepository.addToFriends(friendId, userId);
+    }
 
     await this.notificationService.createNotification(
       friendId,

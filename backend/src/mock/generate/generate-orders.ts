@@ -12,8 +12,8 @@ function generateOrder(workouts: WorkoutEntity[]) {
     type: getRandomItem(Object.values(OrderType)),
     workoutId: workout.id!,
     workoutPrice: workout.price,
-    count: count * workout.price,
-    totalPrice: 0,
+    count: count,
+    totalPrice: count * workout.price,
     paymentType: getRandomItem(Object.values(PaymentType)),
     createdAt: generateDate(),
   };

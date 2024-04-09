@@ -12,7 +12,7 @@ export class FriendsModel extends Document {
   public userId: string;
 
   @Prop({
-    type: () => String,
+    type: () => [String],
     default: [],
   })
   public friendsList: string[];
