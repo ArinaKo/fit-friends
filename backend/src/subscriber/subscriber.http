@@ -12,7 +12,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyN
 
 # Dispatch notifications
 PATCH  http://localhost:3000/subscribe/dispatch HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWZiMjIyNGRkYmFjNzg5ZDMzMjE0NDciLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwibmFtZSI6Iktla3MiLCJhdmF0YXIiOiJwaG90by0xLnBuZyIsImlzUmVhZHkiOnRydWUsImlhdCI6MTcxMjI4MTMwNywiZXhwIjoxNzEyMjgyMjA3fQ.zYH3-ybR4bOrze4_Z36iXzm52jENxPsmm6e-HZna968
 
 ###
 

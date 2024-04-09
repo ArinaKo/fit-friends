@@ -7,9 +7,6 @@ import { RefreshToken } from '@app/types';
   timestamps: true,
 })
 export class RefreshTokenModel extends Document implements RefreshToken {
-  @Prop()
-  public createdAt: Date;
-
   @Prop({ required: true })
   public tokenId: string;
 

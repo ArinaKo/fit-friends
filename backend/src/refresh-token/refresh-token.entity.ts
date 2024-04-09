@@ -5,7 +5,6 @@ export class RefreshTokenEntity implements RefreshToken, Entity<string> {
   public id?: string;
   public tokenId: string;
   public userId: string;
-  public createdAt: Date;
   public expiresIn: Date;
 
   constructor(refreshToken: RefreshToken) {
@@ -16,7 +15,6 @@ export class RefreshTokenEntity implements RefreshToken, Entity<string> {
     this.id = data.id;
     this.tokenId = data.tokenId;
     this.userId = data.userId;
-    this.createdAt = data.createdAt;
     this.expiresIn = data.expiresIn;
   }
 
@@ -25,7 +23,6 @@ export class RefreshTokenEntity implements RefreshToken, Entity<string> {
       id: this.id,
       tokenId: this.tokenId,
       userId: this.userId,
-      createdAt: this.createdAt,
       expiresIn: this.expiresIn,
     };
   }
