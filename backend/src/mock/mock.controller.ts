@@ -1,4 +1,4 @@
-import { Controller, HttpStatus, Logger, Post } from '@nestjs/common';
+import { Controller, HttpStatus, Post } from '@nestjs/common';
 import { MockService } from './mock.service';
 import { Public } from '@app/core';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -16,6 +16,5 @@ export class MockController {
   @Post('/')
   public async index() {
     await this.mockService.generateMocks();
-    Logger.log(`Mocks successfully generated`);
   }
 }

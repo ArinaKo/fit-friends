@@ -1,7 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import { EmailSubject } from './mail.const';
+import { EmailSubject, EmailTemplates } from './mail.const';
 import { mailConfig } from '@app/config';
 import { WorkoutNotification } from '@app/types';
 
@@ -21,7 +21,7 @@ export class MailService {
       from: this.mailConfig.from,
       to: email,
       subject: EmailSubject.NewSubscription,
-      template: './new-subscription',
+      template: EmailTemplates.NewSubscription,
       context: {
         coachName,
         userName,
@@ -40,7 +40,7 @@ export class MailService {
       from: this.mailConfig.from,
       to: email,
       subject: EmailSubject.NewWorkout,
-      template: './new-workout',
+      template: EmailTemplates.NewWorkout,
       context: {
         userName,
         coachName,

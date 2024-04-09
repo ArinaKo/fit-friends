@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from 'src/user/user.repository';
 import { CommentRepository } from 'src/comment/comment.repository';
 import { FileVaultRepository } from 'src/file-vault/file-vault.repository';
@@ -160,5 +160,7 @@ export class MockService {
         await this.workoutService.updateWorkoutRating(workoutId);
       }),
     );
+
+    Logger.log(`Mocks successfully generated`);
   }
 }
