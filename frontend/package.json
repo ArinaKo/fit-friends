@@ -1,5 +1,5 @@
 {
-  "name": "FitFriends",
+  "name": "fit-friends-frontend",
   "version": "4.0.0",
   "type": "module",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.5",
-    "axios": "0.27.2",
+    "axios": "1.6.8",
     "classnames": "2.3.2",
     "history": "5.3.0",
     "http-status-codes": "2.2.0",
@@ -44,7 +44,7 @@
     "faker": "5.5.3",
     "jsdom": "22.1.0",
     "typescript": "5.0.4",
-    "vite": "4.3.9",
+    "vite": "4.5.3",
     "vitest": "0.32.2"
   },
   "browserslist": {
