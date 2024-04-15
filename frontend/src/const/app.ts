@@ -28,3 +28,9 @@ export const WorkoutsPath = {
 export const UsersPath = {
   User: ':userId',
 } as const;
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
