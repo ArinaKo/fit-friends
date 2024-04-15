@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import {
   AccountPath,
   AppRoute,
@@ -6,13 +6,14 @@ import {
   UsersPath,
   WorkoutsPath,
 } from '../../const';
-import { EntryLayout, Layout, PrivateRoute } from '../index';
+import { EntryLayout, HistoryRouter, Layout, PrivateRoute } from '../index';
 import { HelmetProvider } from 'react-helmet-async';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route element={<EntryLayout />}>
             <Route
@@ -94,7 +95,7 @@ function App(): JSX.Element {
           </Route>
           <Route path="*" element={<div>Not implemented - 404 page</div>} />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
