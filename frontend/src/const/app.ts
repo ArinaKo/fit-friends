@@ -1,3 +1,5 @@
+export const AUTH_TOKEN_KEY_NAME = 'fit-friends-token';
+
 export const AppRoute = {
   Root: '/',
   Login: '/login',
