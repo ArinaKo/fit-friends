@@ -1,31 +1,27 @@
 import { Routes, Route } from 'react-router-dom';
-import {
-  AccountPath,
-  AppRoute,
-  UsersPath,
-  WorkoutsPath,
-} from '../../const';
+import { AccountPath, AppRoute, UsersPath, WorkoutsPath } from '../../const';
 import { EntryLayout, HistoryRouter, Layout, PrivateRoute } from '../index';
 import { HelmetProvider } from 'react-helmet-async';
 import browserHistory from '../../browser-history';
+import { IntroPage, LoginPage, RegisterPage } from '../../pages';
 
 function App(): JSX.Element {
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
+          <Route
+            path={AppRoute.Root}
+            element={<IntroPage />}
+          />
           <Route element={<EntryLayout />}>
             <Route
-              path={AppRoute.Root}
-              element={<div>Not implemented - root page</div>}
-            />
-            <Route
               path={AppRoute.Login}
-              element={<div>Not implemented - login page</div>}
+              element={<LoginPage />}
             />
             <Route
               path={AppRoute.Register}
-              element={<div>Not implemented - register page</div>}
+              element={<RegisterPage />}
             />
             <Route
               path={AppRoute.Questionary}
