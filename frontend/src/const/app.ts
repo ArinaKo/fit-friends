@@ -33,12 +33,6 @@ export const UsersPath = {
   User: ':userId',
 } as const;
 
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
-}
-
 export enum NameSpace {
   AppData = 'APP_DATA',
 }

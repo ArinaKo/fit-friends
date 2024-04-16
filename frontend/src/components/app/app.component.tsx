@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 import {
   AccountPath,
   AppRoute,
-  AuthorizationStatus,
   UsersPath,
   WorkoutsPath,
 } from '../../const';
@@ -31,7 +30,7 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Questionary}
               element={
-                <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+                <PrivateRoute>
                   <div>Not implemented - questionary page</div>
                 </PrivateRoute>
               }
@@ -39,7 +38,7 @@ function App(): JSX.Element {
           </Route>
           <Route
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute>
                 <Layout />
               </PrivateRoute>
             }
