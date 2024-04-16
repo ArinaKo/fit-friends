@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { transformValidationErrors } from '@app/helpers';
 import { ValidationError } from 'class-validator';
+import * as cors from 'cors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -26,6 +27,8 @@ async function bootstrap() {
       },
     }),
   );
+
+  app.use(cors());
 
   const configService = app.get(ConfigService);
   const port = configService.get('app.port');
