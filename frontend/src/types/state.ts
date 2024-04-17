@@ -1,5 +1,5 @@
 import { store } from '../store/index.js';
-import { AuthorizationStatus, UserRole } from '../const';
+import { AuthorizationStatus, MetroStation, UserRole, UserSex } from '../const';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -13,5 +13,10 @@ export type AppData = {
 export type UserForm = {
   email: string;
   password: string;
+  name: string;
+  sex: UserSex;
+  dateOfBirth: string;
+  role: UserRole;
+  location: MetroStation | undefined;
   isSending: boolean;
 };
