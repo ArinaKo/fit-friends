@@ -14,7 +14,7 @@ export interface User {
   sex: UserSex;
   dateOfBirth?: Date;
   role: UserRole;
-  description: string;
+  description?: string;
   location: MetroStation;
   backgroundImage: string | FileData;
   level: UserLevel;

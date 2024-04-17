@@ -54,10 +54,8 @@ export class UserModel extends Document implements AuthUser {
   })
   public sex: UserSex;
 
-  @Prop({
-    required: true,
-  })
-  public description: string;
+  @Prop()
+  public description?: string;
 
   @Prop({
     required: true,

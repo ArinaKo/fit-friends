@@ -11,17 +11,16 @@ import {
 } from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
 import { UserEntity } from '../user/user.entity';
-import { CreateCoachUserDto, CreateUserDto, LoginUserDto } from './dto/index';
-import * as dayjs from 'dayjs';
+import { CreateUserDto, LoginUserDto } from './dto/index';
 import { FileMessage, UserMessage } from 'src/shared/messages';
-import { RefreshTokenPayload } from '@app/types';
+import { RefreshTokenPayload, UserLevel } from '@app/types';
 import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '@app/config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 import { createJWTPayload, fillDto } from '@app/helpers';
 import { UserService } from 'src/user/user.service';
-import { AuthUserRdo, LoggedUserRdo } from './rdo';
+import { LoggedUserRdo } from './rdo';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
 
 @Injectable()
@@ -37,21 +36,9 @@ export class AuthService {
     private readonly fileVaultService: FileVaultService,
   ) {}
 
-  public async register(dto: CreateUserDto): Promise<AuthUserRdo> {
-    const {
-      email,
-      name,
-      avatar,
-      sex,
-      dateOfBirth,
-      role,
-      description,
-      location,
-      level,
-      workoutTypes,
-      isReady,
-      password,
-    } = dto;
+  public async register(dto: CreateUserDto): Promise<LoggedUserRdo> {
+    const { email, name, avatar, sex, dateOfBirth, role, location, password } =
+      dto;
 
     if (await this.userRepository.findByEmail(email)) {
       throw new ConflictException(UserMessage.Exists);
@@ -73,42 +60,24 @@ export class AuthService {
       name,
       avatar,
       sex,
-      dateOfBirth: dateOfBirth ? dayjs(dateOfBirth).toDate() : undefined,
+      dateOfBirth: dateOfBirth ? dateOfBirth : undefined,
       role,
-      description,
       location,
       backgroundImage: dto.backgroundImage ?? avatar,
-      level,
-      workoutTypes,
-      isReady,
+      level: UserLevel.Amateur,
+      workoutTypes: [],
+      isReady: false,
       passwordHash: '',
       createdAt: new Date(),
     };
 
-    let extraInfo = {};
-    if (dto instanceof CreateCoachUserDto) {
-      if (!(await this.fileVaultService.isFileDocument(dto.certificate))) {
-        throw new BadRequestException(FileMessage.UploadedDocumentType);
-      }
-      extraInfo = {
-        certificate: dto.certificate,
-        achievements: dto.achievements,
-      };
-    } else {
-      extraInfo = {
-        caloriesToLose: dto.caloriesToLose,
-        caloriesPerDay: dto.caloriesPerDay,
-        timeForWorkout: dto.timeForWorkout,
-      };
-    }
-
     const userEntity = await new UserEntity(
-      Object.assign(userInfo, extraInfo),
+      Object.assign(userInfo),
     ).setPassword(password);
+    console.log(userEntity);
+    await this.userRepository.save(userEntity);
 
-    const userId = (await this.userRepository.save(userEntity)).id!;
-    const fullUser = await this.userRepository.findFullUser(userId);
-    return fillDto(AuthUserRdo, fullUser!.toPOJO());
+    return this.createUserToken(userEntity);
   }
 
   public async verifyUser(dto: LoginUserDto): Promise<UserEntity> {

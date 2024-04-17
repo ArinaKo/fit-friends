@@ -1,5 +1,6 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserRole } from '@app/types';
 
 export class LoggedUserRdo {
   @ApiProperty({
@@ -10,11 +11,11 @@ export class LoggedUserRdo {
   public id: string;
 
   @ApiProperty({
-    description: 'User email',
-    example: 'user@user.local',
+    description: 'User role',
+    example: 'пользователь',
   })
   @Expose()
-  public email: string;
+  public role: UserRole;
 
   @ApiProperty({
     description: 'Access token',

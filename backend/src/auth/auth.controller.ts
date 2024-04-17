@@ -10,10 +10,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateDefaultUserDto, CreateUserDto, LoginUserDto } from './dto';
-import { AuthUserRdo, LoggedUserRdo } from './rdo/index';
+import { CreateUserDto, LoginUserDto } from './dto';
+import { LoggedUserRdo } from './rdo/index';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Public, UserDtoValidationPipe } from '@app/core';
+import { Public } from '@app/core';
 import {
   LocalAuthGuard,
   JwtRefreshGuard,
@@ -24,7 +24,6 @@ import {
   RequestWithTokenPayload,
   RequestWithRefreshTokenPayload,
 } from '../shared/requests/index';
-import { CreateUserDtoListing } from './auth.const';
 import { UserService } from 'src/user/user.service';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
 
@@ -38,17 +37,15 @@ export class AuthController {
   ) {}
 
   @ApiResponse({
-    type: AuthUserRdo,
+    type: LoggedUserRdo,
     status: HttpStatus.CREATED,
     description: 'The new user has been successfully created.',
   })
-  @ApiBody({ type: CreateDefaultUserDto })
+  @ApiBody({ type: CreateUserDto })
   @Public()
   @UseGuards(NotAuthGuard)
   @Post('register')
-  public async create(
-    @Body(new UserDtoValidationPipe(CreateUserDtoListing)) dto: CreateUserDto,
-  ) {
+  public async create(@Body() dto: CreateUserDto) {
     return this.authService.register(dto);
   }
 

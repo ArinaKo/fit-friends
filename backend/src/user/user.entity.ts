@@ -20,7 +20,7 @@ export class UserEntity implements FullUser, Entity<string> {
   public dateOfBirth?: Date;
   public role: UserRole;
   public sex: UserSex;
-  public description: string;
+  public description?: string;
   public location: MetroStation;
   public backgroundImage: string | FileEntity;
   public level: UserLevel;

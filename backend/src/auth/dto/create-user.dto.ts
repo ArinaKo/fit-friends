@@ -1,40 +1,20 @@
-import {
-  MetroStation,
-  UserLevel,
-  UserRole,
-  UserSex,
-  WorkoutDuration,
-  WorkoutType,
-} from '@app/types';
+import { MetroStation, UserRole, UserSex } from '@app/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEmail,
   IsString,
-  ArrayMaxSize,
-  IsArray,
-  IsBoolean,
   IsEnum,
   Length,
-  IsInt,
-  Min,
-  Max,
   IsOptional,
   IsISO8601,
   IsMongoId,
   Matches,
 } from 'class-validator';
-import {
-  CaloriesValue,
-  MAX_WORKOUTS_TYPES,
-  UserAchievementsLength,
-  UserDescriptionLength,
-  UserNameLength,
-  UserPasswordLength,
-} from 'src/shared/const';
+import { UserNameLength, UserPasswordLength } from 'src/shared/const';
 import { DtoValidationMessage } from 'src/shared/messages';
 import { Expose, Transform } from 'class-transformer';
 
-class BaseUserDto {
+export class CreateUserDto {
   @ApiProperty({
     description: 'User avatar',
     example: '660306ae5cdc417b17500eec',
@@ -106,18 +86,6 @@ class BaseUserDto {
   public sex: UserSex;
 
   @ApiProperty({
-    description: 'User description',
-    example: 'Описание пользователя текстом',
-  })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsString()
-  @Length(UserDescriptionLength.Min, UserDescriptionLength.Max, {
-    message: DtoValidationMessage.userDescription.length,
-  })
-  @Expose()
-  public description: string;
-
-  @ApiProperty({
     description: 'User location - metro station',
     example: 'Пионерская',
   })
@@ -137,104 +105,4 @@ class BaseUserDto {
   @IsOptional()
   @Expose()
   public backgroundImage?: string;
-
-  @ApiProperty({
-    description: 'User level',
-    example: 'новичок',
-  })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsEnum(UserLevel, { message: DtoValidationMessage.level.invalidFormat })
-  @Expose()
-  public level: UserLevel;
-
-  @ApiProperty({
-    description: 'User`s workouts types',
-    example: 'йога, бег',
-  })
-  @Transform(({ value }) => {
-    if (typeof value === 'string') {
-      return [value.trim()];
-    }
-    if (Array.isArray(value)) {
-      return value.map((item) =>
-        typeof item === 'string' ? item.trim() : item,
-      );
-    }
-  })
-  @IsArray()
-  @ArrayMaxSize(MAX_WORKOUTS_TYPES, {
-    message: DtoValidationMessage.workoutsTypes.length,
-  })
-  @IsEnum(WorkoutType, {
-    each: true,
-    message: DtoValidationMessage.workoutsTypes.invalidItems,
-  })
-  @Expose()
-  public workoutTypes: WorkoutType[];
-
-  @ApiProperty({
-    description: 'Is user ready for workout?',
-    example: 'true',
-  })
-  @IsBoolean()
-  @Expose()
-  public isReady: boolean;
 }
-
-export class CreateDefaultUserDto extends BaseUserDto {
-  @ApiProperty({
-    description: 'Calories to lose',
-    example: '3200',
-  })
-  @IsInt()
-  @Min(CaloriesValue.Min, { message: DtoValidationMessage.calories.value })
-  @Max(CaloriesValue.Max, { message: DtoValidationMessage.calories.value })
-  @Expose()
-  public caloriesToLose: number;
-
-  @ApiProperty({
-    description: 'Calories to lose per day',
-    example: '1000',
-  })
-  @IsInt()
-  @Min(CaloriesValue.Min, { message: DtoValidationMessage.calories.value })
-  @Max(CaloriesValue.Max, { message: DtoValidationMessage.calories.value })
-  @Expose()
-  public caloriesPerDay: number;
-
-  @ApiProperty({
-    description: 'User`s preferable workout duration',
-    example: '10-30 мин',
-  })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsEnum(WorkoutDuration, {
-    message: DtoValidationMessage.timeForWorkout.invalidFormat,
-  })
-  @Expose()
-  public timeForWorkout: WorkoutDuration;
-}
-
-export class CreateCoachUserDto extends BaseUserDto {
-  @ApiProperty({
-    description: 'Coach certificate',
-    example: '660306ae5cdc417b17500eec',
-  })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsMongoId()
-  @Expose()
-  public certificate: string;
-
-  @ApiProperty({
-    description: 'User`s achievements',
-    example: 'Мой список достижений',
-  })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsString()
-  @Length(UserAchievementsLength.Min, UserAchievementsLength.Max, {
-    message: DtoValidationMessage.achievements.length,
-  })
-  @Expose()
-  public achievements: string;
-}
-
-export type CreateUserDto = CreateCoachUserDto | CreateDefaultUserDto;

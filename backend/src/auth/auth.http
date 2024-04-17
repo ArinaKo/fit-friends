@@ -23,14 +23,7 @@ Content-Type: application/json
   "avatar": "6611e2bcb59f179241a1b76d",
   "sex": "мужской",
   "role": "пользователь",
-  "description": "Описание пользователя, описание пользователя.",
   "location": "Петроградская",
-  "level": "профессионал",
-  "workoutTypes": ["йога", "бег"],
-  "isReady": true,
-  "caloriesToLose": 5000,
-  "caloriesPerDay": 1000,
-  "timeForWorkout": "10-30 мин"
 }
 
 ###
@@ -60,13 +53,7 @@ Content-Type: application/json
   "avatar": "6611e2bcb59f179241a1b76d",
   "sex": "мужской",
   "role": "тренер",
-  "description": "Описание тренера, описание тренера.",
   "location": "Петроградская",
-  "level": "профессионал",
-  "workoutTypes": ["йога", "бег"],
-  "isReady": true,
-  "certificate": "6611e2bcb59f179241a1b76d",
-  "achievements": "Я кот и этим все сказано"
 }
 
 ###
