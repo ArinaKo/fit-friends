@@ -1,7 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { isUserAuth } from '../../store';
+import { isAuthRequesting, isUserAuth } from '../../store';
+import UIBlocker from '../ui-blocker/ui-blocker.component';
 
 type PrivateRouteProps = {
   children: JSX.Element;
@@ -9,7 +10,11 @@ type PrivateRouteProps = {
 
 function PrivateRoute({ children }: PrivateRouteProps): React.JSX.Element {
   const isAuth = useAppSelector(isUserAuth);
-  return isAuth ? children : <Navigate to={AppRoute.Root} />;
+  const isRequesting = useAppSelector(isAuthRequesting);
+  if (isRequesting) {
+    return <UIBlocker />;
+  }
+  return isAuth ? children : <Navigate to={AppRoute.Login} />;
 }
 
 export default PrivateRoute;

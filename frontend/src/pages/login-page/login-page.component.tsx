@@ -1,4 +1,31 @@
+import { useNavigate } from 'react-router-dom';
+import { LoginForm, UIBlocker } from '../../components';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  isAuthRequesting,
+  isUserAuth,
+  isUserCoach,
+} from '../../store';
+import { useEffect } from 'react';
+import { AppRoute } from '../../const';
+
 function LoginPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const isAuth = useAppSelector(isUserAuth);
+  const isCoach = useAppSelector(isUserCoach);
+  const isDataLoading = useAppSelector(isAuthRequesting);
+
+  if (isDataLoading) {
+    return <UIBlocker />;
+  }
+
+  useEffect(() => {
+    if (isAuth) {
+      isCoach ? navigate(AppRoute.Account) : navigate(AppRoute.Main);
+    }
+  }, [dispatch, isAuth]);
+
   return (
     <div className="popup-form popup-form--sign-in">
       <div className="popup-form__wrapper">

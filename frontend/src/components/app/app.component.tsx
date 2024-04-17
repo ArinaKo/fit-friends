@@ -4,25 +4,25 @@ import { EntryLayout, HistoryRouter, Layout, PrivateRoute } from '../index';
 import { HelmetProvider } from 'react-helmet-async';
 import browserHistory from '../../browser-history';
 import { IntroPage, LoginPage, RegisterPage } from '../../pages';
+import { useAppDispatch } from '../../hooks';
+import { useEffect } from 'react';
+import { checkAuthAction } from '../../store/api-actions';
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, [dispatch]);
+
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route
-            path={AppRoute.Root}
-            element={<IntroPage />}
-          />
+          <Route path={AppRoute.Root} element={<IntroPage />} />
           <Route element={<EntryLayout />}>
-            <Route
-              path={AppRoute.Login}
-              element={<LoginPage />}
-            />
-            <Route
-              path={AppRoute.Register}
-              element={<RegisterPage />}
-            />
+            <Route path={AppRoute.Login} element={<LoginPage />} />
+            <Route path={AppRoute.Register} element={<RegisterPage />} />
             <Route
               path={AppRoute.Questionary}
               element={
