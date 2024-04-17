@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+
 function IntroPage(): JSX.Element {
   return (
     <div className="wrapper">
@@ -43,14 +46,18 @@ function IntroPage(): JSX.Element {
               </picture>
             </div>
             <div className="intro__buttons">
-              <button className="btn intro__button" type="button">
+              <Link
+                to={AppRoute.Register}
+                className="btn intro__button"
+                type="button"
+              >
                 Регистрация
-              </button>
+              </Link>
               <p className="intro__text">
                 Есть аккаунт?{' '}
-                <a className="intro__link" href="#">
+                <Link to={AppRoute.Login} className="intro__link">
                   Вход
-                </a>
+                </Link>
               </p>
             </div>
           </div>
