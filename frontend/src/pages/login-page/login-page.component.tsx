@@ -17,19 +17,19 @@ function LoginPage(): JSX.Element {
   const isCoach = useAppSelector(isUserCoach);
   const isDataLoading = useAppSelector(isAuthRequesting);
 
-  if (isDataLoading) {
-    return <UIBlocker />;
-  }
-
   useEffect(() => {
     if (isAuth) {
-      isCoach ? navigate(AppRoute.Account) : navigate(AppRoute.Main);
+      navigate(isCoach ? AppRoute.Account : AppRoute.Main);
     }
-  }, [dispatch, isAuth]);
+  }, [navigate, isAuth, isCoach]);
 
   useEffect(() => {
     dispatch(resetUserForm());
   }, [dispatch]);
+
+  if (isDataLoading) {
+    return <UIBlocker />;
+  }
 
   return (
     <div className="popup-form popup-form--sign-in">

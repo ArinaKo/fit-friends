@@ -18,15 +18,16 @@ import {
   setSex,
 } from '../../store';
 import {
+  AppRoute,
   MetroStation,
   RoleInputLabel,
-  UserLevel,
   UserRole,
   UserSex,
 } from '../../const';
 import { registerAction } from '../../store/api-actions';
 import lodash from 'lodash';
 import dayjs from 'dayjs';
+import { redirectToRoute } from '../../store/actions';
 
 function RegisterForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -53,9 +54,12 @@ function RegisterForm(): JSX.Element {
         location: location,
         dateOfBirth: dateOfBirth.length ? new Date(dateOfBirth) : undefined,
         avatar: '6614adb311a9567c1b1a513e',
-        level: UserLevel.Beginner,
       })
-    );
+    ).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(redirectToRoute(AppRoute.Questionary));
+      }
+    });
   };
 
   return (
