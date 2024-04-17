@@ -10,3 +10,9 @@ export type AppData = {
   authStatus: AuthorizationStatus;
   userRole: UserRole | undefined;
 };
+
+export type UserForm = {
+  email: string;
+  password: string;
+  isSending: boolean;
+};

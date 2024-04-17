@@ -35,4 +35,5 @@ export const UsersPath = {
 
 export enum NameSpace {
   AppData = 'APP_DATA',
+  UserForm = 'USER_FORM',
 }
