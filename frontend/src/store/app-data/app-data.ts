@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AppData, AuthorizationStatus } from '../../types';
+import { AppData } from '../../types';
 import { NameSpace } from '../../const';
 import { checkAuthAction, loginAction } from '../api-actions';
-import { UserRole } from '../../types/user-role.enum';
+import { AuthorizationStatus, UserRole } from '../../const';
 
 const initialState: AppData = {
   authStatus: AuthorizationStatus.Unknown,

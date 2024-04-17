@@ -1,6 +1,5 @@
 import { store } from '../store/index.js';
-import { AuthorizationStatus } from './authorization-status.enum.js';
-import { UserRole } from './user-role.enum.js';
+import { AuthorizationStatus, UserRole } from '../const';
 
 export type State = ReturnType<typeof store.getState>;
 
