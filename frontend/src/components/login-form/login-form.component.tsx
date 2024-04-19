@@ -11,9 +11,7 @@ import {
   setUserFormError,
 } from '../../store';
 import { loginAction } from '../../store/api-actions';
-import cn from 'classnames';
-import { validateEmail, validatePassword } from '../../utils';
-import { REQUIRED_INPUT_MESSAGE } from '../../const';
+import { EmailInput, PasswordInput } from '../form-inputs';
 
 function LoginForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -43,65 +41,8 @@ function LoginForm(): JSX.Element {
   return (
     <form method="post" onSubmit={handleFormSubmit}>
       <div className="sign-in">
-        <div
-          className={cn('custom-input sign-in__input', {
-            'custom-input--error': emailError,
-          })}
-        >
-          <label>
-            <span className="custom-input__label">E-mail</span>
-            <span className="custom-input__wrapper">
-              <input
-                type="email"
-                name="email"
-                value={email}
-                disabled={isSending}
-                onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
-                  dispatch(setEmail(target.value));
-                  if (validateEmail(target.value) !== emailError) {
-                    dispatch(
-                      setUserFormError(['email', validateEmail(target.value)])
-                    );
-                  }
-                }}
-              />
-            </span>
-            {emailError && (
-              <span className="custom-input__error">{emailError}</span>
-            )}
-          </label>
-        </div>
-        <div
-          className={cn('custom-input sign-in__input', {
-            'custom-input--error': passwordError,
-          })}
-        >
-          <label>
-            <span className="custom-input__label">Пароль</span>
-            <span className="custom-input__wrapper">
-              <input
-                type="password"
-                name="password"
-                value={password}
-                disabled={isSending}
-                onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
-                  dispatch(setPassword(target.value));
-                  if (validatePassword(target.value) !== passwordError) {
-                    dispatch(
-                      setUserFormError([
-                        'password',
-                        validatePassword(target.value),
-                      ])
-                    );
-                  }
-                }}
-              />
-            </span>
-            {passwordError && (
-              <span className="custom-input__error">{passwordError}</span>
-            )}
-          </label>
-        </div>
+        <EmailInput isDisabled={isSending} />
+        <PasswordInput isDisabled={isSending} />
         <button
           className="btn sign-in__button"
           type="submit"
