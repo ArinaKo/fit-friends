@@ -1,14 +1,9 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
-  getUserFormEmail,
-  getUserFormEmailError,
-  getUserFormPassword,
-  getUserFormPasswordError,
   isUserFormDataSending,
-  setEmail,
-  setPassword,
-  setUserFormError,
+  isUserFormHaveErrors,
+  setLoginRequiredFields,
 } from '../../store';
 import { loginAction } from '../../store/api-actions';
 import { EmailInput, PasswordInput } from '../form-inputs';
@@ -16,25 +11,13 @@ import { EmailInput, PasswordInput } from '../form-inputs';
 function LoginForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const isSending = useAppSelector(isUserFormDataSending);
-  const email = useAppSelector(getUserFormEmail);
-  const emailError = useAppSelector(getUserFormEmailError);
-  const password = useAppSelector(getUserFormPassword);
-  const passwordError = useAppSelector(getUserFormPasswordError);
-
-  const isSubmitAvailable = (): boolean => {
-    if (!email) {
-      dispatch(setUserFormError(['email', REQUIRED_INPUT_MESSAGE]));
-    }
-    if (!password) {
-      dispatch(setUserFormError(['password', REQUIRED_INPUT_MESSAGE]));
-    }
-    return !emailError && !passwordError;
-  };
+  const isFormHaveError = useAppSelector(isUserFormHaveErrors);
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    if (isSubmitAvailable()) {
-      dispatch(loginAction({ email, password }));
+    dispatch(setLoginRequiredFields());
+    if (!isFormHaveError) {
+      dispatch(loginAction());
     }
   };
 

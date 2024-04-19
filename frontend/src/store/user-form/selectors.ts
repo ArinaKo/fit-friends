@@ -43,5 +43,8 @@ export const getUserFormRoleError = (state: State): string | undefined =>
 export const getUserFormLocationError = (state: State): string | undefined =>
   state[NameSpace.UserForm].validationErrors.location;
 
+export const isUserFormHaveErrors = (state: State): boolean =>
+  Object.values(state[NameSpace.UserForm].validationErrors).some((error) => error !== undefined);
+
 export const isUserFormDataSending = (state: State): boolean =>
   state[NameSpace.UserForm].isSending;

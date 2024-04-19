@@ -4,6 +4,7 @@ import {
   EmptyUserForm,
   MetroStation,
   NameSpace,
+  REQUIRED_INPUT_MESSAGE,
   UserRole,
   UserSex,
 } from '../../const';
@@ -59,6 +60,14 @@ export const userForm = createSlice({
     setUserFormError: (state, action: PayloadAction<[string, string | undefined]>) => {
       state.validationErrors = { ...state.validationErrors, [action.payload[0]]: action.payload[1] };
     },
+    setLoginRequiredFields: (state) => {
+      if (!state.email) {
+        state.validationErrors.email = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.password) {
+        state.validationErrors.password = REQUIRED_INPUT_MESSAGE;
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -103,4 +112,5 @@ export const {
   setRole,
   setSex,
   setUserFormError,
+  setLoginRequiredFields,
 } = userForm.actions;
