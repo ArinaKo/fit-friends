@@ -14,3 +14,13 @@ export enum UserLevel {
   Amateur = 'любитель',
   Pro = 'профессионал',
 }
+
+export enum PasswordLength {
+  Min = 6,
+  Max = 12,
+}
+
+export enum NameLength {
+  Min = 1,
+  Max = 15,
+}
