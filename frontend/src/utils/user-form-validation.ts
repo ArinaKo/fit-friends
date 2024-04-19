@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { NameLength, PasswordLength } from '../const';
+import { NameLength, PasswordLength, REQUIRED_INPUT_MESSAGE } from '../const';
 
 type ValidationData = {
   email: string;
@@ -11,7 +11,8 @@ const ValidationSchema = {
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .message('Введите валидный адрес электронной почты')
-    .required(),
+    .required()
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
   password: Joi.string()
     .min(PasswordLength.Min)
     .message(
@@ -21,7 +22,8 @@ const ValidationSchema = {
     .message(
       `Рекомендуемая длина пароля ${PasswordLength.Min} - ${PasswordLength.Max} символов`
     )
-    .required(),
+    .required()
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
   name: Joi.string()
     .pattern(/^[a-zа-яё]+$/i)
     .message('Только буквы русского/английского алфавита')
@@ -33,7 +35,8 @@ const ValidationSchema = {
     .message(
       `Рекомендуемая длина имени ${NameLength.Min} - ${NameLength.Max} символов`
     )
-    .required(),
+    .required()
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
 };
 
 const validateProperty = (
