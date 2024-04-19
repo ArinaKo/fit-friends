@@ -17,6 +17,7 @@ const initialState: UserForm = {
   dateOfBirth: EmptyUserForm.DateOfBirth,
   role: EmptyUserForm.Role,
   location: EmptyUserForm.Location,
+  validationErrors: EmptyUserForm.ValidationsErrors,
   isSending: false,
 };
 
@@ -32,6 +33,7 @@ export const userForm = createSlice({
       state.dateOfBirth = EmptyUserForm.DateOfBirth;
       state.role = EmptyUserForm.Role;
       state.location = EmptyUserForm.Location;
+      state.validationErrors = EmptyUserForm.ValidationsErrors;
     },
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
@@ -53,6 +55,9 @@ export const userForm = createSlice({
     },
     setRole: (state, action: PayloadAction<UserRole>) => {
       state.role = action.payload;
+    },
+    setUserFormError: (state, action: PayloadAction<[string, string | undefined]>) => {
+      state.validationErrors = { ...state.validationErrors, [action.payload[0]]: action.payload[1] };
     },
   },
   extraReducers(builder) {
@@ -79,6 +84,7 @@ export const userForm = createSlice({
         state.dateOfBirth = EmptyUserForm.DateOfBirth;
         state.role = EmptyUserForm.Role;
         state.location = EmptyUserForm.Location;
+        state.validationErrors = EmptyUserForm.ValidationsErrors;
         state.isSending = false;
       })
       .addCase(registerAction.rejected, (state) => {
@@ -96,4 +102,5 @@ export const {
   setName,
   setRole,
   setSex,
+  setUserFormError,
 } = userForm.actions;
