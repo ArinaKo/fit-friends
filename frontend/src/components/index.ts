@@ -6,3 +6,4 @@ export { default as Layout } from './layout/layout.component';
 export { default as UIBlocker } from './ui-blocker/ui-blocker.component';
 export { default as LoginForm } from './login-form/login-form.component';
 export { default as RegisterForm } from './register-form/register-form.component';
+export { default as QuestionaryForm } from './questionary-form/questionary-form.component';
