@@ -2,9 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, LoggedUser, State } from '../types';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute, UserRole } from '../const';
-import { RegisterData } from '../types/user-form-data';
 import { saveTokens } from '../services/token';
 import { redirectToRoute } from './actions';
+import { getRegisterFormData } from '../utils/get-form-data';
 
 type asyncThunkConfig = {
   dispatch: AppDispatch;
@@ -43,10 +43,11 @@ export const loginAction = createAsyncThunk<
 
 export const registerAction = createAsyncThunk<
   LoggedUser,
-  RegisterData,
+  Blob,
   asyncThunkConfig
->('user/register', async (registerData, { extra: api }) => {
-  const { data } = await api.post<LoggedUser>(APIRoute.Register, registerData);
+>('user/register', async (avatar, { getState, extra: api }) => {
+  const formData = getRegisterFormData(getState(), avatar);
+  const { data } = await api.post<LoggedUser>(APIRoute.Register, formData);
   const { accessToken, refreshToken } = data;
   saveTokens(accessToken, refreshToken);
   return data;

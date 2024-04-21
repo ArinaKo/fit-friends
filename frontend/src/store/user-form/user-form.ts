@@ -72,6 +72,23 @@ export const userForm = createSlice({
         state.validationErrors.password = REQUIRED_INPUT_MESSAGE;
       }
     },
+    setRegisterRequiredFields: (state) => {
+      if (!state.email) {
+        state.validationErrors.email = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.password) {
+        state.validationErrors.password = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.name) {
+        state.validationErrors.name = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.location) {
+        state.validationErrors.location = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.avatar) {
+        state.validationErrors.avatar = REQUIRED_INPUT_MESSAGE;
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -118,4 +135,5 @@ export const {
   setAvatar,
   setUserFormError,
   setLoginRequiredFields,
+  setRegisterRequiredFields,
 } = userForm.actions;
