@@ -1,4 +1,5 @@
-import { UserRole, UserSex } from './user';
+import { UserLevel, UserRole, UserSex } from './user';
+import { WorkoutDuration } from './workout';
 
 export const EmptyUserForm = {
   Email: '',
@@ -9,6 +10,13 @@ export const EmptyUserForm = {
   Role: UserRole.Coach,
   Location: undefined,
   Avatar: undefined,
+  Level: UserLevel.Amateur,
+  WorkoutTypes: [],
+  TimeForWorkout: WorkoutDuration.Medium,
+  CaloriesToLose: '',
+  CaloriesPerDay: '',
+  Certificates: [],
+  Achievements: '',
   ValidationsErrors: {
     email: undefined,
     password: undefined,
@@ -16,5 +24,10 @@ export const EmptyUserForm = {
     dateOfBirth: undefined,
     location: undefined,
     avatar: undefined,
-  }
-} as const;
+    workoutTypes: undefined,
+    caloriesToLose: undefined,
+    caloriesPerDay: undefined,
+    certificates: undefined,
+    achievements: undefined,
+  },
+};

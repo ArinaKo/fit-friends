@@ -5,8 +5,11 @@ import {
   MetroStation,
   NameSpace,
   REQUIRED_INPUT_MESSAGE,
+  UserLevel,
   UserRole,
   UserSex,
+  WorkoutDuration,
+  WorkoutType,
 } from '../../const';
 import { loginAction, registerAction } from '../api-actions';
 
@@ -19,6 +22,13 @@ const initialState: UserForm = {
   role: EmptyUserForm.Role,
   location: EmptyUserForm.Location,
   avatar: EmptyUserForm.Avatar,
+  level: EmptyUserForm.Level,
+  workoutTypes: EmptyUserForm.WorkoutTypes,
+  timeForWorkout: EmptyUserForm.TimeForWorkout,
+  caloriesToLose: EmptyUserForm.CaloriesToLose,
+  caloriesPerDay: EmptyUserForm.CaloriesPerDay,
+  certificates: EmptyUserForm.Certificates,
+  achievements: EmptyUserForm.Achievements,
   validationErrors: EmptyUserForm.ValidationsErrors,
   isSending: false,
 };
@@ -61,8 +71,41 @@ export const userForm = createSlice({
     setAvatar: (state, action: PayloadAction<string | undefined>) => {
       state.avatar = action.payload;
     },
-    setUserFormError: (state, action: PayloadAction<[string, string | undefined]>) => {
-      state.validationErrors = { ...state.validationErrors, [action.payload[0]]: action.payload[1] };
+    setLevel: (state, action: PayloadAction<UserLevel>) => {
+      state.level = action.payload;
+    },
+    setWorkoutTypes: (state, action: PayloadAction<WorkoutType>) => {
+      const type = action.payload;
+      state.workoutTypes = state.workoutTypes.includes(type)
+        ? state.workoutTypes.filter((item) => item !== type)
+        : [...state.workoutTypes, type];
+    },
+    setTimeForWorkout: (state, action: PayloadAction<WorkoutDuration>) => {
+      state.timeForWorkout = action.payload;
+    },
+    setCaloriesToLose: (state, action: PayloadAction<string>) => {
+      state.caloriesToLose = action.payload;
+    },
+    setCaloriesPerDay: (state, action: PayloadAction<string>) => {
+      state.caloriesPerDay = action.payload;
+    },
+    setCertificate: (state, action: PayloadAction<string>) => {
+      const certificate = action.payload;
+      state.certificates = state.certificates.includes(certificate)
+        ? state.certificates.filter((item) => item !== certificate)
+        : [...state.certificates, certificate];
+    },
+    setAchievements: (state, action: PayloadAction<string>) => {
+      state.achievements = action.payload;
+    },
+    setUserFormError: (
+      state,
+      action: PayloadAction<[string, string | undefined]>
+    ) => {
+      state.validationErrors = {
+        ...state.validationErrors,
+        [action.payload[0]]: action.payload[1],
+      };
     },
     setLoginRequiredFields: (state) => {
       if (!state.email) {
@@ -87,6 +130,28 @@ export const userForm = createSlice({
       }
       if (!state.avatar) {
         state.validationErrors.avatar = REQUIRED_INPUT_MESSAGE;
+      }
+    },
+    setCustomerQuestionaryRequiredFields: (state) => {
+      if (!state.workoutTypes.length) {
+        state.validationErrors.workoutTypes = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.caloriesPerDay) {
+        state.validationErrors.caloriesPerDay = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.caloriesToLose) {
+        state.validationErrors.caloriesToLose = REQUIRED_INPUT_MESSAGE;
+      }
+    },
+    setCoachQuestionaryRequiredFields: (state) => {
+      if (!state.workoutTypes.length) {
+        state.validationErrors.workoutTypes = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.achievements) {
+        state.validationErrors.achievements = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.certificates.length) {
+        state.validationErrors.certificates = REQUIRED_INPUT_MESSAGE;
       }
     },
   },
@@ -133,7 +198,16 @@ export const {
   setRole,
   setSex,
   setAvatar,
+  setLevel,
+  setWorkoutTypes,
+  setTimeForWorkout,
+  setCaloriesToLose,
+  setCaloriesPerDay,
+  setCertificate,
+  setAchievements,
   setUserFormError,
   setLoginRequiredFields,
   setRegisterRequiredFields,
+  setCustomerQuestionaryRequiredFields,
+  setCoachQuestionaryRequiredFields,
 } = userForm.actions;

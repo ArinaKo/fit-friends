@@ -1,3 +1,5 @@
+export const WORKOUT_TYPE_MAX_AMOUNT = 3;
+
 export enum UserRole {
   Coach = 'тренер',
   Default = 'пользователь',
@@ -23,4 +25,9 @@ export enum PasswordLength {
 export enum NameLength {
   Min = 1,
   Max = 15,
+}
+
+export enum CaloriesValue {
+  Min = 1000,
+  Max = 5000,
 }
