@@ -4,7 +4,11 @@ import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute, UserRole } from '../const';
 import { saveTokens } from '../services/token';
 import { redirectToRoute } from './actions';
-import { getRegisterFormData } from '../utils/get-form-data';
+import {
+  getCoachQuestionaryData,
+  getCustomerQuestionaryData,
+  getRegisterData,
+} from '../utils';
 
 type asyncThunkConfig = {
   dispatch: AppDispatch;
@@ -46,9 +50,29 @@ export const registerAction = createAsyncThunk<
   Blob,
   asyncThunkConfig
 >('user/register', async (avatar, { getState, extra: api }) => {
-  const formData = getRegisterFormData(getState(), avatar);
+  const formData = getRegisterData(getState(), avatar);
   const { data } = await api.post<LoggedUser>(APIRoute.Register, formData);
   const { accessToken, refreshToken } = data;
   saveTokens(accessToken, refreshToken);
   return data;
+});
+
+export const questionaryCustomerAction = createAsyncThunk<
+  void,
+  undefined,
+  asyncThunkConfig
+>('user/register', async (_arg, { getState, dispatch, extra: api }) => {
+  const formData = getCustomerQuestionaryData(getState());
+  await api.post(APIRoute.Register, formData);
+  dispatch(redirectToRoute(AppRoute.Main));
+});
+
+export const questionaryCoachAction = createAsyncThunk<
+  void,
+  CoachFiles,
+  asyncThunkConfig
+>('user/register', async (files, { getState, dispatch, extra: api }) => {
+  const formData = getCoachQuestionaryData(getState(), files.certificates);
+  await api.post(APIRoute.UpdateUser, formData);
+  dispatch(redirectToRoute(AppRoute.Account));
 });

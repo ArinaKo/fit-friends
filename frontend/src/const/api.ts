@@ -5,4 +5,5 @@ export const APIRoute = {
   CheckAuth: '/auth/login',
   Login: '/auth/login',
   Register: '/auth/register',
+  UpdateUser: '/users/update',
 } as const;
