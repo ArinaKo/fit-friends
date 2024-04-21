@@ -22,6 +22,9 @@ export const getUserFormRole = (state: State): UserRole =>
 export const getUserFormLocation = (state: State): MetroStation | undefined =>
   state[NameSpace.UserForm].location;
 
+export const getUserFormAvatar = (state: State): string | undefined =>
+  state[NameSpace.UserForm].avatar;
+
 export const getUserFormEmailError = (state: State): string | undefined =>
   state[NameSpace.UserForm].validationErrors.email;
 
@@ -42,6 +45,9 @@ export const getUserFormRoleError = (state: State): string | undefined =>
 
 export const getUserFormLocationError = (state: State): string | undefined =>
   state[NameSpace.UserForm].validationErrors.location;
+
+export const getUserFormAvatarError = (state: State): string | undefined =>
+  state[NameSpace.UserForm].validationErrors.avatar;
 
 export const isUserFormHaveErrors = (state: State): boolean =>
   Object.values(state[NameSpace.UserForm].validationErrors).some((error) => error !== undefined);

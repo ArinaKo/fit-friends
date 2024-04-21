@@ -8,6 +8,7 @@ export const EmptyUserForm = {
   DateOfBirth: '',
   Role: UserRole.Coach,
   Location: undefined,
+  Avatar: undefined,
   ValidationsErrors: {
     email: undefined,
     password: undefined,
@@ -16,5 +17,6 @@ export const EmptyUserForm = {
     dateOfBirth: undefined,
     role: undefined,
     location: undefined,
+    avatar: undefined,
   }
 } as const;

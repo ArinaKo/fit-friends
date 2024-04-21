@@ -18,6 +18,7 @@ const initialState: UserForm = {
   dateOfBirth: EmptyUserForm.DateOfBirth,
   role: EmptyUserForm.Role,
   location: EmptyUserForm.Location,
+  avatar: EmptyUserForm.Avatar,
   validationErrors: EmptyUserForm.ValidationsErrors,
   isSending: false,
 };
@@ -56,6 +57,9 @@ export const userForm = createSlice({
     },
     setRole: (state, action: PayloadAction<UserRole>) => {
       state.role = action.payload;
+    },
+    setAvatar: (state, action: PayloadAction<string | undefined>) => {
+      state.avatar = action.payload;
     },
     setUserFormError: (state, action: PayloadAction<[string, string | undefined]>) => {
       state.validationErrors = { ...state.validationErrors, [action.payload[0]]: action.payload[1] };
@@ -111,6 +115,7 @@ export const {
   setName,
   setRole,
   setSex,
+  setAvatar,
   setUserFormError,
   setLoginRequiredFields,
 } = userForm.actions;

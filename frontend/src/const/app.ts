@@ -4,6 +4,11 @@ export const REFRESH_PENDING_KEY_NAME = 'fit-friends-refresh-pending';
 
 export const REQUIRED_INPUT_MESSAGE = 'Поле обязательно для заполнения';
 
+export const AvatarMaxSize = {
+  ForHuman: '1 мегабайт',
+  ToCheck: 8388608,
+} as const;
+
 export const AppRoute = {
   Root: '/',
   Login: '/login',

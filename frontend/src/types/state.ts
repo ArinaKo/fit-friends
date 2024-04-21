@@ -18,6 +18,7 @@ export type UserForm = {
   dateOfBirth: string;
   role: UserRole;
   location: MetroStation | undefined;
+  avatar: string | undefined;
   validationErrors: {
     email: string | undefined;
     password: string | undefined;
@@ -26,6 +27,7 @@ export type UserForm = {
     dateOfBirth: string | undefined;
     role: string | undefined;
     location: string | undefined;
+    avatar: string | undefined;
   };
   isSending: boolean;
 };
