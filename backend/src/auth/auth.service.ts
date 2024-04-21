@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   HttpException,
   HttpStatus,
@@ -12,7 +11,7 @@ import {
 import { UserRepository } from '../user/user.repository';
 import { UserEntity } from '../user/user.entity';
 import { CreateUserDto, LoginUserDto } from './dto/index';
-import { FileMessage, UserMessage } from 'src/shared/messages';
+import { UserMessage } from 'src/shared/messages';
 import { RefreshTokenPayload, UserLevel } from '@app/types';
 import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '@app/config/jwt.config';
@@ -36,34 +35,27 @@ export class AuthService {
     private readonly fileVaultService: FileVaultService,
   ) {}
 
-  public async register(dto: CreateUserDto): Promise<LoggedUserRdo> {
-    const { email, name, avatar, sex, dateOfBirth, role, location, password } =
-      dto;
+  public async register(
+    dto: CreateUserDto,
+    avatar: Express.Multer.File,
+  ): Promise<LoggedUserRdo> {
+    const { email, name, sex, dateOfBirth, role, location, password } = dto;
 
     if (await this.userRepository.findByEmail(email)) {
       throw new ConflictException(UserMessage.Exists);
     }
 
-    if (!(await this.fileVaultService.isFileImage(avatar))) {
-      throw new BadRequestException(FileMessage.UploadedImageType);
-    }
-
-    if (
-      dto.backgroundImage &&
-      !(await this.fileVaultService.isFileImage(dto.backgroundImage))
-    ) {
-      throw new BadRequestException(FileMessage.UploadedImageType);
-    }
+    const avatarId = (await this.fileVaultService.saveFile(avatar)).id;
 
     const userInfo = {
       email,
       name,
-      avatar,
+      avatar: avatarId,
       sex,
       dateOfBirth: dateOfBirth ? dateOfBirth : undefined,
       role,
       location,
-      backgroundImage: dto.backgroundImage ?? avatar,
+      backgroundImage: avatarId,
       level: UserLevel.Amateur,
       workoutTypes: [],
       isReady: false,

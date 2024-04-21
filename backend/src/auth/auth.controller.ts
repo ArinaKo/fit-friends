@@ -7,13 +7,15 @@ import {
   HttpStatus,
   Post,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { LoggedUserRdo } from './rdo/index';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Public } from '@app/core';
+import { ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileFilter, ParseFile, Public } from '@app/core';
 import {
   LocalAuthGuard,
   JwtRefreshGuard,
@@ -26,6 +28,8 @@ import {
 } from '../shared/requests/index';
 import { UserService } from 'src/user/user.service';
 import { RefreshTokenService } from 'src/refresh-token/refresh-token.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ImageFile } from 'src/shared/const';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -42,11 +46,20 @@ export class AuthController {
     description: 'The new user has been successfully created.',
   })
   @ApiBody({ type: CreateUserDto })
+  @ApiConsumes('multipart/form-data')
   @Public()
   @UseGuards(NotAuthGuard)
   @Post('register')
-  public async create(@Body() dto: CreateUserDto) {
-    return this.authService.register(dto);
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      fileFilter: FileFilter(ImageFile.MimeTypes, ImageFile.MaxSize),
+    }),
+  )
+  public async create(
+    @Body() dto: CreateUserDto,
+    @UploadedFile(ParseFile) avatar: Express.Multer.File,
+  ) {
+    return this.authService.register(dto, avatar);
   }
 
   @ApiResponse({

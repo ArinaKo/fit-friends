@@ -7,7 +7,6 @@ import {
   Length,
   IsOptional,
   IsISO8601,
-  IsMongoId,
   Matches,
 } from 'class-validator';
 import { UserNameLength, UserPasswordLength } from 'src/shared/const';
@@ -17,12 +16,9 @@ import { Expose, Transform } from 'class-transformer';
 export class CreateUserDto {
   @ApiProperty({
     description: 'User avatar',
-    example: '660306ae5cdc417b17500eec',
   })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsMongoId()
   @Expose()
-  public avatar: string;
+  public avatar: File;
 
   @ApiPropertyOptional({
     description: 'User birth date',
@@ -95,14 +91,4 @@ export class CreateUserDto {
   })
   @Expose()
   public location: MetroStation;
-
-  @ApiPropertyOptional({
-    description: 'User image for background',
-    example: '660306ae5cdc417b17500eec',
-  })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsMongoId()
-  @IsOptional()
-  @Expose()
-  public backgroundImage?: string;
 }
