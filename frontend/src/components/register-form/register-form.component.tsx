@@ -30,7 +30,7 @@ function RegisterForm(): JSX.Element {
     evt.preventDefault();
     dispatch(setRegisterRequiredFields());
     if (!isFormHaveError && file) {
-      dispatch(registerAction(file)).then((res) => {
+      dispatch(registerAction({ avatar: file})).then((res) => {
         if (res.meta.requestStatus === 'fulfilled') {
           dispatch(redirectToRoute(AppRoute.Questionary));
         }

@@ -1,16 +1,7 @@
-import { UserRole, UserSex, MetroStation, UserLevel } from '../const';
-
-export type LoginData = {
-  email: string;
-  password: string;
+export type UserFiles = {
+  avatar?: Blob;
 };
 
-export type RegisterData = LoginData & {
-  name: string;
-  sex: UserSex;
-  dateOfBirth?: Date;
-  role: UserRole;
-  location: MetroStation;
-  avatar: string;
-  level: UserLevel;
+export type CoachFiles = UserFiles & {
+  certificates?: Blob[];
 };
