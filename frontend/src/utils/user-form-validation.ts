@@ -5,6 +5,7 @@ type ValidationData = {
   email: string;
   password: string;
   name: string;
+  dateOfBirth: string;
 };
 
 const ValidationSchema = {
@@ -37,6 +38,7 @@ const ValidationSchema = {
     )
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
+  dateOfBirth: Joi.date().less('now').message('Некорректная дата рождения'),
 };
 
 const validateProperty = (
@@ -52,3 +54,6 @@ export const validatePassword = (value: unknown) =>
   validateProperty('password', value);
 
 export const validateName = (value: unknown) => validateProperty('name', value);
+
+export const validateDateOfBirth = (value: unknown) =>
+  validateProperty('dateOfBirth', value);
