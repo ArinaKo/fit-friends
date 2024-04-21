@@ -6,3 +6,8 @@ export { default as LocationInput } from './location-input/location-input.compon
 export { default as UserSexInput } from './user-sex-input/user-sex-input.component';
 export { default as RoleInput } from './role-input/role-input.component';
 export { default as AvatarInput } from './avatar-input/avatar-input.component';
+export { default as WorkoutTypesInput } from './workout-types-input/workout-types-input.component';
+export { default as TimeForWorkoutInput } from './time-for-workout-input/time-for-workout-input.component';
+export { default as UserLevelInput } from './user-level-input/user-level-input.component';
+export { default as CaloriesInput } from './calories-input/calories-input.component';
+export * from './calories-input/calories-input.mode';
