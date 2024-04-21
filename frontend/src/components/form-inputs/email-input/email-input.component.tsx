@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   getUserFormEmail,
   getUserFormEmailError,
+  isUserFormDataSending,
   setEmail,
   setUserFormError,
 } from '../../../store';
@@ -9,14 +10,11 @@ import { ChangeEvent } from 'react';
 import { validateEmail } from '../../../utils';
 import cn from 'classnames';
 
-type EmailInputProps = {
-  isDisabled: boolean;
-};
-
-function EmailInput({ isDisabled }: EmailInputProps): JSX.Element {
+function EmailInput(): JSX.Element {
   const dispatch = useAppDispatch();
   const email = useAppSelector(getUserFormEmail);
   const emailError = useAppSelector(getUserFormEmailError);
+  const isDisabled = useAppSelector(isUserFormDataSending);
 
   return (
     <div

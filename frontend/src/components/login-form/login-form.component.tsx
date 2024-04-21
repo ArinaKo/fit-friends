@@ -24,8 +24,8 @@ function LoginForm(): JSX.Element {
   return (
     <form method="post" onSubmit={handleFormSubmit}>
       <div className="sign-in">
-        <EmailInput isDisabled={isSending} />
-        <PasswordInput isDisabled={isSending} />
+        <EmailInput />
+        <PasswordInput />
         <button
           className="btn sign-in__button"
           type="submit"

@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   getUserFormPassword,
   getUserFormPasswordError,
+  isUserFormDataSending,
   setPassword,
   setUserFormError,
 } from '../../../store';
@@ -9,14 +10,11 @@ import { ChangeEvent } from 'react';
 import { validatePassword } from '../../../utils';
 import cn from 'classnames';
 
-type EmailInputProps = {
-  isDisabled: boolean;
-};
-
-function PasswordInput({ isDisabled }: EmailInputProps): JSX.Element {
+function PasswordInput(): JSX.Element {
   const dispatch = useAppDispatch();
   const password = useAppSelector(getUserFormPassword);
   const passwordError = useAppSelector(getUserFormPasswordError);
+  const isDisabled = useAppSelector(isUserFormDataSending);
 
   return (
     <div
