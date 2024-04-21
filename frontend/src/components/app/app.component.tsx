@@ -3,7 +3,7 @@ import { AccountPath, AppRoute, UsersPath, WorkoutsPath } from '../../const';
 import { EntryLayout, HistoryRouter, Layout, PrivateRoute } from '../index';
 import { HelmetProvider } from 'react-helmet-async';
 import browserHistory from '../../browser-history';
-import { IntroPage, LoginPage, RegisterPage } from '../../pages';
+import { IntroPage, LoginPage, QuestionaryPage, RegisterPage } from '../../pages';
 import { useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
 import { checkAuthAction } from '../../store/api-actions';
@@ -27,7 +27,7 @@ function App(): JSX.Element {
               path={AppRoute.Questionary}
               element={
                 <PrivateRoute>
-                  <div>Not implemented - questionary page</div>
+                  <QuestionaryPage />
                 </PrivateRoute>
               }
             />
