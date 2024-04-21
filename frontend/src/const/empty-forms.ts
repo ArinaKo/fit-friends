@@ -13,9 +13,7 @@ export const EmptyUserForm = {
     email: undefined,
     password: undefined,
     name: undefined,
-    sex: undefined,
     dateOfBirth: undefined,
-    role: undefined,
     location: undefined,
     avatar: undefined,
   }

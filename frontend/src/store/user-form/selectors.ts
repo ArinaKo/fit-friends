@@ -37,12 +37,6 @@ export const getUserFormNameError = (state: State): string | undefined =>
 export const getUserFormDateOfBirthError = (state: State): string | undefined =>
   state[NameSpace.UserForm].validationErrors.dateOfBirth;
 
-export const getUserFormSexError = (state: State): string | undefined =>
-  state[NameSpace.UserForm].validationErrors.sex;
-
-export const getUserFormRoleError = (state: State): string | undefined =>
-  state[NameSpace.UserForm].validationErrors.role;
-
 export const getUserFormLocationError = (state: State): string | undefined =>
   state[NameSpace.UserForm].validationErrors.location;
 

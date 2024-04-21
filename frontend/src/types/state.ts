@@ -23,9 +23,7 @@ export type UserForm = {
     email: string | undefined;
     password: string | undefined;
     name: string | undefined;
-    sex: string | undefined;
     dateOfBirth: string | undefined;
-    role: string | undefined;
     location: string | undefined;
     avatar: string | undefined;
   };
