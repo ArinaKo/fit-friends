@@ -1,11 +1,17 @@
 import Joi from 'joi';
-import { NameLength, PasswordLength, REQUIRED_INPUT_MESSAGE } from '../const';
+import {
+  CaloriesValue,
+  NameLength,
+  PasswordLength,
+  REQUIRED_INPUT_MESSAGE,
+} from '../const';
 
 type ValidationData = {
   email: string;
   password: string;
   name: string;
   dateOfBirth: string;
+  calories: string;
 };
 
 const ValidationSchema = {
@@ -39,6 +45,15 @@ const ValidationSchema = {
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
   dateOfBirth: Joi.date().less('now').message('Некорректная дата рождения'),
+  calories: Joi.number()
+    .integer()
+    .message('Введите целое число')
+    .min(CaloriesValue.Min)
+    .message(`Минимальное количество калорий: ${CaloriesValue.Min}`)
+    .max(CaloriesValue.Max)
+    .message(`Минимальное количество калорий: ${CaloriesValue.Max}`)
+    .required()
+    .messages({ 'number.base': REQUIRED_INPUT_MESSAGE }),
 };
 
 const validateProperty = (
@@ -57,3 +72,6 @@ export const validateName = (value: unknown) => validateProperty('name', value);
 
 export const validateDateOfBirth = (value: unknown) =>
   validateProperty('dateOfBirth', value);
+
+export const validateCalories = (value: unknown) =>
+  validateProperty('calories', value);
