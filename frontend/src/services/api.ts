@@ -1,4 +1,5 @@
 import axios, {
+  AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
@@ -13,6 +14,7 @@ import {
   setPendingStatus,
 } from './token';
 import { StatusCodes } from 'http-status-codes';
+import { LoggedUser } from '../types';
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -35,11 +37,11 @@ export const createAPI = (): AxiosInstance => {
 
   api.interceptors.response.use(
     (response) => response,
-    async (error) => {
-      const originalRequest: AxiosRequestConfig = error.config;
+    async (error: AxiosError) => {
+      const originalRequest = error.config as AxiosRequestConfig;
       const isPending = getPendingStatus();
 
-      if (error.response.status === StatusCodes.UNAUTHORIZED && !isPending) {
+      if (error.response?.status === StatusCodes.UNAUTHORIZED && !isPending) {
         const token = getRefreshToken();
         if (!token) {
           return Promise.reject(error);
@@ -47,15 +49,21 @@ export const createAPI = (): AxiosInstance => {
 
         setPendingStatus();
         try {
-          const response = await axios.get(`${BACKEND_URL}/auth/refresh`, {
-            headers: {
-              Authorization: 'Bearer ' + token,
-            },
-          });
+          const response = await axios.get<LoggedUser>(
+            `${BACKEND_URL}/auth/refresh`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
           const { accessToken, refreshToken } = response.data;
           saveTokens(accessToken, refreshToken);
 
-          originalRequest.headers!.Authorization = `Bearer ${accessToken}`;
+          if (originalRequest?.headers) {
+            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          }
+
           return api(originalRequest);
         } finally {
           dropPendingStatus();
