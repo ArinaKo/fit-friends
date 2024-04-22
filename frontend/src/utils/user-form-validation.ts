@@ -1,6 +1,7 @@
 import Joi from 'joi';
 import {
   CaloriesValue,
+  CoachAchievementsLength,
   NameLength,
   PasswordLength,
   REQUIRED_INPUT_MESSAGE,
@@ -12,6 +13,7 @@ type ValidationData = {
   name: string;
   dateOfBirth: string;
   calories: string;
+  achievements: string;
 };
 
 const ValidationSchema = {
@@ -54,6 +56,17 @@ const ValidationSchema = {
     .message(`Минимальное количество калорий: ${CaloriesValue.Max}`)
     .required()
     .messages({ 'number.base': REQUIRED_INPUT_MESSAGE }),
+  achievements: Joi.string()
+    .min(CoachAchievementsLength.Min)
+    .message(
+      `Рекомендуемая длина ${CoachAchievementsLength.Min} - ${CoachAchievementsLength.Max} символов`
+    )
+    .max(CoachAchievementsLength.Max)
+    .message(
+      `Рекомендуемая длина ${CoachAchievementsLength.Min} - ${CoachAchievementsLength.Max} символов`
+    )
+    .required()
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
 };
 
 const validateProperty = (
@@ -75,3 +88,6 @@ export const validateDateOfBirth = (value: unknown) =>
 
 export const validateCalories = (value: unknown) =>
   validateProperty('calories', value);
+
+export const validateAchievements = (value: unknown) =>
+  validateProperty('achievements', value);
