@@ -16,7 +16,7 @@ export const EmptyUserForm = {
   TimeForWorkout: WorkoutDuration.Medium,
   CaloriesToLose: '',
   CaloriesPerDay: '',
-  Certificates: [],
+  CertificatesAmount: 0,
   Achievements: '',
   ValidationsErrors: {
     email: undefined,
@@ -28,7 +28,7 @@ export const EmptyUserForm = {
     workoutTypes: undefined,
     caloriesToLose: undefined,
     caloriesPerDay: undefined,
-    certificates: undefined,
+    certificatesAmount: undefined,
     achievements: undefined,
   },
 };

@@ -33,7 +33,7 @@ export type UserForm = {
   timeForWorkout: WorkoutDuration;
   caloriesToLose: string;
   caloriesPerDay: string;
-  certificates: string[];
+  certificatesAmount: number;
   achievements: string;
   validationErrors: {
     email: string | undefined;
@@ -45,7 +45,7 @@ export type UserForm = {
     workoutTypes: string | undefined;
     caloriesToLose: string | undefined;
     caloriesPerDay: string | undefined;
-    certificates: string | undefined;
+    certificatesAmount: string | undefined;
     achievements: string | undefined;
   };
   isSending: boolean;

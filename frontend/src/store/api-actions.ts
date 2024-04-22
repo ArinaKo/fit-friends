@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AppDispatch,
-  CoachFiles,
+  CertificatesFiles,
   LoggedUser,
   State,
   UserFiles,
@@ -75,7 +75,7 @@ export const questionaryCustomerAction = createAsyncThunk<
 
 export const questionaryCoachAction = createAsyncThunk<
   void,
-  CoachFiles,
+  CertificatesFiles,
   asyncThunkConfig
 >('user/register', async (files, { getState, dispatch, extra: api }) => {
   const formData = getCoachQuestionaryData(getState(), files.certificates);

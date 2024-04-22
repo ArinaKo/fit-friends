@@ -54,8 +54,8 @@ export const getUserFormCaloriesPerDay = (state: State): string =>
 export const getUserFormAchievements = (state: State): string =>
   state[NameSpace.UserForm].achievements;
 
-export const getUserFormCertificates = (state: State): string[] =>
-  state[NameSpace.UserForm].certificates;
+export const getUserFormCertificatesAmount = (state: State): number =>
+  state[NameSpace.UserForm].certificatesAmount;
 
 export const getUserFormEmailError = (state: State): string | undefined =>
   state[NameSpace.UserForm].validationErrors.email;
@@ -93,7 +93,7 @@ export const getUserFormCaloriesPerDayError = (
 export const getUserFormCertificatesError = (
   state: State
 ): string | undefined =>
-  state[NameSpace.UserForm].validationErrors.certificates;
+  state[NameSpace.UserForm].validationErrors.certificatesAmount;
 
 export const getUserFormAchievementsError = (
   state: State

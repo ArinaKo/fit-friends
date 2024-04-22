@@ -28,7 +28,7 @@ const initialState: UserForm = {
   timeForWorkout: EmptyUserForm.TimeForWorkout,
   caloriesToLose: EmptyUserForm.CaloriesToLose,
   caloriesPerDay: EmptyUserForm.CaloriesPerDay,
-  certificates: EmptyUserForm.Certificates,
+  certificatesAmount: EmptyUserForm.CertificatesAmount,
   achievements: EmptyUserForm.Achievements,
   validationErrors: EmptyUserForm.ValidationsErrors,
   isSending: false,
@@ -93,11 +93,8 @@ export const userForm = createSlice({
     setCaloriesPerDay: (state, action: PayloadAction<string>) => {
       state.caloriesPerDay = action.payload;
     },
-    setCertificate: (state, action: PayloadAction<string>) => {
-      const certificate = action.payload;
-      state.certificates = state.certificates.includes(certificate)
-        ? state.certificates.filter((item) => item !== certificate)
-        : [...state.certificates, certificate];
+    setCertificatesAmount: (state, action: PayloadAction<number>) => {
+      state.certificatesAmount = action.payload;
     },
     setAchievements: (state, action: PayloadAction<string>) => {
       state.achievements = action.payload;
@@ -154,8 +151,8 @@ export const userForm = createSlice({
       if (!state.achievements) {
         state.validationErrors.achievements = REQUIRED_INPUT_MESSAGE;
       }
-      if (!state.certificates.length) {
-        state.validationErrors.certificates = REQUIRED_INPUT_MESSAGE;
+      if (!state.certificatesAmount) {
+        state.validationErrors.certificatesAmount = REQUIRED_INPUT_MESSAGE;
       }
     },
   },
@@ -208,7 +205,7 @@ export const {
   setTimeForWorkout,
   setCaloriesToLose,
   setCaloriesPerDay,
-  setCertificate,
+  setCertificatesAmount,
   setAchievements,
   setUserFormError,
   setLoginRequiredFields,
