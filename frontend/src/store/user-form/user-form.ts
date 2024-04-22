@@ -11,7 +11,12 @@ import {
   WorkoutDuration,
   WorkoutType,
 } from '../../const';
-import { loginAction, registerAction } from '../api-actions';
+import {
+  loginAction,
+  questionaryCoachAction,
+  questionaryCustomerAction,
+  registerAction,
+} from '../api-actions';
 
 const initialState: UserForm = {
   email: EmptyUserForm.Email,
@@ -38,16 +43,7 @@ export const userForm = createSlice({
   name: NameSpace.UserForm,
   initialState,
   reducers: {
-    resetUserForm: (state) => {
-      state.email = EmptyUserForm.Email;
-      state.password = EmptyUserForm.Password;
-      state.name = EmptyUserForm.Name;
-      state.sex = EmptyUserForm.Sex;
-      state.dateOfBirth = EmptyUserForm.DateOfBirth;
-      state.role = EmptyUserForm.Role;
-      state.location = EmptyUserForm.Location;
-      state.validationErrors = EmptyUserForm.ValidationsErrors;
-    },
+    resetUserForm: () => ({ ...initialState }),
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
     },
@@ -101,7 +97,7 @@ export const userForm = createSlice({
     },
     setUserFormError: (
       state,
-      action: PayloadAction<[string, string | undefined]>
+      action: PayloadAction<[string, string | undefined]>,
     ) => {
       state.validationErrors = {
         ...state.validationErrors,
@@ -161,29 +157,29 @@ export const userForm = createSlice({
       .addCase(loginAction.pending, (state) => {
         state.isSending = true;
       })
-      .addCase(loginAction.fulfilled, (state) => {
-        state.email = EmptyUserForm.Email;
-        state.password = EmptyUserForm.Password;
-        state.isSending = false;
-      })
+      .addCase(loginAction.fulfilled, () => ({ ...initialState }))
       .addCase(loginAction.rejected, (state) => {
         state.isSending = false;
       })
       .addCase(registerAction.pending, (state) => {
         state.isSending = true;
       })
-      .addCase(registerAction.fulfilled, (state) => {
-        state.email = EmptyUserForm.Email;
-        state.password = EmptyUserForm.Password;
-        state.name = EmptyUserForm.Name;
-        state.sex = EmptyUserForm.Sex;
-        state.dateOfBirth = EmptyUserForm.DateOfBirth;
-        state.role = EmptyUserForm.Role;
-        state.location = EmptyUserForm.Location;
-        state.validationErrors = EmptyUserForm.ValidationsErrors;
+      .addCase(registerAction.fulfilled, () => ({ ...initialState }))
+      .addCase(registerAction.rejected, (state) => {
         state.isSending = false;
       })
-      .addCase(registerAction.rejected, (state) => {
+      .addCase(questionaryCustomerAction.pending, (state) => {
+        state.isSending = true;
+      })
+      .addCase(questionaryCustomerAction.fulfilled, () => ({ ...initialState }))
+      .addCase(questionaryCustomerAction.rejected, (state) => {
+        state.isSending = false;
+      })
+      .addCase(questionaryCoachAction.pending, (state) => {
+        state.isSending = true;
+      })
+      .addCase(questionaryCoachAction.fulfilled, () => ({ ...initialState }))
+      .addCase(questionaryCoachAction.rejected, (state) => {
         state.isSending = false;
       });
   },
