@@ -67,9 +67,9 @@ export const questionaryCustomerAction = createAsyncThunk<
   void,
   undefined,
   asyncThunkConfig
->('user/register', async (_arg, { getState, dispatch, extra: api }) => {
+>('user/questionary-customer', async (_arg, { getState, dispatch, extra: api }) => {
   const formData = getCustomerQuestionaryData(getState());
-  await api.post(APIRoute.Register, formData);
+  await api.patch(APIRoute.QuestionaryUser, formData);
   dispatch(redirectToRoute(AppRoute.Main));
 });
 
@@ -77,8 +77,8 @@ export const questionaryCoachAction = createAsyncThunk<
   void,
   CertificatesFiles,
   asyncThunkConfig
->('user/register', async (files, { getState, dispatch, extra: api }) => {
+>('user/questionary-coach', async (files, { getState, dispatch, extra: api }) => {
   const formData = getCoachQuestionaryData(getState(), files.certificates);
-  await api.post(APIRoute.UpdateUser, formData);
+  await api.patch(APIRoute.QuestionaryCoach, formData);
   dispatch(redirectToRoute(AppRoute.Account));
 });

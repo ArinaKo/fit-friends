@@ -53,8 +53,11 @@ export function getCoachQuestionaryData(
   }
   formData.append('level', level);
   formData.append('achievements', achievements);
+  workoutTypes.forEach((type) => {
+    formData.append('workoutTypes[]', type);
+  });
   certificates.forEach((certificate) => {
-    formData.append('certificates[]', certificate);
+    formData.append('certificates', certificate);
   });
   return formData;
 }
