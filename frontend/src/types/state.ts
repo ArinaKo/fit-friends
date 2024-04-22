@@ -28,6 +28,7 @@ export type UserForm = {
   location: MetroStation | undefined;
   avatar: string | undefined;
   level: UserLevel;
+  status: boolean;
   workoutTypes: WorkoutType[];
   timeForWorkout: WorkoutDuration;
   caloriesToLose: string;

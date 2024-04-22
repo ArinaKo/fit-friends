@@ -36,6 +36,9 @@ export const getUserFormAvatar = (state: State): string | undefined =>
 export const getUserFormLevel = (state: State): UserLevel =>
   state[NameSpace.UserForm].level;
 
+export const getUserFormStatus = (state: State): boolean =>
+  state[NameSpace.UserForm].status;
+
 export const getUserFormWorkoutTypes = (state: State): WorkoutType[] =>
   state[NameSpace.UserForm].workoutTypes;
 

@@ -23,6 +23,7 @@ const initialState: UserForm = {
   location: EmptyUserForm.Location,
   avatar: EmptyUserForm.Avatar,
   level: EmptyUserForm.Level,
+  status: EmptyUserForm.Status,
   workoutTypes: EmptyUserForm.WorkoutTypes,
   timeForWorkout: EmptyUserForm.TimeForWorkout,
   caloriesToLose: EmptyUserForm.CaloriesToLose,
@@ -73,6 +74,9 @@ export const userForm = createSlice({
     },
     setLevel: (state, action: PayloadAction<UserLevel>) => {
       state.level = action.payload;
+    },
+    setStatus: (state, action: PayloadAction<boolean>) => {
+      state.status = action.payload;
     },
     setWorkoutTypes: (state, action: PayloadAction<WorkoutType>) => {
       const type = action.payload;
@@ -199,6 +203,7 @@ export const {
   setSex,
   setAvatar,
   setLevel,
+  setStatus,
   setWorkoutTypes,
   setTimeForWorkout,
   setCaloriesToLose,

@@ -11,6 +11,7 @@ export const EmptyUserForm = {
   Location: undefined,
   Avatar: undefined,
   Level: UserLevel.Amateur,
+  Status: true,
   WorkoutTypes: [],
   TimeForWorkout: WorkoutDuration.Medium,
   CaloriesToLose: '',
