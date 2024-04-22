@@ -57,9 +57,9 @@ function generateUsers(
       email: Emails[index],
       avatar,
       backgroundImage: avatar,
-      certificate:
+      certificates:
         index < GeneratedDataAmount.Coaches
-          ? getRandomItem(certificateIds)
+          ? [...getRandomItem(certificateIds)]
           : undefined,
     });
   });

@@ -34,10 +34,10 @@ export class FullUserRdo extends UserRdo {
   public backgroundImage: FileRdo;
 
   @ApiPropertyOptional({
-    description: 'Coach certificate',
+    description: 'Coach certificates',
     type: FileRdo,
   })
   @Type(() => FileRdo)
   @Expose()
-  public certificate?: FileRdo;
+  public certificates?: FileRdo[];
 }

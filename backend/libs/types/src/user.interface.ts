@@ -23,7 +23,7 @@ export interface User {
 }
 
 export interface CoachUser extends User {
-  certificate?: string | FileData;
+  certificates?: string[] | FileData[];
   achievements?: string;
 }
 

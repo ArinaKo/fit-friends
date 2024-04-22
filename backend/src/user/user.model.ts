@@ -89,7 +89,7 @@ export class UserModel extends Document implements AuthUser {
   public isReady: boolean;
 
   @Prop()
-  public certificate?: string;
+  public certificates?: string[];
 
   @Prop()
   public achievements?: string;

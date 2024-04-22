@@ -33,19 +33,25 @@ const PipelineStage: { [key: string]: PipelineStage } = {
       as: 'avatar',
     },
   },
-  LookupCertificate: {
+  LookupCertificates: {
     $lookup: {
       from: 'files',
-      let: { imageId: '$certificate' },
+      let: { certificatesIds: '$certificates' },
       pipeline: [
-        { $match: { $expr: { $eq: ['$_id', { $toObjectId: '$$imageId' }] } } },
         {
           $addFields: {
             id: { $toString: '$_id' },
           },
         },
+        {
+          $match: {
+            $expr: {
+              $in: ['$id', '$$certificatesIds'],
+            },
+          },
+        },
       ],
-      as: 'certificate',
+      as: 'certificates',
     },
   },
   LookupBackgroundImages: {
@@ -110,10 +116,10 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
         { $unwind: '$avatar' },
         PipelineStage.LookupBackgroundImages,
         { $unwind: '$backgroundImage' },
-        PipelineStage.LookupCertificate,
+        PipelineStage.LookupCertificates,
         {
           $unwind: {
-            path: '$certificate',
+            path: '$certificates',
             preserveNullAndEmptyArrays: true,
           },
         },

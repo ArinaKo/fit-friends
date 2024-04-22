@@ -27,7 +27,7 @@ export class UserEntity implements FullUser, Entity<string> {
   public workoutTypes: WorkoutType[];
   public isReady: boolean;
   public passwordHash?: string;
-  public certificate?: string | FileEntity;
+  public certificates?: string[] | FileEntity[];
   public achievements?: string;
   public caloriesToLose?: number;
   public caloriesPerDay?: number;
@@ -57,10 +57,10 @@ export class UserEntity implements FullUser, Entity<string> {
       workoutTypes: this.workoutTypes,
       isReady: this.isReady,
       passwordHash: this.passwordHash,
-      certificate:
-        this.certificate instanceof FileEntity
-          ? this.certificate.toPOJO()
-          : this.certificate,
+      certificates:
+        this.certificates && this.certificates[0] instanceof FileEntity
+          ? this.certificates.map((certificate) => certificate.toPOJO())
+          : this.certificates,
       achievements: this.achievements,
       caloriesToLose: this.caloriesToLose,
       caloriesPerDay: this.caloriesPerDay,
@@ -89,10 +89,12 @@ export class UserEntity implements FullUser, Entity<string> {
     this.workoutTypes = data.workoutTypes;
     this.isReady = data.isReady;
     this.passwordHash = data.passwordHash;
-    this.certificate =
-      typeof data.certificate === 'object'
-        ? FileEntity.fromObject(data.certificate)
-        : data.certificate;
+    this.certificates =
+      typeof data.certificates === 'object'
+        ? data.certificates.map((certificate) =>
+            FileEntity.fromObject(certificate),
+          )
+        : data.certificates;
     this.achievements = data.achievements;
     this.caloriesToLose = data.caloriesToLose;
     this.caloriesPerDay = data.caloriesPerDay;
