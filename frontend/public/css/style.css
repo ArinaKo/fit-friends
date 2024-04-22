@@ -1500,7 +1500,7 @@ input:disabled ~ .role-btn__btn,
 }
 
 .custom-input--error label input,
-.custom-textarea--error label input {
+.custom-textarea--error label textarea {
   border: 1px solid #e4001b;
   background-color: transparent;
 }
@@ -1527,7 +1527,7 @@ input:disabled ~ .role-btn__btn,
 }
 
 .custom-input--error .custom-input__error,
-.custom-input--error .custom-textarea__error {
+.custom-textarea--error .custom-textarea__error {
   opacity: 1;
 }
 
