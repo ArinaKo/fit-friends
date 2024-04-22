@@ -1,17 +1,17 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
-import { UpdateCoachUserDto, UpdateUserDto } from './dto';
+import {
+  CoachUserQuestionaryDto,
+  DefaultUserQuestionaryDto,
+  UpdateUserDto,
+} from './dto';
 import { UserEntity } from './user.entity';
 import { UsersQuery } from './query';
 import { AuthUserRdo, LoggedUserRdo } from 'src/auth/rdo';
 import { fillDto } from '@app/helpers';
 import { FullUserRdo, UserRdo, UsersWithPaginationRdo } from './rdo';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
-import { FileMessage } from 'src/shared/messages';
+import { FileRdo } from 'src/file-vault/rdo';
 
 @Injectable()
 export class UserService {
@@ -47,7 +47,15 @@ export class UserService {
       throw new NotFoundException(`User with id ${userId} not found`);
     }
 
-    return fillDto(FullUserRdo, existsUser.toPOJO());
+    const user = existsUser.toPOJO();
+
+    if (existsUser.certificates) {
+      user.certificates = existsUser.certificates.map((entity) =>
+        fillDto(FileRdo, entity.toPOJO()),
+      );
+    }
+
+    return fillDto(FullUserRdo, user);
   }
 
   public async getAllUsers(
@@ -62,38 +70,82 @@ export class UserService {
     });
   }
 
-  public async updateUser(
+  public async completeCoachData(
     userId: string,
-    dto: UpdateUserDto,
-  ): Promise<AuthUserRdo> {
+    dto: CoachUserQuestionaryDto,
+    certificates: Array<Express.Multer.File>,
+  ): Promise<void> {
     const existsUser = await this.getUserEntity(userId);
 
-    if (dto.avatar && !(await this.fileVaultService.isFileImage(dto.avatar))) {
-      throw new BadRequestException(FileMessage.UploadedImageType);
+    for (const [key, value] of Object.entries(dto)) {
+      if (
+        value !== undefined &&
+        existsUser[key] !== value &&
+        key !== 'certificates'
+      ) {
+        existsUser[key] = value;
+      }
     }
 
-    if (
-      dto.backgroundImage &&
-      !(await this.fileVaultService.isFileImage(dto.backgroundImage))
-    ) {
-      throw new BadRequestException(FileMessage.UploadedImageType);
-    }
+    const certificatesIds: string[] = [];
+    await Promise.allSettled(
+      certificates.map(async (certificate) => {
+        const certificateId = (
+          await this.fileVaultService.saveFile(certificate)
+        ).id;
+        certificatesIds.push(certificateId);
+      }),
+    );
+    existsUser.certificates = certificatesIds;
 
-    if (
-      dto instanceof UpdateCoachUserDto &&
-      dto.certificate &&
-      !(await this.fileVaultService.isFileDocument(dto.certificate))
-    ) {
-      throw new BadRequestException(FileMessage.UploadedDocumentType);
-    }
+    await this.userRepository.update(userId, existsUser);
+  }
 
-    let hasChanges = false;
+  public async completeDefaultUserData(
+    userId: string,
+    dto: DefaultUserQuestionaryDto,
+  ): Promise<void> {
+    const existsUser = await this.getUserEntity(userId);
 
     for (const [key, value] of Object.entries(dto)) {
       if (value !== undefined && existsUser[key] !== value) {
         existsUser[key] = value;
+      }
+    }
+
+    await this.userRepository.update(userId, existsUser);
+  }
+
+  public async updateUser(
+    userId: string,
+    dto: UpdateUserDto,
+    avatar?: Express.Multer.File,
+  ): Promise<AuthUserRdo> {
+    const existsUser = await this.getUserEntity(userId);
+
+    let hasChanges = false;
+
+    for (const [key, value] of Object.entries(dto)) {
+      if (
+        value !== undefined &&
+        existsUser[key] !== value &&
+        key !== 'avatar'
+      ) {
+        existsUser[key] = value;
         hasChanges = true;
       }
+    }
+
+    if (avatar) {
+      const oldAvatar =
+        typeof existsUser.avatar === 'string'
+          ? existsUser.avatar
+          : existsUser.avatar.id!;
+      const newAvatar = await this.fileVaultService.saveFile(avatar);
+      existsUser.avatar = newAvatar.id;
+      hasChanges = true;
+
+      this.fileVaultService.deleteFile(oldAvatar);
     }
 
     if (!hasChanges) {
