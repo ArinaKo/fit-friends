@@ -11,7 +11,7 @@ import { StoredFile } from '@app/types';
 import { FileEntity } from './file.entity';
 import { FileVaultRepository } from './file-vault.repository';
 import { extension } from 'mime-types';
-import { DocumentFile, ImageFile, VideoFile } from '../shared/const/index';
+import { VideoFile } from '../shared/const/index';
 import { fillDto } from '@app/helpers';
 import { FileRdo } from './rdo';
 
@@ -102,18 +102,8 @@ export class FileVaultService {
     await this.fileVaultRepository.deleteById(fileId);
   }
 
-  public async isFileImage(fileId: string): Promise<boolean> {
-    const file = await this.getFile(fileId);
-    return ImageFile.MimeTypes.includes(file.mimetype);
-  }
-
   public async isFileVideo(fileId: string): Promise<boolean> {
     const file = await this.getFile(fileId);
     return VideoFile.MimeTypes.includes(file.mimetype);
-  }
-
-  public async isFileDocument(fileId: string): Promise<boolean> {
-    const file = await this.getFile(fileId);
-    return DocumentFile.MimeTypes.includes(file.mimetype);
   }
 }

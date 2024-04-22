@@ -11,7 +11,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileVaultService } from './file-vault.service';
 import { FileFilter, ParseFile, Public, Role } from '@app/core';
-import { DocumentFile, ImageFile, VideoFile } from '../shared/const/index';
+import { DocumentFile, VideoFile } from '../shared/const/index';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
 import { FileRdo } from './rdo';
@@ -21,34 +21,6 @@ import { ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
 @Controller('upload')
 export class FileVaultController {
   constructor(private readonly fileVaultService: FileVaultService) {}
-
-  @ApiResponse({
-    type: FileRdo,
-    status: HttpStatus.CREATED,
-    description: 'The file has been successfully uploaded',
-  })
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
-    },
-  })
-  @Public()
-  @Post('/image')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      fileFilter: FileFilter(ImageFile.MimeTypes, ImageFile.MaxSize),
-    }),
-  )
-  public async uploadImage(@UploadedFile(ParseFile) file: Express.Multer.File) {
-    return this.fileVaultService.saveFile(file);
-  }
 
   @ApiResponse({
     type: FileRdo,

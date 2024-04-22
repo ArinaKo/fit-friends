@@ -1,4 +1,4 @@
-import { DocumentFile, ImageFile, VideoFile } from '../const';
+import { VideoFile } from '../const';
 
 export const UserMessage = {
   Exists: 'User with this email exists',
@@ -8,6 +8,4 @@ export const UserMessage = {
 
 export const FileMessage = {
   UploadedVideoType: `Uploaded file type is not matching: ${VideoFile.MimeTypes.join(', ')}`,
-  UploadedImageType: `Uploaded file type is not matching: ${ImageFile.MimeTypes.join(', ')}`,
-  UploadedDocumentType: `Uploaded file type is not matching: ${DocumentFile.MimeTypes.join(', ')}`,
 };
