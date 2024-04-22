@@ -1,19 +1,24 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
-  // isUserCoach,
+  isUserCoach,
   isUserFormDataSending,
   isUserFormHaveErrors,
-  // setCoachQuestionaryRequiredFields,
+  setCoachQuestionaryRequiredFields,
   setCustomerQuestionaryRequiredFields,
 } from '../../store';
 import {
-  // questionaryCoachAction,
+  questionaryCoachAction,
   questionaryCustomerAction,
 } from '../../store/api-actions';
 import {
   CaloriesInput,
   CaloriesInputType,
+  CertificatesInput,
+  StatusInput,
+  StatusInputMode,
+  TextAreaInput,
+  TextAreaInputMode,
   TimeForWorkoutInput,
   UserLevelInput,
   WorkoutTypesInput,
@@ -21,19 +26,21 @@ import {
 
 function QuestionaryForm(): JSX.Element {
   const dispatch = useAppDispatch();
-  // const isCoach = useAppSelector(isUserCoach);
+  const isCoach = useAppSelector(isUserCoach);
   const isSending = useAppSelector(isUserFormDataSending);
   const isFormHaveError = useAppSelector(isUserFormHaveErrors);
 
+  const [files, setFiles] = useState<File[]>([]);
+
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    // if (isCoach) {
-    //   dispatch(setCoachQuestionaryRequiredFields());
-    //   if (!isFormHaveError) {
-    //     dispatch(questionaryCoachAction(file));
-    //   }
-    //   return;
-    // }
+    if (isCoach) {
+      dispatch(setCoachQuestionaryRequiredFields());
+      if (!isFormHaveError) {
+        dispatch(questionaryCoachAction({ certificates: files }));
+      }
+      return;
+    }
     dispatch(setCustomerQuestionaryRequiredFields());
     if (!isFormHaveError) {
       dispatch(questionaryCustomerAction());
@@ -51,30 +58,54 @@ function QuestionaryForm(): JSX.Element {
             </span>
             <WorkoutTypesInput />
           </div>
-          <div className="questionnaire-user__block">
-            <span className="questionnaire-user__legend">
-              Сколько времени вы готовы уделять на тренировку в день
-            </span>
-            <TimeForWorkoutInput />
-          </div>
+          {isCoach ? (
+            ''
+          ) : (
+            <div className="questionnaire-user__block">
+              <span className="questionnaire-user__legend">
+                Сколько времени вы готовы уделять на тренировку в день
+              </span>
+              <TimeForWorkoutInput />
+            </div>
+          )}
           <div className="questionnaire-user__block">
             <span className="questionnaire-user__legend">Ваш уровень</span>
             <UserLevelInput />
           </div>
-          <div className="questionnaire-user__block">
-            <div className="questionnaire-user__calories-lose">
-              <span className="questionnaire-user__legend">
-                Сколько калорий хотите сбросить
-              </span>
-              <CaloriesInput type={CaloriesInputType.ToLose} />
+          {isCoach ? (
+            <>
+              <div className="questionnaire-coach__block">
+                <span className="questionnaire-coach__legend">
+                  Ваши дипломы и сертификаты
+                </span>
+                <CertificatesInput setFiles={setFiles} />
+              </div>
+              <div className="questionnaire-coach__block">
+                <span className="questionnaire-coach__legend">
+                  Расскажите о своём опыте, который мы сможем проверить
+                </span>
+                <TextAreaInput mode={TextAreaInputMode.Achievements} />
+                <div className="questionnaire-coach__checkbox">
+                  <StatusInput mode={StatusInputMode.Questionary} />
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="questionnaire-user__block">
+              <div className="questionnaire-user__calories-lose">
+                <span className="questionnaire-user__legend">
+                  Сколько калорий хотите сбросить
+                </span>
+                <CaloriesInput type={CaloriesInputType.ToLose} />
+              </div>
+              <div className="questionnaire-user__calories-waste">
+                <span className="questionnaire-user__legend">
+                  Сколько калорий тратить в день
+                </span>
+                <CaloriesInput type={CaloriesInputType.PerDay} />
+              </div>
             </div>
-            <div className="questionnaire-user__calories-waste">
-              <span className="questionnaire-user__legend">
-                Сколько калорий тратить в день
-              </span>
-              <CaloriesInput type={CaloriesInputType.PerDay} />
-            </div>
-          </div>
+          )}
         </div>
         <button
           className="btn questionnaire-user__button"
