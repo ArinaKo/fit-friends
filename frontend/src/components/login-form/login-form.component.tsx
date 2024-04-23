@@ -6,7 +6,7 @@ import {
   setLoginRequiredFields,
 } from '../../store';
 import { loginAction } from '../../store/api-actions';
-import { EmailInput, PasswordInput } from '../form-inputs';
+import { TextInput, TextInputType } from '../form-inputs';
 
 function LoginForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -24,8 +24,8 @@ function LoginForm(): JSX.Element {
   return (
     <form method="post" onSubmit={handleFormSubmit}>
       <div className="sign-in">
-        <EmailInput />
-        <PasswordInput />
+        <TextInput type={TextInputType.Email} />
+        <TextInput type={TextInputType.Password} />
         <button
           className="btn sign-in__button"
           type="submit"

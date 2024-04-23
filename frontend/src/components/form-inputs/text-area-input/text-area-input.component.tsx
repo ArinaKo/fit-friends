@@ -3,15 +3,15 @@ import { isUserFormDataSending, setUserFormError } from '../../../store';
 import { ChangeEvent } from 'react';
 import cn from 'classnames';
 import {
-  TextAreaInputMode,
-  TextAreaInputModeDiffs,
-} from './text-area-input.mode';
+  TextAreaInputType,
+  TextAreaInputTypeDiffs,
+} from './text-area-input';
 
 type TextAreaInputProps = {
-  mode: TextAreaInputMode;
+  type: TextAreaInputType;
 };
 
-function TextAreaInput({ mode }: TextAreaInputProps): JSX.Element {
+function TextAreaInput({ type }: TextAreaInputProps): JSX.Element {
   const {
     styleClass,
     valueSelector,
@@ -19,7 +19,7 @@ function TextAreaInput({ mode }: TextAreaInputProps): JSX.Element {
     validationFunction,
     setValue,
     errorFieldName,
-  } = TextAreaInputModeDiffs[mode];
+  } = TextAreaInputTypeDiffs[type];
   const dispatch = useAppDispatch();
   const value = useAppSelector(valueSelector);
   const valueError = useAppSelector(errorSelector);

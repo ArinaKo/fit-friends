@@ -7,11 +7,11 @@ import {
 import { State } from '../../../types';
 import { validateAchievements } from '../../../utils';
 
-export enum TextAreaInputMode {
+export enum TextAreaInputType {
   Achievements = 'achievements',
 }
 
-type TextAreaInputModeDiff = {
+type TextAreaInputTypeDiff = {
   styleClass: string;
   valueSelector: (state: State) => string;
   errorSelector: (state: State) => string | undefined;
@@ -20,12 +20,12 @@ type TextAreaInputModeDiff = {
   errorFieldName: string;
 };
 
-type TextAreaInputModeDiffs = {
-  [mode: string]: TextAreaInputModeDiff;
+type TextAreaInputTypeDiffs = {
+  [TypeTextAreaInputType: string]: TextAreaInputTypeDiff;
 };
 
-export const TextAreaInputModeDiffs: TextAreaInputModeDiffs = {
-  [TextAreaInputMode.Achievements]: {
+export const TextAreaInputTypeDiffs: TextAreaInputTypeDiffs = {
+  [TextAreaInputType.Achievements]: {
     styleClass: 'questionnaire-coach__textarea',
     valueSelector: getUserFormAchievements,
     errorSelector: getUserFormAchievementsError,

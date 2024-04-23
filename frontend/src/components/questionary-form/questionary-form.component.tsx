@@ -18,7 +18,7 @@ import {
   StatusInput,
   StatusInputMode,
   TextAreaInput,
-  TextAreaInputMode,
+  TextAreaInputType,
   TimeForWorkoutInput,
   UserLevelInput,
   WorkoutTypesInput,
@@ -84,7 +84,7 @@ function QuestionaryForm(): JSX.Element {
                 <span className="questionnaire-coach__legend">
                   Расскажите о своём опыте, который мы сможем проверить
                 </span>
-                <TextAreaInput mode={TextAreaInputMode.Achievements} />
+                <TextAreaInput type={TextAreaInputType.Achievements} />
                 <div className="questionnaire-coach__checkbox">
                   <StatusInput mode={StatusInputMode.Questionary} />
                 </div>

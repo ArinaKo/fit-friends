@@ -11,11 +11,10 @@ import { redirectToRoute } from '../../store/actions';
 import {
   AvatarInput,
   DateOfBirthInput,
-  EmailInput,
   LocationInput,
-  NameInput,
-  PasswordInput,
   RoleInput,
+  TextInput,
+  TextInputType,
   UserSexInput,
 } from '../form-inputs';
 
@@ -51,11 +50,11 @@ function RegisterForm(): JSX.Element {
           </div>
         </div>
         <div className="sign-up__data">
-          <NameInput />
-          <EmailInput />
+          <TextInput type={TextInputType.Name} />
+          <TextInput type={TextInputType.Email} />
           <DateOfBirthInput />
           <LocationInput />
-          <PasswordInput />
+          <TextInput type={TextInputType.Password} />
           <UserSexInput />
         </div>
         <RoleInput />

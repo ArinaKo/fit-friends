@@ -1,6 +1,3 @@
-export { default as EmailInput } from './email-input/email-input.component';
-export { default as PasswordInput } from './password-input/password-input.component';
-export { default as NameInput } from './name-input/name-input.component';
 export { default as DateOfBirthInput } from './date-of-birth-input/day-of-birth-input.component';
 export { default as LocationInput } from './location-input/location-input.component';
 export { default as UserSexInput } from './user-sex-input/user-sex-input.component';
@@ -10,9 +7,11 @@ export { default as WorkoutTypesInput } from './workout-types-input/workout-type
 export { default as TimeForWorkoutInput } from './time-for-workout-input/time-for-workout-input.component';
 export { default as UserLevelInput } from './user-level-input/user-level-input.component';
 export { default as CertificatesInput } from './certificates-input/certificates-input.component';
+export { default as TextInput } from './text-input/text-input.component';
+export * from './text-input/text-input';
 export { default as CaloriesInput } from './calories-input/calories-input.component';
 export * from './calories-input/calories-input.mode';
 export { default as TextAreaInput } from './text-area-input/text-area-input.component';
-export * from './text-area-input/text-area-input.mode';
+export * from './text-area-input/text-area-input';
 export { default as StatusInput } from './status-input/status-input.component';
 export * from './status-input/status-input.mode';

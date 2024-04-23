@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { isUserFormDataSending } from '../../../store';
+import { getUserFormStatus, isUserFormDataSending, setStatus } from '../../../store';
 import { StatusInputMode, StatusInputModeDiffs } from './status-input.mode';
 
 type StatusInputProps = {
@@ -11,11 +11,9 @@ function StatusInput({ mode }: StatusInputProps): JSX.Element {
     iconStyleClass,
     labelStyleClass,
     labelText,
-    valueSelector,
-    setValue,
   } = StatusInputModeDiffs[mode];
   const dispatch = useAppDispatch();
-  const status = useAppSelector(valueSelector);
+  const status = useAppSelector(getUserFormStatus);
   const isDisabled = useAppSelector(isUserFormDataSending);
 
   return (
@@ -26,7 +24,7 @@ function StatusInput({ mode }: StatusInputProps): JSX.Element {
         checked={status}
         disabled={isDisabled}
         onChange={() => {
-          dispatch(setValue(!status));
+          dispatch(setStatus(!status));
         }}
       />
       <span className={iconStyleClass}>
