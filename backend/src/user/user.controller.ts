@@ -84,7 +84,7 @@ export class UserController {
   @ApiBody({ type: CoachUserQuestionaryDto })
   @Patch('/questionary-coach')
   @UseInterceptors(
-    FilesInterceptor('certificates', 10, {
+    FilesInterceptor('certificates', undefined, {
       fileFilter: FileFilter(DocumentFile.MimeTypes),
     }),
   )

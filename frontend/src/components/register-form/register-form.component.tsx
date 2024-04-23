@@ -23,7 +23,7 @@ function RegisterForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const isSending = useAppSelector(isUserFormDataSending);
   const isFormHaveError = useAppSelector(isUserFormHaveErrors);
-
+  const [isAgree, setAgreement] = useState(true);
   const [file, setFile] = useState<Blob | null>(null);
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>): void => {
@@ -65,10 +65,11 @@ function RegisterForm(): JSX.Element {
               type="checkbox"
               defaultValue="user-agreement"
               name="user-agreement"
-              // disabled={isSending}
-              // onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
-              //   target.checked = !target.checked;
-              // }}
+              disabled={isSending}
+              checked={isAgree}
+              onChange={() => {
+                setAgreement(!isAgree);
+              }}
             />
             <span className="sign-up__checkbox-icon">
               <svg width={9} height={6} aria-hidden="true">
@@ -83,7 +84,7 @@ function RegisterForm(): JSX.Element {
         <button
           className="btn sign-up__button"
           type="submit"
-          disabled={isSending}
+          disabled={isSending || !isAgree}
         >
           Продолжить
         </button>

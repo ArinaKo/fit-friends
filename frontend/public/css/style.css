@@ -1517,7 +1517,8 @@ input:disabled ~ .role-btn__btn,
 }
 
 .custom-input__error,
-.custom-textarea__error {
+.custom-textarea__error,
+.specialization-checkbox__error {
   margin-top: 6px;
   color: #e4001b;
   opacity: 0;
@@ -1527,7 +1528,8 @@ input:disabled ~ .role-btn__btn,
 }
 
 .custom-input--error .custom-input__error,
-.custom-textarea--error .custom-textarea__error {
+.custom-textarea--error .custom-textarea__error,
+.specialization-checkbox--error .specialization-checkbox__error {
   opacity: 1;
 }
 
@@ -1954,7 +1956,7 @@ input:active + .custom-textarea__text {
 
 .custom-select__placeholder {
   position: absolute;
-  bottom: 17px;
+  top: 42px;
   left: 20px;
   color: #333333;
   pointer-events: none;

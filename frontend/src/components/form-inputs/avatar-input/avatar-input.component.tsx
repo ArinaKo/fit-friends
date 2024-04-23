@@ -44,6 +44,7 @@ function AvatarInput({ setFile }: AvatarInputProps): JSX.Element {
           className="visually-hidden"
           type="file"
           accept="image/png, image/jpeg"
+          required
           disabled={isDisabled}
           onChange={handleFileChange}
         />

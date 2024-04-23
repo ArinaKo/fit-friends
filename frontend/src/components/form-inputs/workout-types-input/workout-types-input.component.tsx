@@ -2,19 +2,30 @@ import { WORKOUT_TYPE_MAX_AMOUNT, WorkoutType } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   getUserFormWorkoutTypes,
+  getUserFormWorkoutTypesError,
   isUserFormDataSending,
+  setUserFormError,
   setWorkoutTypes,
 } from '../../../store';
 import { ChangeEvent } from 'react';
 import lodash from 'lodash';
+import cn from 'classnames';
 
 function WorkoutTypesInput(): JSX.Element {
   const dispatch = useAppDispatch();
   const workoutTypes = useAppSelector(getUserFormWorkoutTypes);
+  const workoutTypesError = useAppSelector(getUserFormWorkoutTypesError);
   const isDisabled = useAppSelector(isUserFormDataSending);
 
   return (
-    <div className="specialization-checkbox questionnaire-user__specializations">
+    <div
+      className={cn(
+        'specialization-checkbox questionnaire-user__specializations',
+        {
+          'specialization-checkbox--error': workoutTypesError,
+        },
+      )}
+    >
       {Object.values(WorkoutType).map((type) => (
         <div className="btn-checkbox" key={`type-${type}`}>
           <label>
@@ -32,6 +43,7 @@ function WorkoutTypesInput(): JSX.Element {
                   workoutTypes.includes(editedType)
                 ) {
                   dispatch(setWorkoutTypes(editedType));
+                  dispatch(setUserFormError(['workoutTypes', undefined]));
                 }
               }}
             />
@@ -39,6 +51,9 @@ function WorkoutTypesInput(): JSX.Element {
           </label>
         </div>
       ))}
+      {workoutTypesError && (
+        <span className="specialization-checkbox__error">{workoutTypesError}</span>
+      )}
     </div>
   );
 }

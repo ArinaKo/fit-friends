@@ -128,6 +128,9 @@ export const userForm = createSlice({
       if (!state.avatar) {
         state.validationErrors.avatar = REQUIRED_INPUT_MESSAGE;
       }
+      if (!state.dateOfBirth) {
+        state.validationErrors.dateOfBirth = REQUIRED_INPUT_MESSAGE;
+      }
     },
     setCustomerQuestionaryRequiredFields: (state) => {
       if (!state.workoutTypes.length) {

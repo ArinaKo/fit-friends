@@ -7,6 +7,7 @@ import {
   setCertificatesAmount,
   setUserFormError,
 } from '../../../store';
+import cn from 'classnames';
 
 type CertificateInputProps = {
   setFiles: (files: File[]) => void;
@@ -31,9 +32,6 @@ function CertificatesInput({ setFiles }: CertificateInputProps): JSX.Element {
   }
 
   function getInputText(): string {
-    if (certificatesError) {
-      return certificatesError;
-    }
     if (!certificatesAmount) {
       return 'Загрузите сюда файлы формата PDF, JPG или PNG';
     }
@@ -46,7 +44,11 @@ function CertificatesInput({ setFiles }: CertificateInputProps): JSX.Element {
   }
 
   return (
-    <div className="drag-and-drop questionnaire-coach__drag-and-drop">
+    <div
+      className={cn('drag-and-drop questionnaire-coach__drag-and-drop', {
+        'custom-input--error': certificatesError,
+      })}
+    >
       <label>
         <span className="drag-and-drop__label" tabIndex={0}>
           {getInputText()}
@@ -59,11 +61,13 @@ function CertificatesInput({ setFiles }: CertificateInputProps): JSX.Element {
           name="certificates"
           tabIndex={-1}
           accept=".pdf"
-          // accept=".pdf, .jpg, .png"
           multiple
           disabled={isDisabled}
           onChange={handleFileChange}
         />
+        {certificatesError && (
+          <span className="custom-input__error">{certificatesError}</span>
+        )}
       </label>
     </div>
   );

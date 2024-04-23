@@ -25,11 +25,11 @@ const ValidationSchema = {
   password: Joi.string()
     .min(PasswordLength.Min)
     .message(
-      `Рекомендуемая длина пароля ${PasswordLength.Min} - ${PasswordLength.Max} символов`
+      `Рекомендуемая длина пароля ${PasswordLength.Min} - ${PasswordLength.Max} символов`,
     )
     .max(PasswordLength.Max)
     .message(
-      `Рекомендуемая длина пароля ${PasswordLength.Min} - ${PasswordLength.Max} символов`
+      `Рекомендуемая длина пароля ${PasswordLength.Min} - ${PasswordLength.Max} символов`,
     )
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
@@ -38,15 +38,19 @@ const ValidationSchema = {
     .message('Только буквы русского/английского алфавита')
     .min(NameLength.Min)
     .message(
-      `Рекомендуемая длина имени ${NameLength.Min} - ${NameLength.Max} символов`
+      `Рекомендуемая длина имени ${NameLength.Min} - ${NameLength.Max} символов`,
     )
     .max(NameLength.Max)
     .message(
-      `Рекомендуемая длина имени ${NameLength.Min} - ${NameLength.Max} символов`
+      `Рекомендуемая длина имени ${NameLength.Min} - ${NameLength.Max} символов`,
     )
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
-  dateOfBirth: Joi.date().less('now').message('Некорректная дата рождения'),
+  dateOfBirth: Joi.date()
+    .less('now')
+    .message('Некорректная дата рождения')
+    .required()
+    .messages({ 'number.base': REQUIRED_INPUT_MESSAGE }),
   calories: Joi.number()
     .integer()
     .message('Введите целое число')
@@ -59,11 +63,11 @@ const ValidationSchema = {
   achievements: Joi.string()
     .min(CoachAchievementsLength.Min)
     .message(
-      `Рекомендуемая длина ${CoachAchievementsLength.Min} - ${CoachAchievementsLength.Max} символов`
+      `Рекомендуемая длина ${CoachAchievementsLength.Min} - ${CoachAchievementsLength.Max} символов`,
     )
     .max(CoachAchievementsLength.Max)
     .message(
-      `Рекомендуемая длина ${CoachAchievementsLength.Min} - ${CoachAchievementsLength.Max} символов`
+      `Рекомендуемая длина ${CoachAchievementsLength.Min} - ${CoachAchievementsLength.Max} символов`,
     )
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
@@ -71,7 +75,7 @@ const ValidationSchema = {
 
 const validateProperty = (
   propertyName: keyof ValidationData,
-  value: unknown
+  value: unknown,
 ): string | undefined =>
   ValidationSchema[propertyName].validate(value).error?.message;
 
