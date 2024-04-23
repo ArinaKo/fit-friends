@@ -3,7 +3,13 @@ import { AccountPath, AppRoute, UsersPath, WorkoutsPath } from '../../const';
 import { EntryLayout, HistoryRouter, Layout, PrivateRoute } from '../index';
 import { HelmetProvider } from 'react-helmet-async';
 import browserHistory from '../../browser-history';
-import { IntroPage, LoginPage, QuestionaryPage, RegisterPage } from '../../pages';
+import {
+  AccountPage,
+  IntroPage,
+  LoginPage,
+  QuestionaryPage,
+  RegisterPage,
+} from '../../pages';
 import { useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
 import { checkAuthAction } from '../../store/api-actions';
@@ -44,10 +50,7 @@ function App(): JSX.Element {
               element={<div>Not implemented - main page</div>}
             />
             <Route path={AppRoute.Account}>
-              <Route
-                index
-                element={<div>Not implemented - account page</div>}
-              />
+              <Route index element={<AccountPage />} />
               <Route
                 path={AccountPath.Friends}
                 element={<div>Not implemented - friends page</div>}
