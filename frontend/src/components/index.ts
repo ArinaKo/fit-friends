@@ -7,3 +7,7 @@ export { default as UIBlocker } from './ui-blocker/ui-blocker.component';
 export { default as LoginForm } from './login-form/login-form.component';
 export { default as RegisterForm } from './register-form/register-form.component';
 export { default as QuestionaryForm } from './questionary-form/questionary-form.component';
+export { default as EditUserForm } from './edit-user-form/edit-user-form.component';
+export { default as NewFeatureFiller } from './new-feature-filler/new-feature-filler.component';
+export { default as CaloriesPlan } from './calories-plan/calories-plan.component';
+export { default as CoachCertificates } from './coach-certificates/coach-certificates.component';
