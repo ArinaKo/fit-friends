@@ -138,7 +138,12 @@ export class FriendsRepository extends BaseMongoRepository<
                   as: 'avatar',
                 },
               },
-              { $unwind: '$avatar' },
+              {
+                $unwind: {
+                  path: '$avatar',
+                  preserveNullAndEmptyArrays: true,
+                },
+              },
             ],
             as: 'friends',
           },

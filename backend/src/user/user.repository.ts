@@ -113,16 +113,15 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
         { $match: { $expr: { $eq: ['$_id', { $toObjectId: id }] } } },
         PipelineStage.AddStringId,
         PipelineStage.LookupAvatars,
-        { $unwind: '$avatar' },
-        PipelineStage.LookupBackgroundImages,
-        { $unwind: '$backgroundImage' },
-        PipelineStage.LookupCertificates,
         {
           $unwind: {
-            path: '$certificates',
+            path: '$avatar',
             preserveNullAndEmptyArrays: true,
           },
         },
+        PipelineStage.LookupBackgroundImages,
+        { $unwind: '$backgroundImage' },
+        PipelineStage.LookupCertificates,
       ])
       .exec()
       .then((r) => r.at(0) || null);
@@ -155,7 +154,12 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
           { $limit: limit },
           PipelineStage.AddStringId,
           PipelineStage.LookupAvatars,
-          { $unwind: '$avatar' },
+          {
+            $unwind: {
+              path: '$avatar',
+              preserveNullAndEmptyArrays: true,
+            },
+          },
         ])
         .exec(),
       this.model.countDocuments(filter),

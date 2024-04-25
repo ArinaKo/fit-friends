@@ -87,7 +87,12 @@ const PipelineStage: { [key: string]: PipelineStage } = {
             as: 'avatar',
           },
         },
-        { $unwind: '$avatar' },
+        {
+          $unwind: {
+            path: '$avatar',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
       ],
       as: 'coach',
     },
