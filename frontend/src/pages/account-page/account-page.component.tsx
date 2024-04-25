@@ -4,13 +4,28 @@ import {
   CoachCertificates,
   EditUserForm,
   NewFeatureFiller,
+  UIBlocker,
 } from '../../components';
 import { AccountPath } from '../../const';
-import { useAppSelector } from '../../hooks';
-import { isUserCoach } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { isUserCoach, isUserDataReady } from '../../store';
+import { useEffect } from 'react';
+import { getAuthUserAction } from '../../store/api-actions';
 
 function AccountPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const isCoach = useAppSelector(isUserCoach);
+  const isDataReady = useAppSelector(isUserDataReady);
+
+  useEffect(() => {
+    if (!isDataReady) {
+      dispatch(getAuthUserAction());
+    }
+  }, [dispatch, isDataReady]);
+
+  if (!isDataReady) {
+    return <UIBlocker />;
+  }
 
   return (
     <>
