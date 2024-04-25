@@ -24,7 +24,8 @@ type TextInputTypeDiff = {
   errorSelector: (state: State) => string | undefined;
   validationFunction: (value: string) => string | undefined;
   setValue: ActionCreatorWithPayload<string>;
-  errorFieldName: string;
+  fieldName: string;
+  labelText: string;
   fieldType?: string;
 };
 
@@ -38,14 +39,16 @@ export const TextInputTypeDiffs: TextInputTypeDiffs = {
     errorSelector: getUserFormNameError,
     validationFunction: validateName,
     setValue: setName,
-    errorFieldName: 'achievements',
+    fieldName: 'name',
+    labelText: 'Имя'
   },
   [TextInputType.Password]: {
     valueSelector: getUserFormPassword,
     errorSelector: getUserFormPasswordError,
     validationFunction: validatePassword,
     setValue: setPassword,
-    errorFieldName: 'password',
+    fieldName: 'password',
+    labelText: 'Пароль',
     fieldType: 'password',
   },
   [TextInputType.Email]: {
@@ -53,6 +56,7 @@ export const TextInputTypeDiffs: TextInputTypeDiffs = {
     errorSelector: getUserFormEmailError,
     validationFunction: validateEmail,
     setValue: setEmail,
-    errorFieldName: 'email',
+    fieldName: 'email',
+    labelText: 'E-mail',
   },
 };
