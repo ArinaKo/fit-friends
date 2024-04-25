@@ -46,6 +46,9 @@ export const getUserFormCaloriesPerDay = (state: State): string =>
 export const getUserFormAchievements = (state: State): string =>
   state[NameSpace.UserForm].achievements;
 
+export const getUserFormDescription = (state: State): string =>
+  state[NameSpace.UserForm].description;
+
 export const getUserFormCertificatesAmount = (state: State): number =>
   state[NameSpace.UserForm].certificatesAmount;
 
@@ -74,33 +77,36 @@ export const getUserFormLevelError = (state: State): string | undefined =>
   state[NameSpace.UserForm].validationErrors.level;
 
 export const getUserFormWorkoutTypesError = (
-  state: State
+  state: State,
 ): string | undefined =>
   state[NameSpace.UserForm].validationErrors.workoutTypes;
 
 export const getUserFormCaloriesToLoseError = (
-  state: State
+  state: State,
 ): string | undefined =>
   state[NameSpace.UserForm].validationErrors.caloriesToLose;
 
 export const getUserFormCaloriesPerDayError = (
-  state: State
+  state: State,
 ): string | undefined =>
   state[NameSpace.UserForm].validationErrors.caloriesPerDay;
 
 export const getUserFormCertificatesError = (
-  state: State
+  state: State,
 ): string | undefined =>
   state[NameSpace.UserForm].validationErrors.certificatesAmount;
 
 export const getUserFormAchievementsError = (
-  state: State
+  state: State,
 ): string | undefined =>
   state[NameSpace.UserForm].validationErrors.achievements;
 
+export const getUserFormDescriptionError = (state: State): string | undefined =>
+  state[NameSpace.UserForm].validationErrors.description;
+
 export const isUserFormHaveErrors = (state: State): boolean =>
   Object.values(state[NameSpace.UserForm].validationErrors).some(
-    (error) => error !== undefined
+    (error) => error !== undefined,
   );
 
 export const isUserFormDataSending = (state: State): boolean =>

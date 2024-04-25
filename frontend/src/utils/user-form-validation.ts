@@ -5,6 +5,7 @@ import {
   NameLength,
   PasswordLength,
   REQUIRED_INPUT_MESSAGE,
+  UserDescriptionLength,
 } from '../const';
 
 type ValidationData = {
@@ -14,6 +15,7 @@ type ValidationData = {
   dateOfBirth: string;
   calories: string;
   achievements: string;
+  description: string;
 };
 
 const ValidationSchema = {
@@ -50,7 +52,7 @@ const ValidationSchema = {
     .less('now')
     .message('Некорректная дата рождения')
     .required()
-    .messages({ 'number.base': REQUIRED_INPUT_MESSAGE }),
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
   calories: Joi.number()
     .integer()
     .message('Введите целое число')
@@ -68,6 +70,17 @@ const ValidationSchema = {
     .max(CoachAchievementsLength.Max)
     .message(
       `Рекомендуемая длина ${CoachAchievementsLength.Min} - ${CoachAchievementsLength.Max} символов`,
+    )
+    .required()
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
+  description: Joi.string()
+    .min(UserDescriptionLength.Min)
+    .message(
+      `Рекомендуемая длина ${UserDescriptionLength.Min} - ${UserDescriptionLength.Max} символов`,
+    )
+    .max(UserDescriptionLength.Max)
+    .message(
+      `Рекомендуемая длина ${UserDescriptionLength.Min} - ${UserDescriptionLength.Max} символов`,
     )
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
@@ -95,3 +108,6 @@ export const validateCalories = (value: unknown) =>
 
 export const validateAchievements = (value: unknown) =>
   validateProperty('achievements', value);
+
+export const validateDescription = (value: unknown) =>
+  validateProperty('description', value);

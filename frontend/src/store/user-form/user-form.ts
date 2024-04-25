@@ -32,6 +32,7 @@ const initialState: UserForm = {
   caloriesPerDay: EmptyUserForm.CaloriesPerDay,
   certificatesAmount: EmptyUserForm.CertificatesAmount,
   achievements: EmptyUserForm.Achievements,
+  description: EmptyUserForm.Description,
   validationErrors: EmptyUserForm.ValidationsErrors,
   isSending: false,
 };
@@ -91,6 +92,9 @@ export const userForm = createSlice({
     },
     setAchievements: (state, action: PayloadAction<string>) => {
       state.achievements = action.payload;
+    },
+    setDescription: (state, action: PayloadAction<string>) => {
+      state.description = action.payload;
     },
     setUserFormError: (
       state,
@@ -203,6 +207,7 @@ export const {
   setCaloriesPerDay,
   setCertificatesAmount,
   setAchievements,
+  setDescription,
   setUserFormError,
   setLoginRequiredFields,
   setRegisterRequiredFields,

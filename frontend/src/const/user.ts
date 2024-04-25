@@ -36,3 +36,8 @@ export enum CoachAchievementsLength {
   Min = 10,
   Max = 140,
 }
+
+export enum UserDescriptionLength {
+  Min = 10,
+  Max = 140,
+}

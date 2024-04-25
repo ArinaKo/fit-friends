@@ -35,6 +35,7 @@ export type UserForm = {
   caloriesPerDay: string;
   certificatesAmount: number;
   achievements: string;
+  description: string;
   validationErrors: {
     email: string | undefined;
     password: string | undefined;
@@ -49,6 +50,7 @@ export type UserForm = {
     caloriesPerDay: string | undefined;
     certificatesAmount: string | undefined;
     achievements: string | undefined;
+    description: string | undefined;
   };
   isSending: boolean;
 };

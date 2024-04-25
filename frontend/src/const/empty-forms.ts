@@ -18,6 +18,7 @@ export const EmptyUserForm = {
   CaloriesPerDay: '',
   CertificatesAmount: 0,
   Achievements: '',
+  Description: '',
   ValidationsErrors: {
     email: undefined,
     password: undefined,
@@ -32,5 +33,6 @@ export const EmptyUserForm = {
     caloriesPerDay: undefined,
     certificatesAmount: undefined,
     achievements: undefined,
+    description: undefined,
   },
 };

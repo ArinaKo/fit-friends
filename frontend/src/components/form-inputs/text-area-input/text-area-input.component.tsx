@@ -1,50 +1,64 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { isUserFormDataSending, setUserFormError } from '../../../store';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import cn from 'classnames';
-import {
-  TextAreaInputType,
-  TextAreaInputTypeDiffs,
-} from './text-area-input';
+import { TextAreaInputType, TextAreaInputTypeDiffs } from './text-area-input';
 
 type TextAreaInputProps = {
   type: TextAreaInputType;
+  originalValue?: string;
+  isActive?: boolean;
 };
 
-function TextAreaInput({ type }: TextAreaInputProps): JSX.Element {
+function TextAreaInput({
+  type,
+  originalValue,
+  isActive = true,
+}: TextAreaInputProps): JSX.Element {
   const {
     styleClass,
     valueSelector,
     errorSelector,
     validationFunction,
     setValue,
-    errorFieldName,
+    fieldName,
+    labelText,
   } = TextAreaInputTypeDiffs[type];
   const dispatch = useAppDispatch();
   const value = useAppSelector(valueSelector);
   const valueError = useAppSelector(errorSelector);
   const isDisabled = useAppSelector(isUserFormDataSending);
 
+  useEffect(() => {
+    if (originalValue && isActive) {
+      dispatch(setValue(originalValue));
+    }
+  }, [dispatch, setValue, isActive, originalValue]);
+
   return (
     <div
       className={cn('custom-textarea', styleClass, {
         'custom-textarea--error': valueError,
+        'custom-textarea--readonly': !isActive,
       })}
     >
       <label>
+        {labelText ? (
+          <span className="custom-textarea__label">{labelText}</span>
+        ) : undefined}
         <textarea
-          name="description"
+          name={fieldName}
           placeholder=" "
-          value={value}
-          disabled={isDisabled}
+          value={isActive ? value : originalValue}
+          disabled={isDisabled || !isActive}
           onInput={({ target }: ChangeEvent<HTMLTextAreaElement>) => {
             dispatch(setValue(target.value));
             if (validationFunction(target.value) !== valueError) {
               dispatch(
                 setUserFormError([
-                  errorFieldName,
+                  fieldName,
                   validationFunction(target.value),
-                ])
+                ]),
               );
             }
           }}
