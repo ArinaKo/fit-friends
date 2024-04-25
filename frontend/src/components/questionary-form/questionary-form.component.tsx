@@ -85,9 +85,7 @@ function QuestionaryForm(): JSX.Element {
                   Расскажите о своём опыте, который мы сможем проверить
                 </span>
                 <TextAreaInput type={TextAreaInputType.Achievements} />
-                <div className="questionnaire-coach__checkbox">
-                  <StatusInput mode={StatusInputMode.Questionary} />
-                </div>
+                <StatusInput mode={StatusInputMode.Questionary} />
               </div>
             </>
           ) : (
