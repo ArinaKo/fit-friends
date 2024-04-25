@@ -1,5 +1,6 @@
 export const BACKEND_URL = 'http://localhost:3000';
 export const REQUEST_TIMEOUT = 5000;
+export const STATIC_URL = `${BACKEND_URL}/static`;
 
 export const APIRoute = {
   CheckAuth: '/auth/login',
