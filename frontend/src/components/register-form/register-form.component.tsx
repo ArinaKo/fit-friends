@@ -11,11 +11,12 @@ import { redirectToRoute } from '../../store/actions';
 import {
   AvatarInput,
   DateOfBirthInput,
-  LocationInput,
+  SelectInput,
   RoleInput,
   TextInput,
   TextInputType,
   UserSexInput,
+  SelectInputType,
 } from '../form-inputs';
 
 function RegisterForm(): JSX.Element {
@@ -53,7 +54,7 @@ function RegisterForm(): JSX.Element {
           <TextInput type={TextInputType.Name} />
           <TextInput type={TextInputType.Email} />
           <DateOfBirthInput />
-          <LocationInput />
+          <SelectInput type={SelectInputType.Location} label='Ваша локация' styleClass='sing-up__input' />
           <TextInput type={TextInputType.Password} />
           <UserSexInput />
         </div>

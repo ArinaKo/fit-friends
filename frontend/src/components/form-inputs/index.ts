@@ -1,5 +1,4 @@
 export { default as DateOfBirthInput } from './date-of-birth-input/day-of-birth-input.component';
-export { default as LocationInput } from './location-input/location-input.component';
 export { default as UserSexInput } from './user-sex-input/user-sex-input.component';
 export { default as RoleInput } from './role-input/role-input.component';
 export { default as AvatarInput } from './avatar-input/avatar-input.component';
@@ -9,6 +8,8 @@ export { default as UserLevelInput } from './user-level-input/user-level-input.c
 export { default as CertificatesInput } from './certificates-input/certificates-input.component';
 export { default as TextInput } from './text-input/text-input.component';
 export * from './text-input/text-input';
+export { default as SelectInput } from './select-input/select-input.component';
+export * from './select-input/select-input';
 export { default as CaloriesInput } from './calories-input/calories-input.component';
 export * from './calories-input/calories-input.mode';
 export { default as TextAreaInput } from './text-area-input/text-area-input.component';

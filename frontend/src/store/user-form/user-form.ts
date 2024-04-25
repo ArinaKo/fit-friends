@@ -2,12 +2,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UserForm } from '../../types';
 import {
   EmptyUserForm,
-  MetroStation,
   NameSpace,
   REQUIRED_INPUT_MESSAGE,
-  UserLevel,
   UserRole,
-  UserSex,
   WorkoutDuration,
   WorkoutType,
 } from '../../const';
@@ -53,13 +50,13 @@ export const userForm = createSlice({
     setName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
-    setSex: (state, action: PayloadAction<UserSex>) => {
+    setSex: (state, action: PayloadAction<string>) => {
       state.sex = action.payload;
     },
     setDateOfBirth: (state, action: PayloadAction<string>) => {
       state.dateOfBirth = action.payload;
     },
-    setLocation: (state, action: PayloadAction<MetroStation>) => {
+    setLocation: (state, action: PayloadAction<string>) => {
       state.location = action.payload;
     },
     setRole: (state, action: PayloadAction<UserRole>) => {
@@ -68,7 +65,7 @@ export const userForm = createSlice({
     setAvatar: (state, action: PayloadAction<string | undefined>) => {
       state.avatar = action.payload;
     },
-    setLevel: (state, action: PayloadAction<UserLevel>) => {
+    setLevel: (state, action: PayloadAction<string>) => {
       state.level = action.payload;
     },
     setStatus: (state, action: PayloadAction<boolean>) => {

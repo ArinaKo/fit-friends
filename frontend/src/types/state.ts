@@ -22,12 +22,12 @@ export type UserForm = {
   email: string;
   password: string;
   name: string;
-  sex: UserSex;
+  sex: string;
   dateOfBirth: string;
   role: UserRole;
-  location: MetroStation | undefined;
+  location: string | undefined;
   avatar: string | undefined;
-  level: UserLevel;
+  level: string;
   status: boolean;
   workoutTypes: WorkoutType[];
   timeForWorkout: WorkoutDuration;
@@ -39,9 +39,11 @@ export type UserForm = {
     email: string | undefined;
     password: string | undefined;
     name: string | undefined;
+    sex: string | undefined;
     dateOfBirth: string | undefined;
     location: string | undefined;
     avatar: string | undefined;
+    level: string | undefined;
     workoutTypes: string | undefined;
     caloriesToLose: string | undefined;
     caloriesPerDay: string | undefined;
