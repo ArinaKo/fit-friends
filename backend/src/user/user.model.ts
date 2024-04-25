@@ -15,10 +15,8 @@ import {
   timestamps: true,
 })
 export class UserModel extends Document implements AuthUser {
-  @Prop({
-    required: true,
-  })
-  public avatar: string;
+  @Prop()
+  public avatar?: string;
 
   @Prop()
   public dateOfBirth?: Date;

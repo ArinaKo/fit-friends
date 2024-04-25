@@ -11,7 +11,6 @@ import { AuthUserRdo, LoggedUserRdo } from 'src/auth/rdo';
 import { fillDto } from '@app/helpers';
 import { FullUserRdo, UserRdo, UsersWithPaginationRdo } from './rdo';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
-import { FileRdo } from 'src/file-vault/rdo';
 
 @Injectable()
 export class UserService {
@@ -138,16 +137,15 @@ export class UserService {
       }
     }
 
+    if (dto.avatar !== undefined) {
+      existsUser.avatar = null;
+      hasChanges = true;
+    }
+
     if (avatar) {
-      const oldAvatar =
-        typeof existsUser.avatar === 'string'
-          ? existsUser.avatar
-          : existsUser.avatar.id!;
       const newAvatar = await this.fileVaultService.saveFile(avatar);
       existsUser.avatar = newAvatar.id;
       hasChanges = true;
-
-      this.fileVaultService.deleteFile(oldAvatar);
     }
 
     if (!hasChanges) {

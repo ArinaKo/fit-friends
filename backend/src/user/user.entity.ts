@@ -16,7 +16,7 @@ export class UserEntity implements FullUser, Entity<string> {
   public id?: string;
   public name: string;
   public email: string;
-  public avatar: string | FileEntity;
+  public avatar?: string | FileEntity | null;
   public dateOfBirth?: Date;
   public role: UserRole;
   public sex: UserSex;
@@ -58,9 +58,13 @@ export class UserEntity implements FullUser, Entity<string> {
       isReady: this.isReady,
       passwordHash: this.passwordHash,
       certificates:
-        this.certificates && this.certificates[0] instanceof FileEntity
-          ? this.certificates.map((certificate) => certificate.toPOJO())
-          : this.certificates,
+        this.certificates && this.role === UserRole.Coach
+          ? this.certificates.map((certificate) =>
+              certificate instanceof FileEntity
+                ? certificate.toPOJO()
+                : certificate,
+            )
+          : undefined,
       achievements: this.achievements,
       caloriesToLose: this.caloriesToLose,
       caloriesPerDay: this.caloriesPerDay,
@@ -73,7 +77,7 @@ export class UserEntity implements FullUser, Entity<string> {
     this.email = data.email;
     this.name = data.name;
     this.avatar =
-      typeof data.avatar === 'object'
+      typeof data.avatar === 'object' && data.avatar
         ? FileEntity.fromObject(data.avatar)
         : data.avatar;
     this.dateOfBirth = data.dateOfBirth;
@@ -89,12 +93,13 @@ export class UserEntity implements FullUser, Entity<string> {
     this.workoutTypes = data.workoutTypes;
     this.isReady = data.isReady;
     this.passwordHash = data.passwordHash;
-    this.certificates =
-      typeof data.certificates === 'object'
-        ? data.certificates.map((certificate) =>
-            FileEntity.fromObject(certificate),
-          )
-        : data.certificates;
+    if (data.certificates) {
+      this.certificates = data.certificates.map((certificate) =>
+        typeof certificate === 'object'
+          ? FileEntity.fromObject(certificate)
+          : certificate,
+      );
+    }
     this.achievements = data.achievements;
     this.caloriesToLose = data.caloriesToLose;
     this.caloriesPerDay = data.caloriesPerDay;

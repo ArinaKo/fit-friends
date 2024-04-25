@@ -20,11 +20,11 @@ import { Expose, Transform } from 'class-transformer';
 
 export class UpdateUserDto {
   @ApiPropertyOptional({
-    description: 'User avatar file id',
+    description: 'User avatar',
   })
   @IsOptional()
   @Expose()
-  public avatar?: File;
+  public avatar?: File | null;
 
   @ApiPropertyOptional({
     description: 'User name',

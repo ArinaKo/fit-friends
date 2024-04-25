@@ -7,6 +7,7 @@ import {
   Patch,
   Query,
   Req,
+  UploadedFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -31,8 +32,8 @@ import { AuthUserRdo } from 'src/auth/rdo';
 import { UsersQuery } from './query';
 import { UserRole } from '@app/types';
 import { RequestWithTokenPayload } from 'src/shared/requests';
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { DocumentFile } from 'src/shared/const';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { DocumentFile, ImageFile } from 'src/shared/const';
 
 @ApiTags('users')
 @Controller('users')
@@ -73,17 +74,24 @@ export class UserController {
   }
 
   @ApiResponse({
-    type: AuthUserRdo,
+    type: FullUserRdo,
     status: HttpStatus.OK,
     description: 'User`s info has been successfully updated',
   })
+  @ApiConsumes('multipart/form-data')
   @ApiBody({ type: UpdateUserDto })
   @Patch('/update')
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      fileFilter: FileFilter(ImageFile.MimeTypes, ImageFile.MaxSize),
+    }),
+  )
   public async update(
     @Body() dto: UpdateUserDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
+    @UploadedFile() avatar?: Express.Multer.File,
   ) {
-    return this.userService.updateUser(tokenPayload.sub, dto);
+    return this.userService.updateUser(tokenPayload.sub, dto, avatar);
   }
 
   @ApiResponse({

@@ -10,7 +10,7 @@ export interface User {
   id?: string;
   name: string;
   email: string;
-  avatar: string | FileData;
+  avatar?: string | FileData | null;
   sex: UserSex;
   dateOfBirth?: Date;
   role: UserRole;
