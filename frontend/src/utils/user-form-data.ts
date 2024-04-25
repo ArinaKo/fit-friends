@@ -44,9 +44,9 @@ export function getCustomerQuestionaryData(state: State): FormData {
 
 export function getCoachQuestionaryData(
   state: State,
-  certificates?: Blob[]
+  certificates?: Blob[],
 ): FormData {
-  const { level, workoutTypes, achievements } = state.USER_FORM;
+  const { level, workoutTypes, achievements, status } = state.USER_FORM;
   const formData = new FormData();
   if (!workoutTypes.length || !certificates?.length) {
     throw new Error('Not enough data for coach questionary');
@@ -59,5 +59,55 @@ export function getCoachQuestionaryData(
   certificates.forEach((certificate) => {
     formData.append('certificates', certificate);
   });
+  formData.append('isReady', String(status));
+  return formData;
+}
+
+export function getUpdateUserData(state: State, newAvatar?: Blob): FormData {
+  const { name, sex, isReady, level, workoutTypes, location, description } =
+    state.USER_DATA;
+  const {
+    name: newName,
+    sex: newSex,
+    status,
+    level: newLevel,
+    workoutTypes: newWorkoutTypes,
+    location: newLocation,
+    description: newDescription,
+    avatar,
+  } = state.USER_FORM;
+  const formData = new FormData();
+  if (newName !== name) {
+    formData.append('name', newName);
+  }
+  if (newSex !== sex) {
+    formData.append('sex', newSex);
+  }
+  if (status !== isReady) {
+    formData.append('isReady', String(status));
+  }
+  if (newLevel !== level) {
+    formData.append('level', newLevel);
+  }
+  if (newLocation && newLocation !== location) {
+    formData.append('location', newLocation);
+  }
+  if (newDescription !== description) {
+    formData.append('description', newDescription);
+  }
+  if (workoutTypes.length !== newWorkoutTypes.length ||
+    workoutTypes.length !==
+    [...new Set(workoutTypes.concat(newWorkoutTypes))].length
+  ) {
+    newWorkoutTypes.forEach((type) => {
+      formData.append('workoutTypes[]', type);
+    });
+  }
+  if (!avatar) {
+    formData.append('avatar', String(null));
+  }
+  if (newAvatar) {
+    formData.append('avatar', newAvatar);
+  }
   return formData;
 }

@@ -13,6 +13,7 @@ import {
   questionaryCoachAction,
   questionaryCustomerAction,
   registerAction,
+  updateUserAction,
 } from '../api-actions';
 
 const initialState: UserForm = {
@@ -188,6 +189,13 @@ export const userForm = createSlice({
       })
       .addCase(questionaryCoachAction.fulfilled, () => ({ ...initialState }))
       .addCase(questionaryCoachAction.rejected, (state) => {
+        state.isSending = false;
+      })
+      .addCase(updateUserAction.pending, (state) => {
+        state.isSending = true;
+      })
+      .addCase(updateUserAction.fulfilled, () => ({ ...initialState }))
+      .addCase(updateUserAction.rejected, (state) => {
         state.isSending = false;
       });
   },

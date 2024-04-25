@@ -7,5 +7,6 @@ export const APIRoute = {
   Register: '/auth/register',
   QuestionaryUser: 'users/questionary-user',
   QuestionaryCoach: 'users/questionary-coach',
+  AuthUser: '/users',
   UpdateUser: '/users/update',
 } as const;
