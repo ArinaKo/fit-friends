@@ -56,7 +56,7 @@ function QuestionaryForm(): JSX.Element {
             <span className="questionnaire-user__legend">
               Ваша специализация (тип) тренировок
             </span>
-            <WorkoutTypesInput />
+            <WorkoutTypesInput styleClass='questionnaire-user' />
           </div>
           {isCoach ? (
             ''

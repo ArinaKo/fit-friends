@@ -72,7 +72,11 @@ export const userForm = createSlice({
     setStatus: (state, action: PayloadAction<boolean>) => {
       state.status = action.payload;
     },
-    setWorkoutTypes: (state, action: PayloadAction<WorkoutType>) => {
+    setWorkoutTypes: (state, action: PayloadAction<WorkoutType | WorkoutType[]>) => {
+      if (typeof action.payload === 'object') {
+        state.workoutTypes = action.payload;
+        return;
+      }
       const type = action.payload;
       state.workoutTypes = state.workoutTypes.includes(type)
         ? state.workoutTypes.filter((item) => item !== type)

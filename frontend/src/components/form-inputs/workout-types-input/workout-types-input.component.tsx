@@ -7,21 +7,38 @@ import {
   setUserFormError,
   setWorkoutTypes,
 } from '../../../store';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import lodash from 'lodash';
 import cn from 'classnames';
 
-function WorkoutTypesInput(): JSX.Element {
+type WorkoutTypesProps = {
+  styleClass: string;
+  originalValue?: WorkoutType[];
+  isActive?: boolean;
+};
+
+function WorkoutTypesInput({
+  styleClass,
+  originalValue,
+  isActive = true,
+}: WorkoutTypesProps): JSX.Element {
   const dispatch = useAppDispatch();
   const workoutTypes = useAppSelector(getUserFormWorkoutTypes);
   const workoutTypesError = useAppSelector(getUserFormWorkoutTypesError);
   const isDisabled = useAppSelector(isUserFormDataSending);
 
+  useEffect(() => {
+    if (originalValue && isActive) {
+      dispatch(setWorkoutTypes(originalValue));
+    }
+  }, [dispatch, isActive, originalValue]);
+
   return (
     <div
       className={cn(
-        'specialization-checkbox questionnaire-user__specializations',
+        'specialization-checkbox',
         {
+          [`${styleClass ?? ''}__specializations`]: styleClass,
           'specialization-checkbox--error': workoutTypesError,
         },
       )}
@@ -34,8 +51,8 @@ function WorkoutTypesInput(): JSX.Element {
               type="checkbox"
               name="workoutType"
               value={type}
-              disabled={isDisabled}
-              checked={workoutTypes.includes(type)}
+              disabled={isDisabled || !isActive}
+              checked={isActive ? workoutTypes.includes(type) : originalValue?.includes(type)}
               onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
                 const editedType = target.value as WorkoutType;
                 if (
