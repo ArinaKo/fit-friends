@@ -20,7 +20,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { FullUserRdo, UsersWithPaginationRdo } from './rdo';
+import { FullUserRdo, AuthUserRdo, UsersWithPaginationRdo } from './rdo';
 import { FileFilter, MongoIdValidationPipe, ParseFile, Role } from '@app/core';
 import { RoleGuard } from 'src/shared/guards';
 import {
@@ -28,7 +28,6 @@ import {
   DefaultUserQuestionaryDto,
   UpdateUserDto,
 } from './dto';
-import { AuthUserRdo } from 'src/auth/rdo';
 import { UsersQuery } from './query';
 import { UserRole } from '@app/types';
 import { RequestWithTokenPayload } from 'src/shared/requests';

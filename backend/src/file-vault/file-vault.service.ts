@@ -2,7 +2,7 @@ import 'multer';
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { ensureDir } from 'fs-extra';
-import { writeFile, unlink } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import appConfig from '@app/config/app.config';
@@ -89,17 +89,6 @@ export class FileVaultService {
     }
 
     return fillDto(FileRdo, existFile);
-  }
-
-  public async deleteFile(fileId: string): Promise<void> {
-    const existFile = await this.fileVaultRepository.findById(fileId);
-
-    if (!existFile) {
-      throw new NotFoundException(`File with ${fileId} not found.`);
-    }
-
-    await unlink(existFile.path);
-    await this.fileVaultRepository.deleteById(fileId);
   }
 
   public async isFileVideo(fileId: string): Promise<boolean> {

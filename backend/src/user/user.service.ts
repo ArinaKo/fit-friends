@@ -7,9 +7,14 @@ import {
 } from './dto';
 import { UserEntity } from './user.entity';
 import { UsersQuery } from './query';
-import { AuthUserRdo, LoggedUserRdo } from 'src/auth/rdo';
+import { LoggedUserRdo } from 'src/auth/rdo';
 import { fillDto } from '@app/helpers';
-import { FullUserRdo, UserRdo, UsersWithPaginationRdo } from './rdo';
+import {
+  FullUserRdo,
+  UserRdo,
+  AuthUserRdo,
+  UsersWithPaginationRdo,
+} from './rdo';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
 
 @Injectable()

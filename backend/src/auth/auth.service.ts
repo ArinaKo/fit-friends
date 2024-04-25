@@ -58,7 +58,7 @@ export class AuthService {
       backgroundImage: avatarId,
       level: UserLevel.Amateur,
       workoutTypes: [],
-      isReady: false,
+      isReady: true,
       passwordHash: '',
       createdAt: new Date(),
     };
@@ -66,7 +66,7 @@ export class AuthService {
     const userEntity = await new UserEntity(
       Object.assign(userInfo),
     ).setPassword(password);
-    console.log(userEntity);
+
     await this.userRepository.save(userEntity);
 
     return this.createUserToken(userEntity);
