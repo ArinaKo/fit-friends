@@ -40,6 +40,16 @@ export class UserService {
     return existsUser;
   }
 
+  public async getAuthUser(userId: string): Promise<FullUserRdo> {
+    const existsUser = await this.userRepository.findFullUser(userId);
+
+    if (!existsUser) {
+      throw new NotFoundException(`User with id ${userId} not found`);
+    }
+
+    return fillDto(AuthUserRdo, existsUser.toPOJO());
+  }
+
   public async getFullUser(userId: string): Promise<FullUserRdo> {
     const existsUser = await this.userRepository.findFullUser(userId);
 
@@ -47,15 +57,7 @@ export class UserService {
       throw new NotFoundException(`User with id ${userId} not found`);
     }
 
-    const user = existsUser.toPOJO();
-
-    if (existsUser.certificates) {
-      user.certificates = existsUser.certificates.map((entity) =>
-        fillDto(FileRdo, entity.toPOJO()),
-      );
-    }
-
-    return fillDto(FullUserRdo, user);
+    return fillDto(FullUserRdo, existsUser.toPOJO());
   }
 
   public async getAllUsers(

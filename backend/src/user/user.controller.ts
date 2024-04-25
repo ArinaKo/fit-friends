@@ -40,6 +40,16 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiResponse({
+    type: AuthUserRdo,
+    status: HttpStatus.OK,
+    description: 'Auth user info',
+  })
+  @Get('/')
+  public async index(@Req() { tokenPayload }: RequestWithTokenPayload) {
+    return this.userService.getAuthUser(tokenPayload.sub);
+  }
+
+  @ApiResponse({
     type: UsersWithPaginationRdo,
     status: HttpStatus.OK,
     description: 'Users list',
@@ -47,8 +57,8 @@ export class UserController {
   @ApiQuery({ type: UsersQuery })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
-  @Get('/')
-  public async index(@Query() query: UsersQuery) {
+  @Get('/all-users')
+  public async getUsers(@Query() query: UsersQuery) {
     return this.userService.getAllUsers(query);
   }
 
@@ -58,7 +68,7 @@ export class UserController {
     description: 'User found',
   })
   @Get('/:userId')
-  public async show(@Param('userId', MongoIdValidationPipe) id: string) {
+  public async getUserInfo(@Param('userId', MongoIdValidationPipe) id: string) {
     return this.userService.getFullUser(id);
   }
 
