@@ -8,6 +8,7 @@ import {
   WorkoutDuration,
   WorkoutType,
 } from '../const';
+import { FileData } from './file-data.js';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -53,4 +54,19 @@ export type UserForm = {
     description: string | undefined;
   };
   isSending: boolean;
+};
+
+export type UserData = {
+  name: string;
+  location: MetroStation;
+  avatar: FileData | undefined;
+  level: UserLevel;
+  sex: UserSex;
+  isReady: boolean;
+  description: string;
+  workoutTypes: WorkoutType[];
+  caloriesToLose: number;
+  caloriesPerDay: number;
+  certificates: FileData[];
+  isDataReady: boolean;
 };
