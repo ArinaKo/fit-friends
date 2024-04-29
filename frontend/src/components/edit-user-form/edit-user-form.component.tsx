@@ -25,7 +25,6 @@ import {
   WorkoutTypesInput,
 } from '../form-inputs';
 import { updateUserAction } from '../../store/api-actions';
-import UIBlocker from '../ui-blocker/ui-blocker.component';
 import { getFileUrl } from '../../utils';
 
 const inputStyleClass = 'user-info-edit';
@@ -45,10 +44,6 @@ function EditUserForm(): JSX.Element {
 
   const [isEdited, setEdited] = useState<boolean>(false);
   const [file, setFile] = useState<Blob | null>(null);
-
-  if (isSending) {
-    return <UIBlocker />;
-  }
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();

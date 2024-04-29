@@ -8,7 +8,7 @@ import {
 } from '../../components';
 import { AccountPath } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { isUserCoach, isUserDataReady } from '../../store';
+import { isUserCoach, isUserDataReady, isUserDataUpdating } from '../../store';
 import { useEffect } from 'react';
 import { getAuthUserAction } from '../../store/api-actions';
 
@@ -16,6 +16,7 @@ function AccountPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const isCoach = useAppSelector(isUserCoach);
   const isDataReady = useAppSelector(isUserDataReady);
+  const isDataUpdating = useAppSelector(isUserDataUpdating);
 
   useEffect(() => {
     if (!isDataReady) {
@@ -23,7 +24,7 @@ function AccountPage(): JSX.Element {
     }
   }, [dispatch, isDataReady]);
 
-  if (!isDataReady) {
+  if (!isDataReady || isDataUpdating) {
     return <UIBlocker />;
   }
 
