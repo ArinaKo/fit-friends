@@ -10,4 +10,7 @@ export const APIRoute = {
   QuestionaryCoach: 'users/questionary-coach',
   AuthUser: '/users',
   UpdateUser: '/users/update',
+  UploadCertificate: '/users/certificates/upload',
+  DeleteCertificate: '/users/certificates/delete',
+  UpdateCertificate: '/users/certificates/update',
 } as const;

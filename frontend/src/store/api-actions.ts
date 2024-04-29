@@ -3,6 +3,7 @@ import {
   AppDispatch,
   AuthUser,
   CertificatesFiles,
+  FileData,
   LoggedUser,
   State,
   UserFiles,
@@ -104,12 +105,53 @@ export const updateUserAction = createAsyncThunk<
   AuthUser,
   UserFiles,
   asyncThunkConfig
->('user/update', async (files, { getState, extra: api }) => {
+>('account/update', async (files, { getState, extra: api }) => {
   const formData = getUpdateUserData(getState(), files.avatar);
   const { data } = await api.patch<AuthUser>(APIRoute.UpdateUser, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return data;
+});
+
+export const deleteCertificateAction = createAsyncThunk<
+  string,
+  string,
+  asyncThunkConfig
+>('account/delete-certificate', async (certificateId, { extra: api }) => {
+  await api.patch<FileData[]>(APIRoute.DeleteCertificate, { certificateId });
+  return certificateId;
+});
+
+export const updateCertificateAction = createAsyncThunk<
+  { oldCertificateId: string; newCertificate: FileData },
+  { certificateId: string; newCertificate: Blob },
+  asyncThunkConfig
+>(
+  'account/update-certificate',
+  async ({ certificateId, newCertificate }, { extra: api }) => {
+    const formData = new FormData();
+    formData.append('oldCertificateId', certificateId);
+    formData.append('newCertificate', newCertificate);
+    const { data } = await api.patch<FileData>(
+      APIRoute.UpdateCertificate,
+      formData,
+    );
+    return { oldCertificateId: certificateId, newCertificate: data };
+  },
+);
+
+export const uploadCertificateAction = createAsyncThunk<
+  FileData,
+  File,
+  asyncThunkConfig
+>('account/upload-certificate', async (certificate, { extra: api }) => {
+  const fileData = new FormData();
+  fileData.append('certificate', certificate);
+  const { data } = await api.patch<FileData>(
+    APIRoute.UploadCertificate,
+    fileData,
+  );
   return data;
 });

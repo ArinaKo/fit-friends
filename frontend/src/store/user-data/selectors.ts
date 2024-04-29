@@ -33,3 +33,6 @@ export const getUserDataCertificates = (state: State): FileData[] =>
 
 export const isUserDataReady = (state: State): boolean =>
   state[NameSpace.UserData].isDataReady;
+
+export const isUserDataUpdating = (state: State): boolean =>
+  state[NameSpace.UserData].isDataUpdating;

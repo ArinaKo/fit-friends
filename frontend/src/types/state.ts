@@ -69,4 +69,5 @@ export type UserData = {
   caloriesPerDay: number;
   certificates: FileData[];
   isDataReady: boolean;
+  isDataUpdating: boolean;
 };
