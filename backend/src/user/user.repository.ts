@@ -173,4 +173,16 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
       totalItems: recordsCount,
     };
   }
+
+  public async findUserCertificates(
+    id: string,
+  ): Promise<string[] | undefined | null> {
+    const document = await this.model.findById(id).exec();
+
+    if (!document) {
+      return null;
+    }
+
+    return document.certificates;
+  }
 }

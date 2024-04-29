@@ -66,7 +66,7 @@ export class FileVaultService {
     }
   }
 
-  public async saveFile(file: Express.Multer.File): Promise<FileRdo> {
+  public async saveFile(file: Express.Multer.File): Promise<FileEntity> {
     const storedFile = await this.writeFile(file);
     const fileEntity = FileEntity.fromObject({
       hashName: storedFile.filename,
@@ -77,8 +77,7 @@ export class FileVaultService {
       subDirectory: storedFile.subDirectory,
     });
 
-    const savedFile = await this.fileVaultRepository.save(fileEntity);
-    return fillDto(FileRdo, savedFile);
+    return this.fileVaultRepository.save(fileEntity);
   }
 
   public async getFile(fileId: string): Promise<FileRdo> {

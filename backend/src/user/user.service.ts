@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import {
   CoachUserQuestionaryDto,
@@ -16,6 +20,7 @@ import {
   UsersWithPaginationRdo,
 } from './rdo';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
+import { FileRdo } from 'src/file-vault/rdo';
 
 @Injectable()
 export class UserService {
@@ -23,6 +28,22 @@ export class UserService {
     private readonly userRepository: UserRepository,
     private readonly fileVaultService: FileVaultService,
   ) {}
+
+  private async getUserCertificates(userId: string): Promise<string[]> {
+    const result = await this.userRepository.findUserCertificates(userId);
+
+    if (result === null) {
+      throw new NotFoundException(`User with id ${userId} not found`);
+    }
+
+    if (result === undefined) {
+      throw new BadRequestException(
+        'Certificates can be updated only by coach',
+      );
+    }
+
+    return result;
+  }
 
   public async getUserByEmail(email: string): Promise<LoggedUserRdo> {
     const existsUser = await this.userRepository.findByEmail(email);
@@ -98,7 +119,7 @@ export class UserService {
       certificates.map(async (certificate) => {
         const certificateId = (
           await this.fileVaultService.saveFile(certificate)
-        ).id;
+        ).id!;
         certificatesIds.push(certificateId);
       }),
     );
@@ -161,5 +182,58 @@ export class UserService {
 
     const updatedUser = await this.userRepository.findFullUser(userId);
     return fillDto(AuthUserRdo, updatedUser!.toPOJO());
+  }
+
+  public async uploadCertificate(
+    userId: string,
+    certificateFile: Express.Multer.File,
+  ): Promise<FileRdo> {
+    const certificates = await this.getUserCertificates(userId);
+    const existsUser = await this.getUserEntity(userId);
+
+    const certificate = await this.fileVaultService.saveFile(certificateFile);
+    existsUser.certificates = [certificate.id!, ...certificates];
+
+    await this.userRepository.update(userId, existsUser);
+    return fillDto(FileRdo, certificate);
+  }
+
+  public async updateCertificate(
+    userId: string,
+    oldCertificateId: string,
+    newCertificate: Express.Multer.File,
+  ): Promise<FileRdo> {
+    const certificates = await this.getUserCertificates(userId);
+    const existsUser = await this.getUserEntity(userId);
+
+    if (!certificates.includes(oldCertificateId)) {
+      throw new BadRequestException(`Certificate with id ${userId} not found`);
+    }
+
+    const certificate = await this.fileVaultService.saveFile(newCertificate);
+    existsUser.certificates = certificates.map((item) =>
+      item === oldCertificateId ? certificate.id! : item,
+    );
+
+    await this.userRepository.update(userId, existsUser);
+    return fillDto(FileRdo, certificate);
+  }
+
+  public async deleteCertificate(
+    userId: string,
+    certificateId: string,
+  ): Promise<void> {
+    const certificates = await this.getUserCertificates(userId);
+    const existsUser = await this.getUserEntity(userId);
+
+    if (!certificates.includes(certificateId)) {
+      throw new BadRequestException(`Certificate with id ${userId} not found`);
+    }
+
+    existsUser.certificates = certificates.filter(
+      (item) => item !== certificateId,
+    );
+
+    this.userRepository.update(userId, existsUser);
   }
 }
