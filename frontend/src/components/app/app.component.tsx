@@ -13,6 +13,8 @@ import {
 import { useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
 import { checkAuthAction } from '../../store/api-actions';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
