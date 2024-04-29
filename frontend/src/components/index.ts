@@ -11,3 +11,4 @@ export { default as EditUserForm } from './edit-user-form/edit-user-form.compone
 export { default as NewFeatureFiller } from './new-feature-filler/new-feature-filler.component';
 export { default as CaloriesPlan } from './calories-plan/calories-plan.component';
 export { default as CoachCertificates } from './coach-certificates/coach-certificates.component';
+export { default as CertificateCard } from './certificate-card/certificate-card.component';
