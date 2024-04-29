@@ -26,13 +26,17 @@ import { RoleGuard } from 'src/shared/guards';
 import {
   CoachUserQuestionaryDto,
   DefaultUserQuestionaryDto,
+  DeleteCertificateDto,
+  UpdateCertificateDto,
   UpdateUserDto,
+  UploadCertificateDto,
 } from './dto';
 import { UsersQuery } from './query';
 import { UserRole } from '@app/types';
 import { RequestWithTokenPayload } from 'src/shared/requests';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { DocumentFile, ImageFile } from 'src/shared/const';
+import { FileRdo } from 'src/file-vault/rdo';
 
 @ApiTags('users')
 @Controller('users')
@@ -99,6 +103,8 @@ export class UserController {
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: CoachUserQuestionaryDto })
+  @Role(UserRole.Coach)
+  @UseGuards(RoleGuard)
   @Patch('/questionary-coach')
   @UseInterceptors(
     FilesInterceptor('certificates', undefined, {
@@ -122,11 +128,80 @@ export class UserController {
     description: 'User`s info has been successfully completed',
   })
   @ApiBody({ type: DefaultUserQuestionaryDto })
+  @Role(UserRole.Default)
+  @UseGuards(RoleGuard)
   @Patch('/questionary-user')
   public async completeUserInfo(
     @Body() dto: DefaultUserQuestionaryDto,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
     await this.userService.completeDefaultUserData(tokenPayload.sub, dto);
+  }
+
+  @ApiResponse({
+    type: FileRdo,
+    status: HttpStatus.OK,
+    description: 'Certificate has been successfully uploaded',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: UploadCertificateDto })
+  @Role(UserRole.Coach)
+  @UseGuards(RoleGuard)
+  @Patch('/certificates/upload')
+  @UseInterceptors(
+    FileInterceptor('certificate', {
+      fileFilter: FileFilter(DocumentFile.MimeTypes),
+    }),
+  )
+  public async uploadCertificate(
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+    @UploadedFile(ParseFile) certificate: Express.Multer.File,
+  ) {
+    return this.userService.uploadCertificate(tokenPayload.sub, certificate);
+  }
+
+  @ApiResponse({
+    type: FileRdo,
+    status: HttpStatus.OK,
+    description: 'Certificate has been successfully updated',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: UpdateCertificateDto })
+  @Role(UserRole.Coach)
+  @UseGuards(RoleGuard)
+  @Patch('/certificates/update')
+  @UseInterceptors(
+    FileInterceptor('newCertificate', {
+      fileFilter: FileFilter(DocumentFile.MimeTypes),
+    }),
+  )
+  public async updateCertificate(
+    @Body() dto: UpdateCertificateDto,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+    @UploadedFile(ParseFile) certificate: Express.Multer.File,
+  ) {
+    return this.userService.updateCertificate(
+      tokenPayload.sub,
+      dto.oldCertificateId,
+      certificate,
+    );
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Certificate has been successfully deleted',
+  })
+  @ApiBody({ type: DeleteCertificateDto })
+  @Role(UserRole.Coach)
+  @UseGuards(RoleGuard)
+  @Patch('/certificates/delete')
+  public async deleteCertificate(
+    @Body() dto: DeleteCertificateDto,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    await this.userService.deleteCertificate(
+      tokenPayload.sub,
+      dto.certificateId,
+    );
   }
 }
