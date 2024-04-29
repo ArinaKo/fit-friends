@@ -9437,8 +9437,16 @@ input:active + .custom-textarea__text {
   list-style: none;
 }
 
+.personal-account-coach__list .slick-list {
+  margin: 0 -20px;
+}
+
+.personal-account-coach__list .slick-track {
+  margin: 0;
+}
+
 .personal-account-coach__item {
-  margin-right: 20px;
+  margin: 0 20px;
 }
 
 .personal-account-coach__item:last-child {
