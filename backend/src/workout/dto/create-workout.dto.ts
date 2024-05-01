@@ -6,16 +6,7 @@ import {
   WorkoutType,
 } from '@app/types';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsBoolean,
-  IsEnum,
-  Length,
-  IsInt,
-  Min,
-  Max,
-  IsMongoId,
-} from 'class-validator';
+import { IsString, IsEnum, Length, IsInt, Min, Max } from 'class-validator';
 import {
   CaloriesValue,
   PriceValue,
@@ -68,6 +59,7 @@ export class CreateWorkoutDto {
     description: 'Workout price',
     example: '5500',
   })
+  @Transform(({ value }) => +value)
   @IsInt()
   @Min(PriceValue.Min, { message: DtoValidationMessage.price.value })
   public price: number;
@@ -76,6 +68,7 @@ export class CreateWorkoutDto {
     description: 'Workout`s calories loss',
     example: '2300',
   })
+  @Transform(({ value }) => +value)
   @IsInt()
   @Min(CaloriesValue.Min, { message: DtoValidationMessage.calories.value })
   @Max(CaloriesValue.Max, { message: DtoValidationMessage.calories.value })
@@ -104,17 +97,7 @@ export class CreateWorkoutDto {
   public userSex: WorkoutSexFor;
 
   @ApiProperty({
-    description: 'Workout video file id',
-    example: '65fb2c95e0f91e82a4d24b11',
+    description: 'Workout video file',
   })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsMongoId()
-  public video: string;
-
-  @ApiProperty({
-    description: 'Workout`s special offer flag',
-    example: 'true',
-  })
-  @IsBoolean()
-  public isSpecial: boolean;
+  public video: File;
 }

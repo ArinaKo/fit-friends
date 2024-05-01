@@ -8,5 +8,5 @@ export const DocumentFile = {
 };
 
 export const VideoFile = {
-  MimeTypes: ['video/mov', 'video/mp4', 'video/avi'],
+  MimeTypes: ['video/mov', 'video/mp4', 'video/avi', 'video/quicktime'],
 };

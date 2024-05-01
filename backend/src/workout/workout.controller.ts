@@ -8,17 +8,27 @@ import {
   Post,
   Query,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
 import { FullWorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
-import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { RequestWithTokenPayload } from 'src/shared/requests';
-import { MongoIdValidationPipe, Role } from '@app/core';
+import { FileFilter, MongoIdValidationPipe, ParseFile, Role } from '@app/core';
 import { RoleGuard, WorkoutOwnerGuard } from 'src/shared/guards';
 import { UserRole } from '@app/types';
 import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { VideoFile } from 'src/shared/const';
 
 @ApiTags('workouts')
 @Controller('workouts')
@@ -58,14 +68,21 @@ export class WorkoutController {
     description: 'The new workout has been successfully created',
   })
   @ApiBody({ type: CreateWorkoutDto })
+  @ApiConsumes('multipart/form-data')
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
   @Post('/')
+  @UseInterceptors(
+    FileInterceptor('video', {
+      fileFilter: FileFilter(VideoFile.MimeTypes),
+    }),
+  )
   public async create(
     @Body() dto: CreateWorkoutDto,
+    @UploadedFile(ParseFile) video: Express.Multer.File,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    return this.workoutService.createWorkout(dto, tokenPayload.sub);
+    return this.workoutService.createWorkout(dto, tokenPayload.sub, video);
   }
 
   @ApiResponse({

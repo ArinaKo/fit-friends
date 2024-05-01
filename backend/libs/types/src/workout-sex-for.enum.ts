@@ -1,5 +1,5 @@
 export enum WorkoutSexFor {
-  Male = 'для мужчин',
-  Female = 'для женщин',
-  All = 'для всех',
+  Male = 'мужчинам',
+  Female = 'женщинам',
+  All = 'всем',
 }

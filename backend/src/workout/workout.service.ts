@@ -36,16 +36,17 @@ export class WorkoutService {
   public async createWorkout(
     dto: CreateWorkoutDto,
     coachId: string,
+    video: Express.Multer.File,
   ): Promise<FullWorkoutRdo> {
-    if (!(await this.fileVaultService.isFileVideo(dto.video))) {
-      throw new BadRequestException(FileMessage.UploadedVideoType);
-    }
+    const videoId = (await this.fileVaultService.saveFile(video)).id;
 
     const newEntity = WorkoutEntity.fromObject(
       Object.assign(dto, {
         coachId,
         rating: DEFAULT_RATING,
         backgroundImage: `/mocks/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.png`,
+        isSpecial: false,
+        video: videoId,
       }),
     );
     const newWorkout = await this.workoutRepository.save(newEntity);
