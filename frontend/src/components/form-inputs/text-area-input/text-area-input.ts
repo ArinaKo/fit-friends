@@ -4,15 +4,23 @@ import {
   getUserFormAchievementsError,
   getUserFormDescription,
   getUserFormDescriptionError,
+  getWorkoutFormDescription,
+  getWorkoutFormDescriptionError,
+  isUserFormDataSending,
+  isWorkoutFormDataSending,
   setAchievements,
   setDescription,
+  setUserFormError,
+  setWorkoutDescription,
+  setWorkoutFormError,
 } from '../../../store';
 import { State } from '../../../types';
-import { validateAchievements, validateDescription } from '../../../utils';
+import { validateAchievements, validateUserDescription, validateWorkoutDescription } from '../../../utils';
 
 export enum TextAreaInputType {
   Achievements = 'achievements',
-  Description = 'description',
+  UserDescription = 'user-description',
+  WorkoutDescription = 'workout-description',
 }
 
 type TextAreaInputTypeDiff = {
@@ -20,6 +28,11 @@ type TextAreaInputTypeDiff = {
   valueSelector: (state: State) => string;
   errorSelector: (state: State) => string | undefined;
   validationFunction: (value: string) => string | undefined;
+  setError: (value: string | undefined) => {
+    payload: [string, string | undefined];
+    type: string;
+  };
+  formStatusSelector: (state: State) => boolean;
   setValue: ActionCreatorWithPayload<string>;
   fieldName: string;
   labelText?: string;
@@ -35,16 +48,33 @@ export const TextAreaInputTypeDiffs: TextAreaInputTypeDiffs = {
     valueSelector: getUserFormAchievements,
     errorSelector: getUserFormAchievementsError,
     validationFunction: validateAchievements,
+    setError: (value: string | undefined) =>
+      setUserFormError(['achievements', value]),
+    formStatusSelector: isUserFormDataSending,
     setValue: setAchievements,
     fieldName: 'achievements',
   },
-  [TextAreaInputType.Description]: {
+  [TextAreaInputType.UserDescription]: {
     styleClass: 'user-info-edit__textarea',
     valueSelector: getUserFormDescription,
     errorSelector: getUserFormDescriptionError,
-    validationFunction: validateDescription,
+    validationFunction: validateUserDescription,
+    setError: (value: string | undefined) =>
+      setUserFormError(['description', value]),
+    formStatusSelector: isUserFormDataSending,
     setValue: setDescription,
     fieldName: 'description',
     labelText: 'Описание',
+  },
+  [TextAreaInputType.WorkoutDescription]: {
+    styleClass: 'create-training__textarea',
+    valueSelector: getWorkoutFormDescription,
+    errorSelector: getWorkoutFormDescriptionError,
+    validationFunction: validateWorkoutDescription,
+    setError: (value: string | undefined) =>
+      setWorkoutFormError(['description', value]),
+    formStatusSelector: isWorkoutFormDataSending,
+    setValue: setWorkoutDescription,
+    fieldName: 'description',
   },
 };

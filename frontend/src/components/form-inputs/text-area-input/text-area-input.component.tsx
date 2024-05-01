@@ -1,8 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { isUserFormDataSending, setUserFormError } from '../../../store';
 import { ChangeEvent, useEffect } from 'react';
-import cn from 'classnames';
 import { TextAreaInputType, TextAreaInputTypeDiffs } from './text-area-input';
+import cn from 'classnames';
 
 type TextAreaInputProps = {
   type: TextAreaInputType;
@@ -20,6 +19,8 @@ function TextAreaInput({
     valueSelector,
     errorSelector,
     validationFunction,
+    setError,
+    formStatusSelector,
     setValue,
     fieldName,
     labelText,
@@ -27,7 +28,7 @@ function TextAreaInput({
   const dispatch = useAppDispatch();
   const value = useAppSelector(valueSelector);
   const valueError = useAppSelector(errorSelector);
-  const isDisabled = useAppSelector(isUserFormDataSending);
+  const isDisabled = useAppSelector(formStatusSelector);
 
   useEffect(() => {
     if (originalValue && isActive) {
@@ -54,12 +55,7 @@ function TextAreaInput({
           onInput={({ target }: ChangeEvent<HTMLTextAreaElement>) => {
             dispatch(setValue(target.value));
             if (validationFunction(target.value) !== valueError) {
-              dispatch(
-                setUserFormError([
-                  fieldName,
-                  validationFunction(target.value),
-                ]),
-              );
+              dispatch(setError(validationFunction(target.value)));
             }
           }}
         />
