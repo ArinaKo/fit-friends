@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { AccountPath, AppRoute, UsersPath, WorkoutsPath } from '../../const';
+import { AppRoute } from '../../const';
 import { EntryLayout, HistoryRouter, Layout, PrivateRoute } from '../index';
 import { HelmetProvider } from 'react-helmet-async';
 import browserHistory from '../../browser-history';
@@ -51,47 +51,37 @@ function App(): JSX.Element {
               path={AppRoute.Main}
               element={<div>Not implemented - main page</div>}
             />
-            <Route path={AppRoute.Account}>
-              <Route index element={<AccountPage />} />
-              <Route
-                path={AccountPath.Friends}
-                element={<div>Not implemented - friends page</div>}
-              />
-              <Route
-                path={AccountPath.Customer.Balance}
-                element={<div>Not implemented - customer balance page</div>}
-              />
-              <Route
-                path={AccountPath.Coach.Workouts}
-                element={<div>Not implemented - coach workouts page</div>}
-              />
-              <Route
-                path={AccountPath.Coach.Orders}
-                element={<div>Not implemented - coach orders page</div>}
-              />
-              <Route
-                path={AccountPath.Coach.CreateWorkout}
-                element={<div>Not implemented - create workout page</div>}
-              />
-            </Route>
-            <Route path={AppRoute.Users}>
-              <Route index element={<div>Not implemented</div>} />
-              <Route
-                path={UsersPath.User}
-                element={<div>Not implemented</div>}
-              />
-            </Route>
-
-            <Route path={AppRoute.Workouts}>
-              <Route
-                index
-                element={<div>Not implemented - workouts list page</div>}
-              />
-              <Route
-                path={WorkoutsPath.Workout}
-                element={<div>Not implemented - workout page</div>}
-              />
-            </Route>
+            <Route path={AppRoute.Account} element={<AccountPage />} />
+            <Route
+              path={AppRoute.Friends}
+              element={<div>Not implemented - friends page</div>}
+            />
+            <Route
+              path={AppRoute.Balance}
+              element={<div>Not implemented - customer balance page</div>}
+            />
+            <Route
+              path={AppRoute.CoachWorkouts}
+              element={<div>Not implemented - coach workouts page</div>}
+            />
+            <Route
+              path={AppRoute.Orders}
+              element={<div>Not implemented - coach orders page</div>}
+            />
+            <Route
+              path={AppRoute.CreateWorkout}
+              element={<div>Not implemented - create workout page</div>}
+            />
+            <Route path={AppRoute.Users} element={<div>Not implemented</div>} />
+            <Route path={AppRoute.User} element={<div>Not implemented</div>} />
+            <Route
+              path={AppRoute.Workouts}
+              element={<div>Not implemented - workouts list page</div>}
+            />
+            <Route
+              path={AppRoute.Workout}
+              element={<div>Not implemented - workout page</div>}
+            />
           </Route>
           <Route path="*" element={<div>Not implemented - 404 page</div>} />
         </Routes>

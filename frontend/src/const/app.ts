@@ -16,28 +16,15 @@ export const AppRoute = {
   Questionary: '/questionary',
   Main: '/main',
   Account: '/account',
+  Friends: '/account/friends',
+  Balance: '/account/balance',
+  Orders: '/account/orders',
+  CoachWorkouts: '/account/my-workouts',
+  CreateWorkout: '/account/create-workout',
   Users: '/users',
+  User: '/users/:userId',
   Workouts: '/workouts',
-} as const;
-
-export const AccountPath = {
-  Friends: 'friends',
-  Customer: {
-    Balance: 'balance',
-  },
-  Coach: {
-    Orders: 'orders',
-    Workouts: 'workouts',
-    CreateWorkout: 'create-workout',
-  },
-} as const;
-
-export const WorkoutsPath = {
-  Workout: ':workoutId',
-} as const;
-
-export const UsersPath = {
-  User: ':userId',
+  Workout: '/workouts/:workoutId',
 } as const;
 
 export enum AuthorizationStatus {

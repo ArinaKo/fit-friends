@@ -6,11 +6,11 @@ import {
   NewFeatureFiller,
   UIBlocker,
 } from '../../components';
-import { AccountPath } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { isUserCoach, isUserDataReady, isUserDataUpdating } from '../../store';
 import { useEffect } from 'react';
 import { getAuthUserAction } from '../../store/api-actions';
+import { AppRoute } from '../../const';
 
 function AccountPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ function AccountPage(): JSX.Element {
           {isCoach ? (
             <div className="personal-account-coach__navigation">
               <Link
-                to={AccountPath.Coach.Workouts}
+                    to={AppRoute.CoachWorkouts}
                 className="thumbnail-link thumbnail-link--theme-light"
               >
                 <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
@@ -48,7 +48,7 @@ function AccountPage(): JSX.Element {
                 <span className="thumbnail-link__text">Мои тренировки</span>
               </Link>
               <Link
-                to={AccountPath.Coach.CreateWorkout}
+                    to={AppRoute.CreateWorkout}
                 className="thumbnail-link thumbnail-link--theme-light"
               >
                 <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
@@ -56,10 +56,12 @@ function AccountPage(): JSX.Element {
                     <use xlinkHref="#icon-add" />
                   </svg>
                 </div>
-                <span className="thumbnail-link__text">Создать тренировку</span>
+                    <span className="thumbnail-link__text">
+                      Создать тренировку
+                    </span>
               </Link>
               <Link
-                to={AccountPath.Friends}
+                    to={AppRoute.Friends}
                 className="thumbnail-link thumbnail-link--theme-light"
               >
                 <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
@@ -70,7 +72,7 @@ function AccountPage(): JSX.Element {
                 <span className="thumbnail-link__text">Мои друзья</span>
               </Link>
               <Link
-                to={AccountPath.Coach.Orders}
+                    to={AppRoute.Orders}
                 className="thumbnail-link thumbnail-link--theme-light"
               >
                 <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
@@ -99,7 +101,7 @@ function AccountPage(): JSX.Element {
             ) : (
               <>
                 <Link
-                  to={AccountPath.Friends}
+                      to={AppRoute.Friends}
                   className="thumbnail-link thumbnail-link--theme-light"
                 >
                   <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
@@ -110,7 +112,7 @@ function AccountPage(): JSX.Element {
                   <span className="thumbnail-link__text">Мои друзья</span>
                 </Link>
                 <Link
-                  to={AccountPath.Customer.Balance}
+                      to={AppRoute.Balance}
                   className="thumbnail-link thumbnail-link--theme-light"
                 >
                   <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
