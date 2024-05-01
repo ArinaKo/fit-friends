@@ -1,5 +1,5 @@
 import { UserLevel, UserRole, UserSex } from './user';
-import { WorkoutDuration } from './workout';
+import { WorkoutDuration, WorkoutSexFor } from './workout';
 
 export const EmptyUserForm = {
   Email: '',
@@ -34,5 +34,28 @@ export const EmptyUserForm = {
     certificatesAmount: undefined,
     achievements: undefined,
     description: undefined,
+  },
+};
+
+export const EmptyWorkoutForm = {
+  Title: '',
+  Type: undefined,
+  Duration: undefined,
+  Level: undefined,
+  Calories: '',
+  Price: '',
+  UserSex: WorkoutSexFor.Female,
+  Description: '',
+  HasVideo: false,
+  IsSpecial: false,
+  ValidationErrors: {
+    title: undefined,
+    type: undefined,
+    duration: undefined,
+    level: undefined,
+    calories: undefined,
+    price: undefined,
+    description: undefined,
+    video: undefined,
   },
 };

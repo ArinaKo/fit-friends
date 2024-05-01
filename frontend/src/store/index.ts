@@ -4,4 +4,6 @@ export * from './user-form/user-form';
 export * from './user-form/selectors';
 export * from './user-data/user-data';
 export * from './user-data/selectors';
+export * from './workout-form/workout-form';
+export * from './workout-form/selectors';
 export * from './main';

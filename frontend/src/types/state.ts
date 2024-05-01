@@ -71,3 +71,27 @@ export type UserData = {
   isDataReady: boolean;
   isDataUpdating: boolean;
 };
+
+export type WorkoutForm = {
+  title: string;
+  type: string | undefined;
+  duration: string | undefined;
+  level: string | undefined;
+  calories: string;
+  price: string;
+  userSex: string;
+  description: string;
+  hasVideo: boolean;
+  isSpecial: boolean;
+  validationErrors: {
+    title: string | undefined;
+    type: string | undefined;
+    duration: string | undefined;
+    level: string | undefined;
+    calories: string | undefined;
+    price: string | undefined;
+    description: string | undefined;
+    video: string | undefined;
+  };
+  isSending: boolean;
+};

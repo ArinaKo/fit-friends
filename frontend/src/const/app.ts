@@ -50,4 +50,5 @@ export enum NameSpace {
   AppData = 'APP_DATA',
   UserForm = 'USER_FORM',
   UserData = 'USER_DATA',
+  WorkoutForm = 'WORKOUT_FORM',
 }
