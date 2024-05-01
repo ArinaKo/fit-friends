@@ -5,7 +5,6 @@ import {
   NameSpace,
   REQUIRED_INPUT_MESSAGE,
   UserRole,
-  WorkoutDuration,
   WorkoutType,
 } from '../../const';
 import {
@@ -83,7 +82,7 @@ export const userForm = createSlice({
         ? state.workoutTypes.filter((item) => item !== type)
         : [...state.workoutTypes, type];
     },
-    setTimeForWorkout: (state, action: PayloadAction<WorkoutDuration>) => {
+    setTimeForWorkout: (state, action: PayloadAction<string>) => {
       state.timeForWorkout = action.payload;
     },
     setCaloriesToLose: (state, action: PayloadAction<string>) => {

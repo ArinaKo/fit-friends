@@ -7,20 +7,22 @@ import {
 } from '../../store';
 import { AppRoute } from '../../const';
 import { registerAction } from '../../store/api-actions';
-import { redirectToRoute } from '../../store/actions';
 import {
   AvatarInput,
   DateOfBirthInput,
   SelectInput,
   RoleInput,
-  TextInput,
-  TextInputType,
-  UserSexInput,
+  CustomInput,
+  CustomInputType,
   SelectInputType,
+  RadioInput,
+  RadioInputType,
 } from '../form-inputs';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterForm(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const isSending = useAppSelector(isUserFormDataSending);
   const isFormHaveError = useAppSelector(isUserFormHaveErrors);
   const [isAgree, setAgreement] = useState(true);
@@ -30,9 +32,9 @@ function RegisterForm(): JSX.Element {
     evt.preventDefault();
     dispatch(setRegisterRequiredFields());
     if (!isFormHaveError && file) {
-      dispatch(registerAction({ avatar: file})).then((res) => {
+      dispatch(registerAction({ avatar: file })).then((res) => {
         if (res.meta.requestStatus === 'fulfilled') {
-          dispatch(redirectToRoute(AppRoute.Questionary));
+          navigate(AppRoute.Questionary);
         }
       });
     }
@@ -51,12 +53,19 @@ function RegisterForm(): JSX.Element {
           </div>
         </div>
         <div className="sign-up__data">
-          <TextInput type={TextInputType.Name} />
-          <TextInput type={TextInputType.Email} />
+          <CustomInput type={CustomInputType.Name} />
+          <CustomInput type={CustomInputType.Email} />
           <DateOfBirthInput />
-          <SelectInput type={SelectInputType.Location} label='Ваша локация' styleClass='sing-up__input' />
-          <TextInput type={TextInputType.Password} />
-          <UserSexInput />
+          <SelectInput
+            type={SelectInputType.Location}
+            label="Ваша локация"
+            styleClass="sing-up__input"
+          />
+          <CustomInput type={CustomInputType.Password} />
+          <div className="sign-up__radio">
+            <span className="sign-up__label">Пол</span>
+            <RadioInput type={RadioInputType.Sex} />
+          </div>
         </div>
         <RoleInput />
         <div className="sign-up__checkbox">

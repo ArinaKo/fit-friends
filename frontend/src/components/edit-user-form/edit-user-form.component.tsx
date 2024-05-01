@@ -20,8 +20,8 @@ import {
   StatusInputMode,
   TextAreaInput,
   TextAreaInputType,
-  TextInput,
-  TextInputType,
+  CustomInput,
+  CustomInputType,
   WorkoutTypesInput,
 } from '../form-inputs';
 import { updateUserAction } from '../../store/api-actions';
@@ -85,14 +85,14 @@ function EditUserForm(): JSX.Element {
         </button>
         <div className="user-info-edit__section">
           <h2 className="user-info-edit__title">Обо мне</h2>
-          <TextInput
-            type={TextInputType.Name}
+          <CustomInput
+            type={CustomInputType.Name}
             styleClass={inputStyleClass}
             originalValue={name}
             isActive={isEdited}
           />
           <TextAreaInput
-            type={TextAreaInputType.Description}
+            type={TextAreaInputType.UserDescription}
             originalValue={description}
             isActive={isEdited}
           />

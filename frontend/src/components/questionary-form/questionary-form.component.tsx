@@ -12,17 +12,19 @@ import {
   questionaryCustomerAction,
 } from '../../store/api-actions';
 import {
-  CaloriesInput,
-  CaloriesInputType,
+  CustomInput,
+  CustomInputType,
   CertificatesInput,
   StatusInput,
   StatusInputMode,
   TextAreaInput,
   TextAreaInputType,
-  TimeForWorkoutInput,
-  UserLevelInput,
   WorkoutTypesInput,
+  RadioInput,
+  RadioInputType,
 } from '../form-inputs';
+
+const styleClass = 'questionnaire-user';
 
 function QuestionaryForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -56,7 +58,7 @@ function QuestionaryForm(): JSX.Element {
             <span className="questionnaire-user__legend">
               Ваша специализация (тип) тренировок
             </span>
-            <WorkoutTypesInput styleClass='questionnaire-user' />
+            <WorkoutTypesInput styleClass={styleClass} />
           </div>
           {isCoach ? (
             ''
@@ -65,12 +67,15 @@ function QuestionaryForm(): JSX.Element {
               <span className="questionnaire-user__legend">
                 Сколько времени вы готовы уделять на тренировку в день
               </span>
-              <TimeForWorkoutInput />
+              <RadioInput
+                type={RadioInputType.TimeForWorkout}
+                styleClass={styleClass}
+              />
             </div>
           )}
           <div className="questionnaire-user__block">
             <span className="questionnaire-user__legend">Ваш уровень</span>
-            <UserLevelInput />
+            <RadioInput type={RadioInputType.Level} styleClass={styleClass} />
           </div>
           {isCoach ? (
             <>
@@ -94,13 +99,19 @@ function QuestionaryForm(): JSX.Element {
                 <span className="questionnaire-user__legend">
                   Сколько калорий хотите сбросить
                 </span>
-                <CaloriesInput type={CaloriesInputType.ToLose} />
+                <CustomInput
+                  type={CustomInputType.CaloriesToLose}
+                  styleClass={styleClass}
+                />
               </div>
               <div className="questionnaire-user__calories-waste">
                 <span className="questionnaire-user__legend">
                   Сколько калорий тратить в день
                 </span>
-                <CaloriesInput type={CaloriesInputType.PerDay} />
+                <CustomInput
+                  type={CustomInputType.CaloriesPerDay}
+                  styleClass={styleClass}
+                />
               </div>
             </div>
           )}

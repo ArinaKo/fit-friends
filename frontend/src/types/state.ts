@@ -5,7 +5,6 @@ import {
   UserLevel,
   UserRole,
   UserSex,
-  WorkoutDuration,
   WorkoutType,
 } from '../const';
 import { FileData } from './file-data.js';
@@ -31,7 +30,7 @@ export type UserForm = {
   level: string;
   status: boolean;
   workoutTypes: WorkoutType[];
-  timeForWorkout: WorkoutDuration;
+  timeForWorkout: string;
   caloriesToLose: string;
   caloriesPerDay: string;
   certificatesAmount: number;

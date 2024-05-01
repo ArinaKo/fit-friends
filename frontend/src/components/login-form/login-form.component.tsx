@@ -6,7 +6,7 @@ import {
   setLoginRequiredFields,
 } from '../../store';
 import { loginAction } from '../../store/api-actions';
-import { TextInput, TextInputType } from '../form-inputs';
+import { CustomInput, CustomInputType } from '../form-inputs';
 
 const inputStyleClass = 'sign-in';
 
@@ -26,8 +26,8 @@ function LoginForm(): JSX.Element {
   return (
     <form method="post" onSubmit={handleFormSubmit}>
       <div className="sign-in">
-        <TextInput type={TextInputType.Email} styleClass={inputStyleClass} />
-        <TextInput type={TextInputType.Password} styleClass={inputStyleClass} />
+        <CustomInput type={CustomInputType.Email} styleClass={inputStyleClass} />
+        <CustomInput type={CustomInputType.Password} styleClass={inputStyleClass} />
         <button
           className="btn sign-in__button"
           type="submit"
