@@ -4,8 +4,11 @@ import {
   CoachAchievementsLength,
   NameLength,
   PasswordLength,
+  PriceValue,
   REQUIRED_INPUT_MESSAGE,
   UserDescriptionLength,
+  WorkoutDescriptionLength,
+  WorkoutTitleLength,
 } from '../const';
 
 type ValidationData = {
@@ -15,7 +18,10 @@ type ValidationData = {
   dateOfBirth: string;
   calories: string;
   achievements: string;
-  description: string;
+  userDescription: string;
+  workoutTitle: string;
+  workoutPrice: string;
+  workoutDescription: string;
 };
 
 const ValidationSchema = {
@@ -73,7 +79,7 @@ const ValidationSchema = {
     )
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
-  description: Joi.string()
+  userDescription: Joi.string()
     .min(UserDescriptionLength.Min)
     .message(
       `Рекомендуемая длина ${UserDescriptionLength.Min} - ${UserDescriptionLength.Max} символов`,
@@ -81,6 +87,35 @@ const ValidationSchema = {
     .max(UserDescriptionLength.Max)
     .message(
       `Рекомендуемая длина ${UserDescriptionLength.Min} - ${UserDescriptionLength.Max} символов`,
+    )
+    .required()
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
+  workoutTitle: Joi.string()
+    .min(WorkoutTitleLength.Min)
+    .message(
+      `Рекомендуемая длина ${WorkoutTitleLength.Min} - ${WorkoutTitleLength.Max} символов`,
+    )
+    .max(WorkoutTitleLength.Max)
+    .message(
+      `Рекомендуемая длина ${WorkoutTitleLength.Min} - ${WorkoutTitleLength.Max} символов`,
+    )
+    .required()
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
+  workoutPrice: Joi.number()
+    .integer()
+    .message('Введите целое число')
+    .min(PriceValue.Min)
+    .message(`Минимальная цена: ${PriceValue.Min}`)
+    .required()
+    .messages({ 'number.base': REQUIRED_INPUT_MESSAGE }),
+  workoutDescription: Joi.string()
+    .min(WorkoutDescriptionLength.Min)
+    .message(
+      `Рекомендуемая длина ${WorkoutDescriptionLength.Min} - ${WorkoutDescriptionLength.Max} символов`,
+    )
+    .max(WorkoutDescriptionLength.Max)
+    .message(
+      `Рекомендуемая длина ${WorkoutDescriptionLength.Min} - ${WorkoutDescriptionLength.Max} символов`,
     )
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
@@ -109,5 +144,14 @@ export const validateCalories = (value: unknown) =>
 export const validateAchievements = (value: unknown) =>
   validateProperty('achievements', value);
 
-export const validateDescription = (value: unknown) =>
-  validateProperty('description', value);
+export const validateUserDescription = (value: unknown) =>
+  validateProperty('userDescription', value);
+
+export const validateWorkoutTitle = (value: unknown) =>
+  validateProperty('workoutTitle', value);
+
+export const validateWorkoutPrice = (value: unknown) =>
+  validateProperty('workoutPrice', value);
+
+export const validateWorkoutDescription = (value: unknown) =>
+  validateProperty('workoutDescription', value);
