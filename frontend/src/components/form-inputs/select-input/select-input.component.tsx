@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { isUserFormDataSending, setUserFormError } from '../../../store';
 import { useEffect, useState } from 'react';
 import { SelectInputType, SelectInputTypeDiffs } from './select-input';
 import cn from 'classnames';
@@ -25,13 +24,14 @@ function SelectInput({
     setValue,
     optionsArray,
     errorSelector,
-    errorFieldName,
+    setError,
+    formStatusSelector,
     labelText,
   } = SelectInputTypeDiffs[type];
   const dispatch = useAppDispatch();
   const value = useAppSelector(valueSelector);
   const valueError = useAppSelector(errorSelector);
-  const isDisabled = useAppSelector(isUserFormDataSending);
+  const isDisabled = useAppSelector(formStatusSelector);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -45,7 +45,9 @@ function SelectInput({
     const text = !isActive ? originalValue : value;
     return text ? (
       <div className="custom-select__placeholder">
-        {type === SelectInputType.Location ? `ст. м. ${lodash.capitalize(text)}` : lodash.capitalize(text)}
+        {type === SelectInputType.Location
+          ? `ст. м. ${lodash.capitalize(text)}`
+          : lodash.capitalize(text)}
       </div>
     ) : undefined;
   };
@@ -82,7 +84,7 @@ function SelectInput({
             key={`option-${option}`}
             onClick={() => {
               dispatch(setValue(option));
-              dispatch(setUserFormError([errorFieldName, undefined]));
+              dispatch(setError(undefined));
               setIsOpen(false);
             }}
             className="custom-select__item"
