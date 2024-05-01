@@ -17,6 +17,7 @@ import {
   getCustomerQuestionaryData,
   getRegisterData,
   getUpdateUserData,
+  getCreateWorkoutData
 } from '../utils';
 
 type asyncThunkConfig = {
@@ -154,4 +155,18 @@ export const uploadCertificateAction = createAsyncThunk<
     fileData,
   );
   return data;
+});
+
+export const createWorkoutAction = createAsyncThunk<
+  void,
+  Blob,
+  asyncThunkConfig
+>('workouts/create', async (file, { getState, dispatch, extra: api }) => {
+  const formData = getCreateWorkoutData(getState(), file);
+  await api.post(APIRoute.CreateWorkout, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  dispatch(redirectToRoute(AppRoute.CoachWorkouts));
 });
