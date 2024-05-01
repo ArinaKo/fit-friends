@@ -12,3 +12,4 @@ export { default as NewFeatureFiller } from './new-feature-filler/new-feature-fi
 export { default as CaloriesPlan } from './calories-plan/calories-plan.component';
 export { default as CoachCertificates } from './coach-certificates/coach-certificates.component';
 export { default as CertificateCard } from './certificate-card/certificate-card.component';
+export { default as CreateWorkoutForm } from './create-workout-form/create-workout-form.component';
