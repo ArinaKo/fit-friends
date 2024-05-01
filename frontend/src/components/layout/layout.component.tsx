@@ -189,13 +189,7 @@ function Layout(): JSX.Element {
         </div>
       </header>
       <main>
-        <section className="inner-page">
-          <div className="container">
-            <div className="inner-page__wrapper">
-              <Outlet />
-            </div>
-          </div>
-        </section>
+        <Outlet />
       </main>
     </div>
   );
