@@ -1,36 +1,38 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { isUserFormDataSending, setUserFormError } from '../../../store';
 import { ChangeEvent, useEffect } from 'react';
-import { validateName } from '../../../utils';
+import { CustomInputType, CustomInputTypeDiffs } from './custom-input';
 import cn from 'classnames';
-import { TextInputType, TextInputTypeDiffs } from './text-input';
 
-type TextInputProps = {
-  type: TextInputType;
+type CustomInputProps = {
+  type: CustomInputType;
   styleClass?: string;
   originalValue?: string;
   isActive?: boolean;
 };
 
-function TextInput({
+function CustomInput({
   type,
   styleClass,
   originalValue,
   isActive = true,
-}: TextInputProps): JSX.Element {
+}: CustomInputProps): JSX.Element {
   const {
     valueSelector,
     errorSelector,
     validationFunction,
+    formStatusSelector,
+    setError,
     setValue,
     fieldName,
     fieldType,
-    labelText
-  } = TextInputTypeDiffs[type];
+    labelText,
+    styleMode,
+    inputSymbol,
+  } = CustomInputTypeDiffs[type];
   const dispatch = useAppDispatch();
   const value = useAppSelector(valueSelector);
   const valueError = useAppSelector(errorSelector);
-  const isDisabled = useAppSelector(isUserFormDataSending);
+  const isDisabled = useAppSelector(formStatusSelector);
 
   useEffect(() => {
     if (originalValue && isActive) {
@@ -44,28 +46,30 @@ function TextInput({
         'custom-input--error': valueError,
         'custom-input--readonly': !isActive,
         [`${styleClass ?? ''}__input`]: styleClass,
+        [`${styleMode ?? ''}`]: styleMode,
       })}
     >
       <label>
-        <span className="custom-input__label">{labelText}</span>
+        {labelText ? (
+          <span className="custom-input__label">{labelText}</span>
+        ) : undefined}
         <span className="custom-input__wrapper">
           <input
             type={fieldType ? fieldType : 'text'}
             name={fieldName}
+            autoComplete="off"
             value={isActive ? value : originalValue}
             disabled={isDisabled || !isActive}
             onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
               dispatch(setValue(target.value));
-              if (validateName(target.value) !== valueError) {
-                dispatch(
-                  setUserFormError([
-                    fieldName,
-                    validationFunction(target.value),
-                  ]),
-                );
+              if (validationFunction(target.value) !== valueError) {
+                dispatch(setError(validationFunction(target.value)));
               }
             }}
           />
+          {inputSymbol ? (
+            <span className="custom-input__text">{inputSymbol}</span>
+          ) : undefined}
         </span>
         {valueError && (
           <span className="custom-input__error">{valueError}</span>
@@ -75,4 +79,4 @@ function TextInput({
   );
 }
 
-export default TextInput;
+export default CustomInput;
