@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import browserHistory from '../../browser-history';
 import {
   AccountPage,
+  CoachWorkoutsPage,
   CreateWorkoutPage,
   IntroPage,
   LoginPage,
@@ -63,7 +64,7 @@ function App(): JSX.Element {
             />
             <Route
               path={AppRoute.CoachWorkouts}
-              element={<div>Not implemented - coach workouts page</div>}
+              element={<CoachWorkoutsPage />}
             />
             <Route
               path={AppRoute.Orders}
