@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { isUserCoach, isUserDataReady, isUserDataUpdating } from '../../store';
 import { useEffect } from 'react';
 import { getAuthUserAction } from '../../store/api-actions';
-import { AppRoute } from '../../const';
+import { CoachLinks, CustomerLinks } from './account-page';
 
 function AccountPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -28,6 +28,24 @@ function AccountPage(): JSX.Element {
     return <UIBlocker />;
   }
 
+  const getAccountLinks = () => {
+    const list = isCoach ? CoachLinks : CustomerLinks;
+    return list.map((link) => (
+      <Link
+        key={`link-${link.Icon}`}
+        to={link.Route}
+        className="thumbnail-link thumbnail-link--theme-light"
+      >
+        <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
+          <svg width={30} height={26} aria-hidden="true">
+            <use xlinkHref={link.Icon} />
+          </svg>
+        </div>
+        <span className="thumbnail-link__text">{link.Label}</span>
+      </Link>
+    ));
+  };
+
   return (
     <section className="inner-page">
       <div className="container">
@@ -38,52 +56,7 @@ function AccountPage(): JSX.Element {
             <div className={`personal-account-${isCoach ? 'coach' : 'user'}`}>
               {isCoach ? (
                 <div className="personal-account-coach__navigation">
-                  <Link
-                    to={AppRoute.CoachWorkouts}
-                    className="thumbnail-link thumbnail-link--theme-light"
-                  >
-                    <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                      <svg width={30} height={26} aria-hidden="true">
-                        <use xlinkHref="#icon-flash" />
-                      </svg>
-                    </div>
-                    <span className="thumbnail-link__text">Мои тренировки</span>
-                  </Link>
-                  <Link
-                    to={AppRoute.CreateWorkout}
-                    className="thumbnail-link thumbnail-link--theme-light"
-                  >
-                    <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                      <svg width={30} height={26} aria-hidden="true">
-                        <use xlinkHref="#icon-add" />
-                      </svg>
-                    </div>
-                    <span className="thumbnail-link__text">
-                      Создать тренировку
-                    </span>
-                  </Link>
-                  <Link
-                    to={AppRoute.Friends}
-                    className="thumbnail-link thumbnail-link--theme-light"
-                  >
-                    <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                      <svg width={30} height={26} aria-hidden="true">
-                        <use xlinkHref="#icon-friends" />
-                      </svg>
-                    </div>
-                    <span className="thumbnail-link__text">Мои друзья</span>
-                  </Link>
-                  <Link
-                    to={AppRoute.Orders}
-                    className="thumbnail-link thumbnail-link--theme-light"
-                  >
-                    <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                      <svg width={30} height={26} aria-hidden="true">
-                        <use xlinkHref="#icon-bag" />
-                      </svg>
-                    </div>
-                    <span className="thumbnail-link__text">Мои заказы</span>
-                  </Link>
+                  {getAccountLinks()}
                   <div className="personal-account-coach__calendar">
                     <NewFeatureFiller />
                   </div>
@@ -102,28 +75,7 @@ function AccountPage(): JSX.Element {
                   <CoachCertificates />
                 ) : (
                   <>
-                    <Link
-                      to={AppRoute.Friends}
-                      className="thumbnail-link thumbnail-link--theme-light"
-                    >
-                      <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                        <svg width={30} height={26} aria-hidden="true">
-                          <use xlinkHref="#icon-friends" />
-                        </svg>
-                      </div>
-                      <span className="thumbnail-link__text">Мои друзья</span>
-                    </Link>
-                    <Link
-                      to={AppRoute.Balance}
-                      className="thumbnail-link thumbnail-link--theme-light"
-                    >
-                      <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                        <svg width={30} height={26} aria-hidden="true">
-                          <use xlinkHref="#icon-shopping-cart" />
-                        </svg>
-                      </div>
-                      <span className="thumbnail-link__text">Мои покупки</span>
-                    </Link>
+                    {getAccountLinks()}
                     <NewFeatureFiller />
                   </>
                 )}
