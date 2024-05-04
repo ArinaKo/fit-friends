@@ -9,6 +9,7 @@ import {
   CreateWorkoutPage,
   IntroPage,
   LoginPage,
+  OrdersPage,
   QuestionaryPage,
   RegisterPage,
 } from '../../pages';
@@ -68,7 +69,7 @@ function App(): JSX.Element {
             />
             <Route
               path={AppRoute.Orders}
-              element={<div>Not implemented - coach orders page</div>}
+              element={<OrdersPage />}
             />
             <Route
               path={AppRoute.CreateWorkout}
