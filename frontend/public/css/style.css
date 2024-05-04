@@ -9836,7 +9836,7 @@ input:active + .custom-textarea__text {
   max-width: 256px;
 }
 
-.show-more__button--to-top {
+.show-more__button--not-active {
   display: none;
 }
 

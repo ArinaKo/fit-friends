@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { ListItemsPortion } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getWorkoutsFilterDuration,
@@ -15,6 +14,7 @@ import {
 } from '../../store';
 import { CatalogButtons, UIBlocker, WorkoutCard } from '../index';
 import { getCoachWorkoutsAction } from '../../store/api-actions';
+import { CatalogButtonsType } from '../catalog-buttons/catalog-buttons';
 
 function WorkoutsList(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -47,11 +47,6 @@ function WorkoutsList(): JSX.Element {
     return <UIBlocker />;
   }
 
-  function handleShoeMoreButtonClick(evt: React.MouseEvent) {
-    evt.preventDefault();
-    dispatch(increaseWorkoutsLimit(ListItemsPortion.CoachWorkouts));
-  }
-
   return (
     <>
       <ul className="my-trainings__list">
@@ -62,8 +57,8 @@ function WorkoutsList(): JSX.Element {
         ))}
       </ul>
       <CatalogButtons
+        type={CatalogButtonsType.Workouts}
         styleClass="my-trainings__show-more"
-        onShowMoreButtonClick={handleShoeMoreButtonClick}
       />
     </>
   );
