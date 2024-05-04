@@ -106,11 +106,6 @@ export type WorkoutForm = {
 
 export type WorkoutsList = {
   workouts: Workout[];
-  limit: number;
-  totalPages: number;
-  totalItems: number;
-  currentPage: number;
-  itemsPerPage: number;
   price: {
     min: number;
     max: number;

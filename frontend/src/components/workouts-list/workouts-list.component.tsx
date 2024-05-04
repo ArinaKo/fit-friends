@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
+  getCatalogPage,
   getWorkoutsFilterDuration,
   getWorkoutsFilterMaxCalories,
   getWorkoutsFilterMaxPrice,
@@ -9,17 +10,15 @@ import {
   getWorkoutsFilterMinPrice,
   getWorkoutsFilterMinRating,
   getWorkoutsList,
-  getWorkoutsListPage,
   isWorkoutsListLoading,
 } from '../../store';
 import { CatalogButtons, UIBlocker, WorkoutCard } from '../index';
 import { getCoachWorkoutsAction } from '../../store/api-actions';
-import { CatalogButtonsType } from '../catalog-buttons/catalog-buttons';
 
 function WorkoutsList(): JSX.Element {
   const dispatch = useAppDispatch();
   const workouts = useAppSelector(getWorkoutsList);
-  const page = useAppSelector(getWorkoutsListPage);
+  const page = useAppSelector(getCatalogPage);
   const minPriceFilter = useAppSelector(getWorkoutsFilterMinPrice);
   const maxPriceFilter = useAppSelector(getWorkoutsFilterMaxPrice);
   const minCaloriesFilter = useAppSelector(getWorkoutsFilterMinCalories);
@@ -56,10 +55,7 @@ function WorkoutsList(): JSX.Element {
           </li>
         ))}
       </ul>
-      <CatalogButtons
-        type={CatalogButtonsType.Workouts}
-        styleClass="my-trainings__show-more"
-      />
+      <CatalogButtons styleClass="my-trainings__show-more" />
     </>
   );
 }

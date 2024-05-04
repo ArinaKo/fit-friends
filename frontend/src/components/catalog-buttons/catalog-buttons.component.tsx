@@ -1,18 +1,19 @@
 import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CatalogButtonsType, CatalogButtonsTypeDiffs } from './catalog-buttons';
+import {
+  increaseCatalogPage,
+  isAllCatalogItems,
+  isCatalogScrollActive,
+} from '../../store';
 
 export interface CatalogButtonsProps {
-  type: CatalogButtonsType;
   styleClass: string;
 }
 
-function CatalogButtons({ type, styleClass }: CatalogButtonsProps) {
-  const { increasePageAction, isAllSelector, isScrollActiveSelector } =
-    CatalogButtonsTypeDiffs[type];
+function CatalogButtons({ styleClass }: CatalogButtonsProps) {
   const dispatch = useAppDispatch();
-  const isAll = useAppSelector(isAllSelector);
-  const isScrollActive = useAppSelector(isScrollActiveSelector);
+  const isAll = useAppSelector(isAllCatalogItems);
+  const isScrollActive = useAppSelector(isCatalogScrollActive);
   return (
     <div className={cn('show-more', styleClass)}>
       <button
@@ -20,7 +21,7 @@ function CatalogButtons({ type, styleClass }: CatalogButtonsProps) {
           'show-more__button--not-active': isAll,
         })}
         type="button"
-        onClick={() => dispatch(increasePageAction())}
+        onClick={() => dispatch(increaseCatalogPage())}
       >
         Показать еще
       </button>

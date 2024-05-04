@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { resetCatalogPage } from '../../../store';
 import { CheckboxInputType, CheckboxInputTypeDiffs } from './checkbox-input';
 
 type CheckboxInputProps = {
@@ -26,6 +27,7 @@ function CheckboxInput({ type, styleClass }: CheckboxInputProps): JSX.Element {
                 name={name}
                 checked={filter.includes(option)}
                 onChange={() => {
+                  dispatch(resetCatalogPage());
                   dispatch(setFilter(option));
                 }}
               />

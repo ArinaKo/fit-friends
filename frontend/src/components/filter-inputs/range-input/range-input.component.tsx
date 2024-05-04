@@ -2,6 +2,7 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { RangeInputType, RangeInputTypeDiffs } from './range-input';
 import './range-input.css';
+import { resetCatalogPage } from '../../../store';
 
 type RangeInputProps = {
   type: RangeInputType;
@@ -69,6 +70,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
                 const value = Number(target.value);
                 setMinInput(value);
                 if (value >= minValue && value <= (maxFilter ?? maxValue)) {
+                  dispatch(resetCatalogPage());
                   dispatch(setMinFilter(value));
                 }
               }}
@@ -91,6 +93,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
                 const value = Number(target.value);
                 setMaxInput(value);
                 if (value <= maxValue && value >= (minFilter ?? minValue)) {
+                  dispatch(resetCatalogPage());
                   dispatch(setMaxFilter(value));
                 }
               }}
@@ -116,6 +119,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
                 Number(event.target.value),
                 maxFilter ?? maxValue - 1,
               );
+              dispatch(resetCatalogPage());
               dispatch(setMinFilter(value));
             }}
             className="thumb thumb--left"
@@ -135,6 +139,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
                 Number(event.target.value),
                 minFilter ?? minValue + 1,
               );
+              dispatch(resetCatalogPage());
               dispatch(setMaxFilter(value));
             }}
             className="thumb thumb--right"

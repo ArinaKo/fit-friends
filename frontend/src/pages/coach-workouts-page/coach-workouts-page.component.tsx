@@ -3,8 +3,7 @@ import { WorkoutsFilter, WorkoutsList } from '../../components';
 import { AppRoute, ListItemsPortion } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { isUserCoach, resetWorkoutsFilters, setWorkoutsLimit } from '../../store';
-import { getCoachWorkoutsAction } from '../../store/api-actions';
+import { isUserCoach, resetCatalogData, resetWorkoutsFilters } from '../../store';
 
 function CoachWorkoutsPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,9 +18,8 @@ function CoachWorkoutsPage(): JSX.Element {
 
   useEffect(() => {
     if (isCoach) {
-      dispatch(setWorkoutsLimit(ListItemsPortion.CoachWorkouts));
+      dispatch(resetCatalogData(ListItemsPortion.CoachWorkouts));
       dispatch(resetWorkoutsFilters());
-      dispatch(getCoachWorkoutsAction());
     }
   }, [dispatch, isCoach]);
 
