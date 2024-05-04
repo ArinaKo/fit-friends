@@ -8,6 +8,7 @@ import {
   WorkoutType,
 } from '../const';
 import { FileData } from './file-data.js';
+import { Workout } from './workout.js';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -93,4 +94,41 @@ export type WorkoutForm = {
     video: string | undefined;
   };
   isSending: boolean;
+};
+
+export type WorkoutsList = {
+  workouts: Workout[];
+  limit: number;
+  totalPages: number;
+  totalItems: number;
+  currentPage: number;
+  itemsPerPage: number;
+  price: {
+    min: number;
+    max: number;
+  };
+  calories: {
+    min: number;
+    max: number;
+  };
+  rating: {
+    min: number;
+    max: number;
+  };
+  filter: {
+    price: {
+      min: number | undefined;
+      max: number | undefined;
+    };
+    calories: {
+      min: number | undefined;
+      max: number | undefined;
+    };
+    rating: {
+      min: number;
+      max: number;
+    };
+    duration: string[];
+  };
+  isDataLoading: boolean;
 };

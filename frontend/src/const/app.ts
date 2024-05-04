@@ -4,6 +4,11 @@ export const REFRESH_PENDING_KEY_NAME = 'fit-friends-refresh-pending';
 
 export const REQUIRED_INPUT_MESSAGE = 'Поле обязательно для заполнения';
 
+export const ListItemsPortion = {
+  Default: 6,
+  CoachWorkouts: 6,
+};
+
 export const AvatarMaxSize = {
   ForHuman: '1 мегабайт',
   ToCheck: 8388608,
@@ -38,4 +43,5 @@ export enum NameSpace {
   UserForm = 'USER_FORM',
   UserData = 'USER_DATA',
   WorkoutForm = 'WORKOUT_FORM',
+  WorkoutsList = 'WORKOUTS_LIST',
 }

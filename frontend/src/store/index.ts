@@ -6,4 +6,6 @@ export * from './user-data/user-data';
 export * from './user-data/selectors';
 export * from './workout-form/workout-form';
 export * from './workout-form/selectors';
+export * from './workouts-list/workouts-list';
+export * from './workouts-list/selectors';
 export * from './main';

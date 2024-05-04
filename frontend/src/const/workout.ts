@@ -34,4 +34,11 @@ export enum WorkoutDescriptionLength {
 
 export enum PriceValue {
   Min = 0,
+  Max = 50000,
+}
+
+export enum RatingValue {
+  Default = 0,
+  Min = 1,
+  Max = 5,
 }
