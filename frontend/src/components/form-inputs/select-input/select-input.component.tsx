@@ -23,6 +23,7 @@ function SelectInput({
     valueSelector,
     setValue,
     optionsArray,
+    optionsLabels,
     errorSelector,
     setError,
     formStatusSelector,
@@ -79,7 +80,7 @@ function SelectInput({
         </span>
       </button>
       <ul className="custom-select__list" role="listbox">
-        {optionsArray.map((option) => (
+        {optionsArray.map((option, index) => (
           <li
             key={`option-${option}`}
             onClick={() => {
@@ -89,7 +90,7 @@ function SelectInput({
             }}
             className="custom-select__item"
           >
-            {option}
+            {optionsLabels ? optionsLabels[index] : lodash.capitalize(option)}
           </li>
         ))}
       </ul>

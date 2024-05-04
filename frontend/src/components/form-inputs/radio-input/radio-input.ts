@@ -29,6 +29,7 @@ type RadioInputTypeDiff = {
   valueSelector: (state: State) => string | undefined;
   setValue: ActionCreatorWithPayload<string>;
   optionsArray: string[];
+  optionsLabels?: string[];
   formStatusSelector: (state: State) => boolean;
   fieldName: string;
   styleMode?: StyleMode;
@@ -59,6 +60,7 @@ export const RadioInputTypeDiffs: RadioInputTypeDiffs = {
     valueSelector: getUserFormTimeForWorkout,
     setValue: setTimeForWorkout,
     optionsArray: Object.values(WorkoutDuration),
+    optionsLabels: Object.values(WorkoutDuration).map((option) => `${option} мин`),
     formStatusSelector: isUserFormDataSending,
     fieldName: 'timeForWorkout',
     styleMode: StyleMode.Big,

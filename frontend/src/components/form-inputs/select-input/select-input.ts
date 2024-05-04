@@ -31,6 +31,7 @@ import {
   WorkoutDuration,
   WorkoutType,
 } from '../../../const';
+import lodash from 'lodash';
 
 export enum SelectInputType {
   Location = 'location',
@@ -45,6 +46,7 @@ type SelectInputTypeDiff = {
   valueSelector: (state: State) => string | undefined;
   setValue: ActionCreatorWithPayload<string>;
   optionsArray: string[];
+  optionsLabels?: string[];
   errorSelector: (state: State) => string | undefined;
   setError: (value: string | undefined) => {
     payload: [string, string | undefined];
@@ -63,6 +65,7 @@ export const SelectInputTypeDiffs: SelectInputTypeDiffs = {
     valueSelector: getUserFormLocation,
     setValue: setLocation,
     optionsArray: Object.values(MetroStation),
+    optionsLabels: Object.values(MetroStation).map((option) => `ст. м. ${lodash.capitalize(option)}`),
     errorSelector: getUserFormLocationError,
     setError: (value: string | undefined) =>
       setUserFormError(['location', value]),
@@ -103,6 +106,7 @@ export const SelectInputTypeDiffs: SelectInputTypeDiffs = {
     valueSelector: getWorkoutFormDuration,
     setValue: setDuration,
     optionsArray: Object.values(WorkoutDuration),
+    optionsLabels: Object.values(WorkoutDuration).map((option) => `${option} мин`),
     errorSelector: getWorkoutFormDurationError,
     setError: (value: string | undefined) =>
       setWorkoutFormError(['duration', value]),

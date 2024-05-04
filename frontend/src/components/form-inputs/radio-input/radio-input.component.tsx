@@ -13,6 +13,7 @@ function RadioInput({ type, styleClass }: RadioInputProps): JSX.Element {
     valueSelector,
     setValue,
     optionsArray,
+    optionsLabels,
     formStatusSelector,
     fieldName,
     styleMode,
@@ -28,7 +29,7 @@ function RadioInput({ type, styleClass }: RadioInputProps): JSX.Element {
         styleMode,
       })}
     >
-      {Object.values(optionsArray).map((option) => (
+      {Object.values(optionsArray).map((option, index) => (
         <div className="custom-toggle-radio__block" key={`option-${option}`}>
           <label>
             <input
@@ -43,7 +44,7 @@ function RadioInput({ type, styleClass }: RadioInputProps): JSX.Element {
             />
             <span className="custom-toggle-radio__icon" />
             <span className="custom-toggle-radio__label">
-              {lodash.capitalize(option)}
+              {optionsLabels ? optionsLabels[index] : lodash.capitalize(option)}
             </span>
           </label>
         </div>

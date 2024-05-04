@@ -1,4 +1,4 @@
-import { NameSpace, UserRole, WorkoutDuration, WorkoutType } from '../../const';
+import { NameSpace, UserRole, WorkoutType } from '../../const';
 import { State } from '../../types';
 
 export const getUserFormEmail = (state: State): string =>
@@ -34,7 +34,7 @@ export const getUserFormStatus = (state: State): boolean =>
 export const getUserFormWorkoutTypes = (state: State): WorkoutType[] =>
   state[NameSpace.UserForm].workoutTypes;
 
-export const getUserFormTimeForWorkout = (state: State): WorkoutDuration =>
+export const getUserFormTimeForWorkout = (state: State): string =>
   state[NameSpace.UserForm].timeForWorkout;
 
 export const getUserFormCaloriesToLose = (state: State): string =>
