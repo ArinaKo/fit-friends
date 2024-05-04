@@ -6,3 +6,5 @@ export * from './logged-user';
 export * from './user';
 export * from './full-user';
 export * from './auth-user';
+export * from './workout';
+export * from './lists-with-pagination';
