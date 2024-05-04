@@ -10,6 +10,7 @@ import {
   LIST_LIMIT,
 } from 'src/shared/const';
 import { FullWorkoutQuery } from './query';
+import { FieldRange } from '@app/types';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   AddStringId: {
@@ -199,7 +200,12 @@ export class WorkoutRepository extends BaseMongoRepository<
   public async find(
     query?: FullWorkoutQuery,
     coachId?: string,
-  ): Promise<PaginationResult<WorkoutEntity>> {
+  ): Promise<
+    PaginationResult<WorkoutEntity> & {
+      priceRange: FieldRange;
+      caloriesRange: FieldRange;
+    }
+  > {
     const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
@@ -209,7 +215,7 @@ export class WorkoutRepository extends BaseMongoRepository<
       Object.assign(filter, { coachId });
     }
 
-    const [records, recordsCount] = await Promise.all([
+    const [records, recordsCount, price, calories] = await Promise.all([
       this.model
         .aggregate<WorkoutModel>([
           { $match: filter },
@@ -220,6 +226,28 @@ export class WorkoutRepository extends BaseMongoRepository<
         ])
         .exec(),
       this.model.countDocuments(filter),
+      this.model
+        .aggregate<{ min: number; max: number }>([
+          {
+            $group: {
+              _id: null,
+              max: { $max: '$price' },
+              min: { $min: '$price' },
+            },
+          },
+        ])
+        .then((r) => r.at(0)),
+      this.model
+        .aggregate<{ min: number; max: number }>([
+          {
+            $group: {
+              _id: null,
+              max: { $max: '$calories' },
+              min: { $min: '$calories' },
+            },
+          },
+        ])
+        .then((r) => r.at(0)),
     ]);
 
     return {
@@ -228,6 +256,8 @@ export class WorkoutRepository extends BaseMongoRepository<
       totalPages: this.calculatePages(recordsCount, limit),
       itemsPerPage: limit,
       totalItems: recordsCount,
+      priceRange: [price?.min ?? 0, price?.max ?? 0],
+      caloriesRange: [calories?.min ?? 0, calories?.max ?? 0],
     };
   }
 }

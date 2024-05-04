@@ -27,3 +27,4 @@ export * from './file-data.interface';
 export * from './stored-file.interface';
 export * from './subscriber.interface';
 export * from './workout-notification.interface';
+export * from './field-range.type';
