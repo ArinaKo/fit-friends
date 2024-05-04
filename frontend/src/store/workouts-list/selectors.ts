@@ -4,8 +4,8 @@ import { State, Workout } from '../../types';
 export const getWorkoutsList = (state: State): Workout[] =>
   state[NameSpace.WorkoutsList].workouts;
 
-export const getWorkoutsListLimit = (state: State): number =>
-  state[NameSpace.WorkoutsList].limit;
+export const getWorkoutsListPage = (state: State): number =>
+  state[NameSpace.WorkoutsList].currentPage;
 
 export const getWorkoutsMinPrice = (state: State): number =>
   state[NameSpace.WorkoutsList].price.min;
@@ -52,5 +52,8 @@ export const isWorkoutsListLoading = (state: State): boolean =>
   state[NameSpace.WorkoutsList].isDataLoading;
 
 export const isAllWorkouts = (state: State): boolean =>
-  state[NameSpace.WorkoutsList].totalItems <=
-  state[NameSpace.WorkoutsList].limit;
+  state[NameSpace.WorkoutsList].currentPage >=
+  state[NameSpace.WorkoutsList].totalPages;
+
+export const isWorkoutsScrollActive = (state: State): boolean =>
+  state[NameSpace.WorkoutsList].totalPages === 1;

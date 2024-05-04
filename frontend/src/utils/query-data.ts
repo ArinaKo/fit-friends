@@ -1,10 +1,11 @@
 import { State } from '../types';
 
 export function getCoachWorkoutsQuery(state: State): URLSearchParams {
-  const { limit, filter } = state.WORKOUTS_LIST;
+  const { limit, currentPage, filter } = state.WORKOUTS_LIST;
   const { price, calories, rating, duration } = filter;
   const params = new URLSearchParams();
   params.append('limit', limit.toString());
+  params.append('page', currentPage.toString());
   if (price.min) {
     params.append('minPrice', price.min.toString());
   }

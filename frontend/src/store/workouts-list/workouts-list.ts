@@ -52,12 +52,13 @@ export const workoutsList = createSlice({
   reducers: {
     resetWorkoutsFilters: (state) => {
       state.filter = initialState.filter;
+      state.currentPage = initialState.currentPage;
     },
     setWorkoutsLimit: (state, action: PayloadAction<number>) => {
       state.limit = action.payload;
     },
-    increaseWorkoutsLimit: (state, action: PayloadAction<number>) => {
-      state.limit = state.limit + action.payload;
+    increaseWorkoutsPage: (state) => {
+      state.currentPage = state.currentPage + 1;
     },
     setWorkoutsPriceFilter: (
       state,
@@ -65,6 +66,7 @@ export const workoutsList = createSlice({
     ) => {
       const [key, value] = action.payload;
       state.filter.price[key] = value;
+      state.currentPage = initialState.currentPage;
     },
     setWorkoutsCaloriesFilter: (
       state,
@@ -72,6 +74,7 @@ export const workoutsList = createSlice({
     ) => {
       const [key, value] = action.payload;
       state.filter.calories[key] = value;
+      state.currentPage = initialState.currentPage;
     },
     setWorkoutsRatingFilter: (
       state,
@@ -79,12 +82,14 @@ export const workoutsList = createSlice({
     ) => {
       const [key, value] = action.payload;
       state.filter.rating[key] = value;
+      state.currentPage = initialState.currentPage;
     },
     setWorkoutsDurationFilter: (state, action: PayloadAction<string>) => {
       const duration = action.payload;
       state.filter.duration = state.filter.duration.includes(duration)
         ? state.filter.duration.filter((item) => item !== duration)
         : [...state.filter.duration, duration];
+      state.currentPage = initialState.currentPage;
     },
   },
   extraReducers(builder) {
@@ -102,8 +107,7 @@ export const workoutsList = createSlice({
           priceRange,
           caloriesRange,
         } = action.payload;
-        state.workouts = workouts;
-        state.currentPage = currentPage;
+        state.workouts = currentPage === 1 ? workouts : [...state.workouts, ...workouts];
         state.itemsPerPage = itemsPerPage;
         state.totalPages = totalPages;
         state.totalItems = totalItems;
@@ -119,7 +123,7 @@ export const workoutsList = createSlice({
 export const {
   resetWorkoutsFilters,
   setWorkoutsLimit,
-  increaseWorkoutsLimit,
+  increaseWorkoutsPage,
   setWorkoutsPriceFilter,
   setWorkoutsCaloriesFilter,
   setWorkoutsRatingFilter,

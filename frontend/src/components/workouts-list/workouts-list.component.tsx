@@ -10,8 +10,7 @@ import {
   getWorkoutsFilterMinPrice,
   getWorkoutsFilterMinRating,
   getWorkoutsList,
-  getWorkoutsListLimit,
-  increaseWorkoutsLimit,
+  getWorkoutsListPage,
   isWorkoutsListLoading,
 } from '../../store';
 import { CatalogButtons, UIBlocker, WorkoutCard } from '../index';
@@ -20,7 +19,7 @@ import { getCoachWorkoutsAction } from '../../store/api-actions';
 function WorkoutsList(): JSX.Element {
   const dispatch = useAppDispatch();
   const workouts = useAppSelector(getWorkoutsList);
-  const limit = useAppSelector(getWorkoutsListLimit);
+  const page = useAppSelector(getWorkoutsListPage);
   const minPriceFilter = useAppSelector(getWorkoutsFilterMinPrice);
   const maxPriceFilter = useAppSelector(getWorkoutsFilterMaxPrice);
   const minCaloriesFilter = useAppSelector(getWorkoutsFilterMinCalories);
@@ -34,7 +33,7 @@ function WorkoutsList(): JSX.Element {
     dispatch(getCoachWorkoutsAction());
   }, [
     dispatch,
-    limit,
+    page,
     minPriceFilter,
     maxPriceFilter,
     minCaloriesFilter,
