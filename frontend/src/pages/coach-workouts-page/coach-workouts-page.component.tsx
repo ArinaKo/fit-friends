@@ -1,6 +1,29 @@
+import { useNavigate } from 'react-router-dom';
 import { WorkoutsFilter, WorkoutsList } from '../../components';
+import { AppRoute, ListItemsPortion } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { isUserCoach, setWorkoutsLimit } from '../../store';
+import { getCoachWorkoutsAction } from '../../store/api-actions';
 
 function CoachWorkoutsPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const isCoach = useAppSelector(isUserCoach);
+
+  useEffect(() => {
+    if (!isCoach) {
+      navigate(AppRoute.Main);
+    }
+  }, [navigate, isCoach]);
+
+  useEffect(() => {
+    if (isCoach) {
+      dispatch(setWorkoutsLimit(ListItemsPortion.CoachWorkouts));
+      dispatch(getCoachWorkoutsAction());
+    }
+  }, [dispatch, isCoach]);
+
   return (
     <section className="inner-page">
       <div className="container">
@@ -12,6 +35,7 @@ function CoachWorkoutsPage(): JSX.Element {
               <button
                 className="btn-flat btn-flat--underlined my-training-form__btnback"
                 type="button"
+                onClick={() => navigate(AppRoute.Account)}
               >
                 <svg width={14} height={10} aria-hidden="true">
                   <use xlinkHref="#arrow-left" />
@@ -25,20 +49,6 @@ function CoachWorkoutsPage(): JSX.Element {
           <div className="inner-page__content">
             <div className="my-trainings">
               <WorkoutsList />
-              <div className="show-more my-trainings__show-more">
-                <button
-                  className="btn show-more__button show-more__button--more"
-                  type="button"
-                >
-                  Показать еще
-                </button>
-                <button
-                  className="btn show-more__button show-more__button--to-top"
-                  type="button"
-                >
-                  Вернуться в начало
-                </button>
-              </div>
             </div>
           </div>
         </div>
