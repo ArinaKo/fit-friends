@@ -4,18 +4,18 @@ import { FilesAmount } from '../mock.const';
 export function generateAvatarsEntities(): FileEntity[] {
   return Array.from({ length: FilesAmount.Avatars }).map((_, index) =>
     FileEntity.fromObject({
-      originalName: `avatar-${index + 1}.png`,
+      originalName: `avatar-${index + 1}.jpg`,
       subDirectory: 'mocks',
       size: 14,
       mimetype: 'image/png',
-      hashName: `avatar-${index + 1}.png`,
-      path: `${process.env.UPLOAD_DIRECTORY_PATH}/mocks/avatar-${index + 1}.png`,
+      hashName: `avatar-${index + 1}.jpg`,
+      path: `${process.env.UPLOAD_DIRECTORY_PATH}/mocks/avatar-${index + 1}.jpg`,
     }),
   );
 }
 
 export function generateCertificatesEntities(): FileEntity[] {
-  return Array.from({ length: FilesAmount.Avatars }).map((_, index) =>
+  return Array.from({ length: FilesAmount.Certificates }).map((_, index) =>
     FileEntity.fromObject({
       originalName: `certificate-${index + 1}.pdf`,
       subDirectory: 'mocks',

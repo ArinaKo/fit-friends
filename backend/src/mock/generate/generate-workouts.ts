@@ -14,7 +14,7 @@ import { GeneratedDataAmount, MAX_PRICE } from '../mock.const';
 function generateWorkout() {
   return {
     title: getRandomItem(WorkoutsTitles),
-    backgroundImage: `/workouts/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.png`,
+    backgroundImage: `mocks/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.jpg`,
     level: getRandomItem(Object.values(UserLevel)),
     type: getRandomItem(Object.values(WorkoutType)),
     duration: getRandomItem(Object.values(WorkoutDuration)),

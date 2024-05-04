@@ -1,1 +1,1 @@
-export const WORKOUT_IMAGES_COUNT = 4;
+export const WORKOUT_IMAGES_COUNT = 12;
