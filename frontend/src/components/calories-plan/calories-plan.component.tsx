@@ -1,4 +1,10 @@
+import { useAppSelector } from '../../hooks';
+import { getUserDataCalories } from '../../store';
+
+const DAYS_NUMBER = 7;
+
 function CaloriesPlan(): JSX.Element {
+  const calories = useAppSelector(getUserDataCalories);
   return (
     <form action="#" method="get">
       <div className="personal-account-user__form">
@@ -10,7 +16,8 @@ function CaloriesPlan(): JSX.Element {
             <input
               type="text"
               name="schedule-for-the-day"
-              defaultValue="3 300"
+              value={calories}
+              disabled
             />
           </label>
         </div>
@@ -22,7 +29,8 @@ function CaloriesPlan(): JSX.Element {
             <input
               type="text"
               name="schedule-for-the-week"
-              defaultValue="23 100"
+              value={calories * DAYS_NUMBER}
+              disabled
             />
           </label>
         </div>
