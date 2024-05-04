@@ -19,6 +19,14 @@ export type AppData = {
   userRole: UserRole | undefined;
 };
 
+export type CatalogData = {
+  limit: number;
+  totalPages: number;
+  totalItems: number;
+  currentPage: number;
+  itemsPerPage: number;
+};
+
 export type UserForm = {
   email: string;
   password: string;
