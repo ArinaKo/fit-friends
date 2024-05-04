@@ -2,6 +2,7 @@ import { store } from '../store/index.js';
 import {
   AuthorizationStatus,
   MetroStation,
+  OrdersSortType,
   UserLevel,
   UserRole,
   UserSex,
@@ -9,6 +10,7 @@ import {
 } from '../const';
 import { FileData } from './file-data.js';
 import { Workout } from './workout.js';
+import { WorkoutOrders } from './workout-orders.js';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -135,3 +137,13 @@ export type WorkoutsList = {
   };
   isDataLoading: boolean;
 };
+
+export type OrdersList = {
+  orders: WorkoutOrders[];
+  isDataLoading: boolean;
+  sorting: {
+    type: OrdersSortType;
+    directionDown: boolean;
+  };
+};
+

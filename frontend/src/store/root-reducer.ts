@@ -7,6 +7,7 @@ import {
   workoutForm,
   catalogData,
   workoutsList,
+  ordersList,
 } from './index';
 
 export const rootReducer = combineReducers({
@@ -16,4 +17,5 @@ export const rootReducer = combineReducers({
   [NameSpace.WorkoutForm]: workoutForm.reducer,
   [NameSpace.CatalogData]: catalogData.reducer,
   [NameSpace.WorkoutsList]: workoutsList.reducer,
+  [NameSpace.OrdersList]: ordersList.reducer,
 });

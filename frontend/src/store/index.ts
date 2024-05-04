@@ -10,4 +10,6 @@ export * from './catalog-data/catalog-data';
 export * from './catalog-data/selectors';
 export * from './workouts-list/workouts-list';
 export * from './workouts-list/selectors';
+export * from './orders-list/orders-list';
+export * from './orders-list/selectors';
 export * from './main';
