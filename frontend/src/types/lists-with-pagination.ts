@@ -1,4 +1,5 @@
 import { Workout } from './workout';
+import { WorkoutOrders } from './workout-orders';
 
 export type FieldRange = [min: number, max: number];
 
@@ -13,4 +14,8 @@ export type WorkoutsWithPagination = BasePagination & {
   workouts: Workout[];
   priceRange: FieldRange;
   caloriesRange: FieldRange;
+};
+
+export type OrdersWithPagination = BasePagination & {
+  orders: WorkoutOrders[];
 };

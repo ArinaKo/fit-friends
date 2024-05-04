@@ -7,7 +7,13 @@ export const REQUIRED_INPUT_MESSAGE = 'Поле обязательно для з
 export const ListItemsPortion = {
   Default: 6,
   CoachWorkouts: 6,
+  CoachOrders: 4,
 };
+
+export enum OrdersSortType {
+  Sum = 'sum',
+  Count = 'count',
+}
 
 export const AvatarMaxSize = {
   ForHuman: '1 мегабайт',
@@ -43,5 +49,7 @@ export enum NameSpace {
   UserForm = 'USER_FORM',
   UserData = 'USER_DATA',
   WorkoutForm = 'WORKOUT_FORM',
+  CatalogData = 'CATALOG_DATA',
   WorkoutsList = 'WORKOUTS_LIST',
+  OrdersList = 'ORDERS_LIST',
 }
