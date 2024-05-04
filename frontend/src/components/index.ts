@@ -15,3 +15,4 @@ export { default as CertificateCard } from './certificate-card/certificate-card.
 export { default as CreateWorkoutForm } from './create-workout-form/create-workout-form.component';
 export { default as WorkoutsFilter } from './workouts-filter/workouts-filter.component';
 export { default as WorkoutsList } from './workouts-list/workouts-list.component';
+export { default as CatalogButtons } from './catalog-buttons/catalog-buttons.component';
