@@ -51,7 +51,9 @@ function WorkoutsList(): JSX.Element {
       <ul className="my-trainings__list">
         {workouts.map((workout) => (
           <li className="my-trainings__item" key={`workout-${workout.id}`}>
-            <WorkoutCard workout={workout} />
+            <div className="thumbnail-training">
+              <WorkoutCard workout={workout} />
+            </div>
           </li>
         ))}
       </ul>
