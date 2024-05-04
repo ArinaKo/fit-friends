@@ -7,6 +7,7 @@ import {
   LoggedUser,
   State,
   UserFiles,
+  WorkoutsWithPagination,
 } from '../types';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AppRoute, UserRole } from '../const';
@@ -17,7 +18,8 @@ import {
   getCustomerQuestionaryData,
   getRegisterData,
   getUpdateUserData,
-  getCreateWorkoutData
+  getCreateWorkoutData,
+  getCoachWorkoutsQuery,
 } from '../utils';
 
 type asyncThunkConfig = {
@@ -169,4 +171,17 @@ export const createWorkoutAction = createAsyncThunk<
     },
   });
   dispatch(redirectToRoute(AppRoute.CoachWorkouts));
+});
+
+export const getCoachWorkoutsAction = createAsyncThunk<
+  WorkoutsWithPagination,
+  undefined,
+  asyncThunkConfig
+>('workouts/coach-workouts', async (_arg, { getState, extra: api }) => {
+  const params = getCoachWorkoutsQuery(getState());
+  const { data } = await api.get<WorkoutsWithPagination>(
+    APIRoute.CoachWorkouts,
+    { params },
+  );
+  return data;
 });

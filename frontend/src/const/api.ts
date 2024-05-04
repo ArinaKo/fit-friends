@@ -14,4 +14,5 @@ export const APIRoute = {
   DeleteCertificate: '/users/certificates/delete',
   UpdateCertificate: '/users/certificates/update',
   CreateWorkout: '/workouts',
+  CoachWorkouts: '/workouts/coach',
 } as const;
