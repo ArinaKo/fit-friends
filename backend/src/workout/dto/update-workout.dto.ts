@@ -60,7 +60,7 @@ export class UpdateWorkoutDto {
 
   @ApiPropertyOptional({
     description: 'Workout duration',
-    example: '30-50 мин',
+    example: '30-50',
   })
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()

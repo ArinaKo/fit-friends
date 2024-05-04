@@ -77,7 +77,7 @@ export class DefaultUserQuestionaryDto extends BaseQuestionaryDto {
 
   @ApiPropertyOptional({
     description: 'User`s preferable workout duration',
-    example: '10-30 мин',
+    example: '10-30',
   })
   @IsEnum(WorkoutDuration, {
     message: DtoValidationMessage.timeForWorkout.invalidFormat,

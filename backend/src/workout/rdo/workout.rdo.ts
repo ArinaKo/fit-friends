@@ -45,7 +45,7 @@ export class WorkoutRdo {
 
   @ApiProperty({
     description: 'Workout duration',
-    example: '30-50 мин',
+    example: '30-50',
   })
   @Expose()
   public duration: WorkoutDuration;

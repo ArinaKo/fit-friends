@@ -20,7 +20,7 @@ export class AuthUserRdo extends FullUserRdo {
 
   @ApiPropertyOptional({
     description: 'User`s preferable workout duration',
-    example: '10-30 мин',
+    example: '10-30',
   })
   @Expose()
   public timeForWorkout?: WorkoutDuration;
