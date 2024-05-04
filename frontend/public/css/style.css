@@ -9216,6 +9216,7 @@ input:active + .custom-textarea__text {
   transition: 0.3s ease;
 }
 
+.btn-filter-sort--active,
 .btn-filter-sort:focus {
   color: #333333;
   font-weight: 500;
