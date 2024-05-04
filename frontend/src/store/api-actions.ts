@@ -5,6 +5,7 @@ import {
   CertificatesFiles,
   FileData,
   LoggedUser,
+  OrdersWithPagination,
   State,
   UserFiles,
   WorkoutsWithPagination,
@@ -20,6 +21,7 @@ import {
   getUpdateUserData,
   getCreateWorkoutData,
   getCoachWorkoutsQuery,
+  getCoachOrdersQuery,
 } from '../utils';
 
 type asyncThunkConfig = {
@@ -183,5 +185,17 @@ export const getCoachWorkoutsAction = createAsyncThunk<
     APIRoute.CoachWorkouts,
     { params },
   );
+  return data;
+});
+
+export const getCoachOrdersAction = createAsyncThunk<
+  OrdersWithPagination,
+  undefined,
+  asyncThunkConfig
+>('workouts/coach-orders', async (_arg, { getState, extra: api }) => {
+  const params = getCoachOrdersQuery(getState());
+  const { data } = await api.get<OrdersWithPagination>(APIRoute.CoachOrders, {
+    params,
+  });
   return data;
 });
