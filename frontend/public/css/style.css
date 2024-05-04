@@ -6188,16 +6188,24 @@ input:active + .custom-textarea__text {
   pointer-events: none;
 }
 
-.filter-range__scale {
+.filter-range {
+  position: relative;
   width: 312px;
+}
+
+.filter-range__scale {
+  position: absolute;
+  width: 100%;
   height: 1px;
   background-color: #aeaeae;
+  z-index: 1;
 }
 
 .filter-range__bar {
-  width: 208px;
+  position: absolute;
   height: 1px;
   background-color: #333333;
+  z-index: 2;
 }
 
 .filter-range__control {
@@ -6262,12 +6270,23 @@ input:active + .custom-textarea__text {
   max-width: 312px;
 }
 
-.filter-raiting__control span {
+.filter-raiting__control--left,
+.filter-raiting__control--right {
   margin-top: 17px;
   font-weight: 400;
   font-size: 16px;
   line-height: 16px;
   color: #333333;
+}
+
+.filter-raiting__control--left {
+  margin-right: auto;
+  margin-left: 4px;
+}
+
+.filter-raiting__control--right {
+  margin-left: auto;
+  margin-right: 4px;
 }
 
 .filter-raiting__min-toggle,
