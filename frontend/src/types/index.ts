@@ -8,4 +8,5 @@ export * from './full-user';
 export * from './auth-user';
 export * from './workout';
 export * from './workout-orders';
+export * from './workout-balance';
 export * from './lists-with-pagination';

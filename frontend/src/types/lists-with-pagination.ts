@@ -1,4 +1,5 @@
 import { Workout } from './workout';
+import { WorkoutBalance } from './workout-balance';
 import { WorkoutOrders } from './workout-orders';
 
 export type FieldRange = [min: number, max: number];
@@ -18,4 +19,8 @@ export type WorkoutsWithPagination = BasePagination & {
 
 export type OrdersWithPagination = BasePagination & {
   orders: WorkoutOrders[];
+};
+
+export type BalancesWithPagination = BasePagination & {
+  balances: WorkoutBalance[];
 };
