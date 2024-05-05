@@ -8,7 +8,12 @@ import {
   isOrdersListSortDown,
 } from '../../store';
 import { getCoachOrdersAction } from '../../store/api-actions';
-import { CatalogButtons, UIBlocker, WorkoutCard } from '../index';
+import {
+  CatalogButtons,
+  UIBlocker,
+  WorkoutCard,
+  WorkoutCardType,
+} from '../index';
 
 function OrdersList(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -29,37 +34,13 @@ function OrdersList(): JSX.Element {
   return (
     <>
       <ul className="my-orders__list">
-        {orders.map(({ workout, sum, count }) => (
-          <li className="my-orders__item" key={`order-${workout.id}`}>
-            <div className="thumbnail-training">
-              <WorkoutCard workout={workout} />
-              <div className="thumbnail-training__total-info">
-                <div className="thumbnail-training__total-info-card">
-                  <svg width={32} height={32} aria-hidden="true">
-                    <use xlinkHref="#icon-chart" />
-                  </svg>
-                  <p className="thumbnail-training__total-info-value">
-                    {count}
-                  </p>
-                  <p className="thumbnail-training__total-info-text">
-                    Куплено тренировок
-                  </p>
-                </div>
-                <div className="thumbnail-training__total-info-card">
-                  <svg width={31} height={28} aria-hidden="true">
-                    <use xlinkHref="#icon-wallet" />
-                  </svg>
-                  <p className="thumbnail-training__total-info-value">
-                    {sum}
-                    <span>₽</span>
-                  </p>
-                  <p className="thumbnail-training__total-info-text">
-                    Общая сумма
-                  </p>
-                </div>
-              </div>
-            </div>
-          </li>
+        {orders.map(({ workout, count, sum }) => (
+          <WorkoutCard
+            type={WorkoutCardType.WorkoutOrders}
+            workout={workout}
+            ordersInfo={{ count, sum }}
+            key={`order-${workout.id}`}
+          />
         ))}
       </ul>
       <CatalogButtons styleClass="my-orders__show-more" />

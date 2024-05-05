@@ -12,7 +12,12 @@ import {
   getWorkoutsList,
   isWorkoutsListLoading,
 } from '../../store';
-import { CatalogButtons, UIBlocker, WorkoutCard } from '../index';
+import {
+  CatalogButtons,
+  UIBlocker,
+  WorkoutCard,
+  WorkoutCardType,
+} from '../index';
 import { getCoachWorkoutsAction } from '../../store/api-actions';
 
 function WorkoutsList(): JSX.Element {
@@ -50,11 +55,11 @@ function WorkoutsList(): JSX.Element {
     <>
       <ul className="my-trainings__list">
         {workouts.map((workout) => (
-          <li className="my-trainings__item" key={`workout-${workout.id}`}>
-            <div className="thumbnail-training">
-              <WorkoutCard workout={workout} />
-            </div>
-          </li>
+          <WorkoutCard
+            type={WorkoutCardType.CoachWorkouts}
+            workout={workout}
+            key={`workout-${workout.id}`}
+          />
         ))}
       </ul>
       <CatalogButtons styleClass="my-trainings__show-more" />
