@@ -52,4 +52,5 @@ export enum NameSpace {
   CatalogData = 'CATALOG_DATA',
   WorkoutsList = 'WORKOUTS_LIST',
   OrdersList = 'ORDERS_LIST',
+  BalancesList = 'BALANCES_LIST',
 }

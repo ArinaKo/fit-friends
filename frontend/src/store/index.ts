@@ -12,4 +12,6 @@ export * from './workouts-list/workouts-list';
 export * from './workouts-list/selectors';
 export * from './orders-list/orders-list';
 export * from './orders-list/selectors';
+export * from './balance-list/balance-list';
+export * from './balance-list/selectors';
 export * from './main';

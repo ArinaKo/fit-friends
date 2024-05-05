@@ -8,6 +8,7 @@ import {
   catalogData,
   workoutsList,
   ordersList,
+  balancesList,
 } from './index';
 
 export const rootReducer = combineReducers({
@@ -18,4 +19,5 @@ export const rootReducer = combineReducers({
   [NameSpace.CatalogData]: catalogData.reducer,
   [NameSpace.WorkoutsList]: workoutsList.reducer,
   [NameSpace.OrdersList]: ordersList.reducer,
+  [NameSpace.BalancesList]: balancesList.reducer,
 });
