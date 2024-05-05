@@ -10,6 +10,7 @@ import {
   OrdersWithPagination,
   State,
   UserFiles,
+  WorkoutRequest,
   WorkoutsWithPagination,
 } from '../types';
 import { AxiosInstance } from 'axios';
@@ -229,4 +230,26 @@ export const getUserFriendsAction = createAsyncThunk<
     params,
   });
   return data;
+});
+
+export const updateWorkoutRequestAction = createAsyncThunk<
+  WorkoutRequest,
+  WorkoutRequest,
+  asyncThunkConfig
+>('friends/update-request', async (request, { extra: api }) => {
+  await api.patch(APIRoute.UpdateWorkoutRequest, {
+    requestId: request.id,
+    status: request.status,
+  });
+  return request;
+});
+
+export const createWorkoutRequestAction = createAsyncThunk<
+  void,
+  string,
+  asyncThunkConfig
+>('friends/update-request', async (userId, { extra: api }) => {
+  await api.post(APIRoute.CreateWorkoutRequest, {
+    userToId: userId,
+  });
 });

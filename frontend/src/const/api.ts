@@ -18,4 +18,6 @@ export const APIRoute = {
   CoachOrders: '/orders',
   UserBalances: '/balance',
   UserFriends: '/friends',
+  CreateWorkoutRequest: '/workout-requests',
+  UpdateWorkoutRequest: '/workout-requests',
 } as const;
