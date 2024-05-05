@@ -23,3 +23,4 @@ export { default as OrdersSorting } from './orders-sorting/orders-sorting.compon
 export { default as BalancesList } from './balances-list/balances-list.component';
 export { default as BalancesSorting } from './balances-sorting/balances-sorting.component';
 export { default as FriendCard } from './friend-card/friend-card.component';
+export { default as FriendsList } from './friends-list/friends-list.component';
