@@ -1,3 +1,4 @@
+import { Friend } from './friend';
 import { Workout } from './workout';
 import { WorkoutBalance } from './workout-balance';
 import { WorkoutOrders } from './workout-orders';
@@ -23,4 +24,8 @@ export type OrdersWithPagination = BasePagination & {
 
 export type BalancesWithPagination = BasePagination & {
   balances: WorkoutBalance[];
+};
+
+export type FriendsWithPagination = BasePagination & {
+  friends: Friend[];
 };
