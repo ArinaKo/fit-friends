@@ -194,7 +194,7 @@ export const getCoachOrdersAction = createAsyncThunk<
   OrdersWithPagination,
   undefined,
   asyncThunkConfig
->('workouts/coach-orders', async (_arg, { getState, extra: api }) => {
+>('orders/coach-orders', async (_arg, { getState, extra: api }) => {
   const params = getCoachOrdersQuery(getState());
   const { data } = await api.get<OrdersWithPagination>(APIRoute.CoachOrders, {
     params,

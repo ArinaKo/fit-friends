@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getOrdersListSortType,
   isOrdersListSortDown,
+  resetCatalogPage,
   setOrdersSorting,
 } from '../../store';
 import cn from 'classnames';
@@ -21,7 +22,10 @@ function OrdersSorting(): JSX.Element {
             'btn-filter-sort--active': sortType === OrdersSortType.Sum,
           })}
           type="button"
-          onClick={() => dispatch(setOrdersSorting(OrdersSortType.Sum))}
+          onClick={() => {
+            dispatch(resetCatalogPage());
+            dispatch(setOrdersSorting(OrdersSortType.Sum));
+          }}
         >
           <span>Сумме</span>
           <svg width={16} height={10} aria-hidden="true">
@@ -39,7 +43,10 @@ function OrdersSorting(): JSX.Element {
             'btn-filter-sort--active': sortType === OrdersSortType.Count,
           })}
           type="button"
-          onClick={() => dispatch(setOrdersSorting(OrdersSortType.Count))}
+          onClick={() => {
+            dispatch(resetCatalogPage());
+            dispatch(setOrdersSorting(OrdersSortType.Count));
+          }}
         >
           <span>Количеству</span>
           <svg width={16} height={10} aria-hidden="true">

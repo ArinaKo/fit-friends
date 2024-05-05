@@ -4,7 +4,7 @@ import { BaseQuery } from 'src/shared/query/base.query';
 import * as lodash from 'lodash';
 
 export class UserBalanceQuery extends BaseQuery {
-  @Transform(({ value }) => Boolean(lodash.lowerCase(value)))
+  @Transform(({ value }) => lodash.lowerCase(value) === 'true')
   @IsBoolean()
   @IsOptional()
   public active: boolean;
