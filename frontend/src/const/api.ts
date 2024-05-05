@@ -17,4 +17,5 @@ export const APIRoute = {
   CoachWorkouts: '/workouts/coach',
   CoachOrders: '/orders',
   UserBalances: '/balance',
+  UserFriends: '/friends',
 } as const;

@@ -5,6 +5,7 @@ import {
   BalancesWithPagination,
   CertificatesFiles,
   FileData,
+  FriendsWithPagination,
   LoggedUser,
   OrdersWithPagination,
   State,
@@ -24,6 +25,7 @@ import {
   getCoachWorkoutsQuery,
   getCoachOrdersQuery,
   getUserBalancesQuery,
+  getUserFriendsQuery,
 } from '../utils';
 
 type asyncThunkConfig = {
@@ -214,5 +216,17 @@ export const getUserBalancesAction = createAsyncThunk<
       params,
     },
   );
+  return data;
+});
+
+export const getUserFriendsAction = createAsyncThunk<
+  FriendsWithPagination,
+  undefined,
+  asyncThunkConfig
+>('friends/friends-list', async (_arg, { getState, extra: api }) => {
+  const params = getUserFriendsQuery(getState());
+  const { data } = await api.get<FriendsWithPagination>(APIRoute.UserFriends, {
+    params,
+  });
   return data;
 });
