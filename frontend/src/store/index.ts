@@ -14,4 +14,6 @@ export * from './orders-list/orders-list';
 export * from './orders-list/selectors';
 export * from './balance-list/balance-list';
 export * from './balance-list/selectors';
+export * from './friends-list/friends-list';
+export * from './friends-list/selectors';
 export * from './main';

@@ -12,6 +12,7 @@ import { FileData } from './file-data.js';
 import { Workout } from './workout.js';
 import { WorkoutOrders } from './workout-orders.js';
 import { WorkoutBalance } from './workout-balance.js';
+import { Friend } from './friend.js';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -152,4 +153,9 @@ export type BalancesList = {
   balances: WorkoutBalance[];
   isDataLoading: boolean;
   isOnlyActive: boolean;
+};
+
+export type FriendsList = {
+  friends: Friend[];
+  isDataLoading: boolean;
 };
