@@ -8,6 +8,7 @@ import {
   BalancePage,
   CoachWorkoutsPage,
   CreateWorkoutPage,
+  FriendsPage,
   IntroPage,
   LoginPage,
   OrdersPage,
@@ -56,10 +57,7 @@ function App(): JSX.Element {
               element={<div>Not implemented - main page</div>}
             />
             <Route path={AppRoute.Account} element={<AccountPage />} />
-            <Route
-              path={AppRoute.Friends}
-              element={<div>Not implemented - friends page</div>}
-            />
+            <Route path={AppRoute.Friends} element={<FriendsPage />} />
             <Route path={AppRoute.Balance} element={<BalancePage />} />
             <Route
               path={AppRoute.CoachWorkouts}

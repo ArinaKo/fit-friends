@@ -7,3 +7,4 @@ export { default as CreateWorkoutPage } from './create-workout-page/create-worko
 export { default as CoachWorkoutsPage } from './coach-workouts-page/coach-workouts-page.component';
 export { default as OrdersPage } from './orders-page/orders-page.component';
 export { default as BalancePage } from './balance-page/balance-page.component';
+export { default as FriendsPage } from './friends-page/friends-page.component';
