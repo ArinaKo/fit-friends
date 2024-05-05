@@ -11,11 +11,12 @@ function generateFriendsEntity(userId: string, otherUsersIds): FriendsEntity {
 
 export function generateFriendsEntities(
   allUsersIds: string[],
+  usersIds: string[],
 ): FriendsEntity[] {
   return allUsersIds.map((userId) =>
     generateFriendsEntity(
       userId,
-      allUsersIds.filter((id) => id !== userId),
+      usersIds.filter((id) => id !== userId),
     ),
   );
 }

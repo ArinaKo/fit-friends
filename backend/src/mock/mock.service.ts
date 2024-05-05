@@ -115,8 +115,13 @@ export class MockService {
     });
   }
 
-  private async registerFriends(allUsersIds: string[]): Promise<void> {
-    this.friendsRepository.saveMany(generateFriendsEntities(allUsersIds));
+  private async registerFriends(
+    allUsersIds: string[],
+    usersIds: string[],
+  ): Promise<void> {
+    this.friendsRepository.saveMany(
+      generateFriendsEntities(allUsersIds, usersIds),
+    );
   }
 
   private async registerSubscribers(
@@ -151,7 +156,7 @@ export class MockService {
     await this.registerComments(workoutsIds, usersIds);
     await this.registerRequests(usersIds, allUsersIds);
     await this.registerOrders(usersIds, workouts);
-    await this.registerFriends(allUsersIds);
+    await this.registerFriends(allUsersIds, usersIds);
     await this.registerSubscribers(usersIds, coachesIds);
     await this.registerNotifications(allUsersIds);
 
