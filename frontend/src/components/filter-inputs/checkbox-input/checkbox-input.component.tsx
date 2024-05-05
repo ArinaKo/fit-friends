@@ -8,10 +8,17 @@ type CheckboxInputProps = {
 };
 
 function CheckboxInput({ type, styleClass }: CheckboxInputProps): JSX.Element {
-  const { name, filterSelector, setFilter, optionsArray, optionsLabels } =
-    CheckboxInputTypeDiffs[type];
+  const {
+    name,
+    filterSelector,
+    isDisabledSelector,
+    setFilter,
+    optionsArray,
+    optionsLabels,
+  } = CheckboxInputTypeDiffs[type];
   const dispatch = useAppDispatch();
   const filter = useAppSelector(filterSelector);
+  const isDisabled = useAppSelector(isDisabledSelector);
 
   return (
     <ul className={`${styleClass}__check-list`}>
@@ -26,6 +33,7 @@ function CheckboxInput({ type, styleClass }: CheckboxInputProps): JSX.Element {
                 type="checkbox"
                 name={name}
                 checked={filter.includes(option)}
+                disabled={isDisabled}
                 onChange={() => {
                   dispatch(resetCatalogPage());
                   dispatch(setFilter(option));

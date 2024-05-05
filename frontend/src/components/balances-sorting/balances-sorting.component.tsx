@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
+  isBalancesListLoading,
   isOnlyActiveBalances,
   resetCatalogPage,
   setBalancesSorting,
@@ -8,6 +9,7 @@ import {
 function BalancesSorting(): JSX.Element {
   const dispatch = useAppDispatch();
   const isOnlyActive = useAppSelector(isOnlyActiveBalances);
+  const isDisabled = useAppSelector(isBalancesListLoading);
 
   return (
     <div className="my-purchases__controls">
@@ -20,6 +22,7 @@ function BalancesSorting(): JSX.Element {
             type="checkbox"
             name="active-balances"
             checked={isOnlyActive}
+            disabled={isDisabled}
             onChange={() => {
               dispatch(resetCatalogPage());
               dispatch(setBalancesSorting(!isOnlyActive));

@@ -11,6 +11,7 @@ import {
   getWorkoutsMinCalories,
   getWorkoutsMinPrice,
   getWorkoutsMinRating,
+  isWorkoutsListLoading,
   setWorkoutsCaloriesFilter,
   setWorkoutsPriceFilter,
   setWorkoutsRatingFilter,
@@ -30,6 +31,7 @@ type RangeInputTypeDiff = {
   maxValueSelector: (state: State) => number;
   minFilterSelector: (state: State) => number | undefined;
   maxFilterSelector: (state: State) => number | undefined;
+  isDisabledSelector: (state: State) => boolean;
   setMinFilter: (value: number) => { payload: [string, number]; type: string };
   setMaxFilter: (value: number) => { payload: [string, number]; type: string };
 };
@@ -46,6 +48,7 @@ export const RangeInputTypeDiffs: RangeInputTypeDiffs = {
     maxValueSelector: getWorkoutsMaxPrice,
     minFilterSelector: getWorkoutsFilterMinPrice,
     maxFilterSelector: getWorkoutsFilterMaxPrice,
+    isDisabledSelector: isWorkoutsListLoading,
     setMinFilter: (value: number) => setWorkoutsPriceFilter(['min', value]),
     setMaxFilter: (value: number) => setWorkoutsPriceFilter(['max', value]),
   },
@@ -56,6 +59,7 @@ export const RangeInputTypeDiffs: RangeInputTypeDiffs = {
     maxValueSelector: getWorkoutsMaxCalories,
     minFilterSelector: getWorkoutsFilterMinCalories,
     maxFilterSelector: getWorkoutsFilterMaxCalories,
+    isDisabledSelector: isWorkoutsListLoading,
     setMinFilter: (value: number) => setWorkoutsCaloriesFilter(['min', value]),
     setMaxFilter: (value: number) => setWorkoutsCaloriesFilter(['max', value]),
   },
@@ -66,6 +70,7 @@ export const RangeInputTypeDiffs: RangeInputTypeDiffs = {
     maxValueSelector: getWorkoutsMaxRating,
     minFilterSelector: getWorkoutsFilterMinRating,
     maxFilterSelector: getWorkoutsFilterMaxRating,
+    isDisabledSelector: isWorkoutsListLoading,
     setMinFilter: (value: number) => setWorkoutsRatingFilter(['min', value]),
     setMaxFilter: (value: number) => setWorkoutsRatingFilter(['max', value]),
   },

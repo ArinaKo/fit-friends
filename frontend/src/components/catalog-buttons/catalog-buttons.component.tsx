@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   increaseCatalogPage,
   isAllCatalogItems,
+  isCatalogMoreButtonDisabled,
   isCatalogScrollActive,
 } from '../../store';
 
@@ -14,6 +15,8 @@ function CatalogButtons({ styleClass }: CatalogButtonsProps) {
   const dispatch = useAppDispatch();
   const isAll = useAppSelector(isAllCatalogItems);
   const isScrollActive = useAppSelector(isCatalogScrollActive);
+  const isDisabled = useAppSelector(isCatalogMoreButtonDisabled);
+
   return (
     <div className={cn('show-more', styleClass)}>
       <button
@@ -21,6 +24,7 @@ function CatalogButtons({ styleClass }: CatalogButtonsProps) {
           'show-more__button--not-active': isAll,
         })}
         type="button"
+        disabled={isDisabled}
         onClick={() => dispatch(increaseCatalogPage())}
       >
         Показать еще

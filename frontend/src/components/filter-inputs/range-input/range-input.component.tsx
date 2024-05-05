@@ -16,6 +16,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
     maxValueSelector,
     minFilterSelector,
     maxFilterSelector,
+    isDisabledSelector,
     setMinFilter,
     setMaxFilter,
   } = RangeInputTypeDiffs[type];
@@ -24,6 +25,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
   const maxValue = useAppSelector(maxValueSelector);
   const minFilter = useAppSelector(minFilterSelector);
   const maxFilter = useAppSelector(maxFilterSelector);
+  const isDisabled = useAppSelector(isDisabledSelector);
 
   const range = useRef<HTMLDivElement>(null);
   const [minInput, setMinInput] = useState<number>(minValue);
@@ -66,6 +68,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
               autoComplete="off"
               step={1}
               value={minInput}
+              disabled={isDisabled}
               onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
                 const value = Number(target.value);
                 setMinInput(value);
@@ -89,6 +92,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
               autoComplete="off"
               step={1}
               value={maxInput}
+              disabled={isDisabled}
               onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
                 const value = Number(target.value);
                 setMaxInput(value);
@@ -114,6 +118,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
             min={minValue}
             max={maxValue}
             value={minFilter ?? minValue}
+            disabled={isDisabled}
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               const value = Math.min(
                 Number(event.target.value),
@@ -134,6 +139,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
             min={minValue}
             max={maxValue}
             value={maxFilter ?? maxValue}
+            disabled={isDisabled}
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               const value = Math.max(
                 Number(event.target.value),

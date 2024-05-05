@@ -10,3 +10,8 @@ export const isAllCatalogItems = (state: State): boolean =>
 
 export const isCatalogScrollActive = (state: State): boolean =>
   state[NameSpace.CatalogData].totalPages === 1;
+
+export const isCatalogMoreButtonDisabled = (state: State): boolean =>
+  state[NameSpace.WorkoutsList].isDataLoading ||
+  state[NameSpace.OrdersList].isDataLoading ||
+  state[NameSpace.BalancesList].isDataLoading;

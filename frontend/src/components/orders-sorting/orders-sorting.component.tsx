@@ -2,6 +2,7 @@ import { OrdersSortType } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getOrdersListSortType,
+  isOrdersListLoading,
   isOrdersListSortDown,
   resetCatalogPage,
   setOrdersSorting,
@@ -12,6 +13,7 @@ function OrdersSorting(): JSX.Element {
   const dispatch = useAppDispatch();
   const sortType = useAppSelector(getOrdersListSortType);
   const isSortDown = useAppSelector(isOrdersListSortDown);
+  const isDisabled = useAppSelector(isOrdersListLoading);
 
   return (
     <div className="sort-for">
@@ -22,6 +24,7 @@ function OrdersSorting(): JSX.Element {
             'btn-filter-sort--active': sortType === OrdersSortType.Sum,
           })}
           type="button"
+          disabled={isDisabled}
           onClick={() => {
             dispatch(resetCatalogPage());
             dispatch(setOrdersSorting(OrdersSortType.Sum));
@@ -43,6 +46,7 @@ function OrdersSorting(): JSX.Element {
             'btn-filter-sort--active': sortType === OrdersSortType.Count,
           })}
           type="button"
+          disabled={isDisabled}
           onClick={() => {
             dispatch(resetCatalogPage());
             dispatch(setOrdersSorting(OrdersSortType.Count));
