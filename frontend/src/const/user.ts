@@ -41,3 +41,20 @@ export enum UserDescriptionLength {
   Min = 10,
   Max = 140,
 }
+
+export enum RequestStatus {
+  Default = 'на рассмотрении',
+  Rejected = 'отклонён',
+  Accepted = 'принят',
+}
+
+export const RequestStatusText = {
+  [RequestStatus.Default]: 'Запрос на персональную тренировку',
+  [RequestStatus.Rejected]: 'Запрос на персональную тренировку отклонён',
+  [RequestStatus.Accepted]: 'Запрос на персональную тренировку принят',
+} as const;
+
+export enum UserStatus {
+  Ready = 'Готов к тренировке',
+  NotReady = 'Не готов к тренировке',
+}
