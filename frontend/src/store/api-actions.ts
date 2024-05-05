@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AppDispatch,
   AuthUser,
+  BalancesWithPagination,
   CertificatesFiles,
   FileData,
   LoggedUser,
@@ -22,6 +23,7 @@ import {
   getCreateWorkoutData,
   getCoachWorkoutsQuery,
   getCoachOrdersQuery,
+  getUserBalancesQuery,
 } from '../utils';
 
 type asyncThunkConfig = {
@@ -197,5 +199,20 @@ export const getCoachOrdersAction = createAsyncThunk<
   const { data } = await api.get<OrdersWithPagination>(APIRoute.CoachOrders, {
     params,
   });
+  return data;
+});
+
+export const getUserBalancesAction = createAsyncThunk<
+  BalancesWithPagination,
+  undefined,
+  asyncThunkConfig
+>('balance/user-balances', async (_arg, { getState, extra: api }) => {
+  const params = getUserBalancesQuery(getState());
+  const { data } = await api.get<BalancesWithPagination>(
+    APIRoute.UserBalances,
+    {
+      params,
+    },
+  );
   return data;
 });

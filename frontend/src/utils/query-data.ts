@@ -42,3 +42,13 @@ export function getCoachOrdersQuery(state: State): URLSearchParams {
   params.append('sortDirection', directionDown ? '-1' : '1');
   return params;
 }
+
+export function getUserBalancesQuery(state: State): URLSearchParams {
+  const { limit, currentPage } = state.CATALOG_DATA;
+  const { isOnlyActive } = state.BALANCES_LIST;
+  const params = new URLSearchParams();
+  params.append('limit', limit.toString());
+  params.append('page', currentPage.toString());
+  params.append('active', isOnlyActive.toString());
+  return params;
+}

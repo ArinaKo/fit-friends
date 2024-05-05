@@ -16,4 +16,5 @@ export const APIRoute = {
   CreateWorkout: '/workouts',
   CoachWorkouts: '/workouts/coach',
   CoachOrders: '/orders',
+  UserBalances: '/balance',
 } as const;
