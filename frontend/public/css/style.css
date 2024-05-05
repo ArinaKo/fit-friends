@@ -5394,6 +5394,10 @@ input:active + .custom-textarea__text {
   transition: color 0.4s ease-in-out;
 }
 
+.thumbnail-friend__invite-button--coach {
+  color: #d0d0d0;
+}
+
 .thumbnail-friend__invite-button:first-of-type {
   margin-left: auto;
 }
