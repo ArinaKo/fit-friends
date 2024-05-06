@@ -10,6 +10,7 @@ export const ListItemsPortion = {
   CoachOrders: 4,
   UserBalances: 8,
   Friends: 9,
+  AllWorkouts: 6,
 };
 
 export enum OrdersSortType {
