@@ -1,9 +1,10 @@
-import { IsIn, IsOptional } from 'class-validator';
+import { IsEnum, IsIn, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { WorkoutType } from '@app/types';
 import * as lodash from 'lodash';
 import { BaseWorkoutsQuery } from './base-workouts.query';
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { WorkoutsPriceSorting } from '../workout.const';
 
 export class WorkoutsQuery extends BaseWorkoutsQuery {
   @ApiPropertyOptional({
@@ -17,4 +18,9 @@ export class WorkoutsQuery extends BaseWorkoutsQuery {
   @IsIn(Object.values(WorkoutType), { each: true })
   @IsOptional()
   public workoutTypes?: string[];
+
+  @Transform(({ value }) => lodash.lowerCase(value))
+  @IsEnum(WorkoutsPriceSorting)
+  @IsOptional()
+  public sorting?: WorkoutsPriceSorting;
 }

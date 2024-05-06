@@ -10,7 +10,8 @@ import {
   LIST_LIMIT,
 } from 'src/shared/const';
 import { FullWorkoutQuery } from './query';
-import { FieldRange } from '@app/types';
+import { FieldRange, SortDirection } from '@app/types';
+import * as lodash from 'lodash';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   AddStringId: {
@@ -206,10 +207,12 @@ export class WorkoutRepository extends BaseMongoRepository<
       caloriesRange: FieldRange;
     }
   > {
-    const sortDirection = query?.sortDirection ?? DEFAULT_SORT_DIRECTION;
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
     const filter = query ? generateFilter(query) : {};
+    const sorting: PipelineStage = query?.sorting
+      ? { $sort: { price: SortDirection[lodash.capitalize(query.sorting)] } }
+      : { $sort: { createdAt: DEFAULT_SORT_DIRECTION } };
 
     if (coachId) {
       Object.assign(filter, { coachId });
@@ -219,7 +222,7 @@ export class WorkoutRepository extends BaseMongoRepository<
       this.model
         .aggregate<WorkoutModel>([
           { $match: filter },
-          { $sort: { price: sortDirection } },
+          sorting,
           { $skip: skip },
           { $limit: limit },
           PipelineStage.AddStringId,
