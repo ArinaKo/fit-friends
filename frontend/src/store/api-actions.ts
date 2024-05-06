@@ -27,6 +27,7 @@ import {
   getCoachOrdersQuery,
   getUserBalancesQuery,
   getUserFriendsQuery,
+  getAllWorkoutsQuery,
 } from '../utils';
 
 type asyncThunkConfig = {
@@ -178,6 +179,18 @@ export const createWorkoutAction = createAsyncThunk<
     },
   });
   dispatch(redirectToRoute(AppRoute.CoachWorkouts));
+});
+
+export const getAllWorkoutsAction = createAsyncThunk<
+  WorkoutsWithPagination,
+  undefined,
+  asyncThunkConfig
+>('workouts/all-workouts', async (_arg, { getState, extra: api }) => {
+  const params = getAllWorkoutsQuery(getState());
+  const { data } = await api.get<WorkoutsWithPagination>(APIRoute.AllWorkout, {
+    params,
+  });
+  return data;
 });
 
 export const getCoachWorkoutsAction = createAsyncThunk<
