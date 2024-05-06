@@ -13,6 +13,7 @@ export { default as CaloriesPlan } from './calories-plan/calories-plan.component
 export { default as CoachCertificates } from './coach-certificates/coach-certificates.component';
 export { default as CertificateCard } from './certificate-card/certificate-card.component';
 export { default as CreateWorkoutForm } from './create-workout-form/create-workout-form.component';
+export { default as WorkoutsSorting } from './workouts-sorting/workouts-sorting.component';
 export { default as WorkoutsFilter } from './workouts-filter/workouts-filter.component';
 export { default as WorkoutCard } from './workout-card/workout-card.component';
 export * from './workout-card/workout-card';
