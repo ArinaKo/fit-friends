@@ -27,7 +27,7 @@ export const friendsList = createSlice({
         const { friends, currentPage } = action.payload;
         state.friends =
           currentPage === 1 ? friends : [...state.friends, ...friends];
-        state.isDataLoading = true;
+        state.isDataLoading = false;
       })
       .addCase(updateWorkoutRequestAction.fulfilled, (state, action) => {
         const { id, status } = action.payload;

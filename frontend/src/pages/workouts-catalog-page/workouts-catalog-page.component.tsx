@@ -39,6 +39,7 @@ function WorkoutsCatalogPage(): JSX.Element {
               <button
                 className="btn-flat btn-flat--underlined gym-catalog-form__btnback"
                 type="button"
+                onClick={() => navigate(AppRoute.Account)}
               >
                 <svg width={14} height={10} aria-hidden="true">
                   <use xlinkHref="#arrow-left" />

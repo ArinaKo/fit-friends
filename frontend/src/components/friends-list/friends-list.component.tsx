@@ -18,7 +18,7 @@ function FriendsList(): JSX.Element {
     dispatch(getUserFriendsAction());
   }, [dispatch, page]);
 
-  if (!isDataLoading) {
+  if (isDataLoading) {
     return <UIBlocker />;
   }
 

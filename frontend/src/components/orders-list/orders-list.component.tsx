@@ -27,7 +27,7 @@ function OrdersList(): JSX.Element {
     dispatch(getCoachOrdersAction());
   }, [dispatch, page, sortType, sortDirection]);
 
-  if (!isDataLoading) {
+  if (isDataLoading) {
     return <UIBlocker />;
   }
 

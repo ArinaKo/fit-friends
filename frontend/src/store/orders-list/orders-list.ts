@@ -40,7 +40,7 @@ export const ordersList = createSlice({
         const { orders, currentPage } = action.payload;
         state.orders =
           currentPage === 1 ? orders : [...state.orders, ...orders];
-        state.isDataLoading = true;
+        state.isDataLoading = false;
       });
   },
 });

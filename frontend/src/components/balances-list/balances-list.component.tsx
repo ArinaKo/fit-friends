@@ -25,7 +25,7 @@ function BalancesList(): JSX.Element {
     dispatch(getUserBalancesAction());
   }, [dispatch, page, onlyActive]);
 
-  if (!isDataLoading) {
+  if (isDataLoading) {
     return <UIBlocker />;
   }
 

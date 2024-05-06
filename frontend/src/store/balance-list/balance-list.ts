@@ -33,7 +33,7 @@ export const balancesList = createSlice({
         const { balances, currentPage } = action.payload;
         state.balances =
           currentPage === 1 ? balances : [...state.balances, ...balances];
-        state.isDataLoading = true;
+        state.isDataLoading = false;
       });
   },
 });

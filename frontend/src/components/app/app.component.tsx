@@ -71,10 +71,6 @@ function App(): JSX.Element {
             />
             <Route path={AppRoute.Users} element={<div>Not implemented</div>} />
             <Route path={`${AppRoute.Users}:userId`} element={<div>Not implemented</div>} />
-            <Route
-              path={AppRoute.Workouts}
-              element={<div>Not implemented - workouts list page</div>}
-            />
             <Route path={AppRoute.Workouts} element={<WorkoutsCatalogPage />} />
             <Route
               path={`${AppRoute.Workouts}:workoutId`}
