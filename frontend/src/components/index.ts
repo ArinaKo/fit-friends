@@ -20,6 +20,7 @@ export { default as WorkoutCard } from './workout-card/workout-card.component';
 export * from './workout-card/workout-card';
 export { default as CatalogButtons } from './catalog-buttons/catalog-buttons.component';
 export { default as WorkoutsList } from './workouts-list/workouts-list.component';
+export * from './workouts-list/workouts-list';
 export { default as OrdersList } from './orders-list/orders-list.component';
 export { default as OrdersSorting } from './orders-sorting/orders-sorting.component';
 export { default as BalancesList } from './balances-list/balances-list.component';

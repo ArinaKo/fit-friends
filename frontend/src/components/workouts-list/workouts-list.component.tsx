@@ -9,7 +9,9 @@ import {
   getWorkoutsFilterMinCalories,
   getWorkoutsFilterMinPrice,
   getWorkoutsFilterMinRating,
+  getWorkoutsFilterTypes,
   getWorkoutsList,
+  getWorkoutsSortingType,
   isWorkoutsListLoading,
 } from '../../store';
 import {
@@ -18,9 +20,18 @@ import {
   WorkoutCard,
   WorkoutCardType,
 } from '../index';
-import { getCoachWorkoutsAction } from '../../store/api-actions';
+import {
+  getAllWorkoutsAction,
+  getCoachWorkoutsAction,
+} from '../../store/api-actions';
+import { WorkoutsListType, WorkoutsListTypeDiffs } from './workouts-list';
 
-function WorkoutsList(): JSX.Element {
+type WorkoutsListProps = {
+  type: WorkoutsListType;
+};
+
+function WorkoutsList({ type }: WorkoutsListProps): JSX.Element {
+  const { listStyleClass } = WorkoutsListTypeDiffs[type];
   const dispatch = useAppDispatch();
   const workouts = useAppSelector(getWorkoutsList);
   const page = useAppSelector(getCatalogPage);
@@ -31,12 +42,19 @@ function WorkoutsList(): JSX.Element {
   const minRatingFilter = useAppSelector(getWorkoutsFilterMinRating);
   const maxRationFilter = useAppSelector(getWorkoutsFilterMaxRating);
   const durationFilter = useAppSelector(getWorkoutsFilterDuration);
+  const typesFilter = useAppSelector(getWorkoutsFilterTypes);
+  const sorting = useAppSelector(getWorkoutsSortingType);
   const isDataLoading = useAppSelector(isWorkoutsListLoading);
 
   useEffect(() => {
-    dispatch(getCoachWorkoutsAction());
+    dispatch(
+      type === WorkoutsListType.CoachWorkouts
+        ? getCoachWorkoutsAction()
+        : getAllWorkoutsAction(),
+    );
   }, [
     dispatch,
+    type,
     page,
     minPriceFilter,
     maxPriceFilter,
@@ -45,15 +63,17 @@ function WorkoutsList(): JSX.Element {
     minRatingFilter,
     maxRationFilter,
     durationFilter,
+    typesFilter,
+    sorting,
   ]);
 
-  if (!isDataLoading) {
+  if (isDataLoading) {
     return <UIBlocker />;
   }
 
   return (
     <>
-      <ul className="my-trainings__list">
+      <ul className={`${listStyleClass}__list`}>
         {workouts.map((workout) => (
           <WorkoutCard
             type={WorkoutCardType.CoachWorkouts}
@@ -62,7 +82,7 @@ function WorkoutsList(): JSX.Element {
           />
         ))}
       </ul>
-      <CatalogButtons styleClass="my-trainings__show-more" />
+      <CatalogButtons styleClass={`${listStyleClass}__show-more`} />
     </>
   );
 }

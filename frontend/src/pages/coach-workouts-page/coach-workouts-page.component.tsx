@@ -1,9 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { WorkoutsFilter, WorkoutsFilterType, WorkoutsList } from '../../components';
+import {
+  WorkoutsFilter,
+  WorkoutsFilterType,
+  WorkoutsList,
+  WorkoutsListType,
+} from '../../components';
 import { AppRoute, ListItemsPortion } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { isUserCoach, resetCatalogData, resetWorkoutsFilters } from '../../store';
+import {
+  isUserCoach,
+  resetCatalogData,
+  resetWorkoutsFilters,
+} from '../../store';
 
 function CoachWorkoutsPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -47,7 +56,7 @@ function CoachWorkoutsPage(): JSX.Element {
           </div>
           <div className="inner-page__content">
             <div className="my-trainings">
-              <WorkoutsList />
+              <WorkoutsList type={WorkoutsListType.CoachWorkouts} />
             </div>
           </div>
         </div>
