@@ -35,9 +35,7 @@ export const AppRoute = {
   CoachWorkouts: '/account/my-workouts',
   CreateWorkout: '/account/create-workout',
   Users: '/users',
-  User: '/users/:userId',
   Workouts: '/workouts',
-  Workout: '/workouts/:workoutId',
 } as const;
 
 export enum AuthorizationStatus {

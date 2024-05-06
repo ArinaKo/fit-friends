@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Workout } from '../../types';
+import { OrdersInfo, Workout } from '../../types';
 import { AppRoute, STATIC_URL } from '../../const';
 import { WorkoutCardType, WorkoutCardTypeDiffs } from './workout-card';
-
-type OrdersInfo = {
-  sum: number;
-  count: number;
-};
+import WorkoutOrders from './orders-info.component';
 
 type WorkoutCardProps = {
   workout: Workout;
@@ -14,38 +10,12 @@ type WorkoutCardProps = {
   ordersInfo?: OrdersInfo;
 };
 
-function OrdersInfo({ count, sum }: OrdersInfo): JSX.Element {
-  return (
-    <div className="thumbnail-training__total-info">
-      <div className="thumbnail-training__total-info-card">
-        <svg width={32} height={32} aria-hidden="true">
-          <use xlinkHref="#icon-chart" />
-        </svg>
-        <p className="thumbnail-training__total-info-value">{count}</p>
-        <p className="thumbnail-training__total-info-text">
-          Куплено тренировок
-        </p>
-      </div>
-      <div className="thumbnail-training__total-info-card">
-        <svg width={31} height={28} aria-hidden="true">
-          <use xlinkHref="#icon-wallet" />
-        </svg>
-        <p className="thumbnail-training__total-info-value">
-          {sum}
-          <span>₽</span>
-        </p>
-        <p className="thumbnail-training__total-info-text">Общая сумма</p>
-      </div>
-    </div>
-  );
-}
-
 function WorkoutCard({
   workout,
   type,
   ordersInfo,
 }: WorkoutCardProps): JSX.Element {
-  const { listItemStyleClass } = WorkoutCardTypeDiffs[type];
+  const { listItemStyleClass, withButtons } = WorkoutCardTypeDiffs[type];
   const {
     id,
     title,
@@ -104,23 +74,35 @@ function WorkoutCard({
           <div className="thumbnail-training__text-wrapper">
             <p className="thumbnail-training__text">{description}</p>
           </div>
-          <div className="thumbnail-training__button-wrapper">
+          {withButtons ? (
+            <div className="thumbnail-training__button-wrapper">
+              <Link
+                to={`${AppRoute.Workouts}/${id}`}
+                className="btn btn--small thumbnail-training__button-catalog"
+              >
+                Подробнее
+              </Link>
+              <Link
+                to={`${AppRoute.Workouts}/${id}`}
+                className="btn btn--small btn--outlined thumbnail-training__button-catalog"
+              >
+                Отзывы
+              </Link>
+            </div>
+          ) : (
             <Link
               to={`${AppRoute.Workouts}/${id}`}
-              className="btn btn--small thumbnail-training__button-catalog"
+              className="btn-flat btn-flat--underlined thumbnail-training__button-orders"
             >
-              Подробнее
+              <svg width="18" height="18" aria-hidden="true">
+                <use xlinkHref="#icon-info"></use>
+              </svg>
+              <span>Подробнее</span>
             </Link>
-            <a
-              className="btn btn--small btn--outlined thumbnail-training__button-catalog"
-              href="#"
-            >
-              Отзывы
-            </a>
-          </div>
+          )}
         </div>
         {ordersInfo ? (
-          <OrdersInfo count={ordersInfo.count} sum={ordersInfo.sum} />
+          <WorkoutOrders count={ordersInfo.count} sum={ordersInfo.sum} />
         ) : undefined}
       </div>
     </li>

@@ -1,11 +1,12 @@
 import { User, WorkoutRequest } from '../../types';
-import { UserRole, UserStatus } from '../../const';
+import { AppRoute, UserRole, UserStatus } from '../../const';
 import { getFileUrl } from '../../utils';
 import cn from 'classnames';
 import Request from './request.component';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { isUserCoach } from '../../store';
 import { createWorkoutRequestAction } from '../../store/api-actions';
+import { Link } from 'react-router-dom';
 
 type FriendCardProps = {
   user: User;
@@ -34,7 +35,9 @@ function FriendCard({ user, workoutRequest }: FriendCardProps): JSX.Element {
             </div>
           </div>
           <div className="thumbnail-friend__header">
-            <h2 className="thumbnail-friend__name">{name}</h2>
+            <Link to={`${AppRoute.Users}/${id}`}>
+              <h2 className="thumbnail-friend__name">{name}</h2>
+            </Link>
             <div className="thumbnail-friend__location">
               <svg width={14} height={16} aria-hidden="true">
                 <use xlinkHref="#icon-location" />

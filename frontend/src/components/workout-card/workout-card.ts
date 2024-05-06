@@ -6,6 +6,7 @@ export enum WorkoutCardType {
 
 type WorkoutCardTypeDiff = {
   listItemStyleClass: string;
+  withButtons: boolean;
 };
 
 type WorkoutCardTypeDiffs = {
@@ -15,11 +16,14 @@ type WorkoutCardTypeDiffs = {
 export const WorkoutCardTypeDiffs: WorkoutCardTypeDiffs = {
   [WorkoutCardType.CoachWorkouts]: {
     listItemStyleClass: 'my-trainings__item',
+    withButtons: true,
   },
   [WorkoutCardType.WorkoutOrders]: {
     listItemStyleClass: 'my-orders__item',
+    withButtons: false,
   },
   [WorkoutCardType.WorkoutBalance]: {
     listItemStyleClass: 'my-purchases__item',
+    withButtons: true,
   },
 };
