@@ -14,6 +14,7 @@ import {
   OrdersPage,
   QuestionaryPage,
   RegisterPage,
+  WorkoutsCatalogPage,
 } from '../../pages';
 import { useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
@@ -74,6 +75,7 @@ function App(): JSX.Element {
               path={AppRoute.Workouts}
               element={<div>Not implemented - workouts list page</div>}
             />
+            <Route path={AppRoute.Workouts} element={<WorkoutsCatalogPage />} />
             <Route
               path={`${AppRoute.Workouts}:workoutId`}
               element={<div>Not implemented - workout page</div>}
