@@ -17,6 +17,12 @@ export enum OrdersSortType {
   Count = 'count',
 }
 
+export enum WorkoutsSortType {
+  PriceDown = 'down',
+  PriceUp = 'up',
+  Free = 'free',
+}
+
 export const AvatarMaxSize = {
   ForHuman: '1 мегабайт',
   ToCheck: 8388608,

@@ -1,7 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CatalogData } from '../../types';
 import { ListItemsPortion, NameSpace } from '../../const';
-import { getCoachOrdersAction, getCoachWorkoutsAction, getUserBalancesAction, getUserFriendsAction } from '../api-actions';
+import {
+  getAllWorkoutsAction,
+  getCoachOrdersAction,
+  getCoachWorkoutsAction,
+  getUserBalancesAction,
+  getUserFriendsAction,
+} from '../api-actions';
 
 const initialState: CatalogData = {
   limit: ListItemsPortion.Default,
@@ -31,6 +37,12 @@ export const catalogData = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(getAllWorkoutsAction.fulfilled, (state, action) => {
+        const { itemsPerPage, totalItems, totalPages } = action.payload;
+        state.itemsPerPage = itemsPerPage;
+        state.totalPages = totalPages;
+        state.totalItems = totalItems;
+      })
       .addCase(getCoachWorkoutsAction.fulfilled, (state, action) => {
         const { itemsPerPage, totalItems, totalPages } = action.payload;
         state.itemsPerPage = itemsPerPage;

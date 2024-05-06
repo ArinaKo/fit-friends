@@ -5,8 +5,9 @@ import {
   NameSpace,
   PriceValue,
   RatingValue,
+  WorkoutsSortType,
 } from '../../const';
-import { getCoachWorkoutsAction } from '../api-actions';
+import { getAllWorkoutsAction, getCoachWorkoutsAction } from '../api-actions';
 
 const initialState: WorkoutsList = {
   workouts: [],
@@ -36,6 +37,8 @@ const initialState: WorkoutsList = {
       max: RatingValue.Max,
     },
     duration: [],
+    types: [],
+    sorting: undefined,
   },
   isDataLoading: false,
 };
@@ -74,6 +77,16 @@ export const workoutsList = createSlice({
         ? state.filter.duration.filter((item) => item !== duration)
         : [...state.filter.duration, duration];
     },
+    setWorkoutsTypesFilter: (state, action: PayloadAction<string>) => {
+      const type = action.payload;
+      state.filter.types = state.filter.types.includes(type)
+        ? state.filter.types.filter((item) => item !== type)
+        : [...state.filter.types, type];
+    },
+    setWorkoutsSorting: (state, action: PayloadAction<WorkoutsSortType>) => {
+      const value = action.payload;
+      state.filter.sorting = state.filter.sorting !== value ? value : undefined;
+    },
   },
   extraReducers(builder) {
     builder
@@ -84,18 +97,32 @@ export const workoutsList = createSlice({
         state.isDataLoading = false;
       })
       .addCase(getCoachWorkoutsAction.fulfilled, (state, action) => {
-        const {
-          workouts,
-          currentPage,
-          priceRange,
-          caloriesRange,
-        } = action.payload;
-        state.workouts = currentPage === 1 ? workouts : [...state.workouts, ...workouts];
+        const { workouts, currentPage, priceRange, caloriesRange } =
+          action.payload;
+        state.workouts =
+          currentPage === 1 ? workouts : [...state.workouts, ...workouts];
         state.price.min = priceRange[0];
         state.price.max = priceRange[1];
         state.calories.min = caloriesRange[0];
         state.calories.max = caloriesRange[1];
+        state.isDataLoading = false;
+      })
+      .addCase(getAllWorkoutsAction.pending, (state) => {
         state.isDataLoading = true;
+      })
+      .addCase(getAllWorkoutsAction.rejected, (state) => {
+        state.isDataLoading = false;
+      })
+      .addCase(getAllWorkoutsAction.fulfilled, (state, action) => {
+        const { workouts, currentPage, priceRange, caloriesRange } =
+          action.payload;
+        state.workouts =
+          currentPage === 1 ? workouts : [...state.workouts, ...workouts];
+        state.price.min = priceRange[0];
+        state.price.max = priceRange[1];
+        state.calories.min = caloriesRange[0];
+        state.calories.max = caloriesRange[1];
+        state.isDataLoading = false;
       });
   },
 });
@@ -106,4 +133,6 @@ export const {
   setWorkoutsCaloriesFilter,
   setWorkoutsRatingFilter,
   setWorkoutsDurationFilter,
+  setWorkoutsTypesFilter,
+  setWorkoutsSorting,
 } = workoutsList.actions;

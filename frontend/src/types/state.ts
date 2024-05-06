@@ -7,6 +7,7 @@ import {
   UserRole,
   UserSex,
   WorkoutType,
+  WorkoutsSortType,
 } from '../const';
 import { FileData } from './file-data.js';
 import { Workout } from './workout.js';
@@ -136,6 +137,8 @@ export type WorkoutsList = {
       max: number;
     };
     duration: string[];
+    types: string[];
+    sorting: WorkoutsSortType | undefined;
   };
   isDataLoading: boolean;
 };

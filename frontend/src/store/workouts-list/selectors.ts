@@ -1,4 +1,4 @@
-import { NameSpace } from '../../const';
+import { NameSpace, WorkoutsSortType } from '../../const';
 import { State, Workout } from '../../types';
 
 export const getWorkoutsList = (state: State): Workout[] =>
@@ -44,6 +44,12 @@ export const getWorkoutsFilterMaxRating = (state: State): number =>
 
 export const getWorkoutsFilterDuration = (state: State): string[] =>
   state[NameSpace.WorkoutsList].filter.duration;
+
+export const getWorkoutsFilterTypes = (state: State): string[] =>
+  state[NameSpace.WorkoutsList].filter.types;
+
+export const getWorkoutsSortingType = (state: State): WorkoutsSortType | undefined =>
+  state[NameSpace.WorkoutsList].filter.sorting;
 
 export const isWorkoutsListLoading = (state: State): boolean =>
   state[NameSpace.WorkoutsList].isDataLoading;
