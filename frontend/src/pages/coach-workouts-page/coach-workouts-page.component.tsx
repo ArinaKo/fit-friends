@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { WorkoutsFilter, WorkoutsList } from '../../components';
+import { WorkoutsFilter, WorkoutsFilterType, WorkoutsList } from '../../components';
 import { AppRoute, ListItemsPortion } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
@@ -42,7 +42,7 @@ function CoachWorkoutsPage(): JSX.Element {
                 <span>Назад</span>
               </button>
               <h3 className="my-training-form__title">фильтры</h3>
-              <WorkoutsFilter />
+              <WorkoutsFilter type={WorkoutsFilterType.CoachWorkouts} />
             </div>
           </div>
           <div className="inner-page__content">
