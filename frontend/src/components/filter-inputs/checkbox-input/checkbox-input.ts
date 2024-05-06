@@ -1,14 +1,17 @@
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { WorkoutDuration } from '../../../const';
+import { WorkoutDuration, WorkoutType } from '../../../const';
 import {
   getWorkoutsFilterDuration,
+  getWorkoutsFilterTypes,
   isWorkoutsListLoading,
   setWorkoutsDurationFilter,
+  setWorkoutsTypesFilter,
 } from '../../../store';
 import { State } from '../../../types';
 
 export enum CheckboxInputType {
   DurationOfWorkout = 'workout-duration',
+  TypeOfWorkout = 'workout-type',
 }
 
 type CheckboxInputTypeDiff = {
@@ -35,5 +38,12 @@ export const CheckboxInputTypeDiffs: CheckboxInputTypeDiffs = {
       const [from, to] = option.split('-');
       return `${from} мин - ${to} мин`;
     }),
+  },
+  [CheckboxInputType.TypeOfWorkout]: {
+    name: 'type',
+    filterSelector: getWorkoutsFilterTypes,
+    isDisabledSelector: isWorkoutsListLoading,
+    setFilter: setWorkoutsTypesFilter,
+    optionsArray: Object.values(WorkoutType),
   },
 };
