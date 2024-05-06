@@ -9,3 +9,4 @@ export { default as OrdersPage } from './orders-page/orders-page.component';
 export { default as BalancePage } from './balance-page/balance-page.component';
 export { default as FriendsPage } from './friends-page/friends-page.component';
 export { default as WorkoutsCatalogPage } from './workouts-catalog-page/workouts-catalog-page.component';
+export { default as WorkoutPage } from './workout-page/workout-page.component';
