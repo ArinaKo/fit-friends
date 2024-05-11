@@ -4122,7 +4122,8 @@ input:active + .custom-textarea__text {
 
 .training-info__error {
   position: absolute;
-  bottom: -22px;
+  bottom: -17px;
+  width: max-content;
   left: 0;
   font-weight: 400;
   font-size: 14px;
