@@ -15,6 +15,7 @@ export const APIRoute = {
   UpdateCertificate: '/users/certificates/update',
   AllWorkout: '/workouts',
   CreateWorkout: '/workouts',
+  Workout: '/workouts',
   CoachWorkouts: '/workouts/coach',
   CoachOrders: '/orders',
   UserBalances: '/balance',

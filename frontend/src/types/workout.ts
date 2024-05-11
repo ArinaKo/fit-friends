@@ -4,6 +4,8 @@ import {
   WorkoutSexFor,
   WorkoutType,
 } from '../const';
+import { FileData } from './file-data';
+import { User } from './user';
 
 export type Workout = {
   id: string;
@@ -20,3 +22,8 @@ export type Workout = {
   isSpecial: boolean;
   rating: number;
 };
+
+export type FullWorkout = Workout & {
+  coach: User;
+  video: FileData;
+}

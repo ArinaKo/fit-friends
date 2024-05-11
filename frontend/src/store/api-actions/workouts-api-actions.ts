@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { WorkoutsWithPagination } from '../../types';
+import { FullWorkout, WorkoutsWithPagination } from '../../types';
 import { APIRoute, AppRoute } from '../../const';
 import { redirectToRoute } from '../actions';
 import {
@@ -21,6 +21,17 @@ export const createWorkoutAction = createAsyncThunk<
     },
   });
   dispatch(redirectToRoute(AppRoute.CoachWorkouts));
+});
+
+export const getWorkoutAction = createAsyncThunk<
+  FullWorkout,
+  string,
+  AsyncThunkConfig
+>('workouts/get-workout', async (workoutId, { extra: api }) => {
+  const { data } = await api.get<FullWorkout>(
+    `${APIRoute.Workout}/${workoutId}`,
+  );
+  return data;
 });
 
 export const getAllWorkoutsAction = createAsyncThunk<
