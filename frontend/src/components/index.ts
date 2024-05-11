@@ -29,3 +29,4 @@ export { default as FriendCard } from './friend-card/friend-card.component';
 export { default as FriendsList } from './friends-list/friends-list.component';
 export { default as WorkoutVideo } from './workout-video/workout-video.component';
 export { default as WorkoutInfo } from './workout-info/workout-info.component';
+export { default as CommentCard } from './comment-card/comment-card.component';
