@@ -14,12 +14,7 @@ import {
   getWorkoutsSortingType,
   isWorkoutsListLoading,
 } from '../../store';
-import {
-  CatalogButtons,
-  UIBlocker,
-  WorkoutCard,
-  WorkoutCardType,
-} from '../index';
+import { CatalogButtons, UIBlocker, WorkoutCard } from '../index';
 import {
   getAllWorkoutsAction,
   getCoachWorkoutsAction,
@@ -31,7 +26,7 @@ type WorkoutsListProps = {
 };
 
 function WorkoutsList({ type }: WorkoutsListProps): JSX.Element {
-  const { listStyleClass } = WorkoutsListTypeDiffs[type];
+  const { styleClass, cardType } = WorkoutsListTypeDiffs[type];
   const dispatch = useAppDispatch();
   const workouts = useAppSelector(getWorkoutsList);
   const page = useAppSelector(getCatalogPage);
@@ -47,11 +42,11 @@ function WorkoutsList({ type }: WorkoutsListProps): JSX.Element {
   const isDataLoading = useAppSelector(isWorkoutsListLoading);
 
   useEffect(() => {
-    dispatch(
-      type === WorkoutsListType.CoachWorkouts
-        ? getCoachWorkoutsAction()
-        : getAllWorkoutsAction(),
-    );
+    if (type === WorkoutsListType.CoachWorkouts) {
+      dispatch(getCoachWorkoutsAction());
+      return;
+    }
+    dispatch(getAllWorkoutsAction());
   }, [
     dispatch,
     type,
@@ -73,16 +68,16 @@ function WorkoutsList({ type }: WorkoutsListProps): JSX.Element {
 
   return (
     <>
-      <ul className={`${listStyleClass}__list`}>
+      <ul className={`${styleClass}__list`}>
         {workouts.map((workout) => (
           <WorkoutCard
-            type={WorkoutCardType.CoachWorkouts}
+            type={cardType}
             workout={workout}
             key={`workout-${workout.id}`}
           />
         ))}
       </ul>
-      <CatalogButtons styleClass={`${listStyleClass}__show-more`} />
+      <CatalogButtons styleClass={`${styleClass}__show-more`} />
     </>
   );
 }

@@ -1,4 +1,5 @@
 export enum WorkoutCardType {
+  CatalogWorkout = 'catalog-workout',
   CoachWorkouts = 'coach-workouts',
   WorkoutOrders = 'workout-orders',
   WorkoutBalance = 'workout-balance'
@@ -14,6 +15,10 @@ type WorkoutCardTypeDiffs = {
 };
 
 export const WorkoutCardTypeDiffs: WorkoutCardTypeDiffs = {
+  [WorkoutCardType.CatalogWorkout]: {
+    listItemStyleClass: 'training-catalog__item',
+    withButtons: true,
+  },
   [WorkoutCardType.CoachWorkouts]: {
     listItemStyleClass: 'my-trainings__item',
     withButtons: true,

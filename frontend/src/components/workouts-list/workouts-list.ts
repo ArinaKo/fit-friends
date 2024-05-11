@@ -1,10 +1,13 @@
+import { WorkoutCardType } from '../workout-card/workout-card';
+
 export enum WorkoutsListType {
   CoachWorkouts = 'coach-workouts',
   WorkoutsCatalog = 'workouts-catalog',
 }
 
 type WorkoutsListTypeDiff = {
-  listStyleClass: string;
+  styleClass: string;
+  cardType: WorkoutCardType;
 };
 
 type WorkoutsListTypeDiffs = {
@@ -13,9 +16,11 @@ type WorkoutsListTypeDiffs = {
 
 export const WorkoutsListTypeDiffs: WorkoutsListTypeDiffs = {
   [WorkoutsListType.CoachWorkouts]: {
-    listStyleClass: 'my-trainings',
+    styleClass: 'my-trainings',
+    cardType: WorkoutCardType.CoachWorkouts,
   },
   [WorkoutsListType.WorkoutsCatalog]: {
-    listStyleClass: 'training-catalog',
+    styleClass: 'training-catalog',
+    cardType: WorkoutCardType.CatalogWorkout,
   },
 };
