@@ -27,7 +27,8 @@ export { default as BalancesList } from './balances-list/balances-list.component
 export { default as BalancesSorting } from './balances-sorting/balances-sorting.component';
 export { default as UserCard } from './user-card/user-card.component';
 export * from './user-card/user-card';
-export { default as FriendsList } from './friends-list/friends-list.component';
+export { default as UsersList } from './users-list/users-list.component';
+export * from './users-list/users-list';
 export { default as WorkoutVideo } from './workout-video/workout-video.component';
 export { default as WorkoutInfo } from './workout-info/workout-info.component';
 export { default as CommentCard } from './comment-card/comment-card.component';

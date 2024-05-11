@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FriendsList } from '../../components';
+import { UsersList, UsersListType } from '../../components';
 import { useAppDispatch } from '../../hooks';
 import { AppRoute, ListItemsPortion } from '../../const';
 import { useEffect } from 'react';
@@ -30,7 +30,7 @@ function FriendsPage(): JSX.Element {
           <div className="friends-list__title-wrapper">
             <h1 className="friends-list__title">Мои друзья</h1>
           </div>
-          <FriendsList />
+          <UsersList type={UsersListType.FriendsList} />
         </div>
       </div>
     </section>
