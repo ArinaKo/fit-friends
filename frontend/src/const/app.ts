@@ -60,8 +60,8 @@ export enum NameSpace {
   WorkoutForm = 'WORKOUT_FORM',
   CatalogData = 'CATALOG_DATA',
   WorkoutsList = 'WORKOUTS_LIST',
+  UsersList = 'USERS_LIST',
   OrdersList = 'ORDERS_LIST',
   BalancesList = 'BALANCES_LIST',
-  FriendsList = 'FRIENDS_LIST',
   WorkoutInfo = 'WORKOUT_INFO',
 }

@@ -28,7 +28,7 @@ export type BalancesWithPagination = BasePagination & {
 };
 
 export type FriendsWithPagination = BasePagination & {
-  friends: Friend[];
+  friends: User[];
 };
 
 export type CommentsWithPagination = BasePagination & {

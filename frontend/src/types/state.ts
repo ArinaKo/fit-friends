@@ -1,4 +1,4 @@
-import { store } from '../store/index.js';
+import { store } from '../store/index';
 import {
   AuthorizationStatus,
   MetroStation,
@@ -9,13 +9,12 @@ import {
   WorkoutType,
   WorkoutsSortType,
 } from '../const';
-import { FileData } from './file-data.js';
-import { Workout } from './workout.js';
-import { WorkoutOrders } from './workout-orders.js';
-import { WorkoutBalance } from './workout-balance.js';
-import { Friend } from './friend.js';
-import { User } from './user.js';
-import { Comment } from './comment.js';
+import { FileData } from './file-data';
+import { Workout } from './workout';
+import { WorkoutOrders } from './workout-orders';
+import { WorkoutBalance } from './workout-balance';
+import { User } from './user';
+import { Comment } from './comment';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -162,8 +161,8 @@ export type BalancesList = {
   isOnlyActive: boolean;
 };
 
-export type FriendsList = {
-  friends: Friend[];
+export type UsersList = {
+  users: User[];
   isDataLoading: boolean;
 };
 

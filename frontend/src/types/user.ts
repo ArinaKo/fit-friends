@@ -1,11 +1,17 @@
 import {
   MetroStation,
+  RequestStatus,
   UserLevel,
   UserRole,
   UserSex,
   WorkoutType,
 } from '../const';
 import { FileData } from './file-data';
+
+export type WorkoutRequest = {
+  id: string;
+  status: RequestStatus;
+};
 
 export type User = {
   id: string;
@@ -17,4 +23,5 @@ export type User = {
   location: MetroStation;
   level: UserLevel;
   workoutTypes: WorkoutType[];
+  workoutRequest?: WorkoutRequest;
 };

@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { FriendsList } from '../../types';
+import { UsersList } from '../../types';
 import { NameSpace } from '../../const';
 import {
   getUserFriendsAction,
   updateWorkoutRequestAction,
 } from '../api-actions';
 
-const initialState: FriendsList = {
-  friends: [],
+const initialState: UsersList = {
+  users: [],
   isDataLoading: false,
 };
 
-export const friendsList = createSlice({
-  name: NameSpace.FriendsList,
+export const usersList = createSlice({
+  name: NameSpace.UsersList,
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -25,17 +25,17 @@ export const friendsList = createSlice({
       })
       .addCase(getUserFriendsAction.fulfilled, (state, action) => {
         const { friends, currentPage } = action.payload;
-        state.friends =
-          currentPage === 1 ? friends : [...state.friends, ...friends];
+        state.users =
+          currentPage === 1 ? friends : [...state.users, ...friends];
         state.isDataLoading = false;
       })
       .addCase(updateWorkoutRequestAction.fulfilled, (state, action) => {
         const { id, status } = action.payload;
-        state.friends = state.friends.map((friend) => {
-          if (friend.workoutRequest?.id === id) {
-            friend.workoutRequest.status = status;
+        state.users = state.users.map((user) => {
+          if (user.workoutRequest?.id === id) {
+            user.workoutRequest.status = status;
           }
-          return friend;
+          return user;
         });
       });
   },

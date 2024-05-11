@@ -9,6 +9,5 @@ export * from './auth-user';
 export * from './workout';
 export * from './workout-orders';
 export * from './workout-balance';
-export * from './friend';
 export * from './comment';
 export * from './lists-with-pagination';
