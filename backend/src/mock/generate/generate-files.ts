@@ -30,20 +30,20 @@ export function generateCertificatesEntities(): FileEntity[] {
 export function generateVideosEntities(): FileEntity[] {
   return [
     {
-      originalName: 'video-1.mp4',
+      originalName: 'video.mp4',
       subDirectory: 'mocks',
       size: 14,
       mimetype: 'video/mp4',
-      hashName: 'video-1.mp4',
-      path: `${process.env.UPLOAD_DIRECTORY_PATH}/mocks/video-1.mp4`,
+      hashName: 'video.mp4',
+      path: `${process.env.UPLOAD_DIRECTORY_PATH}/mocks/video.mp4`,
     },
     {
-      originalName: 'video-2.mov',
+      originalName: 'video.mov',
       subDirectory: 'mocks',
       size: 14,
       mimetype: 'video/mov',
-      hashName: 'video-2/mov',
-      path: `${process.env.UPLOAD_DIRECTORY_PATH}/mocks/video-2.mov`,
+      hashName: 'video.mov',
+      path: `${process.env.UPLOAD_DIRECTORY_PATH}/mocks/video.mov`,
     },
   ].map((file) => FileEntity.fromObject(file));
 }

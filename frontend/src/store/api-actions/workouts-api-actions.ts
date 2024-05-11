@@ -54,7 +54,7 @@ export const getAllWorkoutsAction = createAsyncThunk<
   AsyncThunkConfig
 >('workouts/all-workouts', async (_arg, { getState, extra: api }) => {
   const params = getAllWorkoutsQuery(getState());
-  const { data } = await api.get<WorkoutsWithPagination>(APIRoute.AllWorkout, {
+  const { data } = await api.get<WorkoutsWithPagination>(APIRoute.AllWorkouts, {
     params,
   });
   return data;

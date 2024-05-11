@@ -13,7 +13,7 @@ export const APIRoute = {
   UploadCertificate: '/users/certificates/upload',
   DeleteCertificate: '/users/certificates/delete',
   UpdateCertificate: '/users/certificates/update',
-  AllWorkout: '/workouts',
+  AllWorkouts: '/workouts',
   CreateWorkout: '/workouts',
   UpdateWorkout: '/workouts',
   Workout: '/workouts',

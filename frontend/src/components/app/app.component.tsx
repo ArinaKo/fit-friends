@@ -71,10 +71,10 @@ function App(): JSX.Element {
               element={<CreateWorkoutPage />}
             />
             <Route path={AppRoute.Users} element={<div>Not implemented</div>} />
-            <Route path={`${AppRoute.Users}:userId`} element={<div>Not implemented</div>} />
+            <Route path={`${AppRoute.Users}/:userId`} element={<div>Not implemented</div>} />
             <Route path={AppRoute.Workouts} element={<WorkoutsCatalogPage />} />
             <Route
-              path={`${AppRoute.Workouts}:workoutId`}
+              path={`${AppRoute.Workouts}/:workoutId`}
               element={<WorkoutPage />}
             />
           </Route>
