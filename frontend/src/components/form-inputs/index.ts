@@ -14,3 +14,5 @@ export { default as TextAreaInput } from './text-area-input/text-area-input.comp
 export * from './text-area-input/text-area-input';
 export { default as StatusInput } from './status-input/status-input.component';
 export * from './status-input/status-input.mode';
+export { default as WorkoutInput } from './workout-input/workout-input.component';
+export * from './workout-input/workout-input';
