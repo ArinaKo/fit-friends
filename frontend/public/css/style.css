@@ -3755,14 +3755,21 @@ input:active + .custom-textarea__text {
   color: #333333;
 }
 
-.reviews-side-bar__list {
+.reviews-side-bar__container {
   position: relative;
   height: 100%;
-  max-height: 976px;
+  overflow: hidden;
+}
+
+.reviews-side-bar__list {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  max-height: 976px;
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .reviews-side-bar__list::before {
