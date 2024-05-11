@@ -26,4 +26,5 @@ export type Workout = {
 export type FullWorkout = Workout & {
   coach: User;
   video: FileData;
+  balance: null | number;
 }

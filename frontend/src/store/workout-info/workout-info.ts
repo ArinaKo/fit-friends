@@ -4,7 +4,6 @@ import { NameSpace } from '../../const';
 import {
   decreaseWorkoutBalanceAction,
   getWorkoutAction,
-  getWorkoutBalanceStatusAction,
 } from '../api-actions';
 
 const initialState: WorkoutInfo = {
@@ -53,10 +52,8 @@ export const workoutInfo = createSlice({
         state.userSex = action.payload.userSex;
         state.duration = action.payload.duration;
         state.coach = action.payload.coach;
+        state.balance = action.payload.balance;
         state.isDataLoading = false;
-      })
-      .addCase(getWorkoutBalanceStatusAction.fulfilled, (state, action) => {
-        state.balance = action.payload.count;
       })
       .addCase(decreaseWorkoutBalanceAction.fulfilled, (state, action) => {
         state.balance = action.payload.count;

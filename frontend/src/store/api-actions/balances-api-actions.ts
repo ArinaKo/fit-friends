@@ -19,17 +19,6 @@ export const getUserBalancesAction = createAsyncThunk<
   return data;
 });
 
-export const getWorkoutBalanceStatusAction = createAsyncThunk<
-  WorkoutBalanceStatus,
-  string,
-  AsyncThunkConfig
->('balances/workout-balance', async (workoutId, { extra: api }) => {
-  const { data } = await api.get<WorkoutBalanceStatus>(
-    `${APIRoute.WorkoutBalance}/${workoutId}`,
-  );
-  return data;
-});
-
 export const decreaseWorkoutBalanceAction = createAsyncThunk<
   WorkoutBalanceStatus & { workoutId: string },
   string,

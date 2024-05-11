@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute } from '../../const';
 import {
   getWorkoutAction,
-  getWorkoutBalanceStatusAction,
   getWorkoutId,
   isUserHaveAccessToWorkout,
   isWorkoutInfoLoading,
@@ -22,7 +21,6 @@ function WorkoutPage(): JSX.Element {
   useEffect(() => {
     if (currentWorkoutId !== workoutId && !isDataLoading) {
       dispatch(getWorkoutAction(workoutId as string));
-      dispatch(getWorkoutBalanceStatusAction(workoutId as string));
     }
     if (!isUserHaveAccess && currentWorkoutId === workoutId) {
       navigate(AppRoute.Account);

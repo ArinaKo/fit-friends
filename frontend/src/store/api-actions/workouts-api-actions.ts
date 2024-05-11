@@ -1,5 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { FullWorkout, WorkoutsWithPagination } from '../../types';
+import {
+  FullWorkout,
+  WorkoutBalanceStatus,
+  WorkoutsWithPagination,
+} from '../../types';
 import { APIRoute, AppRoute } from '../../const';
 import { redirectToRoute } from '../actions';
 import {
@@ -32,7 +36,13 @@ export const getWorkoutAction = createAsyncThunk<
   const { data } = await api.get<FullWorkout>(
     `${APIRoute.Workout}/${workoutId}`,
   );
-  return data;
+  const { data: balancedData } = await api.get<WorkoutBalanceStatus>(
+    `${APIRoute.WorkoutBalance}/${workoutId}`,
+  );
+  return {
+    ...data,
+    balance: balancedData.count,
+  };
 });
 
 export const updateWorkoutAction = createAsyncThunk<
