@@ -30,3 +30,4 @@ export { default as FriendsList } from './friends-list/friends-list.component';
 export { default as WorkoutVideo } from './workout-video/workout-video.component';
 export { default as WorkoutInfo } from './workout-info/workout-info.component';
 export { default as CommentCard } from './comment-card/comment-card.component';
+export { default as CommentsList } from './comments-list/comments-list.component';
