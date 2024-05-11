@@ -1,5 +1,5 @@
 import { NameSpace, UserRole } from '../../const';
-import { FileData, State, User } from '../../types';
+import { Comment, FileData, State, User } from '../../types';
 
 export const getWorkoutId = (state: State): string | undefined =>
   state[NameSpace.WorkoutInfo].id;
@@ -39,6 +39,9 @@ export const getWorkoutCoach = (state: State): User | undefined =>
 
 export const getWorkoutSpecialFlag = (state: State): boolean =>
   state[NameSpace.WorkoutInfo].isSpecial;
+
+export const getWorkoutComments = (state: State): Comment[] =>
+  state[NameSpace.WorkoutInfo].comments;
 
 export const isWorkoutBalanceExists = (state: State): boolean =>
   state[NameSpace.WorkoutInfo].balance !== null;

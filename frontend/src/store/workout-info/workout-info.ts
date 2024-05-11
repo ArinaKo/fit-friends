@@ -22,6 +22,7 @@ const initialState: WorkoutInfo = {
   duration: '',
   coach: undefined,
   balance: null,
+  comments: [],
   isDataLoading: false,
 };
 
@@ -53,6 +54,7 @@ export const workoutInfo = createSlice({
         state.duration = action.payload.duration;
         state.coach = action.payload.coach;
         state.balance = action.payload.balance;
+        state.comments = action.payload.comments;
         state.isDataLoading = false;
       })
       .addCase(decreaseWorkoutBalanceAction.fulfilled, (state, action) => {

@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   FullWorkout,
   WorkoutBalanceStatus,
+  CommentsWithPagination,
   WorkoutsWithPagination,
 } from '../../types';
 import { APIRoute, AppRoute } from '../../const';
@@ -39,9 +40,13 @@ export const getWorkoutAction = createAsyncThunk<
   const { data: balancedData } = await api.get<WorkoutBalanceStatus>(
     `${APIRoute.WorkoutBalance}/${workoutId}`,
   );
+  const { data: commentsData } = await api.get<CommentsWithPagination>(
+    `${APIRoute.Comments}/${workoutId}`,
+  );
   return {
     ...data,
     balance: balancedData.count,
+    comments: commentsData.comments,
   };
 });
 

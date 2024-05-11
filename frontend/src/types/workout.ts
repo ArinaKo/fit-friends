@@ -4,6 +4,7 @@ import {
   WorkoutSexFor,
   WorkoutType,
 } from '../const';
+import { Comment } from './comment';
 import { FileData } from './file-data';
 import { User } from './user';
 
@@ -27,4 +28,5 @@ export type FullWorkout = Workout & {
   coach: User;
   video: FileData;
   balance: null | number;
+  comments: Comment[];
 }

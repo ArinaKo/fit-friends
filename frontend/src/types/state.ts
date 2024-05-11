@@ -15,6 +15,7 @@ import { WorkoutOrders } from './workout-orders.js';
 import { WorkoutBalance } from './workout-balance.js';
 import { Friend } from './friend.js';
 import { User } from './user.js';
+import { Comment } from './comment.js';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -182,5 +183,6 @@ export type WorkoutInfo = {
   duration: string;
   coach: User | undefined;
   balance: number | null;
+  comments: Comment[];
   isDataLoading: boolean;
 };

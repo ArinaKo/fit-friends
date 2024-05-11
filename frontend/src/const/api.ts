@@ -25,4 +25,5 @@ export const APIRoute = {
   UserFriends: '/friends',
   CreateWorkoutRequest: '/workout-requests',
   UpdateWorkoutRequest: '/workout-requests',
+  Comments: '/comments',
 } as const;

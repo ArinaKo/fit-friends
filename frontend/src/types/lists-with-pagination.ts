@@ -1,3 +1,4 @@
+import { Comment } from './comment';
 import { Friend } from './friend';
 import { Workout } from './workout';
 import { WorkoutBalance } from './workout-balance';
@@ -28,4 +29,8 @@ export type BalancesWithPagination = BasePagination & {
 
 export type FriendsWithPagination = BasePagination & {
   friends: Friend[];
+};
+
+export type CommentsWithPagination = BasePagination & {
+  comments: Comment[];
 };
