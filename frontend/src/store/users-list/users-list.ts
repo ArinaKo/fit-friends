@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { UsersList } from '../../types';
 import { NameSpace } from '../../const';
 import {
+  getAllUsersAction,
   getUserFriendsAction,
   updateWorkoutRequestAction,
 } from '../api-actions';
@@ -37,6 +38,17 @@ export const usersList = createSlice({
           }
           return user;
         });
+      })
+      .addCase(getAllUsersAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(getAllUsersAction.rejected, (state) => {
+        state.isDataLoading = false;
+      })
+      .addCase(getAllUsersAction.fulfilled, (state, action) => {
+        const { users, currentPage } = action.payload;
+        state.users = currentPage === 1 ? users : [...state.users, ...users];
+        state.isDataLoading = false;
       });
   },
 });

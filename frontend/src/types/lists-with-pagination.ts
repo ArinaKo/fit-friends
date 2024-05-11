@@ -1,5 +1,5 @@
 import { Comment } from './comment';
-import { Friend } from './friend';
+import { User } from './user';
 import { Workout } from './workout';
 import { WorkoutBalance } from './workout-balance';
 import { WorkoutOrders } from './workout-orders';
@@ -17,6 +17,10 @@ export type WorkoutsWithPagination = BasePagination & {
   workouts: Workout[];
   priceRange: FieldRange;
   caloriesRange: FieldRange;
+};
+
+export type UsersWithPagination = BasePagination & {
+  users: User[];
 };
 
 export type OrdersWithPagination = BasePagination & {
