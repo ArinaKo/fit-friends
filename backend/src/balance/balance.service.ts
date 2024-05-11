@@ -3,7 +3,7 @@ import { BalanceRepository } from './balance.repository';
 import { BalanceEntity } from './balance.entity';
 import { WorkoutService } from 'src/workout/workout.service';
 import { fillDto } from '@app/helpers';
-import { BalancesWithPaginationRdo } from './rdo';
+import { BalanceStatusRdo, BalancesWithPaginationRdo } from './rdo';
 import { UserBalanceQuery } from './query';
 
 @Injectable()
@@ -44,7 +44,15 @@ export class BalanceService {
     return this.createBalance(userId, workoutId);
   }
 
-  public async getUserBalance(
+  public async getWorkoutBalance(
+    userId: string,
+    workoutId: string,
+  ): Promise<BalanceStatusRdo> {
+    const balance = await this.balanceRepository.findBalance(userId, workoutId);
+    return { count: balance ? balance.count : balance };
+  }
+
+  public async getUserBalances(
     userId: string,
     query?: UserBalanceQuery,
   ): Promise<BalancesWithPaginationRdo> {
@@ -72,7 +80,10 @@ export class BalanceService {
     await this.balanceRepository.update(balance.id, balance);
   }
 
-  public async decreaseBalance(userId: string, workoutId: string) {
+  public async decreaseBalance(
+    userId: string,
+    workoutId: string,
+  ): Promise<BalanceStatusRdo> {
     const balance = await this.getBalance(userId, workoutId);
 
     if (!balance.count) {
@@ -82,5 +93,6 @@ export class BalanceService {
     }
     balance.count = balance.count - 1;
     await this.balanceRepository.update(balance.id, balance);
+    return { count: balance.count };
   }
 }

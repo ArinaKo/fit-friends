@@ -1,21 +1,20 @@
 import {
-  Body,
   Controller,
   Get,
   HttpStatus,
+  Param,
   Patch,
   Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BalanceService } from './balance.service';
 import { RequestWithTokenPayload } from 'src/shared/requests';
-import { DecreaseBalanceDto } from './dto';
-import { Role } from '@app/core';
+import { MongoIdValidationPipe, Role } from '@app/core';
 import { UserRole } from '@app/types';
 import { RoleGuard } from 'src/shared/guards';
-import { BalancesWithPaginationRdo } from './rdo';
+import { BalanceStatusRdo, BalancesWithPaginationRdo } from './rdo';
 import { UserBalanceQuery } from './query';
 
 @ApiTags('balances')
@@ -36,21 +35,34 @@ export class BalanceController {
     @Query() query: UserBalanceQuery,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    return this.balanceService.getUserBalance(tokenPayload.sub, query);
+    return this.balanceService.getUserBalances(tokenPayload.sub, query);
   }
 
   @ApiResponse({
+    type: BalanceStatusRdo,
+    status: HttpStatus.OK,
+    description: 'Workout balance status',
+  })
+  @Get('/:workoutId')
+  public async workoutBalance(
+    @Param('workoutId', MongoIdValidationPipe) workoutId: string,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    return this.balanceService.getWorkoutBalance(tokenPayload.sub, workoutId);
+  }
+
+  @ApiResponse({
+    type: BalanceStatusRdo,
     status: HttpStatus.OK,
     description: 'The balance has been successfully updated',
   })
-  @ApiBody({ type: DecreaseBalanceDto })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
-  @Patch('/decrease')
+  @Patch('/decrease/:workoutId')
   public async decrease(
-    @Body() dto: DecreaseBalanceDto,
+    @Param('workoutId', MongoIdValidationPipe) workoutId: string,
     @Req() { tokenPayload }: RequestWithTokenPayload,
   ) {
-    await this.balanceService.decreaseBalance(tokenPayload.sub, dto.workoutId);
+    return this.balanceService.decreaseBalance(tokenPayload.sub, workoutId);
   }
 }
