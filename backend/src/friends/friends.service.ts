@@ -5,10 +5,8 @@ import { UpdateFriendsDto } from './dto';
 import { UserService } from 'src/user/user.service';
 import { TokenPayload } from '@app/types';
 import { BaseQuery } from 'src/shared/query/base.query';
-import { UserRdo } from 'src/user/rdo';
 import { fillDto } from '@app/helpers';
-import { FriendsWithPaginationRdo } from './rdo';
-import { WorkoutRequestRdo } from 'src/workout-request/rdo';
+import { FriendRdo, FriendsWithPaginationRdo } from './rdo';
 import { NotificationService } from 'src/notification/notification.service';
 import { NotificationText } from 'src/notification/notification.const';
 
@@ -49,10 +47,10 @@ export class FriendsService {
     );
     return fillDto(FriendsWithPaginationRdo, {
       ...friendsWithPagination,
-      friends: friendsWithPagination.entities.map(
-        ({ user, workoutRequest }) => ({
-          user: fillDto(UserRdo, user.toPOJO()),
-          workoutRequest: fillDto(WorkoutRequestRdo, workoutRequest?.toPOJO()),
+      friends: friendsWithPagination.entities.map(({ user, workoutRequest }) =>
+        fillDto(FriendRdo, {
+          ...user.toPOJO(),
+          workoutRequest: workoutRequest ? workoutRequest.toPOJO() : undefined,
         }),
       ),
     });
@@ -78,7 +76,7 @@ export class FriendsService {
 
     await this.friendsRepository.addToFriends(userId, friendId);
 
-    if (!await this.checkUserInFriends(friendId, userId)) {
+    if (!(await this.checkUserInFriends(friendId, userId))) {
       await this.friendsRepository.addToFriends(friendId, userId);
     }
 
