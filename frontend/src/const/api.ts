@@ -20,6 +20,8 @@ export const APIRoute = {
   CoachWorkouts: '/workouts/coach',
   CoachOrders: '/orders',
   UserBalances: '/balance',
+  WorkoutBalance: '/balance',
+  DecreaseBalance: '/balance/decrease',
   UserFriends: '/friends',
   CreateWorkoutRequest: '/workout-requests',
   UpdateWorkoutRequest: '/workout-requests',
