@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
 import { UserRdo } from 'src/user/rdo';
 
@@ -11,14 +11,14 @@ export class CommentRdo {
   @Expose()
   public user: UserRdo;
 
-  @ApiPropertyOptional({
-    description: 'User id',
+  @ApiProperty({
+    description: 'Comment id',
     example: '660306ae5cdc417b17500345',
   })
   @Expose()
-  public userId: string;
+  public id: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Workout id',
     example: '660306ae5cdc417b17500eec',
   })
