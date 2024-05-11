@@ -10,9 +10,10 @@ import cn from 'classnames';
 
 type CertificateInputProps = {
   setFile: (files: File | null) => void;
+  styleClass?: string;
 };
 
-function WorkoutVideoInput({ setFile }: CertificateInputProps): JSX.Element {
+function WorkoutVideoInput({ setFile, styleClass }: CertificateInputProps): JSX.Element {
   const dispatch = useAppDispatch();
   const isVideoUpload = useAppSelector(isWorkoutFormHasVideo);
   const videoError = useAppSelector(getWorkoutFormVideoError);
@@ -32,7 +33,7 @@ function WorkoutVideoInput({ setFile }: CertificateInputProps): JSX.Element {
 
   return (
     <div
-      className={cn('drag-and-drop create-training__drag-and-drop', {
+      className={cn('drag-and-drop', styleClass, {
         'custom-input--error': videoError,
       })}
     >
@@ -40,7 +41,7 @@ function WorkoutVideoInput({ setFile }: CertificateInputProps): JSX.Element {
         <span className="drag-and-drop__label" tabIndex={0}>
           {isVideoUpload
             ? 'Видео загружено'
-            : 'Загрузите сюда файлы формата MOV, AVI или MP4'}
+            : 'Загрузите сюда файл формата MOV, AVI или MP4'}
           <svg width={20} height={20} aria-hidden="true">
             <use xlinkHref="#icon-import-video" />
           </svg>

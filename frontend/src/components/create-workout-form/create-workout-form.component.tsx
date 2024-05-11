@@ -75,7 +75,7 @@ function CreateWorkoutForm(): JSX.Element {
             <h2 className="create-training__legend">
               Загрузите видео-тренировку
             </h2>
-            <WorkoutVideoInput setFile={setFile} />
+            <WorkoutVideoInput setFile={setFile} styleClass='create-training__drag-and-drop'/>
           </div>
         </div>
         <button
