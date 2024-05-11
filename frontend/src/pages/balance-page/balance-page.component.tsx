@@ -13,15 +13,11 @@ function BalancePage(): JSX.Element {
   useEffect(() => {
     if (isCoach) {
       navigate(AppRoute.Account);
+      return;
     }
-  }, [navigate, isCoach]);
-
-  useEffect(() => {
-    if (!isCoach) {
-      dispatch(resetCatalogData(ListItemsPortion.UserBalances));
-      dispatch(setBalancesSorting());
-    }
-  }, [dispatch, isCoach]);
+    dispatch(resetCatalogData(ListItemsPortion.UserBalances));
+    dispatch(setBalancesSorting());
+  }, [navigate, dispatch, isCoach]);
 
   return (
     <section className="my-purchases">

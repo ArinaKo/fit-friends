@@ -13,12 +13,10 @@ function CreateWorkoutPage(): JSX.Element {
   useEffect(() => {
     if (!isCoach) {
       navigate(AppRoute.Main);
+      return;
     }
-  }, [navigate, isCoach]);
-
-  useEffect(() => {
     dispatch(resetWorkoutForm());
-  }, [dispatch]);
+  }, [navigate, dispatch, isCoach]);
 
   return (
     <div className="popup-form popup-form--create-training">

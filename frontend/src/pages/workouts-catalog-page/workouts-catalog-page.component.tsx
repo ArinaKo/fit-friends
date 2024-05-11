@@ -6,7 +6,11 @@ import {
   WorkoutsListType,
 } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { isUserCoach, resetCatalogData, resetWorkoutsFilters } from '../../store';
+import {
+  isUserCoach,
+  resetCatalogData,
+  resetWorkoutsFilters,
+} from '../../store';
 import { useEffect } from 'react';
 import { AppRoute, ListItemsPortion } from '../../const';
 
@@ -18,15 +22,11 @@ function WorkoutsCatalogPage(): JSX.Element {
   useEffect(() => {
     if (isCoach) {
       navigate(AppRoute.Account);
+      return;
     }
-  }, [navigate, isCoach]);
-
-  useEffect(() => {
-    if (!isCoach) {
-      dispatch(resetCatalogData(ListItemsPortion.AllWorkouts));
-      dispatch(resetWorkoutsFilters());
-    }
-  }, [dispatch, isCoach]);
+    dispatch(resetCatalogData(ListItemsPortion.AllWorkouts));
+    dispatch(resetWorkoutsFilters());
+  }, [navigate, dispatch, isCoach]);
 
   return (
     <section className="inner-page">

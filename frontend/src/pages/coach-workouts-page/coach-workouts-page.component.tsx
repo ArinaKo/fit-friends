@@ -22,15 +22,11 @@ function CoachWorkoutsPage(): JSX.Element {
   useEffect(() => {
     if (!isCoach) {
       navigate(AppRoute.Main);
+      return;
     }
-  }, [navigate, isCoach]);
-
-  useEffect(() => {
-    if (isCoach) {
-      dispatch(resetCatalogData(ListItemsPortion.CoachWorkouts));
-      dispatch(resetWorkoutsFilters());
-    }
-  }, [dispatch, isCoach]);
+    dispatch(resetCatalogData(ListItemsPortion.CoachWorkouts));
+    dispatch(resetWorkoutsFilters());
+  }, [navigate, dispatch, isCoach]);
 
   return (
     <section className="inner-page">

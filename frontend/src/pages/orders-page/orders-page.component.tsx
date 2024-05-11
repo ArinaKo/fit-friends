@@ -13,15 +13,11 @@ function OrdersPage(): JSX.Element {
   useEffect(() => {
     if (!isCoach) {
       navigate(AppRoute.Main);
+      return;
     }
-  }, [navigate, isCoach]);
-
-  useEffect(() => {
-    if (isCoach) {
-      dispatch(resetCatalogData(ListItemsPortion.CoachOrders));
-      dispatch(resetOrdersSorting());
-    }
-  }, [dispatch, isCoach]);
+    dispatch(resetCatalogData(ListItemsPortion.CoachOrders));
+    dispatch(resetOrdersSorting());
+  }, [navigate, dispatch, isCoach]);
 
   return (
     <section className="my-orders">
