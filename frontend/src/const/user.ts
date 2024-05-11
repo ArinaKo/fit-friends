@@ -49,9 +49,8 @@ export enum RequestStatus {
 }
 
 export const RequestStatusText = {
-  [RequestStatus.Default]: 'Запрос на персональную тренировку',
-  [RequestStatus.Rejected]: 'Запрос на персональную тренировку отклонён',
-  [RequestStatus.Accepted]: 'Запрос на персональную тренировку принят',
+  ForUser: 'Запрос на совместную тренировку',
+  ForCoach: 'Запрос на персональную тренировку',
 } as const;
 
 export enum UserStatus {
