@@ -116,11 +116,11 @@ export class MockService {
   }
 
   private async registerFriends(
-    allUsersIds: string[],
     usersIds: string[],
+    coachesIds: string[],
   ): Promise<void> {
     this.friendsRepository.saveMany(
-      generateFriendsEntities(allUsersIds, usersIds),
+      generateFriendsEntities(usersIds, coachesIds),
     );
   }
 
@@ -156,7 +156,7 @@ export class MockService {
     await this.registerComments(workoutsIds, usersIds);
     await this.registerRequests(usersIds, allUsersIds);
     await this.registerOrders(usersIds, workouts);
-    await this.registerFriends(allUsersIds, usersIds);
+    await this.registerFriends(usersIds, coachesIds);
     await this.registerSubscribers(usersIds, coachesIds);
     await this.registerNotifications(allUsersIds);
 

@@ -10,13 +10,20 @@ function generateFriendsEntity(userId: string, otherUsersIds): FriendsEntity {
 }
 
 export function generateFriendsEntities(
-  allUsersIds: string[],
   usersIds: string[],
+  coachesIds: string[],
 ): FriendsEntity[] {
-  return allUsersIds.map((userId) =>
+  const forUsers = usersIds.map((userId) =>
+    generateFriendsEntity(userId, [
+      ...usersIds.filter((id) => id !== userId),
+      ...coachesIds,
+    ]),
+  );
+  const forCoaches = coachesIds.map((userId) =>
     generateFriendsEntity(
       userId,
       usersIds.filter((id) => id !== userId),
     ),
   );
+  return [...forUsers, ...forCoaches];
 }

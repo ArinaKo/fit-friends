@@ -44,7 +44,7 @@ const initialState: WorkoutsList = {
 };
 
 export const workoutsList = createSlice({
-  name: NameSpace.UserData,
+  name: NameSpace.WorkoutsList,
   initialState,
   reducers: {
     resetWorkoutsFilters: (state) => {
