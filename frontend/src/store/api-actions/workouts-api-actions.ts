@@ -6,6 +6,7 @@ import {
   getCreateWorkoutData,
   getCoachWorkoutsQuery,
   getAllWorkoutsQuery,
+  getUpdateWorkoutData,
 } from '../../utils';
 import { AsyncThunkConfig } from './async-thunk-config';
 
@@ -32,6 +33,19 @@ export const getWorkoutAction = createAsyncThunk<
     `${APIRoute.Workout}/${workoutId}`,
   );
   return data;
+});
+
+export const updateWorkoutAction = createAsyncThunk<
+  void,
+  { workoutId: string; newVideo?: Blob },
+  AsyncThunkConfig
+>('workouts/update-workout', async (data, { getState, extra: api }) => {
+  const formData = getUpdateWorkoutData(getState(), data.newVideo);
+  await api.patch(`${APIRoute.UpdateWorkout}/${data.workoutId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 });
 
 export const getAllWorkoutsAction = createAsyncThunk<
