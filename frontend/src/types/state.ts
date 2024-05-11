@@ -23,6 +23,8 @@ export type AppDispatch = typeof store.dispatch;
 export type AppData = {
   authStatus: AuthorizationStatus;
   userRole: UserRole | undefined;
+  userId: string;
+  activeWorkout: string | undefined;
 };
 
 export type CatalogData = {

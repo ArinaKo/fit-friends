@@ -4,6 +4,7 @@ import {
   EmptyWorkoutForm,
   NameSpace,
   REQUIRED_INPUT_MESSAGE,
+  SALE_PERCENT,
 } from '../../const';
 import { createWorkoutAction } from '../api-actions';
 
@@ -54,8 +55,11 @@ export const workoutForm = createSlice({
     setVideoPresence: (state, action: PayloadAction<boolean>) => {
       state.hasVideo = action.payload;
     },
-    setIsSpecial: (state, action: PayloadAction<boolean>) => {
-      state.isSpecial = action.payload;
+    setIsSpecial: (state) => {
+      state.isSpecial = !state.isSpecial;
+      state.price = state.isSpecial
+        ? String(Math.ceil((Number(state.price) / 100) * (100 - SALE_PERCENT)))
+        : String(Math.floor((Number(state.price) / (100 - SALE_PERCENT)) * 100));
     },
     setWorkoutFormError: (
       state,

@@ -4,6 +4,8 @@ export const REFRESH_PENDING_KEY_NAME = 'fit-friends-refresh-pending';
 
 export const REQUIRED_INPUT_MESSAGE = 'Поле обязательно для заполнения';
 
+export const SALE_PERCENT = 10;
+
 export const ListItemsPortion = {
   Default: 6,
   CoachWorkouts: 6,
