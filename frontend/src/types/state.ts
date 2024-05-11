@@ -14,6 +14,7 @@ import { Workout } from './workout.js';
 import { WorkoutOrders } from './workout-orders.js';
 import { WorkoutBalance } from './workout-balance.js';
 import { Friend } from './friend.js';
+import { User } from './user.js';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -160,5 +161,24 @@ export type BalancesList = {
 
 export type FriendsList = {
   friends: Friend[];
+  isDataLoading: boolean;
+};
+
+export type WorkoutInfo = {
+  id: string | undefined;
+  coachId: string;
+  title: string;
+  price: string;
+  description: string;
+  isSpecial: boolean;
+  video: FileData | undefined;
+  backgroundImage: string;
+  rating: number;
+  type: string;
+  calories: number;
+  userSex: string;
+  duration: string;
+  coach: User | undefined;
+  balance: number | null;
   isDataLoading: boolean;
 };

@@ -17,4 +17,6 @@ export * from './balance-list/balance-list';
 export * from './balance-list/selectors';
 export * from './friends-list/friends-list';
 export * from './friends-list/selectors';
+export * from './workout-info/workout-info';
+export * from './workout-info/selectors';
 export * from './main';

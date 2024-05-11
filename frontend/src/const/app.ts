@@ -61,4 +61,5 @@ export enum NameSpace {
   OrdersList = 'ORDERS_LIST',
   BalancesList = 'BALANCES_LIST',
   FriendsList = 'FRIENDS_LIST',
+  WorkoutInfo = 'WORKOUT_INFO',
 }
