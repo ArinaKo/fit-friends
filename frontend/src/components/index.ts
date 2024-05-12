@@ -13,7 +13,8 @@ export { default as CaloriesPlan } from './calories-plan/calories-plan.component
 export { default as CoachCertificates } from './coach-certificates/coach-certificates.component';
 export { default as CertificateCard } from './certificate-card/certificate-card.component';
 export { default as CreateWorkoutForm } from './create-workout-form/create-workout-form.component';
-export { default as WorkoutsSorting } from './workouts-sorting/workouts-sorting.component';
+export { default as SortingInput } from './sorting-input/sorting-input.component';
+export * from './sorting-input/sorting-input';
 export { default as WorkoutsFilter } from './workouts-filter/workouts-filter.component';
 export * from './workouts-filter/workouts-filter';
 export { default as WorkoutCard } from './workout-card/workout-card.component';
@@ -29,6 +30,7 @@ export { default as UserCard } from './user-card/user-card.component';
 export * from './user-card/user-card';
 export { default as UsersList } from './users-list/users-list.component';
 export * from './users-list/users-list';
+export { default as UsersFilter } from './users-filter/users-filter.component';
 export { default as WorkoutVideo } from './workout-video/workout-video.component';
 export { default as WorkoutInfo } from './workout-info/workout-info.component';
 export { default as CommentCard } from './comment-card/comment-card.component';

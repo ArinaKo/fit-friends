@@ -4,7 +4,7 @@ import {
   RangeInput,
   RangeInputType,
 } from '../filter-inputs';
-import { WorkoutsSorting } from '../index';
+import { SortingInput, SortingInputType } from '../index';
 import { WorkoutsFilterType, WorkoutsFilterTypeDiffs } from './workouts-filter';
 
 type WorkoutsFilterProps = {
@@ -58,7 +58,7 @@ function WorkoutsFilter({ type }: WorkoutsFilterProps): JSX.Element {
             <h4 className="gym-catalog-form__title gym-catalog-form__title--sort">
               Сортировка
             </h4>
-            <WorkoutsSorting />
+            <SortingInput type={SortingInputType.Workouts} styleClass='gym-catalog-form' />
           </div>
         </>
       )}
