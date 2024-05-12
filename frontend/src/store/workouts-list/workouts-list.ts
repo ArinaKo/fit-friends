@@ -83,9 +83,13 @@ export const workoutsList = createSlice({
         ? state.filter.types.filter((item) => item !== type)
         : [...state.filter.types, type];
     },
-    setWorkoutsSorting: (state, action: PayloadAction<WorkoutsSortType>) => {
+    setWorkoutsSorting: (state, action: PayloadAction<string>) => {
       const value = action.payload;
       state.filter.sorting = state.filter.sorting !== value ? value : undefined;
+      if (state.filter.sorting === WorkoutsSortType.Free) {
+        state.filter.price.max = 0;
+        state.filter.price.min = 0;
+      }
     },
   },
   extraReducers(builder) {

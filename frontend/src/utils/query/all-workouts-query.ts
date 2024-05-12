@@ -1,4 +1,3 @@
-import { WorkoutsSortType } from '../../const';
 import { State } from '../../types';
 
 export function getAllWorkoutsQuery(state: State): URLSearchParams {
@@ -31,10 +30,7 @@ export function getAllWorkoutsQuery(state: State): URLSearchParams {
       params.append('workoutTypes', item);
     });
   }
-  if (
-    sorting === WorkoutsSortType.PriceDown ||
-    sorting === WorkoutsSortType.PriceUp
-  ) {
+  if (sorting) {
     params.append('sorting', sorting);
   }
   return params;

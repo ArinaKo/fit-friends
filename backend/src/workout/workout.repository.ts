@@ -12,6 +12,7 @@ import {
 import { FullWorkoutQuery } from './query';
 import { FieldRange, SortDirection } from '@app/types';
 import * as lodash from 'lodash';
+import { WorkoutsPriceSorting } from './workout.const';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   AddStringId: {
@@ -210,12 +211,17 @@ export class WorkoutRepository extends BaseMongoRepository<
     const limit = query?.limit ?? LIST_LIMIT;
     const skip = query?.page ? (query.page - 1) * limit : 0;
     const filter = query ? generateFilter(query) : {};
-    const sorting: PipelineStage = query?.sorting
-      ? { $sort: { price: SortDirection[lodash.capitalize(query.sorting)] } }
-      : { $sort: { createdAt: DEFAULT_SORT_DIRECTION } };
+    const sorting: PipelineStage =
+      !query?.sorting || query.sorting === WorkoutsPriceSorting.Free
+        ? { $sort: { createdAt: DEFAULT_SORT_DIRECTION } }
+        : { $sort: { price: SortDirection[lodash.capitalize(query.sorting)] } };
 
     if (coachId) {
       Object.assign(filter, { coachId });
+    }
+
+    if (query?.sorting === WorkoutsPriceSorting.Free) {
+      Object.assign(filter, { price: 0 });
     }
 
     const [records, recordsCount, price, calories] = await Promise.all([
