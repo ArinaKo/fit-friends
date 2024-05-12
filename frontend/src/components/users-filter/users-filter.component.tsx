@@ -1,7 +1,11 @@
-import { CheckboxInput, CheckboxInputType } from '../filter-inputs';
-import { RadioInput, RadioInputType } from '../form-inputs';
-import { SortingInputType } from '../sorting-input/sorting-input';
-import SortingInput from '../sorting-input/sorting-input.component';
+import {
+  RadioInput,
+  RadioInputType,
+  CheckboxInput,
+  CheckboxInputType,
+  SortingInput,
+  SortingInputType,
+} from '../form-inputs';
 
 const styleClass = 'user-catalog-form';
 

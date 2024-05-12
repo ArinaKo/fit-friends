@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { resetCatalogPage } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { resetCatalogPage } from '../../../store';
 import { SortingInputType, SortingInputTypeDiffs } from './sorting-input';
 import cn from 'classnames';
 

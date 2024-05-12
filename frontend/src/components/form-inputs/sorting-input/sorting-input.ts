@@ -1,5 +1,5 @@
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { State } from '../../types';
+import { State } from '../../../types';
 import {
   getUsersFilterRole,
   getWorkoutsSortingType,
@@ -7,8 +7,8 @@ import {
   isWorkoutsListLoading,
   setUsersRoleFilter,
   setWorkoutsSorting,
-} from '../../store';
-import { UserRole, WorkoutsSortType } from '../../const';
+} from '../../../store';
+import { UserRole, WorkoutsSortType } from '../../../const';
 
 const WorkoutsSortingText = {
   [WorkoutsSortType.PriceUp]: 'Дешевле',
