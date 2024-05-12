@@ -3,10 +3,10 @@ export const DEFAULT_PASSWORD = '123456';
 
 export const GeneratedDataAmount = {
   Workouts: 14,
-  Coaches: 5,
+  Coaches: 20,
   Comments: 5,
   Orders: 3,
-  WorkoutRequests: 3,
+  WorkoutRequests: 20,
   Friends: 13,
   Subscriptions: 3,
   WorkoutNotifications: 2,
