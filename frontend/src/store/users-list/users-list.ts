@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UsersList } from '../../types';
-import { NameSpace } from '../../const';
+import { NameSpace, UserLevel } from '../../const';
 import {
   getAllUsersAction,
   getUserFriendsAction,
@@ -9,13 +9,45 @@ import {
 
 const initialState: UsersList = {
   users: [],
+  filter: {
+    locations: [],
+    types: [],
+    level: UserLevel.Beginner,
+    role: undefined,
+  },
   isDataLoading: false,
 };
 
 export const usersList = createSlice({
   name: NameSpace.UsersList,
   initialState,
-  reducers: {},
+  reducers: {
+    resetUsersFilters: (state) => {
+      state.filter = initialState.filter;
+    },
+    setUsersLocationsFilter: (state, action: PayloadAction<string>) => {
+      const location = action.payload;
+      state.filter.locations = state.filter.locations.includes(location)
+        ? state.filter.locations.filter((item) => item !== location)
+        : [...state.filter.locations, location];
+    },
+    setUsersTypesFilter: (state, action: PayloadAction<string>) => {
+      const type = action.payload;
+      state.filter.types = state.filter.types.includes(type)
+        ? state.filter.types.filter((item) => item !== type)
+        : [...state.filter.types, type];
+    },
+    setUsersLevelFilter: (state, action: PayloadAction<string>) => {
+      state.filter.level = action.payload;
+    },
+    setUsersRoleFilter: (
+      state,
+      action: PayloadAction<string>,
+    ) => {
+      const value = action.payload;
+      state.filter.role = state.filter.role !== value ? value : undefined;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getUserFriendsAction.pending, (state) => {
@@ -52,3 +84,11 @@ export const usersList = createSlice({
       });
   },
 });
+
+export const {
+  resetUsersFilters,
+  setUsersLocationsFilter,
+  setUsersTypesFilter,
+  setUsersLevelFilter,
+  setUsersRoleFilter,
+} = usersList.actions;

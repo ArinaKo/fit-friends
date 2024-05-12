@@ -163,6 +163,12 @@ export type BalancesList = {
 
 export type UsersList = {
   users: User[];
+  filter: {
+    locations: string[];
+    types: string[];
+    level: string;
+    role: string | undefined;
+  };
   isDataLoading: boolean;
 };
 
