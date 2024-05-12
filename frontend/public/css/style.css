@@ -551,6 +551,12 @@ button,
   appearance: none;
 }
 
+.link-with-no-style {
+  background-color: inherit;
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .wrapper {
   position: relative;
   display: -webkit-box;

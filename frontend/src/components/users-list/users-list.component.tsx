@@ -55,7 +55,7 @@ function UsersList({ type }: UsersListProps): JSX.Element {
     <>
       <ul className={`${styleClass}__list`}>
         {users.map((user) => (
-          <UserCard type={cardType} user={user} key={`user-${user.id}`} />
+          <UserCard type={cardType} user={user} workoutRequest={user.workoutRequest} key={`user-${user.id}`} />
         ))}
       </ul>
       <CatalogButtons styleClass={`${styleClass}__show-more`} />
