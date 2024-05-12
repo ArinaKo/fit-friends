@@ -2,19 +2,30 @@ import { useNavigate } from 'react-router-dom';
 import { UsersFilter, UsersList, UsersListType } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { getUserDataLevel, resetCatalogData, resetUsersFilters, setUsersLevelFilter } from '../../store';
+import {
+  getUserDataLevel,
+  isUserCoach,
+  resetCatalogData,
+  resetUsersFilters,
+  setUsersLevelFilter,
+} from '../../store';
 import { AppRoute, ListItemsPortion } from '../../const';
 
 function UsersCatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const userLevel = useAppSelector(getUserDataLevel);
+  const isCoach = useAppSelector(isUserCoach);
 
   useEffect(() => {
+    if (isCoach) {
+      navigate(AppRoute.Account);
+      return;
+    }
     dispatch(resetCatalogData(ListItemsPortion.AllUsers));
     dispatch(resetUsersFilters());
     dispatch(setUsersLevelFilter(userLevel));
-  }, [dispatch, userLevel]);
+  }, [navigate, dispatch, isCoach, userLevel]);
 
   return (
     <section className="inner-page">
