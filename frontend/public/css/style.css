@@ -6763,6 +6763,15 @@ input:active + .custom-textarea__text {
   list-style: none;
 }
 
+.filter__check-list {
+  max-height: 160px;
+  overflow: hidden;
+}
+
+.filter__check-list__check-list--open {
+  max-height: max-content;
+}
+
 .user-catalog-form__block--location {
   margin-bottom: 32px;
 }
