@@ -3,13 +3,16 @@ import {
   getUserFormLevel,
   getUserFormSex,
   getUserFormTimeForWorkout,
+  getUsersFilterLevel,
   getWorkoutFormUserSex,
   isUserFormDataSending,
+  isUsersListLoading,
   isWorkoutFormDataSending,
   setLevel,
   setSex,
   setTimeForWorkout,
   setUserSexFor,
+  setUsersLevelFilter,
 } from '../../../store';
 import { State } from '../../../types';
 import { UserLevel, UserSex, WorkoutDuration, WorkoutSexFor } from '../../../const';
@@ -19,6 +22,7 @@ export enum RadioInputType {
   Sex = 'sex',
   TimeForWorkout = 'time-for-workout',
   UserSexFor = 'user-sex-for',
+  UserLevelFilter = 'user-level-filter',
 }
 
 enum StyleMode {
@@ -71,5 +75,12 @@ export const RadioInputTypeDiffs: RadioInputTypeDiffs = {
     optionsArray: Object.values(WorkoutSexFor),
     formStatusSelector: isWorkoutFormDataSending,
     fieldName: 'userSexFor',
+  },
+  [RadioInputType.UserLevelFilter]: {
+    valueSelector: getUsersFilterLevel,
+    setValue: setUsersLevelFilter,
+    optionsArray: Object.values(UserLevel),
+    formStatusSelector: isUsersListLoading,
+    fieldName: 'level',
   },
 };
