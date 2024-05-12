@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCatalogPage, getUsersList, isUsersListLoading } from '../../store';
+import {
+  getCatalogPage,
+  getUsersFilterLevel,
+  getUsersFilterLocations,
+  getUsersFilterRole,
+  getUsersFilterTypes,
+  getUsersList,
+  isUsersListLoading,
+} from '../../store';
 import { CatalogButtons, UIBlocker, UserCard } from '../index';
 import {
   getAllUsersAction,
@@ -17,6 +25,10 @@ function UsersList({ type }: UsersListProps): JSX.Element {
   const dispatch = useAppDispatch();
   const users = useAppSelector(getUsersList);
   const page = useAppSelector(getCatalogPage);
+  const locationsFilter = useAppSelector(getUsersFilterLocations);
+  const typesFilter = useAppSelector(getUsersFilterTypes);
+  const levelFilter = useAppSelector(getUsersFilterLevel);
+  const roleFilter = useAppSelector(getUsersFilterRole);
   const isDataLoading = useAppSelector(isUsersListLoading);
 
   useEffect(() => {
@@ -25,7 +37,15 @@ function UsersList({ type }: UsersListProps): JSX.Element {
       return;
     }
     dispatch(getAllUsersAction());
-  }, [dispatch, type, page]);
+  }, [
+    dispatch,
+    type,
+    page,
+    locationsFilter,
+    typesFilter,
+    levelFilter,
+    roleFilter,
+  ]);
 
   if (isDataLoading) {
     return <UIBlocker />;
