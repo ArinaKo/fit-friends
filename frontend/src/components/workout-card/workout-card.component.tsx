@@ -36,7 +36,7 @@ function WorkoutCard({
                 src={`${STATIC_URL}/${backgroundImage}`}
                 width={330}
                 height={190}
-                alt=""
+                alt="Фотография тренировки"
               />
             </picture>
           </div>
