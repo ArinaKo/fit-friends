@@ -38,3 +38,4 @@ export { default as WorkoutInfo } from './workout-info/workout-info.component';
 export { default as CommentCard } from './comment-card/comment-card.component';
 export { default as CommentsList } from './comments-list/comments-list.component';
 export { default as UserInfo } from './user-info/user-info.component';
+export { default as UserInfoWorkouts } from './user-info-workouts/user-info-workouts.component';
