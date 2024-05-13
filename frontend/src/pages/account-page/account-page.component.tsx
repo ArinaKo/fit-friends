@@ -7,10 +7,11 @@ import {
   UIBlocker,
 } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { isUserCoach, isUserDataReady, isUserDataUpdating } from '../../store';
+import { isUserCoach, isUserDataReady, isUserDataUpdating, setActiveRoute } from '../../store';
 import { useEffect } from 'react';
 import { getAuthUserAction } from '../../store/api-actions';
 import { CoachLinks, CustomerLinks } from './account-page';
+import { AppRoute } from '../../const';
 
 function AccountPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ function AccountPage(): JSX.Element {
     if (!isDataReady) {
       dispatch(getAuthUserAction());
     }
+    dispatch(setActiveRoute(AppRoute.Account));
   }, [dispatch, isDataReady]);
 
   if (!isDataReady || isDataUpdating) {

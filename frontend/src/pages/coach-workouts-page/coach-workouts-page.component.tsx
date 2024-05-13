@@ -12,6 +12,7 @@ import {
   isUserCoach,
   resetCatalogData,
   resetWorkoutsFilters,
+  setActiveRoute,
 } from '../../store';
 
 function CoachWorkoutsPage(): JSX.Element {
@@ -26,6 +27,7 @@ function CoachWorkoutsPage(): JSX.Element {
     }
     dispatch(resetCatalogData(ListItemsPortion.CoachWorkouts));
     dispatch(resetWorkoutsFilters());
+    dispatch(setActiveRoute(AppRoute.Balance));
   }, [navigate, dispatch, isCoach]);
 
   return (

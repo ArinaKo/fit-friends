@@ -7,6 +7,7 @@ import {
   isUserCoach,
   resetCatalogData,
   resetUsersFilters,
+  setActiveRoute,
   setUsersLevelFilter,
 } from '../../store';
 import { AppRoute, ListItemsPortion } from '../../const';
@@ -25,6 +26,7 @@ function UsersCatalogPage(): JSX.Element {
     dispatch(resetCatalogData(ListItemsPortion.AllUsers));
     dispatch(resetUsersFilters());
     dispatch(setUsersLevelFilter(userLevel));
+    dispatch(setActiveRoute(AppRoute.Users));
   }, [navigate, dispatch, isCoach, userLevel]);
 
   return (

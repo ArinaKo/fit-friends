@@ -7,6 +7,7 @@ import {
   isUserHaveAccessToWorkout,
   isWorkoutBalanceExists,
   isWorkoutInfoLoading,
+  setActiveRoute,
 } from '../../store';
 import { useEffect } from 'react';
 import { CommentsList, UIBlocker, WorkoutInfo } from '../../components';
@@ -27,6 +28,7 @@ function WorkoutPage(): JSX.Element {
     if (!isUserHaveAccess && currentWorkoutId === workoutId) {
       navigate(AppRoute.Account);
     }
+    dispatch(setActiveRoute());
   }, [
     navigate,
     dispatch,

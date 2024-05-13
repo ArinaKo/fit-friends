@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CreateWorkoutForm } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { isUserCoach, resetWorkoutForm } from '../../store';
+import { isUserCoach, resetWorkoutForm, setActiveRoute } from '../../store';
 import { useEffect } from 'react';
 import { AppRoute } from '../../const';
 
@@ -16,6 +16,7 @@ function CreateWorkoutPage(): JSX.Element {
       return;
     }
     dispatch(resetWorkoutForm());
+    dispatch(setActiveRoute(AppRoute.CreateWorkout));
   }, [navigate, dispatch, isCoach]);
 
   return (

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { BalancesList, BalancesSorting } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { isUserCoach, resetCatalogData, setBalancesSorting } from '../../store';
+import { isUserCoach, resetCatalogData, setActiveRoute, setBalancesSorting } from '../../store';
 import { useEffect } from 'react';
 import { AppRoute, ListItemsPortion } from '../../const';
 
@@ -17,6 +17,7 @@ function BalancePage(): JSX.Element {
     }
     dispatch(resetCatalogData(ListItemsPortion.UserBalances));
     dispatch(setBalancesSorting());
+    dispatch(setActiveRoute(AppRoute.Balance));
   }, [navigate, dispatch, isCoach]);
 
   return (

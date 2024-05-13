@@ -3,7 +3,7 @@ import { UsersList, UsersListType } from '../../components';
 import { useAppDispatch } from '../../hooks';
 import { AppRoute, ListItemsPortion } from '../../const';
 import { useEffect } from 'react';
-import { resetCatalogData } from '../../store';
+import { resetCatalogData, setActiveRoute } from '../../store';
 
 function FriendsPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -11,6 +11,7 @@ function FriendsPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(resetCatalogData(ListItemsPortion.Friends));
+    dispatch(setActiveRoute(AppRoute.Friends));
   }, [dispatch]);
 
   return (

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { OrdersList, OrdersSorting } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { isUserCoach, resetCatalogData, resetOrdersSorting } from '../../store';
+import { isUserCoach, resetCatalogData, resetOrdersSorting, setActiveRoute } from '../../store';
 import { useEffect } from 'react';
 import { AppRoute, ListItemsPortion } from '../../const';
 
@@ -17,6 +17,7 @@ function OrdersPage(): JSX.Element {
     }
     dispatch(resetCatalogData(ListItemsPortion.CoachOrders));
     dispatch(resetOrdersSorting());
+    dispatch(setActiveRoute(AppRoute.Orders));
   }, [navigate, dispatch, isCoach]);
 
   return (

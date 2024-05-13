@@ -10,6 +10,7 @@ import {
   isUserCoach,
   resetCatalogData,
   resetWorkoutsFilters,
+  setActiveRoute,
 } from '../../store';
 import { useEffect } from 'react';
 import { AppRoute, ListItemsPortion } from '../../const';
@@ -26,6 +27,7 @@ function WorkoutsCatalogPage(): JSX.Element {
     }
     dispatch(resetCatalogData(ListItemsPortion.AllWorkouts));
     dispatch(resetWorkoutsFilters());
+    dispatch(setActiveRoute(AppRoute.Workouts));
   }, [navigate, dispatch, isCoach]);
 
   return (
