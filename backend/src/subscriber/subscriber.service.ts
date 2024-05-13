@@ -5,6 +5,7 @@ import { TokenPayload, UserRole } from '@app/types';
 import { UserService } from 'src/user/user.service';
 import { MailService } from 'src/mail/mail.service';
 import { WorkoutEntity } from 'src/workout/workout.entity';
+import { SubscriptionStatusRdo } from './rdo';
 
 @Injectable()
 export class SubscriberService {
@@ -41,6 +42,16 @@ export class SubscriberService {
     }
 
     return this.createSubscriber(userId);
+  }
+
+  public async checkSubscription(
+    userId: string,
+    coachId: string,
+  ): Promise<SubscriptionStatusRdo> {
+    const existsSubscriber = await this.getSubscriber(userId);
+    return {
+      subscriptionStatus: existsSubscriber.coaches.includes(coachId),
+    };
   }
 
   public async dispatchNotifications(): Promise<void> {
