@@ -143,4 +143,19 @@ export class WorkoutService {
       ),
     });
   }
+
+  public async getWorkoutsByCoach(
+    coachId: string,
+  ): Promise<WorkoutsWithPaginationRdo> {
+    const workoutsWithPagination = await this.workoutRepository.find(
+      undefined,
+      coachId,
+    );
+    return fillDto(WorkoutsWithPaginationRdo, {
+      ...workoutsWithPagination,
+      workouts: workoutsWithPagination.entities.map((workout) =>
+        fillDto(WorkoutRdo, workout.toPOJO()),
+      ),
+    });
+  }
 }

@@ -49,6 +49,18 @@ export class WorkoutController {
   @ApiResponse({
     type: WorkoutsWithPaginationRdo,
     status: HttpStatus.OK,
+    description: 'Workouts list from a coach',
+  })
+  @Get('/:coachId')
+  public async coachWorkouts(
+    @Param('coachId', MongoIdValidationPipe) coachId: string,
+  ) {
+    return this.workoutService.getWorkoutsByCoach(coachId);
+  }
+
+  @ApiResponse({
+    type: WorkoutsWithPaginationRdo,
+    status: HttpStatus.OK,
     description: 'Coach workouts list',
   })
   @ApiQuery({ type: CoachWorkoutsQuery })
