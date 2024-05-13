@@ -25,7 +25,7 @@ function StatusInput({
   const isDisabled = useAppSelector(isUserFormDataSending);
 
   useEffect(() => {
-    if (originalValue && isActive) {
+    if (originalValue !== undefined && isActive) {
       dispatch(setStatus(originalValue));
     }
   }, [dispatch, isActive, originalValue]);

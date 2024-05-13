@@ -17,6 +17,7 @@ import {
 } from 'src/shared/const';
 import { DtoValidationMessage } from 'src/shared/messages';
 import { Expose, Transform } from 'class-transformer';
+import * as lodash from 'lodash';
 
 export class UpdateUserDto {
   @ApiPropertyOptional({
@@ -105,6 +106,7 @@ export class UpdateUserDto {
     description: 'Is user ready for workout?',
     example: 'true',
   })
+  @Transform(({ value }) => lodash.lowerCase(value) === 'true')
   @IsOptional()
   @IsBoolean()
   @Expose()

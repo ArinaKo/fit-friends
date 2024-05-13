@@ -15,11 +15,8 @@ function QuestionaryPage(): JSX.Element {
     if (!isAuth) {
       navigate(AppRoute.Login);
     }
-  }, [navigate, isAuth]);
-
-  useEffect(() => {
     dispatch(resetUserForm());
-  }, [dispatch]);
+  }, [navigate, dispatch, isAuth]);
 
   if (isDataLoading) {
     return <UIBlocker />;

@@ -21,11 +21,8 @@ function RegisterPage(): JSX.Element {
     if (isAuth) {
       navigate(isCoach ? AppRoute.Account : AppRoute.Main);
     }
-  }, [navigate, isAuth, isCoach]);
-
-  useEffect(() => {
     dispatch(resetUserForm());
-  }, [dispatch]);
+  }, [navigate, dispatch, isAuth, isCoach]);
 
   if (isDataLoading) {
     return <UIBlocker />;
