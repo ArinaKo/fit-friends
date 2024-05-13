@@ -27,4 +27,5 @@ export const APIRoute = {
   CreateWorkoutRequest: '/workout-requests',
   UpdateWorkoutRequest: '/workout-requests',
   Comments: '/comments',
+  Notifications: '/notifications',
 } as const;

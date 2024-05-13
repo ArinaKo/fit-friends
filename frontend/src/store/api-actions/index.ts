@@ -5,3 +5,4 @@ export * from './balances-api-actions';
 export * from './friends-api-actions';
 export * from './workouts-api-actions';
 export * from './users-api-actions';
+export * from './notifications-api-actions';
