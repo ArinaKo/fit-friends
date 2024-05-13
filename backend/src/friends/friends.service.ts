@@ -6,7 +6,11 @@ import { UserService } from 'src/user/user.service';
 import { TokenPayload } from '@app/types';
 import { BaseQuery } from 'src/shared/query/base.query';
 import { fillDto } from '@app/helpers';
-import { FriendRdo, FriendsWithPaginationRdo } from './rdo';
+import {
+  FriendRdo,
+  FriendshipStatusRdo,
+  FriendsWithPaginationRdo,
+} from './rdo';
 import { NotificationService } from 'src/notification/notification.service';
 import { NotificationText } from 'src/notification/notification.const';
 
@@ -28,12 +32,22 @@ export class FriendsService {
     return this.friendsRepository.save(friendsEntity);
   }
 
-  public async checkUserInFriends(
+  private async checkUserInFriends(
     userId: string,
     friendId: string,
   ): Promise<boolean> {
     const friendsRecord = await this.getFriendsEntity(userId);
     return friendsRecord.friendsList.includes(friendId);
+  }
+
+  public async getFriendshipStatus(
+    userId: string,
+    friendId: string,
+  ): Promise<FriendshipStatusRdo> {
+    const friendsRecord = await this.getFriendsEntity(userId);
+    return {
+      isFriend: friendsRecord.friendsList.includes(friendId),
+    };
   }
 
   public async getFriendsList(
