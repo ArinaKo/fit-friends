@@ -1,36 +1,21 @@
 import { useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getUserDataCertificates } from '../../store';
-import CertificateCard from '../certificate-card/certificate-card.component';
+import { getUserDataCertificates, uploadCertificateAction } from '../../store';
+import { CertificateCard, SliderControls, SliderControlsType } from '../index';
+import { SliderConfig, SlidesAmount } from '../../const';
 import Slider from 'react-slick';
-import { uploadCertificateAction } from '../../store/api-actions';
-
-const SLIDES_TO_SHOW = 3;
 
 function CoachCertificates(): JSX.Element {
   const dispatch = useAppDispatch();
   const certificates = useAppSelector(getUserDataCertificates);
   const settings = {
-    arrows: false,
-    dots: false,
-    infinite: false,
-    centerMode: false,
+    ...SliderConfig,
     className: 'personal-account-coach__list',
-    speed: 500,
-    slidesToShow: SLIDES_TO_SHOW,
-    slidesToScroll: 1,
-    variableWidth: true,
-    adaptiveHeight: true,
+    slidesToShow: SlidesAmount.AccountCertificates,
   };
+  const sliderRef = useRef<Slider>(null);
 
   const fileInput = useRef<HTMLInputElement>(null);
-
-  const sliderRef = useRef<Slider>(null);
-  const [firstSlide, setFirstSlide] = useState(1);
-  const [lastSlide, setLastSlide] = useState(
-    certificates.length < SLIDES_TO_SHOW ? certificates.length : SLIDES_TO_SHOW,
-  );
-
   const [editedCertificate, setEdited] = useState<null | string>(null);
 
   function handleFileUpload(evt: React.ChangeEvent<HTMLInputElement>) {
@@ -63,36 +48,11 @@ function CoachCertificates(): JSX.Element {
           <span>Загрузить</span>
         </button>
         <div className="personal-account-coach__controls">
-          <button
-            className="btn-icon personal-account-coach__control"
-            type="button"
-            aria-label="previous"
-            disabled={firstSlide === 1}
-            onClick={() => {
-              setFirstSlide(firstSlide - 1);
-              setLastSlide(lastSlide - 1);
-              sliderRef.current?.slickPrev();
-            }}
-          >
-            <svg width={16} height={14} aria-hidden="true">
-              <use xlinkHref="#arrow-left" />
-            </svg>
-          </button>
-          <button
-            className="btn-icon personal-account-coach__control"
-            type="button"
-            aria-label="next"
-            disabled={lastSlide === certificates.length}
-            onClick={() => {
-              setFirstSlide(firstSlide + 1);
-              setLastSlide(lastSlide + 1);
-              sliderRef.current?.slickNext();
-            }}
-          >
-            <svg width={16} height={14} aria-hidden="true">
-              <use xlinkHref="#arrow-right" />
-            </svg>
-          </button>
+          <SliderControls
+            type={SliderControlsType.AccountCertificates}
+            sliderRef={sliderRef}
+            slidesAmount={certificates.length}
+          />
         </div>
       </div>
       <Slider ref={sliderRef} {...settings}>
