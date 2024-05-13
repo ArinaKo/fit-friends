@@ -14,6 +14,7 @@ import {
   OrdersPage,
   QuestionaryPage,
   RegisterPage,
+  UserPage,
   UsersCatalogPage,
   WorkoutPage,
   WorkoutsCatalogPage,
@@ -72,7 +73,7 @@ function App(): JSX.Element {
               element={<CreateWorkoutPage />}
             />
             <Route path={AppRoute.Users} element={<UsersCatalogPage />} />
-            <Route path={`${AppRoute.Users}/:userId`} element={<div>Not implemented</div>} />
+            <Route path={`${AppRoute.Users}/:userId`} element={<UserPage />} />
             <Route path={AppRoute.Workouts} element={<WorkoutsCatalogPage />} />
             <Route
               path={`${AppRoute.Workouts}/:workoutId`}
