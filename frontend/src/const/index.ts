@@ -5,3 +5,4 @@ export * from './location';
 export * from './empty-forms';
 export * from './labels';
 export * from './workout';
+export * from './slider';
