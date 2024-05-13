@@ -19,4 +19,6 @@ export * from './users-list/users-list';
 export * from './users-list/selectors';
 export * from './workout-info/workout-info';
 export * from './workout-info/selectors';
+export * from './user-info/user-info';
+export * from './user-info/selectors';
 export * from './main';

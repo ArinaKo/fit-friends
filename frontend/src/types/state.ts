@@ -194,3 +194,22 @@ export type WorkoutInfo = {
   comments: Comment[];
   isDataLoading: boolean;
 };
+
+export type UserInfo = {
+  id: string;
+  name: string;
+  location: MetroStation;
+  role: UserRole;
+  isReady: boolean;
+  description: string;
+  workoutTypes: WorkoutType[];
+  level: UserLevel;
+  isFriend: boolean;
+  images: FileData[];
+  certificates: FileData[];
+  workouts: Workout[];
+  subscriptionStatus: boolean;
+  isDataLoading: boolean;
+  isCoachInfoActual: boolean;
+  isWorkoutsLoading: boolean;
+};
