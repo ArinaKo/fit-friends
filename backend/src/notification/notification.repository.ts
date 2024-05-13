@@ -28,6 +28,7 @@ export class NotificationRepository extends BaseMongoRepository<
         {
           $addFields: {
             id: { $toString: '$_id' },
+            date: '$createdAt',
           },
         },
       ])

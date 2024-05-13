@@ -15,4 +15,11 @@ export class NotificationRdo {
   })
   @Expose()
   public text: string;
+
+  @ApiProperty({
+    description: 'Notification date',
+    example: '2024-05-12T17:18:56.958Z',
+  })
+  @Expose()
+  public date: Date;
 }

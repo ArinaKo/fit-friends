@@ -5,6 +5,7 @@ export class NotificationEntity implements Notification, Entity<string> {
   public id?: string;
   public userId: string;
   public text: string;
+  public date?: Date;
 
   constructor(data: Notification) {
     this.populate(data);
@@ -15,6 +16,7 @@ export class NotificationEntity implements Notification, Entity<string> {
       id: this.id,
       userId: this.userId,
       text: this.text,
+      date: this.date,
     };
   }
 
@@ -22,6 +24,7 @@ export class NotificationEntity implements Notification, Entity<string> {
     this.id = data.id;
     this.userId = data.userId;
     this.text = data.text;
+    this.date = data.date;
   }
 
   static fromObject(data: Notification): NotificationEntity {
