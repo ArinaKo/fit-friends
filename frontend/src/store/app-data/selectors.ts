@@ -1,5 +1,5 @@
 import { NameSpace } from '../../const';
-import { State } from '../../types';
+import { Notification, Route, State } from '../../types';
 import { AuthorizationStatus, UserRole } from '../../const';
 
 export const isUserAuth = (state: State): boolean =>
@@ -10,3 +10,12 @@ export const isAuthRequesting = (state: State): boolean =>
 
 export const isUserCoach = (state: State): boolean =>
   state[NameSpace.AppData].userRole === UserRole.Coach;
+
+export const getCurrentPage = (state: State): Route | undefined =>
+  state[NameSpace.AppData].activePage;
+
+export const getNotifications = (state: State): Notification[] =>
+  state[NameSpace.AppData].notifications;
+
+export const hasNotifications = (state: State): boolean =>
+  state[NameSpace.AppData].notifications.length !== 0;

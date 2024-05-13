@@ -14,6 +14,8 @@ import { WorkoutOrders } from './workout-orders';
 import { WorkoutBalance } from './workout-balance';
 import { User } from './user';
 import { Comment } from './comment';
+import { Route } from './route';
+import { Notification } from './notification';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -23,7 +25,9 @@ export type AppData = {
   authStatus: AuthorizationStatus;
   userRole: UserRole | undefined;
   userId: string;
+  notifications: Notification[];
   activeWorkout: string | undefined;
+  activePage: Route | undefined;
 };
 
 export type CatalogData = {

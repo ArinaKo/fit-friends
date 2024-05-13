@@ -1,8 +1,9 @@
 import { AppRoute } from '../../const';
+import { Route } from '../../types';
 
 type AccountLink = {
   Icon: string;
-  Route: (typeof AppRoute)[keyof typeof AppRoute];
+  Route: Route;
   Label: string;
 };
 
