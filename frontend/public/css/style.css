@@ -2609,6 +2609,10 @@ input:active + .custom-textarea__text {
   grid-template-columns: 1fr 58%;
 }
 
+.user-card__container .user-card__wrapper {
+  margin-bottom: 64px;
+}
+
 .user-card__content {
   padding: 102px 116px 102px 118px;
 }
@@ -2690,8 +2694,21 @@ input:active + .custom-textarea__text {
   flex-shrink: 0;
 }
 
-.user-card__status {
-  position: relative;
+.user-card__status-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.user-card__status,
+.user-card__role {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -2701,26 +2718,55 @@ input:active + .custom-textarea__text {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-bottom: 35px;
-  padding: 12px 20px 12px 34px;
+  margin-bottom: 5px;
   font-weight: 400;
   font-size: 12px;
   line-height: 12px;
-  color: #333333;
   text-transform: uppercase;
-  border: 1px solid #c5ec2a;
   border-radius: 100px;
+}
+
+.user-card__role {
+  margin-right: 15px;
+  padding: 12px 20px;
+  color: #ffffff;
+  background-color: #333333;
+  border: 1px solid #c5ec2a;
+}
+
+.user-card__role-icon {
+  margin-right: 6px;
+  color: #c5ec2a;
+}
+
+.user-card__status {
+  position: relative;
+  padding: 12px 24px 12px 42px;
+  color: #adadad;
+  border: 1px solid #cfcfcf;
+}
+
+.user-card__status--active {
+  padding: 12px 20px 12px 34px;
+  color: #333333;
+  border: 1px solid #c5ec2a;
 }
 
 .user-card__status::after {
   content: "";
   position: absolute;
-  top: 14px;
-  left: 20px;
+  top: 15px;
+  left: 23px;
   width: 8px;
   height: 8px;
-  background-color: #c5ec2a;
+  background-color: #cfcfcf;
   border-radius: 100px;
+}
+
+.user-card__status--active::after {
+  top: 14px;
+  left: 20px;
+  background-color: #c5ec2a;
 }
 
 .user-card__text {
@@ -2741,6 +2787,11 @@ input:active + .custom-textarea__text {
 
 .user-card__text p:last-of-type {
   margin-bottom: 0;
+}
+
+.user-card__sertificate {
+  padding: 0;
+  margin-bottom: 24px;
 }
 
 .user-card__hashtag-list {
@@ -2772,14 +2823,14 @@ input:active + .custom-textarea__text {
   margin-top: 10px;
 }
 
-.user-card__gallary {
+.user-card__gallery {
   padding: 99px 59px;
   background-color: #333333;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
-.user-card__gallary-list {
+.user-card__gallery-list {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr;
@@ -2790,265 +2841,11 @@ input:active + .custom-textarea__text {
   list-style: none;
 }
 
-.user-card__gallary-item {
+.user-card__gallery-item {
   border-radius: 8px;
 }
 
-.user-card__gallary-item img {
-  border-radius: 8px;
-  height: 573px;
-  width: 334px;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
-.user-card__gallary-item:last-child {
-  margin-right: 0;
-}
-
-.user-card-coach__card {
-  display: -ms-grid;
-  display: grid;
-  margin-bottom: 64px;
-  background-color: #ffffff;
-  border: 1px solid #c5ec2a;
-  border-radius: 12px;
-  -ms-grid-columns: 1fr calc(58% - 4px);
-  grid-template-columns: 1fr calc(58% - 4px);
-}
-
-.user-card-coach__content {
-  padding: 96px 116px 96px 118px;
-}
-
-.user-card-coach__head {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-bottom: 12px;
-  padding-right: 5px;
-}
-
-.user-card-coach__title {
-  margin: 0;
-  font-style: bold;
-  font-weight: 700;
-  font-size: 34px;
-  line-height: 34px;
-  color: #333333;
-  text-transform: uppercase;
-  letter-spacing: 1%;
-}
-
-.user-card-coach__icon {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  background-color: #333333;
-  border-radius: 100px;
-}
-
-.user-card-coach__crown {
-  color: #c5ec2a;
-}
-
-.user-card-coach__label {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-bottom: 22px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
-  color: #adadad;
-}
-
-.user-card-coach__label span {
-  padding-left: 8px;
-}
-
-.user-card-coach__label svg {
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.user-card-coach__status-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-}
-
-.user-card-coach__status {
-  position: relative;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 12px 20px 12px 34px;
-  margin-bottom: 5px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 12px;
-  color: #333333;
-  text-transform: uppercase;
-  border: 1px solid #c5ec2a;
-  border-radius: 100px;
-}
-
-.user-card-coach__status--check::after {
-  content: "";
-  position: absolute;
-  top: 15px;
-  left: 20px;
-  width: 8px;
-  height: 8px;
-  background-color: #c5ec2a;
-  border-radius: 100px;
-}
-
-.user-card-coach__status--tag {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-right: 15px;
-  padding: 12px 20px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 12px;
-  color: #ffffff;
-  text-transform: uppercase;
-  background-color: #333333;
-  border: 1px solid #c5ec2a;
-  border-radius: 100px;
-}
-
-.user-card-coach__icon-cup {
-  margin-right: 6px;
-  color: #c5ec2a;
-}
-
-.user-card-coach__text {
-  margin-bottom: 25px;
-  padding-top: 35px;
-  border-top: 1px solid rgba(158, 158, 158, 0.2);
-}
-
-.user-card-coach__text p {
-  max-width: 354px;
-  margin: 0;
-  margin-bottom: 15px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  color: #333333;
-}
-
-.user-card-coach__text p:last-of-type {
-  margin-bottom: 0;
-}
-
-.user-card-coach__sertificate {
-  padding: 0;
-}
-
-.user-card-coach__hashtag-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin: 0;
-  margin-top: 24px;
-  margin-bottom: 30px;
-  padding: 0;
-  list-style: none;
-}
-
-.user-card-coach__hashtag-item {
-  margin-right: 8px;
-  margin-bottom: 10px;
-}
-
-.user-card-coach__hashtag-item:last-child {
-  margin-right: 0;
-}
-
-.user-card-coach__btn {
-  margin-top: 10px;
-}
-
-.user-card-coach__gallary {
-  padding: 99px 59px;
-  background-color: #333333;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-.user-card-coach__gallary-list {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.user-card-coach__gallary-item {
-  border-radius: 8px;
-}
-
-.user-card-coach__gallary-item img {
+.user-card__gallery-item img {
   border-radius: 8px;
   height: 573px;
   width: 334px;
@@ -3056,11 +2853,11 @@ input:active + .custom-textarea__text {
   object-fit: cover;
 }
 
-.user-card-coach__gallary-item:last-child {
+.user-card__gallery-item:last-child {
   margin-right: 0;
 }
 
-.user-card-coach__training-head {
+.user-card__training-head {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3074,7 +2871,7 @@ input:active + .custom-textarea__text {
   margin-bottom: 26px;
 }
 
-.user-card-coach__training-title {
+.user-card__training-title {
   margin: 0;
   font-style: bold;
   font-weight: 700;
@@ -3085,7 +2882,7 @@ input:active + .custom-textarea__text {
   letter-spacing: 1%;
 }
 
-.user-card-coach__training-bts {
+.user-card__training-bts {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3095,11 +2892,11 @@ input:active + .custom-textarea__text {
   flex-direction: row;
 }
 
-.user-card-coach__training-btn:first-of-type {
+.user-card__training-btn:first-of-type {
   margin-right: 15px;
 }
 
-.user-card-coach__training-list {
+.user-card__training-list {
   margin: 0;
   padding: 0;
   display: -webkit-box;
@@ -3110,18 +2907,26 @@ input:active + .custom-textarea__text {
   -ms-flex-direction: row;
   flex-direction: row;
   list-style: none;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
 }
 
-.user-card-coach__training-item {
-  margin-right: 20px;
+.user-card__training-list .slick-list {
+  margin: 0 -20px;
 }
 
-.user-card-coach__training-item:last-child {
+.user-card__training-list .slick-track {
+  margin: 0;
+}
+
+.user-card__training-item {
+  margin: 0 20px;
+}
+
+.user-card__training-item:last-child {
   margin-right: 0;
 }
 
-.user-card-coach__training-form {
+.user-card__training-form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3133,360 +2938,17 @@ input:active + .custom-textarea__text {
   margin: 0 auto;
 }
 
-.user-card-coach__training-form .btn {
+.user-card__training-form .btn {
   max-width: 374px;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 
-.user-card-coach__training-check {
+.user-card__training-check {
   margin-top: 10px;
   margin-left: 5px;
 }
 
-.user-card-coach .custom-toggle {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 16px;
-}
-
-.user-card-coach-2__card {
-  display: -ms-grid;
-  display: grid;
-  margin-bottom: 64px;
-  background-color: #ffffff;
-  border: 1px solid #c5ec2a;
-  border-radius: 12px;
-  -ms-grid-columns: 1fr calc(58% - 4px);
-  grid-template-columns: 1fr calc(58% - 4px);
-}
-
-.user-card-coach-2__content {
-  padding: 96px 116px 96px 118px;
-}
-
-.user-card-coach-2__head {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-bottom: 12px;
-  padding-right: 5px;
-}
-
-.user-card-coach-2__title {
-  margin: 0;
-  font-style: bold;
-  font-weight: 700;
-  font-size: 34px;
-  line-height: 34px;
-  color: #333333;
-  text-transform: uppercase;
-  letter-spacing: 1%;
-}
-
-.user-card-coach-2__icon {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  background-color: #333333;
-  border-radius: 100px;
-}
-
-.user-card-coach-2__crown {
-  color: #c5ec2a;
-}
-
-.user-card-coach-2__label {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-bottom: 22px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 14px;
-  color: #adadad;
-}
-
-.user-card-coach-2__label span {
-  padding-left: 8px;
-}
-
-.user-card-coach-2__label svg {
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.user-card-coach-2__status-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-}
-
-.user-card-coach-2__status {
-  position: relative;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 12px 24px 12px 42px;
-  margin-bottom: 5px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 12px;
-  color: #adadad;
-  text-transform: uppercase;
-  border: 1px solid #cfcfcf;
-  border-radius: 100px;
-}
-
-.user-card-coach-2__status--check::after {
-  content: "";
-  position: absolute;
-  top: 15px;
-  left: 23px;
-  width: 8px;
-  height: 8px;
-  background-color: #cfcfcf;
-  border-radius: 100px;
-}
-
-.user-card-coach-2__status--tag {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-right: 15px;
-  padding: 12px 20px;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 12px;
-  color: #ffffff;
-  text-transform: uppercase;
-  background-color: #333333;
-  border: 1px solid #c5ec2a;
-  border-radius: 100px;
-}
-
-.user-card-coach-2__icon-cup {
-  margin-right: 6px;
-  color: #c5ec2a;
-}
-
-.user-card-coach-2__text {
-  margin-bottom: 25px;
-  padding-top: 35px;
-  border-top: 1px solid rgba(158, 158, 158, 0.2);
-}
-
-.user-card-coach-2__text p {
-  max-width: 354px;
-  margin: 0;
-  margin-bottom: 15px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  color: #333333;
-}
-
-.user-card-coach-2__text p:last-of-type {
-  margin-bottom: 0;
-}
-
-.user-card-coach-2__sertificate {
-  padding: 0;
-}
-
-.user-card-coach-2__hashtag-list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin: 0;
-  margin-top: 24px;
-  margin-bottom: 30px;
-  padding: 0;
-  list-style: none;
-}
-
-.user-card-coach-2__hashtag-item {
-  margin-right: 8px;
-  margin-bottom: 10px;
-}
-
-.user-card-coach-2__hashtag-item:last-child {
-  margin-right: 0;
-}
-
-.user-card-coach-2__btn {
-  margin-top: 10px;
-}
-
-.user-card-coach-2__gallary {
-  padding: 99px 59px;
-  background-color: #333333;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-.user-card-coach-2__gallary-list {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.user-card-coach-2__gallary-item {
-  border-radius: 8px;
-}
-
-.user-card-coach-2__gallary-item img {
-  border-radius: 8px;
-  height: 573px;
-  width: 334px;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
-.user-card-coach-2__gallary-item:last-child {
-  margin-right: 0;
-}
-
-.user-card-coach-2__training-head {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  margin-bottom: 26px;
-}
-
-.user-card-coach-2__training-title {
-  margin: 0;
-  font-style: bold;
-  font-weight: 700;
-  font-size: 34px;
-  line-height: 34px;
-  color: #333333;
-  text-transform: uppercase;
-  letter-spacing: 1%;
-}
-
-.user-card-coach-2__training-bts {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.user-card-coach-2__training-btn:first-of-type {
-  margin-right: 15px;
-}
-
-.user-card-coach-2__training-list {
-  margin: 0;
-  padding: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  list-style: none;
-  margin-bottom: 40px;
-}
-
-.user-card-coach-2__training-item {
-  margin-right: 20px;
-}
-
-.user-card-coach-2__training-item:last-child {
-  margin-right: 0;
-}
-
-.user-card-coach-2__training-form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  max-width: 435px;
-  margin: 0 auto;
-}
-
-.user-card-coach-2__training-form .btn {
-  max-width: 374px;
-  margin: 0 auto;
-}
-
-.user-card-coach-2__training-check {
-  margin-top: 10px;
-  margin-left: 5px;
-}
-
-.user-card-coach-2 .custom-toggle {
+.user-card .custom-toggle {
   font-weight: 500;
   font-size: 16px;
   line-height: 16px;
