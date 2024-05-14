@@ -1,7 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UserInfo } from '../../types';
 import { MetroStation, NameSpace, UserLevel, UserRole } from '../../const';
-import { getCoachDataAction, getUserAction } from '../api-actions';
+import {
+  addUserToFriendsAction,
+  getCoachDataAction,
+  getUserAction,
+  removeUserFromFriendsAction,
+  subscribeToCoachAction,
+  unsubscribeFromCoachAction,
+} from '../api-actions';
 
 const initialState: UserInfo = {
   id: '',
@@ -65,6 +72,18 @@ export const userInfo = createSlice({
         state.workouts = action.payload.workouts;
         state.isCoachInfoActual = true;
         state.isWorkoutsLoading = false;
+      })
+      .addCase(addUserToFriendsAction.fulfilled, (state) => {
+        state.isFriend = true;
+      })
+      .addCase(removeUserFromFriendsAction.fulfilled, (state) => {
+        state.isFriend = false;
+      })
+      .addCase(subscribeToCoachAction.fulfilled, (state) => {
+        state.subscriptionStatus = true;
+      })
+      .addCase(unsubscribeFromCoachAction.fulfilled, (state) => {
+        state.subscriptionStatus = false;
       });
   },
 });
