@@ -25,6 +25,8 @@ export const APIRoute = {
   WorkoutBalance: '/balance',
   DecreaseBalance: '/balance/decrease',
   UserFriends: '/friends',
+  AddFriend: '/friends/add',
+  RemoveFriend: '/friends/remove',
   CreateWorkoutRequest: '/workout-requests',
   UpdateWorkoutRequest: '/workout-requests',
   Comments: '/comments',

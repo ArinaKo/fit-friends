@@ -16,6 +16,26 @@ export const getUserFriendsAction = createAsyncThunk<
   return data;
 });
 
+export const addUserToFriendsAction = createAsyncThunk<
+  void,
+  string,
+  AsyncThunkConfig
+>('friends/add', async (userId, { extra: api }) => {
+  await api.patch(APIRoute.AddFriend, {
+    friendId: userId,
+  });
+});
+
+export const removeUserFromFriendsAction = createAsyncThunk<
+  void,
+  string,
+  AsyncThunkConfig
+>('friends/remove', async (userId, { extra: api }) => {
+  await api.patch(APIRoute.RemoveFriend, {
+    friendId: userId,
+  });
+});
+
 export const updateWorkoutRequestAction = createAsyncThunk<
   WorkoutRequest,
   WorkoutRequest,
