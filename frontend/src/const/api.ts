@@ -31,5 +31,7 @@ export const APIRoute = {
   UpdateWorkoutRequest: '/workout-requests',
   Comments: '/comments',
   Notifications: '/notifications',
-  CheckSubscription: 'subscribe/check',
+  CheckSubscription: '/subscribe/check',
+  SubscribeTo: '/subscribe/add',
+  UnsubscribeFrom: '/subscribe/remove',
 } as const;

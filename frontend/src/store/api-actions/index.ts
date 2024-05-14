@@ -6,3 +6,4 @@ export * from './friends-api-actions';
 export * from './workouts-api-actions';
 export * from './users-api-actions';
 export * from './notifications-api-actions';
+export * from './subscribe-api-actions';
