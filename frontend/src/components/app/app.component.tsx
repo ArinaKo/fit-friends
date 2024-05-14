@@ -11,6 +11,7 @@ import {
   FriendsPage,
   IntroPage,
   LoginPage,
+  MainPage,
   OrdersPage,
   QuestionaryPage,
   RegisterPage,
@@ -56,10 +57,7 @@ function App(): JSX.Element {
               </PrivateRoute>
             }
           >
-            <Route
-              path={AppRoute.Main}
-              element={<div>Not implemented - main page</div>}
-            />
+            <Route path={AppRoute.Main} element={<MainPage />} />
             <Route path={AppRoute.Account} element={<AccountPage />} />
             <Route path={AppRoute.Friends} element={<FriendsPage />} />
             <Route path={AppRoute.Balance} element={<BalancePage />} />
