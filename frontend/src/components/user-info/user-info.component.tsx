@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getUserDescription,
   getUserIsReady,
@@ -9,14 +9,21 @@ import {
   isUserAFriend,
   getUserImages,
   getUserLevel,
+  removeUserFromFriendsAction,
+  getUserId,
+  addUserToFriendsAction,
+  isUserCoach,
 } from '../../store';
 import cn from 'classnames';
 import { getFileUrl } from '../../utils';
 
 function UserInfo(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector(getUserId);
   const name = useAppSelector(getUserName);
+  const isCoach = useAppSelector(isUserCoach);
   const location = useAppSelector(getUserLocation);
-  const isUserCoach = useAppSelector(isUserRoleCoach);
+  const isRoleCoach = useAppSelector(isUserRoleCoach);
   const isReady = useAppSelector(getUserIsReady);
   const description = useAppSelector(getUserDescription);
   const workoutTypes = useAppSelector(getUserWorkoutTypes);
@@ -25,6 +32,14 @@ function UserInfo(): JSX.Element {
   const images = useAppSelector(getUserImages);
 
   const hashtags = [...workoutTypes, level];
+
+  const handleFriendButtonClick = () => {
+    if (isFriend) {
+      dispatch(removeUserFromFriendsAction(userId));
+      return;
+    }
+    dispatch(addUserToFriendsAction(userId));
+  };
 
   return (
     <div className="user-card__wrapper">
@@ -35,7 +50,7 @@ function UserInfo(): JSX.Element {
         <div className="user-card__label">
           <a href="">
             <svg
-              className="user-card-coach__icon-location"
+              className="user-card__icon-location"
               width={12}
               height={14}
               aria-hidden="true"
@@ -46,7 +61,7 @@ function UserInfo(): JSX.Element {
           </a>
         </div>
         <div className="user-card__status-container">
-          {isUserCoach ? (
+          {isRoleCoach ? (
             <div className="user-card__role">
               <svg
                 className="user-card__role-icon"
@@ -66,7 +81,7 @@ function UserInfo(): JSX.Element {
           >
             <span>
               {`${isReady ? 'Готов' : 'Не готов'} ${
-                isUserCoach ? 'тренировать' : 'к тренировке'
+                isRoleCoach ? 'тренировать' : 'к тренировке'
               }`}
             </span>
           </div>
@@ -74,6 +89,17 @@ function UserInfo(): JSX.Element {
         <div className="user-card__text">
           <p>{description}</p>
         </div>
+        {isRoleCoach ? (
+          <button
+            className="btn-flat user-card__sertificate"
+            type="button"
+          >
+            <svg width={12} height={13} aria-hidden="true">
+              <use xlinkHref="#icon-teacher" />
+            </svg>
+            <span>Посмотреть сертификаты</span>
+          </button>
+        ) : undefined}
         <ul className="user-card__hashtag-list">
           {hashtags.map((hashtag) => (
             <li className="user-card__hashtag-item" key={`hashtag-${hashtag}`}>
@@ -86,6 +112,8 @@ function UserInfo(): JSX.Element {
         <button
           className={cn('btn user-card__btn', { 'btn--outlined': isFriend })}
           type="button"
+          disabled={isCoach && !isFriend}
+          onClick={handleFriendButtonClick}
         >
           {isFriend ? 'Удалить из друзей' : 'Добавить в друзья'}
         </button>
