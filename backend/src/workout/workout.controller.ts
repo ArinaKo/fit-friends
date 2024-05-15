@@ -73,6 +73,19 @@ export class WorkoutController {
   }
 
   @ApiResponse({
+    type: [WorkoutRdo],
+    status: HttpStatus.OK,
+    description: 'Workouts list for a user',
+  })
+  @Role(UserRole.Default)
+  @UseGuards(RoleGuard)
+  @ApiQuery({ type: WorkoutsQuery })
+  @Get('/for-user')
+  public async getForUser(@Req() { tokenPayload }: RequestWithTokenPayload) {
+    return this.workoutService.getWorkoutsForUser(tokenPayload.sub);
+  }
+
+  @ApiResponse({
     type: WorkoutsWithPaginationRdo,
     status: HttpStatus.OK,
     description: 'Workouts list from a coach',

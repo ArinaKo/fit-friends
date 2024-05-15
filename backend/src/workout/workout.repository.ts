@@ -10,7 +10,7 @@ import {
   LIST_LIMIT,
 } from 'src/shared/const';
 import { FullWorkoutQuery } from './query';
-import { FieldRange, SortDirection } from '@app/types';
+import { FieldRange, SortDirection, WorkoutsForUserFilter } from '@app/types';
 import { WorkoutsCount, WorkoutsPriceSorting } from './workout.const';
 import * as lodash from 'lodash';
 
@@ -98,6 +98,14 @@ const PipelineStage: { [key: string]: PipelineStage } = {
         },
       ],
       as: 'coach',
+    },
+  },
+  LookupWorkouts: {
+    $lookup: {
+      from: 'workouts',
+      localField: '_id',
+      foreignField: '_id',
+      as: 'workout',
     },
   },
 };
@@ -288,6 +296,53 @@ export class WorkoutRepository extends BaseMongoRepository<
       .aggregate<WorkoutModel>([
         { $sort: { rating: DEFAULT_SORT_DIRECTION } },
         { $limit: WorkoutsCount.Popular },
+        PipelineStage.AddStringId,
+      ])
+      .exec();
+
+    return this.createEntitiesFromDocuments(records);
+  }
+
+  public async findForUser(
+    filter: WorkoutsForUserFilter,
+  ): Promise<WorkoutEntity[]> {
+    const { sex, level, types, duration } = filter;
+    const records = await this.model
+      .aggregate<WorkoutModel>([
+        {
+          $facet: {
+            filterByLevel: [{ $match: { level } }],
+            filterByDuration: [{ $match: { duration } }],
+            filterBySex: [{ $match: { userSex: { $in: sex } } }],
+            filterByType: [{ $match: { type: { $in: types } } }],
+          },
+        },
+        {
+          $project: {
+            result: {
+              $concatArrays: [
+                '$filterBySex',
+                '$filterByLevel',
+                '$filterByDuration',
+                '$filterByType',
+              ],
+            },
+          },
+        },
+        {
+          $unwind: '$result',
+        },
+        { $sortByCount: '$result._id' },
+        { $limit: WorkoutsCount.ForUser },
+        PipelineStage.LookupWorkouts,
+        {
+          $unwind: '$workout',
+        },
+        {
+          $replaceRoot: {
+            newRoot: '$workout',
+          },
+        },
         PipelineStage.AddStringId,
       ])
       .exec();

@@ -7,13 +7,15 @@ import { WorkoutRepository } from './workout.repository';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutEntity } from './workout.entity';
 import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
-import { DEFAULT_RATING } from 'src/shared/const';
+import { DEFAULT_RATING, SexEnumsRelation } from 'src/shared/const';
 import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import { fillDto, generateRandomValue } from '@app/helpers';
 import { SubscriberService } from 'src/subscriber/subscriber.service';
 import { WORKOUT_IMAGES_COUNT } from './workout.const';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
 import { FileMessage } from 'src/shared/messages';
+import { UserService } from 'src/user/user.service';
+import { WorkoutsForUserFilter } from '@app/types';
 
 @Injectable()
 export class WorkoutService {
@@ -21,6 +23,7 @@ export class WorkoutService {
     private readonly workoutRepository: WorkoutRepository,
     private readonly subscriberService: SubscriberService,
     private readonly fileVaultService: FileVaultService,
+    private readonly userService: UserService,
   ) {}
 
   public async getWorkoutEntity(id: string): Promise<WorkoutEntity> {
@@ -123,6 +126,19 @@ export class WorkoutService {
 
   public async getPopularWorkouts(): Promise<WorkoutRdo[]> {
     const workouts = await this.workoutRepository.findPopular();
+    return workouts.map((workout) => fillDto(WorkoutRdo, workout.toPOJO()));
+  }
+
+  public async getWorkoutsForUser(userId: string): Promise<WorkoutRdo[]> {
+    const { level, sex, workoutTypes, timeForWorkout } =
+      await this.userService.getUserEntity(userId);
+    const filter: WorkoutsForUserFilter = {
+      level,
+      sex: SexEnumsRelation[sex],
+      types: workoutTypes,
+      duration: timeForWorkout,
+    };
+    const workouts = await this.workoutRepository.findForUser(filter);
     return workouts.map((workout) => fillDto(WorkoutRdo, workout.toPOJO()));
   }
 

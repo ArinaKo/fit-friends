@@ -1,4 +1,9 @@
-import { RequestStatus, SortDirection } from '@app/types';
+import {
+  RequestStatus,
+  SortDirection,
+  UserSex,
+  WorkoutSexFor,
+} from '@app/types';
 
 export const MAX_WORKOUTS_TYPES = 3;
 
@@ -65,3 +70,9 @@ export enum CommentTextLength {
   Min = 10,
   Max = 140,
 }
+
+export const SexEnumsRelation = {
+  [UserSex.Male]: [WorkoutSexFor.Male, WorkoutSexFor.All],
+  [UserSex.Female]: [WorkoutSexFor.Female, WorkoutSexFor.All],
+  [UserSex.Other]: [WorkoutSexFor.All],
+};

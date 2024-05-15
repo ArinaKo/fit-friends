@@ -6,6 +6,7 @@ import { WorkoutModel, WorkoutSchema } from './workout.model';
 import { WorkoutRepository } from './workout.repository';
 import { SubscriberModule } from 'src/subscriber/subscriber.module';
 import { FileVaultModule } from 'src/file-vault/file-vault.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { FileVaultModule } from 'src/file-vault/file-vault.module';
     ]),
     SubscriberModule,
     FileVaultModule,
+    UserModule,
   ],
   providers: [WorkoutRepository, WorkoutService],
   controllers: [WorkoutController],
