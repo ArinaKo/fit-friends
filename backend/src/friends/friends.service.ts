@@ -32,7 +32,7 @@ export class FriendsService {
     return this.friendsRepository.save(friendsEntity);
   }
 
-  private async checkUserInFriends(
+  public async checkUserInFriends(
     userId: string,
     friendId: string,
   ): Promise<boolean> {
@@ -44,9 +44,9 @@ export class FriendsService {
     userId: string,
     friendId: string,
   ): Promise<FriendshipStatusRdo> {
-    const friendsRecord = await this.getFriendsEntity(userId);
+    const result = await this.checkUserInFriends(userId, friendId);
     return {
-      isFriend: friendsRecord.friendsList.includes(friendId),
+      isFriend: result,
     };
   }
 

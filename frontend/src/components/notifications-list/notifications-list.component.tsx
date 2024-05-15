@@ -17,17 +17,19 @@ function NotificationsList(): JSX.Element {
           <use xlinkHref="#icon-notification" />
         </svg>
       </button>
-      <div className="main-nav__dropdown">
-        <p className="main-nav__label">Оповещения</p>
-        <ul className="main-nav__sublist">
-          {notifications.map((notification) => (
-            <NotificationCard
-              notification={notification}
-              key={`notification-${notification.id}`}
-            />
-          ))}
-        </ul>
-      </div>
+      {notifications.length ? (
+        <div className="main-nav__dropdown">
+          <p className="main-nav__label">Оповещения</p>
+          <ul className="main-nav__sublist">
+            {notifications.map((notification) => (
+              <NotificationCard
+                notification={notification}
+                key={`notification-${notification.id}`}
+              />
+            ))}
+          </ul>
+        </div>
+      ) : undefined}
     </li>
   );
 }

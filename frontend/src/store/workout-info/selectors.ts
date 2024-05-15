@@ -1,7 +1,7 @@
 import { NameSpace, UserRole } from '../../const';
 import { Comment, FileData, State, User } from '../../types';
 
-export const getWorkoutId = (state: State): string | undefined =>
+export const getWorkoutId = (state: State): string =>
   state[NameSpace.WorkoutInfo].id;
 
 export const getWorkoutTitle = (state: State): string =>

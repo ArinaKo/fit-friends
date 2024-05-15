@@ -176,7 +176,7 @@ export type UsersList = {
 };
 
 export type WorkoutInfo = {
-  id: string | undefined;
+  id: string;
   coachId: string;
   title: string;
   price: string;
