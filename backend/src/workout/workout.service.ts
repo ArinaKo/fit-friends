@@ -116,6 +116,16 @@ export class WorkoutService {
     return workout.coachId;
   }
 
+  public async getSpecialWorkouts(): Promise<WorkoutRdo[]> {
+    const workouts = await this.workoutRepository.findSpecial();
+    return workouts.map((workout) => fillDto(WorkoutRdo, workout.toPOJO()));
+  }
+
+  public async getPopularWorkouts(): Promise<WorkoutRdo[]> {
+    const workouts = await this.workoutRepository.findPopular();
+    return workouts.map((workout) => fillDto(WorkoutRdo, workout.toPOJO()));
+  }
+
   public async getAllWorkouts(
     query?: WorkoutsQuery,
   ): Promise<WorkoutsWithPaginationRdo> {

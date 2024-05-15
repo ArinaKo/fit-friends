@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutService } from './workout.service';
-import { FullWorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
+import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import {
   ApiBody,
   ApiConsumes,
@@ -44,6 +44,32 @@ export class WorkoutController {
   @Get('/')
   public async index(@Query() query: WorkoutsQuery) {
     return this.workoutService.getAllWorkouts(query);
+  }
+
+  @ApiResponse({
+    type: [WorkoutRdo],
+    status: HttpStatus.OK,
+    description: 'Special workouts list',
+  })
+  @Role(UserRole.Default)
+  @UseGuards(RoleGuard)
+  @ApiQuery({ type: WorkoutsQuery })
+  @Get('/special')
+  public async getSpecial() {
+    return this.workoutService.getSpecialWorkouts();
+  }
+
+  @ApiResponse({
+    type: [WorkoutRdo],
+    status: HttpStatus.OK,
+    description: 'Popular workouts list',
+  })
+  @Role(UserRole.Default)
+  @UseGuards(RoleGuard)
+  @ApiQuery({ type: WorkoutsQuery })
+  @Get('/popular')
+  public async getPopular() {
+    return this.workoutService.getPopularWorkouts();
   }
 
   @ApiResponse({

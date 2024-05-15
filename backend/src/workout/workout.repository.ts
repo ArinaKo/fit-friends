@@ -11,8 +11,8 @@ import {
 } from 'src/shared/const';
 import { FullWorkoutQuery } from './query';
 import { FieldRange, SortDirection } from '@app/types';
+import { WorkoutsCount, WorkoutsPriceSorting } from './workout.const';
 import * as lodash from 'lodash';
-import { WorkoutsPriceSorting } from './workout.const';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   AddStringId: {
@@ -268,5 +268,30 @@ export class WorkoutRepository extends BaseMongoRepository<
       priceRange: [price?.min ?? 0, price?.max ?? 0],
       caloriesRange: [calories?.min ?? 0, calories?.max ?? 0],
     };
+  }
+
+  public async findSpecial(): Promise<WorkoutEntity[]> {
+    const records = await this.model
+      .aggregate<WorkoutModel>([
+        { $match: { isSpecial: true } },
+        { $sort: { createdAt: DEFAULT_SORT_DIRECTION } },
+        { $limit: WorkoutsCount.Special },
+        PipelineStage.AddStringId,
+      ])
+      .exec();
+
+    return this.createEntitiesFromDocuments(records);
+  }
+
+  public async findPopular(): Promise<WorkoutEntity[]> {
+    const records = await this.model
+      .aggregate<WorkoutModel>([
+        { $sort: { rating: DEFAULT_SORT_DIRECTION } },
+        { $limit: WorkoutsCount.Popular },
+        PipelineStage.AddStringId,
+      ])
+      .exec();
+
+    return this.createEntitiesFromDocuments(records);
   }
 }
