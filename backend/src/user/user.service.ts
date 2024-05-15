@@ -97,6 +97,11 @@ export class UserService {
     });
   }
 
+  public async getReadyUsers(): Promise<UserRdo[]> {
+    const users = await this.userRepository.findReady();
+    return users.map((user) => fillDto(UserRdo, user.toPOJO()));
+  }
+
   public async completeCoachData(
     userId: string,
     dto: CoachUserQuestionaryDto,

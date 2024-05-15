@@ -20,7 +20,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { FullUserRdo, AuthUserRdo, UsersWithPaginationRdo } from './rdo';
+import {
+  FullUserRdo,
+  AuthUserRdo,
+  UsersWithPaginationRdo,
+  UserRdo,
+} from './rdo';
 import { FileFilter, MongoIdValidationPipe, ParseFile, Role } from '@app/core';
 import { RoleGuard } from 'src/shared/guards';
 import {
@@ -64,6 +69,18 @@ export class UserController {
   @Get('/all-users')
   public async getUsers(@Query() query: UsersQuery) {
     return this.userService.getAllUsers(query);
+  }
+
+  @ApiResponse({
+    type: [UserRdo],
+    status: HttpStatus.OK,
+    description: 'Users ready fo workout',
+  })
+  @Role(UserRole.Default)
+  @UseGuards(RoleGuard)
+  @Get('/ready-users')
+  public async getReadyUsers() {
+    return this.userService.getReadyUsers();
   }
 
   @ApiResponse({

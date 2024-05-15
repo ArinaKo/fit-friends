@@ -11,6 +11,7 @@ import {
 } from 'src/shared/const';
 import { PaginationResult } from '@app/core';
 import { UsersQuery } from './query';
+import { USERS_READY_COUNT } from './user.const';
 
 const PipelineStage: { [key: string]: PipelineStage } = {
   AddStringId: {
@@ -172,6 +173,26 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
       itemsPerPage: limit,
       totalItems: recordsCount,
     };
+  }
+
+  public async findReady(): Promise<UserEntity[]> {
+    const records = await this.model
+      .aggregate<UserModel>([
+        { $match: { isReady: true } },
+        { $sort: { createdAt: DEFAULT_SORT_DIRECTION } },
+        { $limit: USERS_READY_COUNT },
+        PipelineStage.AddStringId,
+        PipelineStage.LookupAvatars,
+        {
+          $unwind: {
+            path: '$avatar',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ])
+      .exec();
+
+    return this.createEntitiesFromDocuments(records);
   }
 
   public async findUserCertificates(
