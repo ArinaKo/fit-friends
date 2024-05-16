@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { WorkoutRepository } from './workout.repository';
 import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
 import { WorkoutEntity } from './workout.entity';
@@ -13,9 +9,9 @@ import { fillDto, generateRandomValue } from '@app/helpers';
 import { SubscriberService } from 'src/subscriber/subscriber.service';
 import { WORKOUT_IMAGES_COUNT } from './workout.const';
 import { FileVaultService } from 'src/file-vault/file-vault.service';
-import { FileMessage } from 'src/shared/messages';
 import { UserService } from 'src/user/user.service';
 import { WorkoutsForUserFilter } from '@app/types';
+import { FileRdo } from 'src/file-vault/rdo';
 
 @Injectable()
 export class WorkoutService {
@@ -47,7 +43,7 @@ export class WorkoutService {
       Object.assign(dto, {
         coachId,
         rating: DEFAULT_RATING,
-        backgroundImage: `/mocks/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.png`,
+        backgroundImage: `/mocks/workout-${generateRandomValue(1, WORKOUT_IMAGES_COUNT)}.jpg`,
         isSpecial: false,
         video: videoId,
       }),
@@ -65,10 +61,6 @@ export class WorkoutService {
     workoutId: string,
     dto: UpdateWorkoutDto,
   ): Promise<FullWorkoutRdo> {
-    if (dto.video && !(await this.fileVaultService.isFileVideo(dto.video))) {
-      throw new BadRequestException(FileMessage.UploadedVideoType);
-    }
-
     const workout = await this.getWorkoutEntity(workoutId);
 
     let hasChanges = false;
@@ -88,6 +80,19 @@ export class WorkoutService {
 
     const fullWorkout = await this.workoutRepository.findFullWorkout(workoutId);
     return fillDto(FullWorkoutRdo, fullWorkout!.toPOJO());
+  }
+
+  public async updateWorkoutVideo(
+    workoutId: string,
+    video: Express.Multer.File,
+  ): Promise<FileRdo> {
+    const workout = await this.getWorkoutEntity(workoutId);
+
+    const newVideo = await this.fileVaultService.saveFile(video);
+    workout.video = newVideo.id!;
+
+    await this.workoutRepository.update(workoutId, workout);
+    return fillDto(FileRdo, newVideo.toPOJO());
   }
 
   public async updateWorkoutRating(workoutId: string) {

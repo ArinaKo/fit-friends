@@ -15,7 +15,6 @@ import {
   Min,
   Max,
   IsOptional,
-  IsMongoId,
 } from 'class-validator';
 import {
   CaloriesValue,
@@ -93,12 +92,12 @@ export class UpdateWorkoutDto {
     example:
       'Упражнения по хатха йоге, направленные на понижение нервной возбудимости.',
   })
+  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   @IsOptional()
   @IsString()
   @Length(WorkoutDescriptionLength.Min, WorkoutDescriptionLength.Max, {
     message: DtoValidationMessage.workoutDescription.length,
   })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   public description?: string;
 
   @ApiPropertyOptional({
@@ -111,15 +110,6 @@ export class UpdateWorkoutDto {
     message: DtoValidationMessage.workoutSexFor.invalidFormat,
   })
   public userSex?: WorkoutSexFor;
-
-  @ApiPropertyOptional({
-    description: 'Workout video',
-    example: '65fb2c95e0f91e82a4d24b11',
-  })
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
-  @IsOptional()
-  @IsMongoId()
-  public video?: string;
 
   @ApiPropertyOptional({
     description: 'Workout`s special offer flag',

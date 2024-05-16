@@ -12,7 +12,11 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CreateWorkoutDto, UpdateWorkoutDto } from './dto';
+import {
+  CreateWorkoutDto,
+  UpdateWorkoutDto,
+  UpdateWorkoutVideoDto,
+} from './dto';
 import { WorkoutService } from './workout.service';
 import { FullWorkoutRdo, WorkoutRdo, WorkoutsWithPaginationRdo } from './rdo';
 import {
@@ -29,6 +33,7 @@ import { UserRole } from '@app/types';
 import { CoachWorkoutsQuery, WorkoutsQuery } from './query';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { VideoFile } from 'src/shared/const';
+import { FileRdo } from 'src/file-vault/rdo';
 
 @ApiTags('workouts')
 @Controller('workouts')
@@ -133,7 +138,6 @@ export class WorkoutController {
   public async coachWorkouts(
     @Param('coachId', MongoIdValidationPipe) coachId: string,
   ) {
-    console.log('hi');
     return this.workoutService.getWorkoutsByCoach(coachId);
   }
 
@@ -150,6 +154,27 @@ export class WorkoutController {
     @Body() dto: UpdateWorkoutDto,
   ) {
     return this.workoutService.updateWorkout(workoutId, dto);
+  }
+
+  @ApiResponse({
+    type: FileRdo,
+    status: HttpStatus.OK,
+    description: 'Workout`s video has been successfully updated',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: UpdateWorkoutVideoDto })
+  @UseGuards(WorkoutOwnerGuard)
+  @Patch('/update-video/:workoutId')
+  @UseInterceptors(
+    FileInterceptor('video', {
+      fileFilter: FileFilter(VideoFile.MimeTypes),
+    }),
+  )
+  public async updateVideo(
+    @Param('workoutId', MongoIdValidationPipe) workoutId: string,
+    @UploadedFile(ParseFile) video: Express.Multer.File,
+  ) {
+    return this.workoutService.updateWorkoutVideo(workoutId, video);
   }
 
   @ApiResponse({
