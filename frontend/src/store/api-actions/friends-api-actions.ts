@@ -10,7 +10,7 @@ export const getUserFriendsAction = createAsyncThunk<
   AsyncThunkConfig
 >('friends/friends-list', async (_arg, { getState, extra: api }) => {
   const params = getUserFriendsQuery(getState());
-  const { data } = await api.get<FriendsWithPagination>(APIRoute.UserFriends, {
+  const { data } = await api.get<FriendsWithPagination>(APIRoute.Friends, {
     params,
   });
   return data;

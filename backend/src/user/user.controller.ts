@@ -49,16 +49,6 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiResponse({
-    type: AuthUserRdo,
-    status: HttpStatus.OK,
-    description: 'Auth user info',
-  })
-  @Get('/')
-  public async index(@Req() { tokenPayload }: RequestWithTokenPayload) {
-    return this.userService.getAuthUser(tokenPayload.sub);
-  }
-
-  @ApiResponse({
     type: UsersWithPaginationRdo,
     status: HttpStatus.OK,
     description: 'Users list',
@@ -66,31 +56,19 @@ export class UserController {
   @ApiQuery({ type: UsersQuery })
   @Role(UserRole.Default)
   @UseGuards(RoleGuard)
-  @Get('/all-users')
-  public async getUsers(@Query() query: UsersQuery) {
+  @Get('/')
+  public async index(@Query() query: UsersQuery) {
     return this.userService.getAllUsers(query);
   }
 
   @ApiResponse({
-    type: [UserRdo],
+    type: AuthUserRdo,
     status: HttpStatus.OK,
-    description: 'Users ready fo workout',
+    description: 'Auth user info',
   })
-  @Role(UserRole.Default)
-  @UseGuards(RoleGuard)
-  @Get('/ready-users')
-  public async getReadyUsers() {
-    return this.userService.getReadyUsers();
-  }
-
-  @ApiResponse({
-    type: FullUserRdo,
-    status: HttpStatus.OK,
-    description: 'User found',
-  })
-  @Get('/:userId')
-  public async getUserInfo(@Param('userId', MongoIdValidationPipe) id: string) {
-    return this.userService.getFullUser(id);
+  @Get('/my-data')
+  public async getAuthUser(@Req() { tokenPayload }: RequestWithTokenPayload) {
+    return this.userService.getAuthUser(tokenPayload.sub);
   }
 
   @ApiResponse({
@@ -112,6 +90,18 @@ export class UserController {
     @UploadedFile() avatar?: Express.Multer.File,
   ) {
     return this.userService.updateUser(tokenPayload.sub, dto, avatar);
+  }
+
+  @ApiResponse({
+    type: [UserRdo],
+    status: HttpStatus.OK,
+    description: 'Users ready fo workout',
+  })
+  @Role(UserRole.Default)
+  @UseGuards(RoleGuard)
+  @Get('/ready-users')
+  public async getReadyUsers() {
+    return this.userService.getReadyUsers();
   }
 
   @ApiResponse({
@@ -220,5 +210,15 @@ export class UserController {
       tokenPayload.sub,
       dto.certificateId,
     );
+  }
+
+  @ApiResponse({
+    type: FullUserRdo,
+    status: HttpStatus.OK,
+    description: 'User found',
+  })
+  @Get('/:userId')
+  public async getUserInfo(@Param('userId', MongoIdValidationPipe) id: string) {
+    return this.userService.getFullUser(id);
   }
 }

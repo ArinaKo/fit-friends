@@ -17,7 +17,7 @@ export const getAllUsersAction = createAsyncThunk<
   AsyncThunkConfig
 >('users/all-users', async (_arg, { getState, extra: api }) => {
   const params = getAllUsersQuery(getState());
-  const { data } = await api.get<UsersWithPagination>(APIRoute.AllUsers, {
+  const { data } = await api.get<UsersWithPagination>(APIRoute.Users, {
     params,
   });
   return data;
@@ -28,9 +28,9 @@ export const getUserAction = createAsyncThunk<
   string,
   AsyncThunkConfig
 >('users/user', async (userId, { extra: api }) => {
-  const { data } = await api.get<FullUser>(`${APIRoute.User}/${userId}`);
+  const { data } = await api.get<FullUser>(`${APIRoute.Users}/${userId}`);
   const { data: friendshipStatus } = await api.get<FriendshipStatus>(
-    `${APIRoute.UserFriends}/${userId}`,
+    `${APIRoute.Friends}/${userId}`,
   );
   return {
     ...data,
@@ -48,7 +48,7 @@ export const getCoachDataAction = createAsyncThunk<
     `${APIRoute.CheckSubscription}/${coachId}`,
   );
   const { data: workoutsData } = await api.get<WorkoutsWithPagination>(
-    `${APIRoute.AllWorkouts}/${coachId}`,
+    `${APIRoute.WorkoutsFromCoach}/${coachId}`,
   );
   return {
     ...subscriptionStatus,

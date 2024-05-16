@@ -1,8 +1,8 @@
 export const WORKOUT_IMAGES_COUNT = 12;
 
 export enum WorkoutsCount {
-  Special = 8,
-  Popular = 3,
+  Special = 3,
+  Popular = 12,
   ForUser = 9,
 }
 

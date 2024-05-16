@@ -47,6 +47,29 @@ export class WorkoutController {
   }
 
   @ApiResponse({
+    type: FullWorkoutRdo,
+    status: HttpStatus.CREATED,
+    description: 'The new workout has been successfully created',
+  })
+  @ApiBody({ type: CreateWorkoutDto })
+  @ApiConsumes('multipart/form-data')
+  @Role(UserRole.Coach)
+  @UseGuards(RoleGuard)
+  @Post('/')
+  @UseInterceptors(
+    FileInterceptor('video', {
+      fileFilter: FileFilter(VideoFile.MimeTypes),
+    }),
+  )
+  public async create(
+    @Body() dto: CreateWorkoutDto,
+    @UploadedFile(ParseFile) video: Express.Multer.File,
+    @Req() { tokenPayload }: RequestWithTokenPayload,
+  ) {
+    return this.workoutService.createWorkout(dto, tokenPayload.sub, video);
+  }
+
+  @ApiResponse({
     type: [WorkoutRdo],
     status: HttpStatus.OK,
     description: 'Special workouts list',
@@ -88,24 +111,12 @@ export class WorkoutController {
   @ApiResponse({
     type: WorkoutsWithPaginationRdo,
     status: HttpStatus.OK,
-    description: 'Workouts list from a coach',
-  })
-  @Get('/:coachId')
-  public async coachWorkouts(
-    @Param('coachId', MongoIdValidationPipe) coachId: string,
-  ) {
-    return this.workoutService.getWorkoutsByCoach(coachId);
-  }
-
-  @ApiResponse({
-    type: WorkoutsWithPaginationRdo,
-    status: HttpStatus.OK,
     description: 'Coach workouts list',
   })
   @ApiQuery({ type: CoachWorkoutsQuery })
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
-  @Get('/coach')
+  @Get('/my-workouts')
   public async indexByCoach(
     @Query() query: CoachWorkoutsQuery,
     @Req() { tokenPayload }: RequestWithTokenPayload,
@@ -114,26 +125,16 @@ export class WorkoutController {
   }
 
   @ApiResponse({
-    type: FullWorkoutRdo,
-    status: HttpStatus.CREATED,
-    description: 'The new workout has been successfully created',
+    type: WorkoutsWithPaginationRdo,
+    status: HttpStatus.OK,
+    description: 'Workouts list from a coach',
   })
-  @ApiBody({ type: CreateWorkoutDto })
-  @ApiConsumes('multipart/form-data')
-  @Role(UserRole.Coach)
-  @UseGuards(RoleGuard)
-  @Post('/')
-  @UseInterceptors(
-    FileInterceptor('video', {
-      fileFilter: FileFilter(VideoFile.MimeTypes),
-    }),
-  )
-  public async create(
-    @Body() dto: CreateWorkoutDto,
-    @UploadedFile(ParseFile) video: Express.Multer.File,
-    @Req() { tokenPayload }: RequestWithTokenPayload,
+  @Get('/from-coach/:coachId')
+  public async coachWorkouts(
+    @Param('coachId', MongoIdValidationPipe) coachId: string,
   ) {
-    return this.workoutService.createWorkout(dto, tokenPayload.sub, video);
+    console.log('hi');
+    return this.workoutService.getWorkoutsByCoach(coachId);
   }
 
   @ApiResponse({
@@ -143,7 +144,7 @@ export class WorkoutController {
   })
   @ApiBody({ type: UpdateWorkoutDto })
   @UseGuards(WorkoutOwnerGuard)
-  @Patch('/:workoutId')
+  @Patch('/update/:workoutId')
   public async update(
     @Param('workoutId', MongoIdValidationPipe) workoutId: string,
     @Body() dto: UpdateWorkoutDto,

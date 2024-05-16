@@ -11,7 +11,7 @@ export const getUserBalancesAction = createAsyncThunk<
 >('balances/user-balances', async (_arg, { getState, extra: api }) => {
   const params = getUserBalancesQuery(getState());
   const { data } = await api.get<BalancesWithPagination>(
-    APIRoute.UserBalances,
+    APIRoute.Balances,
     {
       params,
     },

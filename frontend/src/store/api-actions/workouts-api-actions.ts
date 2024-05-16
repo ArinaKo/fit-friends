@@ -21,7 +21,7 @@ export const createWorkoutAction = createAsyncThunk<
   AsyncThunkConfig
 >('workouts/create', async (file, { getState, dispatch, extra: api }) => {
   const formData = getCreateWorkoutData(getState(), file);
-  await api.post(APIRoute.CreateWorkout, formData, {
+  await api.post(APIRoute.Workouts, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -35,10 +35,10 @@ export const getWorkoutAction = createAsyncThunk<
   AsyncThunkConfig
 >('workouts/get-workout', async (workoutId, { extra: api }) => {
   const { data } = await api.get<FullWorkout>(
-    `${APIRoute.Workout}/${workoutId}`,
+    `${APIRoute.Workouts}/${workoutId}`,
   );
   const { data: balancedData } = await api.get<WorkoutBalanceStatus>(
-    `${APIRoute.WorkoutBalance}/${workoutId}`,
+    `${APIRoute.Balances}/${workoutId}`,
   );
   const { data: commentsData } = await api.get<CommentsWithPagination>(
     `${APIRoute.Comments}/${workoutId}`,
@@ -69,7 +69,7 @@ export const getAllWorkoutsAction = createAsyncThunk<
   AsyncThunkConfig
 >('workouts/all-workouts', async (_arg, { getState, extra: api }) => {
   const params = getAllWorkoutsQuery(getState());
-  const { data } = await api.get<WorkoutsWithPagination>(APIRoute.AllWorkouts, {
+  const { data } = await api.get<WorkoutsWithPagination>(APIRoute.Workouts, {
     params,
   });
   return data;

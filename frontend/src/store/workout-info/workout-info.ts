@@ -7,7 +7,7 @@ import {
 } from '../api-actions';
 
 const initialState: WorkoutInfo = {
-  id: undefined,
+  id: '',
   coachId: '',
   title: '',
   price: '',
@@ -42,7 +42,7 @@ export const workoutInfo = createSlice({
         state.id = action.payload.id;
         state.coachId = action.payload.coachId;
         state.title = action.payload.title;
-        state.price = action.payload.price.toString();
+        state.price = String(action.payload.price);
         state.description = action.payload.description;
         state.isSpecial = action.payload.isSpecial;
         state.video = action.payload.video;
