@@ -4161,8 +4161,8 @@ input:active + .custom-textarea__text {
   background-color: #ffffff;
   color: #333333;
   border: 1px solid #c5ec2a;
-  -webkit-box-shadow: 0 10px 30px rgba(51, 51, 51, 0.1);
-  box-shadow: 0 10px 30px rgba(51, 51, 51, 0.1);
+  -webkit-box-shadow: 0 10px 20px rgba(51, 51, 51, 0.1);
+  box-shadow: 0 10px 20px rgba(51, 51, 51, 0.1);
   border-radius: 20px;
   -webkit-transition: -webkit-box-shadow 0.6s ease-in-out;
   transition: -webkit-box-shadow 0.6s ease-in-out;
@@ -4517,8 +4517,8 @@ input:active + .custom-textarea__text {
   width: -moz-min-content;
   width: min-content;
   border: 1px solid #c5ec2a;
-  -webkit-box-shadow: 0 10px 30px rgba(51, 51, 51, 0.33);
-  box-shadow: 0 10px 30px rgba(51, 51, 51, 0.33);
+  -webkit-box-shadow: 0 10px 20px rgba(51, 51, 51, 0.33);
+  box-shadow: 0 10px 20px rgba(51, 51, 51, 0.33);
   border-radius: 20px;
   overflow: hidden;
   -webkit-transition: -webkit-box-shadow 0.6s ease-in-out;
@@ -5360,8 +5360,8 @@ input:active + .custom-textarea__text {
   -o-transition: box-shadow 0.3s ease;
   transition: box-shadow 0.3s ease;
   transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
-  -webkit-box-shadow: 0 10px 30px rgba(51, 51, 51, 0.33);
-  box-shadow: 0 10px 30px rgba(51, 51, 51, 0.33);
+  -webkit-box-shadow: 0 10px 20px rgba(51, 51, 51, 0.33);
+  box-shadow: 0 10px 20px rgba(51, 51, 51, 0.33);
 }
 
 .promo-slider:hover {
@@ -5455,41 +5455,6 @@ input:active + .custom-textarea__text {
   margin-top: auto;
 }
 
-.promo-slider__slider-dots {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  gap: 8px;
-  margin: 0 auto 0 478px;
-}
-
-.promo-slider__slider-dot {
-  width: 10px;
-  height: 10px;
-  padding: 0;
-  background: #e8e8e8;
-  border: none;
-  border-radius: 50%;
-  -webkit-transition: -webkit-box-shadow 0.3s ease;
-  transition: -webkit-box-shadow 0.3s ease;
-  -o-transition: box-shadow 0.3s ease;
-  transition: box-shadow 0.3s ease;
-  transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
-}
-
-.promo-slider__slider-dot.focus-visible:focus {
-  -webkit-box-shadow: 0 0 0 2px #c5ec2a;
-  box-shadow: 0 0 0 2px #c5ec2a;
-  outline: none;
-}
-
-.promo-slider__slider-dot--active {
-  background: #c5ec2a;
-}
-
 .promo-slider__price-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5501,6 +5466,7 @@ input:active + .custom-textarea__text {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  margin-left: auto;
 }
 
 .promo-slider__price {
@@ -9422,12 +9388,26 @@ input:active + .custom-textarea__text {
   list-style: none;
 }
 
-.special-for-you__item {
-  margin-right: 20px;
+.special-for-you__list .slick-list {
+  margin-right: -20px;
+  margin-left: -20px;
+  padding: 0 20px;
+  padding-bottom: 30px;
+  margin-bottom: -30px;
+  box-sizing: content-box;
 }
 
-.special-for-you__item:last-child {
-  margin-right: 0;
+.special-for-you__list .slick-track {
+  margin: 0;
+  margin-left: -10px;
+}
+
+.special-for-you__item {
+  margin: 0 10px;
+}
+
+.slick-slide:not(.slick-active) .thumbnail-preview {
+  box-shadow: none;
 }
 
 .special-offers__wrapper {
@@ -9437,23 +9417,79 @@ input:active + .custom-textarea__text {
   padding-bottom: 70px;
 }
 
+.special-offers__slider {
+  position: relative;
+  max-width:1040px;
+    margin-right: 21px;
+}
+
+.special-offers__slider-dots {
+  position: absolute;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0 auto 0 478px;
+  bottom: 20px;
+}
+
+.special-offers__slider-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  background: #e8e8e8;
+  border: none;
+  border-radius: 50%;
+  -webkit-transition: -webkit-box-shadow 0.3s ease;
+  transition: -webkit-box-shadow 0.3s ease;
+  -o-transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
+}
+
+.special-offers__slider-dot.focus-visible:focus {
+  -webkit-box-shadow: 0 0 0 2px #c5ec2a;
+  box-shadow: 0 0 0 2px #c5ec2a;
+  outline: none;
+}
+
+.special-offers__slider-dot--active {
+  background: #c5ec2a;
+}
+
 .special-offers__list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  max-width: 1040px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+.special-offers__list .slick-list {
+  margin-right: -20px;
+  margin-left: -20px;
+  padding: 0 20px;
+  padding-bottom: 30px;
+  margin-bottom: -30px;
+  box-sizing: content-box;
+}
+
+.special-offers__list .slick-track {
   margin: 0;
-  margin-right: 21px;
-  padding: 0;
-  list-style: none;
+  margin-left: -10px;
 }
 
 .special-offers__item {
-  display: none;
+  margin: 0 10px;
 }
 
-.special-offers__item.is-active {
-  display: block;
+.slick-slide:not(.slick-active) .promo-slider {
+  box-shadow: none;
 }
 
 .popular-trainings {
@@ -9515,12 +9551,26 @@ input:active + .custom-textarea__text {
   list-style: none;
 }
 
-.popular-trainings__item {
-  margin-right: 20px;
+.popular-trainings__list .slick-list {
+  margin-right: -20px;
+  margin-left: -20px;
+  padding: 0 20px;
+  padding-bottom: 30px;
+  margin-bottom: -30px;
+  box-sizing: content-box;
 }
 
-.popular-trainings__item:last-child {
-  margin-right: 0;
+.popular-trainings__list .slick-track {
+  margin: 0;
+  margin-left: -10px;
+}
+
+.popular-trainings__item {
+  margin: 0 10px;
+}
+
+.slick-slide:not(.slick-active) .thumbnail-training__inner {
+  box-shadow: none;
 }
 
 .look-for-company {
@@ -9582,12 +9632,23 @@ input:active + .custom-textarea__text {
   list-style: none;
 }
 
-.look-for-company__item {
-  margin-right: 20px;
+.look-for-company__list .slick-list {
+  margin: 0 -10px;
+  height: 100%;
+  box-sizing: content-box;
 }
 
-.look-for-company__item:last-child {
-  margin-right: 0;
+.look-for-company__list .slick-track {
+  margin: 0;
+  display: flex;
+}
+
+.look-for-company__list .slick-slide {
+  height: auto;
+}
+
+.look-for-company__item {
+  margin: 0 10px;
 }
 
 .users-catalog {
