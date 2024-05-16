@@ -3608,6 +3608,7 @@ input:active + .custom-textarea__text {
 }
 
 .training-info__textarea {
+  position: relative;
   width: 100%;
   min-height: 89px;
 }
@@ -3660,6 +3661,19 @@ input:active + .custom-textarea__text {
 .training-info__textarea.is-disabled textarea:disabled {
   border: 1px solid rgba(149, 149, 149, 0.1);
   background-color: rgba(247, 247, 247, 0.02);
+}
+
+.training-info__textarea.is-invalid textarea {
+  border: 1px solid #ff3e49;
+}
+
+.training-info__textarea.is-invalid textarea:hover,
+.training-info__textarea.is-invalid textarea:focus {
+  border: 1px solid #ff3e49;
+}
+
+.training-info__textarea.is-invalid .training-info__error {
+  opacity: 1;
 }
 
 .training-info__rating-wrapper {
@@ -8740,6 +8754,10 @@ input:active + .custom-textarea__text {
 .drag-and-drop.is-disabled .drag-and-drop__label {
   border: 1px solid #181818;
   background-color: rgba(174, 174, 174, 0.08);
+}
+
+.drag-and-drop.custom-input--error .drag-and-drop__label {
+  border: 1px solid #e4001b;
 }
 
 .drag-and-drop label {
