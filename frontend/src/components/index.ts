@@ -6,8 +6,8 @@ export { default as NotificationsList } from './notifications-list/notifications
 export { default as MainNavigation } from './main-navigation/main-navigation.component';
 export { default as Layout } from './layout/layout.component';
 export { default as UIBlocker } from './ui-blocker/ui-blocker.component';
-export { default as SliderControls } from './slider-controls/slider-controls.component';
-export * from './slider-controls/slider-controls';
+export { default as SliderButtons } from './slider-buttons/slider-buttons.component';
+export * from './slider-buttons/buttons-icon-type';
 export { default as LoginForm } from './login-form/login-form.component';
 export { default as RegisterForm } from './register-form/register-form.component';
 export { default as QuestionaryForm } from './questionary-form/questionary-form.component';

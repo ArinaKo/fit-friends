@@ -17,8 +17,8 @@ import {
 } from '../../store';
 import {
   WorkoutCard,
-  SliderControls,
-  SliderControlsType,
+  SliderButtons,
+  ButtonsIconType,
   UIBlocker,
 } from '../index';
 import Slider from 'react-slick';
@@ -67,10 +67,12 @@ function UserInfoWorkouts(): JSX.Element {
       <div className="user-card__training-head">
         <h2 className="user-card__training-title">Тренировки</h2>
         <div className="user-card__training-bts">
-          <SliderControls
-            type={SliderControlsType.CoachWorkouts}
+          <SliderButtons
             sliderRef={sliderRef}
             slidesAmount={workouts.length}
+            slidesToShow={SlidesAmount.CoachWorkouts}
+            styleClass='user-card__training-btn'
+            iconType={ButtonsIconType.Small}
           />
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserDataCertificates, uploadCertificateAction } from '../../store';
-import { CertificateCard, SliderControls, SliderControlsType } from '../index';
+import { CertificateCard, SliderButtons } from '../index';
 import { SliderConfig, SlidesAmount } from '../../const';
 import Slider from 'react-slick';
 
@@ -48,10 +48,11 @@ function CoachCertificates(): JSX.Element {
           <span>Загрузить</span>
         </button>
         <div className="personal-account-coach__controls">
-          <SliderControls
-            type={SliderControlsType.AccountCertificates}
+          <SliderButtons
             sliderRef={sliderRef}
             slidesAmount={certificates.length}
+            slidesToShow={SlidesAmount.AccountCertificates}
+            styleClass="personal-account-coach__control"
           />
         </div>
       </div>

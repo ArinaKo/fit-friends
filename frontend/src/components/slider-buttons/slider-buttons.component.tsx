@@ -1,20 +1,24 @@
 import { useState } from 'react';
 import Slider from 'react-slick';
-import { SliderControlsType, SliderControlsTypeDiffs } from './slider-controls';
+import { ButtonsIconType, IconTypeDiffs } from './buttons-icon-type';
 import cn from 'classnames';
 
-type SliderControlsProps = {
-  type: SliderControlsType;
+type SliderButtonsProps = {
   sliderRef: React.RefObject<Slider>;
   slidesAmount: number;
+  slidesToShow: number;
+  styleClass: string;
+  iconType?: ButtonsIconType;
 };
 
-function SliderControls({
-  type,
+function SliderButtons({
   sliderRef,
   slidesAmount,
-}: SliderControlsProps): JSX.Element {
-  const { slidesToShow, styleClass, iconSize } = SliderControlsTypeDiffs[type];
+  slidesToShow,
+  styleClass,
+  iconType = ButtonsIconType.Default,
+}: SliderButtonsProps): JSX.Element {
+  const { width, height } = IconTypeDiffs[iconType];
   const [firstSlide, setFirstSlide] = useState(1);
   const [lastSlide, setLastSlide] = useState(
     slidesAmount < slidesToShow ? slidesAmount : slidesToShow,
@@ -33,7 +37,7 @@ function SliderControls({
           sliderRef.current?.slickPrev();
         }}
       >
-        <svg width={iconSize.width} height={iconSize.height} aria-hidden="true">
+        <svg width={width} height={height} aria-hidden="true">
           <use xlinkHref="#arrow-left" />
         </svg>
       </button>
@@ -48,7 +52,7 @@ function SliderControls({
           sliderRef.current?.slickNext();
         }}
       >
-        <svg width={iconSize.width} height={iconSize.height} aria-hidden="true">
+        <svg width={width} height={height} aria-hidden="true">
           <use xlinkHref="#arrow-right" />
         </svg>
       </button>
@@ -56,4 +60,4 @@ function SliderControls({
   );
 }
 
-export default SliderControls;
+export default SliderButtons;
