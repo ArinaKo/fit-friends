@@ -26,7 +26,7 @@ type WorkoutsListProps = {
 };
 
 function WorkoutsList({ type }: WorkoutsListProps): JSX.Element {
-  const { styleClass, cardType } = WorkoutsListTypeDiffs[type];
+  const { styleClass, cardStyleClass } = WorkoutsListTypeDiffs[type];
   const dispatch = useAppDispatch();
   const workouts = useAppSelector(getWorkoutsList);
   const page = useAppSelector(getCatalogPage);
@@ -71,7 +71,7 @@ function WorkoutsList({ type }: WorkoutsListProps): JSX.Element {
       <ul className={`${styleClass}__list`}>
         {workouts.map((workout) => (
           <WorkoutCard
-            type={cardType}
+            styleClass={cardStyleClass}
             workout={workout}
             key={`workout-${workout.id}`}
           />

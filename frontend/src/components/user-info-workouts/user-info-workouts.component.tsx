@@ -17,7 +17,6 @@ import {
 } from '../../store';
 import {
   WorkoutCard,
-  WorkoutCardType,
   SliderControls,
   SliderControlsType,
   UIBlocker,
@@ -79,7 +78,7 @@ function UserInfoWorkouts(): JSX.Element {
         {workouts.map((workout) => (
           <WorkoutCard
             workout={workout}
-            type={WorkoutCardType.UserInfoWorkout}
+            styleClass='user-card__training-item'
             key={`workout-${workout.id}`}
           />
         ))}

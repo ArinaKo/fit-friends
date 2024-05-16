@@ -8,12 +8,7 @@ import {
   isOrdersListSortDown,
 } from '../../store';
 import { getCoachOrdersAction } from '../../store/api-actions';
-import {
-  CatalogButtons,
-  UIBlocker,
-  WorkoutCard,
-  WorkoutCardType,
-} from '../index';
+import { CatalogButtons, UIBlocker, WorkoutCard } from '../index';
 
 function OrdersList(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -36,9 +31,10 @@ function OrdersList(): JSX.Element {
       <ul className="my-orders__list">
         {orders.map(({ workout, count, sum }) => (
           <WorkoutCard
-            type={WorkoutCardType.WorkoutOrders}
             workout={workout}
             ordersInfo={{ count, sum }}
+            styleClass="my-orders__item"
+            withButtons={false}
             key={`order-${workout.id}`}
           />
         ))}

@@ -10,7 +10,6 @@ import {
   CatalogButtons,
   UIBlocker,
   WorkoutCard,
-  WorkoutCardType,
 } from '../index';
 import { getUserBalancesAction } from '../../store/api-actions';
 
@@ -34,8 +33,8 @@ function BalancesList(): JSX.Element {
       <ul className="my-purchases__list">
         {balances.map((balance) => (
           <WorkoutCard
-            type={WorkoutCardType.WorkoutBalance}
             workout={balance.workout}
+            styleClass='my-purchases__item'
             key={`workout-${balance.workout.id}`}
           />
         ))}

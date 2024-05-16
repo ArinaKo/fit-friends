@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
 import { OrdersInfo, Workout } from '../../types';
 import { AppRoute, STATIC_URL } from '../../const';
-import { WorkoutCardType, WorkoutCardTypeDiffs } from './workout-card';
 import WorkoutOrders from './orders-info.component';
 
 type WorkoutCardProps = {
   workout: Workout;
-  type: WorkoutCardType;
+  styleClass: string;
+  withButtons?: boolean;
   ordersInfo?: OrdersInfo;
 };
 
 function WorkoutCard({
   workout,
-  type,
+  styleClass,
+  withButtons = true,
   ordersInfo,
 }: WorkoutCardProps): JSX.Element {
-  const { listItemStyleClass, withButtons } = WorkoutCardTypeDiffs[type];
   const {
     id,
     title,
@@ -26,8 +26,11 @@ function WorkoutCard({
     description,
     rating,
   } = workout;
+
+  const link = `${AppRoute.Workouts}/${id}`;
+
   return (
-    <li className={listItemStyleClass}>
+    <li className={styleClass}>
       <div className="thumbnail-training">
         <div className="thumbnail-training__inner">
           <div className="thumbnail-training__image">
@@ -77,13 +80,13 @@ function WorkoutCard({
           {withButtons ? (
             <div className="thumbnail-training__button-wrapper">
               <Link
-                to={`${AppRoute.Workouts}/${id}`}
+                to={link}
                 className="btn btn--small thumbnail-training__button-catalog"
               >
                 Подробнее
               </Link>
               <Link
-                to={`${AppRoute.Workouts}/${id}`}
+                to={link}
                 className="btn btn--small btn--outlined thumbnail-training__button-catalog"
               >
                 Отзывы
@@ -91,7 +94,7 @@ function WorkoutCard({
             </div>
           ) : (
             <Link
-              to={`${AppRoute.Workouts}/${id}`}
+              to={link}
               className="btn-flat btn-flat--underlined thumbnail-training__button-orders"
             >
               <svg width="18" height="18" aria-hidden="true">
