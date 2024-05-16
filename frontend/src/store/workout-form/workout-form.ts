@@ -6,7 +6,7 @@ import {
   REQUIRED_INPUT_MESSAGE,
   SALE_PERCENT,
 } from '../../const';
-import { createWorkoutAction } from '../api-actions';
+import { createWorkoutAction, updateWorkoutAction, updateWorkoutVideoAction } from '../api-actions';
 
 const initialState: WorkoutForm = {
   title: EmptyWorkoutForm.Title,
@@ -96,6 +96,20 @@ export const workoutForm = createSlice({
         state.validationErrors.video = REQUIRED_INPUT_MESSAGE;
       }
     },
+    setUpdateWorkoutRequiredFields: (state) => {
+      if (!state.title) {
+        state.validationErrors.title = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.price) {
+        state.validationErrors.price = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.description) {
+        state.validationErrors.description = REQUIRED_INPUT_MESSAGE;
+      }
+      if (!state.hasVideo) {
+        state.validationErrors.video = REQUIRED_INPUT_MESSAGE;
+      }
+    },
   },
   extraReducers(builder) {
     builder
@@ -105,7 +119,23 @@ export const workoutForm = createSlice({
       .addCase(createWorkoutAction.rejected, (state) => {
         state.isSending = false;
       })
-      .addCase(createWorkoutAction.fulfilled, () => ({ ...initialState }));
+      .addCase(createWorkoutAction.fulfilled, () => ({ ...initialState }))
+      .addCase(updateWorkoutAction.pending, (state) => {
+        state.isSending = true;
+      })
+      .addCase(updateWorkoutAction.rejected, (state) => {
+        state.isSending = false;
+      })
+      .addCase(updateWorkoutAction.fulfilled, () => ({ ...initialState }))
+      .addCase(updateWorkoutVideoAction.pending, (state) => {
+        state.isSending = true;
+      })
+      .addCase(updateWorkoutVideoAction.rejected, (state) => {
+        state.isSending = false;
+      })
+      .addCase(updateWorkoutVideoAction.fulfilled, (state) => {
+        state.isSending = false;
+      });
   },
 });
 
@@ -123,4 +153,5 @@ export const {
   setIsSpecial,
   setWorkoutFormError,
   setCreationRequiredFields,
+  setUpdateWorkoutRequiredFields,
 } = workoutForm.actions;

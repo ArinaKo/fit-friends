@@ -17,6 +17,7 @@ export const APIRoute = {
   UpdateCertificate: '/users/certificates/update',
   Workouts: '/workouts',
   UpdateWorkout: '/workouts/update',
+  UpdateWorkoutVideo: '/workouts/update-video',
   CoachWorkouts: '/workouts/my-workouts',
   SpecialWorkouts: '/workouts/special',
   PopularWorkouts: '/workouts/popular',

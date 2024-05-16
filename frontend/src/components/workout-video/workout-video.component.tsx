@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   isCurrentWorkoutActive,
   isWorkoutFormHasVideo,
+  isWorkoutInfoEditing,
   setVideoPresence,
 } from '../../store';
 import { WorkoutVideoInput } from '../form-inputs';
@@ -14,20 +15,21 @@ import PlayButton from './play-button.component';
 import cn from 'classnames';
 
 type WorkoutVideoProps = {
-  isEdited: boolean;
   newVideo: Blob | null;
   setFile: (file: File | null) => void;
+  onSave: () => void;
 };
 
 function WorkoutVideo({
-  isEdited,
   newVideo,
   setFile,
+  onSave,
 }: WorkoutVideoProps): JSX.Element {
   const dispatch = useAppDispatch();
   const video = useAppSelector(getWorkoutVideo);
   const hasVideo = useAppSelector(isWorkoutFormHasVideo);
   const isWorkoutActive = useAppSelector(isCurrentWorkoutActive);
+  const isEdited = useAppSelector(isWorkoutInfoEditing);
 
   const [isPlaying, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -78,7 +80,35 @@ function WorkoutVideo({
           </div>
         </form>
       </div>
-      <VideoControls isEdited={isEdited} />
+      <div className="training-video__buttons-wrapper">
+        {isEdited ? (
+          <div className="training-video__edit-buttons">
+            <button
+              className="btn"
+              type="button"
+              disabled={!newVideo}
+              onClick={() => {
+                onSave();
+              }}
+            >
+              Сохранить
+            </button>
+            <button
+              className="btn btn--outlined"
+              type="button"
+              disabled={!hasVideo}
+              onClick={() => {
+                dispatch(setVideoPresence(false));
+                setFile(null);
+              }}
+            >
+              Удалить
+            </button>
+          </div>
+        ) : (
+          <VideoControls />
+        )}
+      </div>
     </div>
   );
 }

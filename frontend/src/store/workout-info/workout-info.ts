@@ -1,9 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { WorkoutInfo } from '../../types';
 import { NameSpace } from '../../const';
 import {
   decreaseWorkoutBalanceAction,
   getWorkoutAction,
+  updateWorkoutAction,
+  updateWorkoutVideoAction,
 } from '../api-actions';
 
 const initialState: WorkoutInfo = {
@@ -24,12 +26,17 @@ const initialState: WorkoutInfo = {
   balance: null,
   comments: [],
   isDataLoading: false,
+  isDataEditing: false,
 };
 
 export const workoutInfo = createSlice({
   name: NameSpace.WorkoutInfo,
   initialState,
-  reducers: {},
+  reducers: {
+    setWorkoutEditingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isDataEditing = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getWorkoutAction.pending, (state) => {
@@ -59,6 +66,17 @@ export const workoutInfo = createSlice({
       })
       .addCase(decreaseWorkoutBalanceAction.fulfilled, (state, action) => {
         state.balance = action.payload.count;
+      })
+      .addCase(updateWorkoutAction.fulfilled, (state, action) => {
+        state.title = action.payload.title;
+        state.description = action.payload.description;
+        state.price = String(action.payload.price);
+        state.isDataEditing = false;
+      })
+      .addCase(updateWorkoutVideoAction.fulfilled, (state, action) => {
+        state.video = action.payload;
       });
   },
 });
+
+export const { setWorkoutEditingStatus } = workoutInfo.actions;

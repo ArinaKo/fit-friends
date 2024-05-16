@@ -4,11 +4,16 @@ import {
   getWorkoutId,
   isUserCoach,
   isWorkoutBalanceActive,
+  isWorkoutFormDataSending,
   isWorkoutFormHaveErrors,
+  isWorkoutInfoEditing,
+  setUpdateWorkoutRequiredFields,
+  setWorkoutEditingStatus,
   updateWorkoutAction,
+  updateWorkoutVideoAction,
 } from '../../store';
 import { WorkoutInput, WorkoutInputType } from '../form-inputs';
-import { WorkoutVideo } from '../index';
+import { UIBlocker, WorkoutVideo } from '../index';
 import Coach from './coach.component';
 import Hashtags from './hashtags.component';
 import Rating from './rating.component';
@@ -21,28 +26,41 @@ function WorkoutInfo(): JSX.Element {
   const workoutId = useAppSelector(getWorkoutId);
   const isBalanceActive = useAppSelector(isWorkoutBalanceActive);
   const isFormHaveError = useAppSelector(isWorkoutFormHaveErrors);
+  const isSending = useAppSelector(isWorkoutFormDataSending);
+  const isEdited = useAppSelector(isWorkoutInfoEditing);
 
-  const [isEdited, setEdited] = useState<boolean>(false);
   const [file, setFile] = useState<Blob | null>(null);
+
+  const handleUploadFile = () => {
+    if (file) {
+      dispatch(updateWorkoutVideoAction({ workoutId, video: file })).then(
+        () => {
+          setFile(null);
+        },
+      );
+    }
+  };
 
   const handleEditButtonClick = (
     evt: React.MouseEvent<HTMLButtonElement>,
   ): void => {
     evt.preventDefault();
     if (!isEdited) {
-      setEdited(true);
+      dispatch(setWorkoutEditingStatus(true));
       return;
     }
+    dispatch(setUpdateWorkoutRequiredFields());
     if (!isFormHaveError) {
-      dispatch(
-        updateWorkoutAction({
-          workoutId: workoutId ?? '',
-          newVideo: file ?? undefined,
-        }),
-      );
-      setEdited(false);
+      if (file) {
+        handleUploadFile();
+      }
+      dispatch(updateWorkoutAction(workoutId));
     }
   };
+
+  if (isSending) {
+    return <UIBlocker />;
+  }
 
   return (
     <div
@@ -108,7 +126,11 @@ function WorkoutInfo(): JSX.Element {
           </form>
         </div>
       </div>
-      <WorkoutVideo isEdited={isEdited} newVideo={file} setFile={setFile} />
+      <WorkoutVideo
+        newVideo={file}
+        setFile={setFile}
+        onSave={handleUploadFile}
+      />
     </div>
   );
 }

@@ -201,6 +201,7 @@ export type WorkoutInfo = {
   balance: number | null;
   comments: Comment[];
   isDataLoading: boolean;
+  isDataEditing: boolean;
 };
 
 export type UserInfo = {

@@ -4,6 +4,7 @@ import {
   WorkoutBalanceStatus,
   CommentsWithPagination,
   WorkoutsWithPagination,
+  FileData,
 } from '../../types';
 import { APIRoute, AppRoute } from '../../const';
 import { redirectToRoute } from '../actions';
@@ -51,16 +52,35 @@ export const getWorkoutAction = createAsyncThunk<
 });
 
 export const updateWorkoutAction = createAsyncThunk<
-  void,
-  { workoutId: string; newVideo?: Blob },
+  FullWorkout,
+  string,
   AsyncThunkConfig
->('workouts/update-workout', async (data, { getState, extra: api }) => {
-  const formData = getUpdateWorkoutData(getState(), data.newVideo);
-  await api.patch(`${APIRoute.UpdateWorkout}/${data.workoutId}`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+>('workouts/update-workout', async (workoutId, { getState, extra: api }) => {
+  const formData = getUpdateWorkoutData(getState());
+  const { data } = await api.patch<FullWorkout>(
+    `${APIRoute.UpdateWorkout}/${workoutId}`,
+    formData,
+  );
+  return data;
+});
+
+export const updateWorkoutVideoAction = createAsyncThunk<
+  FileData,
+  { workoutId: string; video: Blob },
+  AsyncThunkConfig
+>('workouts/update-video', async (videoData, { extra: api }) => {
+  const formData = new FormData();
+  formData.append('video', videoData.video);
+  const { data } = await api.patch<FileData>(
+    `${APIRoute.UpdateWorkoutVideo}/${videoData.workoutId}`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
+  return data;
 });
 
 export const getAllWorkoutsAction = createAsyncThunk<

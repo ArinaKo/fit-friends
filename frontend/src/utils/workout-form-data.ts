@@ -27,7 +27,7 @@ export function getCreateWorkoutData(state: State, video?: Blob): FormData {
   return formData;
 }
 
-export function getUpdateWorkoutData(state: State, newVideo?: Blob): FormData {
+export function getUpdateWorkoutData(state: State) {
   const { title, price, description, isSpecial } = state.WORKOUT_INFO;
   const {
     title: newTitle,
@@ -35,21 +35,10 @@ export function getUpdateWorkoutData(state: State, newVideo?: Blob): FormData {
     description: newDescription,
     isSpecial: newSpecialStatus,
   } = state.WORKOUT_FORM;
-  const formData = new FormData();
-  if (title !== newTitle) {
-    formData.append('title', newTitle);
-  }
-  if (price !== newPrice) {
-    formData.append('price', newPrice);
-  }
-  if (description !== newDescription) {
-    formData.append('description', newDescription);
-  }
-  if (isSpecial !== newSpecialStatus) {
-    formData.append('isSpecial', String(newSpecialStatus));
-  }
-  if (newVideo) {
-    formData.append('video', newVideo);
-  }
-  return formData;
+  return {
+    title: title !== newTitle ? newTitle : undefined,
+    price: price !== newPrice ? Number(newPrice) : undefined,
+    description: description !== newDescription ? newDescription : undefined,
+    isSpecial: isSpecial !== newSpecialStatus ? newSpecialStatus : undefined,
+  };
 }
