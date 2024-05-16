@@ -22,6 +22,7 @@ export { default as WorkoutsFilter } from './workouts-filter/workouts-filter.com
 export * from './workouts-filter/workouts-filter';
 export { default as WorkoutCard } from './workout-card/workout-card.component';
 export { default as WorkoutPreview } from './workout-preview/workout-preview.component';
+export { default as WorkoutPromo } from './workout-promo/workout-promo.component';
 export { default as CatalogButtons } from './catalog-buttons/catalog-buttons.component';
 export { default as WorkoutsList } from './workouts-list/workouts-list.component';
 export * from './workouts-list/workouts-list';
@@ -40,3 +41,7 @@ export { default as CommentCard } from './comment-card/comment-card.component';
 export { default as CommentsList } from './comments-list/comments-list.component';
 export { default as UserInfo } from './user-info/user-info.component';
 export { default as UserInfoWorkouts } from './user-info-workouts/user-info-workouts.component';
+export { default as SpecialForYou } from './special-for-you/special-for-you.component';
+export { default as SpecialOffers } from './special-offers/special-offers.component';
+export { default as PopularWorkouts } from './popular-workouts/popular-workouts.component';
+export { default as LookForCompany } from './look-for-company/look-for-company.component';
