@@ -10,42 +10,54 @@ import UserCardInner from './user-card-inner.component';
 type UserCardProps = {
   type: UserCardType;
   user: User;
+  styleClass: string;
   workoutRequest?: WorkoutRequest;
+  isDark?: boolean;
 };
 
-function UserCard({ type, user, workoutRequest }: UserCardProps): JSX.Element {
+function UserCard({
+  type,
+  user,
+  styleClass,
+  workoutRequest,
+  isDark = false,
+}: UserCardProps): JSX.Element {
   const { id, isReady, role } = user;
 
   const userLink = `${AppRoute.Users}/${id}`;
 
-  return type === UserCardType.Default ? (
-    <li className="users-catalog__item">
-      <div
-        className={cn('thumbnail-user', {
-          'thumbnail-user--role-user': role === UserRole.Default,
-          'thumbnail-user--role-coach': role === UserRole.Coach,
-        })}
-      >
-        <UserCardInner type={type} user={user} />
-        <Link to={userLink} className="btn btn--medium thumbnail-user__button">
-          Подробнее
-        </Link>
-      </div>
-    </li>
-  ) : (
-    <li className="friends-list__item">
-      <div className="thumbnail-friend">
+  return (
+    <li className={`${styleClass}__item`}>
+      {type === UserCardType.Default ? (
         <div
-          className={cn('thumbnail-friend__info', {
-            'thumbnail-friend__info--theme-light': role === UserRole.Default,
-            'thumbnail-friend__info--theme-dark': role === UserRole.Coach,
+          className={cn('thumbnail-user', {
+            'thumbnail-user--role-user': role === UserRole.Default,
+            'thumbnail-user--role-coach': role === UserRole.Coach,
+            'thumbnail-user--dark': isDark,
           })}
         >
           <UserCardInner type={type} user={user} />
-          <ActivityBar userId={id} userRole={role} isReady={isReady} />
+          <Link
+            to={userLink}
+            className="btn btn--medium thumbnail-user__button"
+          >
+            Подробнее
+          </Link>
         </div>
-        {workoutRequest ? <Request request={workoutRequest} /> : undefined}
-      </div>
+      ) : (
+        <div className="thumbnail-friend">
+          <div
+            className={cn('thumbnail-friend__info', {
+              'thumbnail-friend__info--theme-light': role === UserRole.Default,
+              'thumbnail-friend__info--theme-dark': role === UserRole.Coach,
+            })}
+          >
+            <UserCardInner type={type} user={user} />
+            <ActivityBar userId={id} userRole={role} isReady={isReady} />
+          </div>
+          {workoutRequest ? <Request request={workoutRequest} /> : undefined}
+        </div>
+      )}
     </li>
   );
 }
