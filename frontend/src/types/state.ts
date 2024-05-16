@@ -30,6 +30,14 @@ export type AppData = {
   activePage: Route | undefined;
 };
 
+export type MainData = {
+  workoutsForUser: Workout[];
+  specialWorkouts: Workout[];
+  popularWorkouts: Workout[];
+  readyUsers: User[];
+  isDataLoading: boolean;
+};
+
 export type CatalogData = {
   limit: number;
   totalPages: number;

@@ -12,10 +12,12 @@ import {
   usersList,
   workoutInfo,
   userInfo,
+  mainData,
 } from './index';
 
 export const rootReducer = combineReducers({
   [NameSpace.AppData]: appData.reducer,
+  [NameSpace.MainData]: mainData.reducer,
   [NameSpace.UserForm]: userForm.reducer,
   [NameSpace.UserData]: userData.reducer,
   [NameSpace.WorkoutForm]: workoutForm.reducer,

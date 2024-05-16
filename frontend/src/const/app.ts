@@ -56,6 +56,7 @@ export enum AuthorizationStatus {
 
 export enum NameSpace {
   AppData = 'APP_DATA',
+  MainData = 'MAIN_DATA',
   UserForm = 'USER_FORM',
   UserData = 'USER_DATA',
   WorkoutForm = 'WORKOUT_FORM',
