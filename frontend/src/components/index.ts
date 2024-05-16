@@ -21,7 +21,7 @@ export { default as CreateWorkoutForm } from './create-workout-form/create-worko
 export { default as WorkoutsFilter } from './workouts-filter/workouts-filter.component';
 export * from './workouts-filter/workouts-filter';
 export { default as WorkoutCard } from './workout-card/workout-card.component';
-export * from './workout-card/workout-card';
+export { default as WorkoutPreview } from './workout-preview/workout-preview.component';
 export { default as CatalogButtons } from './catalog-buttons/catalog-buttons.component';
 export { default as WorkoutsList } from './workouts-list/workouts-list.component';
 export * from './workouts-list/workouts-list';
