@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UserData } from '../../types';
 import { MetroStation, NameSpace, UserLevel, UserSex } from '../../const';
 import {
@@ -23,12 +23,17 @@ const initialState: UserData = {
   certificates: [],
   isDataReady: false,
   isDataUpdating: false,
+  isDataEditing: false,
 };
 
 export const userData = createSlice({
   name: NameSpace.UserData,
   initialState,
-  reducers: {},
+  reducers: {
+    setUserEditingStatus: (state, action: PayloadAction<boolean>) => {
+      state.isDataEditing = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getAuthUserAction.fulfilled, (state, action) => {
@@ -67,6 +72,7 @@ export const userData = createSlice({
         state.workoutTypes = action.payload.workoutTypes;
         state.avatar = action.payload.avatar;
         state.isDataUpdating = false;
+        state.isDataEditing = false;
       })
       .addCase(uploadCertificateAction.pending, (state) => {
         state.isDataUpdating = true;
@@ -105,3 +111,5 @@ export const userData = createSlice({
       });
   },
 });
+
+export const { setUserEditingStatus } = userData.actions;

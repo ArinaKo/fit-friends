@@ -8,12 +8,12 @@ import {
 } from '../../../store';
 import cn from 'classnames';
 
-type CertificateInputProps = {
-  setFile: (files: File | null) => void;
+type WorkoutVideoInputProps = {
+  setFile: (file: File | null) => void;
   styleClass?: string;
 };
 
-function WorkoutVideoInput({ setFile, styleClass }: CertificateInputProps): JSX.Element {
+function WorkoutVideoInput({ setFile, styleClass }: WorkoutVideoInputProps): JSX.Element {
   const dispatch = useAppDispatch();
   const isVideoUpload = useAppSelector(isWorkoutFormHasVideo);
   const videoError = useAppSelector(getWorkoutFormVideoError);

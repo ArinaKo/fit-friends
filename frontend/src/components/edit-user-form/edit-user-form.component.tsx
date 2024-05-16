@@ -9,8 +9,10 @@ import {
   getUserDataName,
   getUserDataSex,
   getUserDataWorkoutTypes,
+  isUserDataEditing,
   isUserFormDataSending,
   isUserFormHaveErrors,
+  setUserEditingStatus,
 } from '../../store';
 import {
   AvatarInput,
@@ -41,19 +43,18 @@ function EditUserForm(): JSX.Element {
   const description = useAppSelector(getUserDataDescription);
   const isSending = useAppSelector(isUserFormDataSending);
   const isFormHaveError = useAppSelector(isUserFormHaveErrors);
+  const isEdited = useAppSelector(isUserDataEditing);
 
-  const [isEdited, setEdited] = useState<boolean>(false);
   const [file, setFile] = useState<Blob | null>(null);
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
     if (!isEdited) {
-      setEdited(true);
+      dispatch(setUserEditingStatus(true));
       return;
     }
     if (!isFormHaveError) {
       dispatch(updateUserAction({ avatar: file ? file : undefined }));
-      setEdited(false);
     }
   };
 

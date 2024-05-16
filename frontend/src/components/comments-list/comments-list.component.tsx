@@ -12,11 +12,15 @@ function CommentsList(): JSX.Element {
 
   return (
     <div className="reviews-side-bar__container">
-      <ul className="reviews-side-bar__list">
-        {comments.map((comment) => (
-          <CommentCard comment={comment} key={`comment-${comment.id}`} />
-        ))}
-      </ul>
+      {comments.length ? (
+        <ul className="reviews-side-bar__list">
+          {comments.map((comment) => (
+            <CommentCard comment={comment} key={`comment-${comment.id}`} />
+          ))}
+        </ul>
+      ) : (
+        <p>Отзывов пока нет. Желаете быть первым?</p>
+      )}
     </div>
   );
 }

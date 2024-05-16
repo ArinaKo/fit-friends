@@ -97,6 +97,7 @@ export type UserData = {
   certificates: FileData[];
   isDataReady: boolean;
   isDataUpdating: boolean;
+  isDataEditing: boolean;
 };
 
 export type WorkoutForm = {

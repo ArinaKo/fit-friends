@@ -1,4 +1,10 @@
-import { MetroStation, NameSpace, UserLevel, UserSex, WorkoutType } from '../../const';
+import {
+  MetroStation,
+  NameSpace,
+  UserLevel,
+  UserSex,
+  WorkoutType,
+} from '../../const';
 import { FileData, State } from '../../types';
 
 export const getUserDataAvatar = (state: State): FileData | undefined =>
@@ -36,3 +42,6 @@ export const isUserDataReady = (state: State): boolean =>
 
 export const isUserDataUpdating = (state: State): boolean =>
   state[NameSpace.UserData].isDataUpdating;
+
+export const isUserDataEditing = (state: State): boolean =>
+  state[NameSpace.UserData].isDataEditing;
