@@ -11,6 +11,7 @@ export { default as SliderButtons } from './slider-buttons/slider-buttons.compon
 export * from './slider-buttons/buttons-icon-type';
 export { default as CommentForm } from './comment-form/comment-form.component';
 export { default as OrderForm } from './order-form/order-form.component';
+export { default as CoachCertificates } from './account-certificates/account-certificates.component';
 export { default as LoginForm } from './login-form/login-form.component';
 export { default as RegisterForm } from './register-form/register-form.component';
 export { default as QuestionaryForm } from './questionary-form/questionary-form.component';

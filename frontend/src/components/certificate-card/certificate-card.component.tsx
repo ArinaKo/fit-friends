@@ -70,9 +70,9 @@ function CertificateCard({
               newCertificate
                 ? URL.createObjectURL(newCertificate)
                 : getFileUrl(certificate)
-            }#toolbar=0`}
-            width="296px"
-            height="360px"
+            }#toolbar=0&nopageaction=1&nozoom=1&nosidebar=1&navpanes=0&statusbar=0&view=fit`}
+            width="auto"
+            height="100%"
           />
         )}
       </div>

@@ -5,6 +5,7 @@ export enum SlidesAmount {
   SpecialOffers = 1,
   PopularWorkouts = 4,
   LookForCompany = 4,
+  CoachCertificates = 1,
 }
 
 export const SliderConfig = {
