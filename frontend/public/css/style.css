@@ -2916,6 +2916,7 @@ input:active + .custom-textarea__text {
 
 .user-card__training-list .slick-track {
   margin: 0;
+  display: flex;
 }
 
 .user-card__training-item {
@@ -7299,8 +7300,8 @@ input:active + .custom-textarea__text {
   right: 19px;
 }
 
-.popup__slider-btn--prev {
-  margin: 0 15px 0 0;
+.popup__slider-btn:last-child {
+  margin-left: 15px;
 }
 
 .popup__slider-list {
@@ -7309,10 +7310,22 @@ input:active + .custom-textarea__text {
   margin: 0;
 }
 
+.popup__slider-list .slick-list {
+  padding: 0 5px;
+  margin: 0 -5px;
+}
+
+.popup__slider-list .slick-track {
+  margin: 0;
+  margin: 0 -10px;
+  display: flex;
+}
+
 .popup__slide {
   display: none;
   border-radius: 0 12px 12px 0;
   overflow: hidden;
+  margin: 0 10px;
 }
 
 .popup__slide--current {
@@ -7325,6 +7338,9 @@ input:active + .custom-textarea__text {
   padding: 30px 20px 82px;
   border: 1px solid #cfcfcf;
   border-radius: 20px;
+  height: 360px;
+  width: 297px;
+  box-sizing: content-box;
 }
 
 .popup__feedback {
@@ -7945,6 +7961,11 @@ input:active + .custom-textarea__text {
   outline: none;
 }
 
+.with-popup {
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .popup-form {
   position: fixed;
   top: 0;
@@ -7961,6 +7982,26 @@ input:active + .custom-textarea__text {
   flex-direction: column;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+.popup-form--active {
+  pointer-events: all;
+}
+
+/* .popup-form--map {
+  position: absolute;
+}
+
+.popup-form--membership {
+  position: absolute;
+}
+
+.popup-form--feedback {
+  position: absolute;
+}
+
+.popup-form--buy {
+  position: absolute; */
 }
 
 .popup-form__wrapper {
@@ -8043,22 +8084,6 @@ input:active + .custom-textarea__text {
 
 .popup-form--create-training .popup-form__form {
   padding: 40px 117px 59px;
-}
-
-.popup-form--map {
-  position: absolute;
-}
-
-.popup-form--membership {
-  position: absolute;
-}
-
-.popup-form--feedback {
-  position: absolute;
-}
-
-.popup-form--buy {
-  position: absolute;
 }
 
 .background-logo {
@@ -8936,6 +8961,7 @@ input:active + .custom-textarea__text {
 
 .personal-account-coach__list .slick-track {
   margin: 0;
+  display: flex;
 }
 
 .personal-account-coach__item {
@@ -8980,11 +9006,9 @@ input:active + .custom-textarea__text {
   width: 294px;
   height: 360px;
   margin-bottom: 16px;
-}
-
-.certificate-card__image img {
   width: 294px;
   height: 360px;
+  box-sizing: content-box;
 }
 
 .certificate-card__buttons {
@@ -9418,6 +9442,7 @@ input:active + .custom-textarea__text {
 .special-for-you__list .slick-track {
   margin: 0;
   margin-left: -10px;
+  display: flex;
 }
 
 .special-for-you__item {
@@ -9500,6 +9525,7 @@ input:active + .custom-textarea__text {
 .special-offers__list .slick-track {
   margin: 0;
   margin-left: -10px;
+  display: flex;
 }
 
 .special-offers__item {
@@ -9581,6 +9607,7 @@ input:active + .custom-textarea__text {
 .popular-trainings__list .slick-track {
   margin: 0;
   margin-left: -10px;
+  display: flex;
 }
 
 .popular-trainings__item {
@@ -9658,6 +9685,7 @@ input:active + .custom-textarea__text {
 
 .look-for-company__list .slick-track {
   margin: 0;
+  display: flex;
   display: flex;
 }
 
