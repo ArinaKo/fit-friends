@@ -25,4 +25,6 @@ export * from './user-info/user-info';
 export * from './user-info/selectors';
 export * from './comment-form/comment-form';
 export * from './comment-form/selectors';
+export * from './order-form/order-form';
+export * from './order-form/selectors';
 export * from './main';

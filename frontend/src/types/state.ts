@@ -2,7 +2,10 @@ import { store } from '../store/index';
 import {
   AuthorizationStatus,
   MetroStation,
+  OrderType,
   OrdersSortType,
+  PaymentType,
+  PopupKey,
   UserLevel,
   UserRole,
   UserSex,
@@ -231,5 +234,15 @@ export type CommentForm = {
   validationErrors: {
     text: string | undefined;
   };
+  isSending: boolean;
+};
+
+export type OrderForm = {
+  workoutId: string;
+  price: number;
+  type: OrderType;
+  count: number;
+  totalSum: number;
+  paymentType: PaymentType;
   isSending: boolean;
 };

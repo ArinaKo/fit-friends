@@ -27,6 +27,21 @@ export enum WorkoutsSortType {
   Free = 'free',
 }
 
+export enum OrderType {
+  Default = 'абонемент',
+}
+
+export enum PaymentType {
+  Visa = 'visa',
+  Mir = 'mir',
+  Umoney = 'umoney',
+}
+
+export enum OrderCountValue {
+  Min = 1,
+  Max = 50,
+}
+
 export const AvatarMaxSize = {
   ForHuman: '1 мегабайт',
   ToCheck: 8388608,
@@ -68,4 +83,5 @@ export enum NameSpace {
   WorkoutInfo = 'WORKOUT_INFO',
   UserInfo = 'USER_INFO',
   CommentForm = 'COMMENT_FORM',
+  OrderForm = 'ORDER_FORM',
 }

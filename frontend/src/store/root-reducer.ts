@@ -14,6 +14,7 @@ import {
   userInfo,
   mainData,
   commentForm,
+  orderForm,
 } from './index';
 
 export const rootReducer = combineReducers({
@@ -30,4 +31,5 @@ export const rootReducer = combineReducers({
   [NameSpace.WorkoutInfo]: workoutInfo.reducer,
   [NameSpace.UserInfo]: userInfo.reducer,
   [NameSpace.CommentForm]: commentForm.reducer,
+  [NameSpace.OrderForm]: orderForm.reducer,
 });
