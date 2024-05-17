@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom';
 import {
   CaloriesPlan,
-  CoachCertificates,
+  AccountCertificates,
   EditUserForm,
   NewFeatureFiller,
   UIBlocker,
 } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { isUserCoach, isUserDataReady, isUserDataUpdating, setActiveRoute } from '../../store';
+import {
+  isUserCoach,
+  isUserDataReady,
+  isUserDataUpdating,
+  setActiveRoute,
+} from '../../store';
 import { useEffect } from 'react';
 import { getAuthUserAction } from '../../store/api-actions';
 import { CoachLinks, CustomerLinks } from './account-page';
@@ -74,7 +79,7 @@ function AccountPage(): JSX.Element {
                 }__additional-info`}
               >
                 {isCoach ? (
-                  <CoachCertificates />
+                  <AccountCertificates />
                 ) : (
                   <>
                     {getAccountLinks()}

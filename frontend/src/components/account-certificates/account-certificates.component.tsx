@@ -5,7 +5,7 @@ import { CertificateCard, SliderButtons } from '../index';
 import { SliderConfig, SlidesAmount } from '../../const';
 import Slider from 'react-slick';
 
-function CoachCertificates(): JSX.Element {
+function AccountCertificates(): JSX.Element {
   const dispatch = useAppDispatch();
   const certificates = useAppSelector(getUserDataCertificates);
   const settings = {
@@ -74,4 +74,4 @@ function CoachCertificates(): JSX.Element {
   );
 }
 
-export default CoachCertificates;
+export default AccountCertificates;
