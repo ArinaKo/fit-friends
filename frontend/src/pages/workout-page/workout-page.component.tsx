@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AppRoute } from '../../const';
+import { AppRoute, PopupKey } from '../../const';
 import {
   getWorkoutAction,
   getWorkoutId,
@@ -8,9 +8,11 @@ import {
   isWorkoutBalanceExists,
   isWorkoutInfoLoading,
   setActiveRoute,
+  setCommentForm,
+  setActivePopup,
 } from '../../store';
 import { useEffect } from 'react';
-import { CommentsList, UIBlocker, WorkoutInfo } from '../../components';
+import { CommentsList, Popup, UIBlocker, WorkoutInfo } from '../../components';
 
 function WorkoutPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -38,6 +40,11 @@ function WorkoutPage(): JSX.Element {
     isUserHaveAccess,
   ]);
 
+  const handleAddCommentButtonClick = () => {
+    dispatch(setCommentForm(workoutId as string));
+    dispatch(setActivePopup(PopupKey.Comment));
+  };
+
   if (isDataLoading) {
     return <UIBlocker />;
   }
@@ -64,6 +71,7 @@ function WorkoutPage(): JSX.Element {
               className="btn btn--medium reviews-side-bar__button"
               type="button"
               disabled={!isBalanceExists}
+              onClick={handleAddCommentButtonClick}
             >
               Оставить отзыв
             </button>
@@ -71,6 +79,8 @@ function WorkoutPage(): JSX.Element {
           <WorkoutInfo />
         </div>
       </div>
+      <Popup type={PopupKey.Comment} />
+      <Popup type={PopupKey.Order} />
     </section>
   );
 }

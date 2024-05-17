@@ -13,9 +13,11 @@ import {
   getUserId,
   addUserToFriendsAction,
   isUserCoach,
+  setActivePopup,
 } from '../../store';
 import cn from 'classnames';
 import { getFileUrl } from '../../utils';
+import { PopupKey } from '../../const';
 
 function UserInfo(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -93,6 +95,9 @@ function UserInfo(): JSX.Element {
           <button
             className="btn-flat user-card__sertificate"
             type="button"
+            onClick={() => {
+              dispatch(setActivePopup(PopupKey.Certificates));
+            }}
           >
             <svg width={12} height={13} aria-hidden="true">
               <use xlinkHref="#icon-teacher" />

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { UIBlocker, UserInfo, UserInfoWorkouts } from '../../components';
+import { Popup, UIBlocker, UserInfo, UserInfoWorkouts } from '../../components';
 import {
   getUserAction,
   getUserId,
@@ -9,7 +9,7 @@ import {
   isUserRoleCoach,
   setActiveRoute,
 } from '../../store';
-import { AppRoute } from '../../const';
+import { AppRoute, PopupKey } from '../../const';
 
 function UserPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -59,6 +59,7 @@ function UserPage(): JSX.Element {
           </div>
         </div>
       </div>
+      <Popup type={PopupKey.Certificates} />
     </div>
   );
 }

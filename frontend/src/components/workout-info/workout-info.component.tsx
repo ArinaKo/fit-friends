@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getWorkoutId,
+  getWorkoutPrice,
   isUserCoach,
   isWorkoutBalanceActive,
   isWorkoutFormDataSending,
   isWorkoutFormHaveErrors,
   isWorkoutInfoEditing,
+  setActivePopup,
+  setOrderForm,
   setUpdateWorkoutRequiredFields,
   setWorkoutEditingStatus,
   updateWorkoutAction,
@@ -19,11 +22,13 @@ import Hashtags from './hashtags.component';
 import Rating from './rating.component';
 import SpecialStatus from './special-status.component';
 import cn from 'classnames';
+import { PopupKey } from '../../const';
 
 function WorkoutInfo(): JSX.Element {
   const dispatch = useAppDispatch();
   const isCoach = useAppSelector(isUserCoach);
   const workoutId = useAppSelector(getWorkoutId);
+  const price = useAppSelector(getWorkoutPrice);
   const isBalanceActive = useAppSelector(isWorkoutBalanceActive);
   const isFormHaveError = useAppSelector(isWorkoutFormHaveErrors);
   const isSending = useAppSelector(isWorkoutFormDataSending);
@@ -56,6 +61,11 @@ function WorkoutInfo(): JSX.Element {
       }
       dispatch(updateWorkoutAction(workoutId));
     }
+  };
+
+  const handleBuyButtonClick = (): void => {
+    dispatch(setOrderForm({ workoutId: workoutId, price: Number(price) }));
+    dispatch(setActivePopup(PopupKey.Order));
   };
 
   if (isSending) {
@@ -117,6 +127,7 @@ function WorkoutInfo(): JSX.Element {
                     className="btn training-info__buy"
                     type="button"
                     disabled={isBalanceActive}
+                    onClick={handleBuyButtonClick}
                   >
                     Купить
                   </button>
