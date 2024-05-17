@@ -1,30 +1,41 @@
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import {
+  getCommentText,
+  getCommentTextError,
   getUserFormAchievements,
   getUserFormAchievementsError,
   getUserFormDescription,
   getUserFormDescriptionError,
   getWorkoutFormDescription,
   getWorkoutFormDescriptionError,
+  isCommentSending,
   isUserFormDataSending,
   isWorkoutFormDataSending,
   setAchievements,
+  setCommentText,
+  setCommentFormError,
   setDescription,
   setUserFormError,
   setWorkoutDescription,
   setWorkoutFormError,
 } from '../../../store';
 import { State } from '../../../types';
-import { validateAchievements, validateUserDescription, validateWorkoutDescription } from '../../../utils';
+import {
+  validateAchievements,
+  validateCommentText,
+  validateUserDescription,
+  validateWorkoutDescription,
+} from '../../../utils';
 
 export enum TextAreaInputType {
   Achievements = 'achievements',
   UserDescription = 'user-description',
   WorkoutDescription = 'workout-description',
+  CommentText = 'comment-text',
 }
 
 type TextAreaInputTypeDiff = {
-  styleClass: string;
+  styleClass?: string;
   valueSelector: (state: State) => string;
   errorSelector: (state: State) => string | undefined;
   validationFunction: (value: string) => string | undefined;
@@ -76,5 +87,15 @@ export const TextAreaInputTypeDiffs: TextAreaInputTypeDiffs = {
     formStatusSelector: isWorkoutFormDataSending,
     setValue: setWorkoutDescription,
     fieldName: 'description',
+  },
+  [TextAreaInputType.CommentText]: {
+    valueSelector: getCommentText,
+    errorSelector: getCommentTextError,
+    validationFunction: validateCommentText,
+    setError: (value: string | undefined) =>
+      setCommentFormError(['text', value]),
+    formStatusSelector: isCommentSending,
+    setValue: setCommentText,
+    fieldName: 'text',
   },
 };

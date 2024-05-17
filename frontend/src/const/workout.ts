@@ -42,3 +42,8 @@ export enum RatingValue {
   Min = 1,
   Max = 5,
 }
+
+export enum CommentTextLength {
+  Min = 10,
+  Max = 140,
+}

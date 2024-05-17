@@ -38,7 +38,7 @@ function TextAreaInput({
 
   return (
     <div
-      className={cn('custom-textarea', styleClass, {
+      className={cn('custom-textarea', styleClass ?? '', {
         'custom-textarea--error': valueError,
         'custom-textarea--readonly': !isActive,
       })}

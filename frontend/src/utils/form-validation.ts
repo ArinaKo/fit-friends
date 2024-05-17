@@ -2,6 +2,7 @@ import Joi from 'joi';
 import {
   CaloriesValue,
   CoachAchievementsLength,
+  CommentTextLength,
   NameLength,
   PasswordLength,
   PriceValue,
@@ -22,6 +23,7 @@ type ValidationData = {
   workoutTitle: string;
   workoutPrice: string;
   workoutDescription: string;
+  commentText: string;
 };
 
 const ValidationSchema = {
@@ -119,6 +121,17 @@ const ValidationSchema = {
     )
     .required()
     .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
+  commentText: Joi.string()
+    .min(CommentTextLength.Min)
+    .message(
+      `Рекомендуемая длина ${CommentTextLength.Min} - ${CommentTextLength.Max} символов`,
+    )
+    .max(CommentTextLength.Max)
+    .message(
+      `Рекомендуемая длина ${CommentTextLength.Min} - ${CommentTextLength.Max} символов`,
+    )
+    .required()
+    .messages({ 'string.empty': REQUIRED_INPUT_MESSAGE }),
 };
 
 const validateProperty = (
@@ -155,3 +168,6 @@ export const validateWorkoutPrice = (value: unknown) =>
 
 export const validateWorkoutDescription = (value: unknown) =>
   validateProperty('workoutDescription', value);
+
+export const validateCommentText = (value: unknown) =>
+  validateProperty('commentText', value);
