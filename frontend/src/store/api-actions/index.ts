@@ -7,4 +7,5 @@ export * from './workouts-api-actions';
 export * from './users-api-actions';
 export * from './notifications-api-actions';
 export * from './subscribe-api-actions';
+export * from './comments-api-actions';
 export * from './app-api-actions';

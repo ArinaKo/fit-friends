@@ -4,6 +4,7 @@ import { NameSpace } from '../../const';
 import {
   decreaseWorkoutBalanceAction,
   getWorkoutAction,
+  sendCommentAction,
   updateWorkoutAction,
   updateWorkoutVideoAction,
 } from '../api-actions';
@@ -75,6 +76,10 @@ export const workoutInfo = createSlice({
       })
       .addCase(updateWorkoutVideoAction.fulfilled, (state, action) => {
         state.video = action.payload;
+      })
+      .addCase(sendCommentAction.fulfilled, (state, action) => {
+        state.comments = [action.payload.comment, ...state.comments];
+        state.rating = action.payload.rating;
       });
   },
 });
