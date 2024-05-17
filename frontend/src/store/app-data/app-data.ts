@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppData, Route } from '../../types';
-import { NameSpace } from '../../const';
+import { NameSpace, PopupKey } from '../../const';
 import {
   checkAuthAction,
   decreaseWorkoutBalanceAction,
@@ -8,6 +8,8 @@ import {
   registerAction,
   deleteNotificationAction,
   getUserNotificationsAction,
+  sendCommentAction,
+  createOrderAction,
 } from '../api-actions';
 import { AuthorizationStatus } from '../../const';
 
@@ -18,6 +20,7 @@ const initialState: AppData = {
   notifications: [],
   activeWorkout: undefined,
   activePage: undefined,
+  activePopup: undefined,
 };
 
 export const appData = createSlice({
@@ -29,6 +32,9 @@ export const appData = createSlice({
     },
     setActiveRoute: (state, action: PayloadAction<Route | undefined>) => {
       state.activePage = action.payload;
+    },
+    setActivePopup: (state, action: PayloadAction<PopupKey | undefined>) => {
+      state.activePopup = action.payload;
     },
   },
   extraReducers(builder) {
@@ -62,8 +68,15 @@ export const appData = createSlice({
         state.notifications = state.notifications.filter(
           (notification) => notification.id !== deletedId,
         );
+      })
+      .addCase(sendCommentAction.fulfilled, (state) => {
+        state.activePopup = undefined;
+      })
+      .addCase(createOrderAction.fulfilled, (state) => {
+        state.activePopup = undefined;
       });
   },
 });
 
-export const { setActiveWorkout, setActiveRoute } = appData.actions;
+export const { setActiveWorkout, setActiveRoute, setActivePopup } =
+  appData.actions;

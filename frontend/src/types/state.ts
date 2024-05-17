@@ -31,6 +31,7 @@ export type AppData = {
   notifications: Notification[];
   activeWorkout: string | undefined;
   activePage: Route | undefined;
+  activePopup: PopupKey | undefined;
 };
 
 export type MainData = {

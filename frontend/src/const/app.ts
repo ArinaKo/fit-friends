@@ -85,3 +85,10 @@ export enum NameSpace {
   CommentForm = 'COMMENT_FORM',
   OrderForm = 'ORDER_FORM',
 }
+
+export enum PopupKey {
+  Comment = 'comment-popup',
+  Order = 'order-popup',
+  Location = 'location-popup',
+  Certificates = 'certificates-popup',
+}

@@ -1,4 +1,4 @@
-import { NameSpace } from '../../const';
+import { NameSpace, PopupKey } from '../../const';
 import { Notification, Route, State } from '../../types';
 import { AuthorizationStatus, UserRole } from '../../const';
 
@@ -19,3 +19,19 @@ export const getNotifications = (state: State): Notification[] =>
 
 export const hasNotifications = (state: State): boolean =>
   state[NameSpace.AppData].notifications.length !== 0;
+
+export const getActivePopup = (state: State): PopupKey | undefined =>
+  state[NameSpace.AppData].activePopup;
+
+export const isCommentPopupActive = (state: State): boolean =>
+  state[NameSpace.AppData].activePopup === PopupKey.Comment;
+
+export const isOrderPopupActive = (state: State): boolean =>
+  state[NameSpace.AppData].activePopup === PopupKey.Order;
+
+export const isCertificatesPopupActive = (state: State): boolean =>
+  state[NameSpace.AppData].activePopup === PopupKey.Certificates;
+
+export const isLocationPopupActive = (state: State): boolean =>
+  state[NameSpace.AppData].activePopup === PopupKey.Location;
+
