@@ -223,3 +223,13 @@ export type UserInfo = {
   isCoachInfoActual: boolean;
   isWorkoutsLoading: boolean;
 };
+
+export type CommentForm = {
+  workoutId: string;
+  rating: number;
+  text: string;
+  validationErrors: {
+    text: string | undefined;
+  };
+  isSending: boolean;
+};

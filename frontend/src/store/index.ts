@@ -23,4 +23,6 @@ export * from './workout-info/workout-info';
 export * from './workout-info/selectors';
 export * from './user-info/user-info';
 export * from './user-info/selectors';
+export * from './comment-form/comment-form';
+export * from './comment-form/selectors';
 export * from './main';
