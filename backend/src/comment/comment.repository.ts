@@ -106,4 +106,19 @@ export class CommentRepository extends BaseMongoRepository<
       totalItems: recordsCount,
     };
   }
+
+  public async findById(commentId: string): Promise<CommentEntity | null> {
+    const record = await this.model
+      .aggregate([
+        { $match: { $expr: { $eq: ['$_id', { $toObjectId: commentId }] } } },
+        PipelineStage.AddStringId,
+        PipelineStage.LookupUsers,
+        { $unwind: '$user' },
+        { $project: { userId: false } },
+      ])
+      .exec()
+      .then((r) => r.at(0) || null);
+
+    return this.createEntityFromDocument(record);
+  }
 }
