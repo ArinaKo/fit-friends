@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { WorkoutInfo } from '../../types';
 import { NameSpace } from '../../const';
 import {
+  createOrderAction,
   decreaseWorkoutBalanceAction,
   getWorkoutAction,
   sendCommentAction,
@@ -80,6 +81,9 @@ export const workoutInfo = createSlice({
       .addCase(sendCommentAction.fulfilled, (state, action) => {
         state.comments = [action.payload.comment, ...state.comments];
         state.rating = action.payload.rating;
+      })
+      .addCase(createOrderAction.fulfilled, (state, action) => {
+        state.balance = action.payload.newBalance;
       });
   },
 });

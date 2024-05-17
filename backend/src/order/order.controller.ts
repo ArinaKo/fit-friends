@@ -46,7 +46,7 @@ export class OrderController {
   @ApiQuery({ type: WorkoutsOrdersQuery })
   @Role(UserRole.Coach)
   @UseGuards(RoleGuard)
-  @Get('/')
+  @Get('/my-orders')
   public async indexByCoach(
     @Query() query: WorkoutsOrdersQuery,
     @Req() { tokenPayload }: RequestWithTokenPayload,
