@@ -17,8 +17,8 @@ import {
 } from '../../store';
 import cn from 'classnames';
 import { getFileUrl } from '../../utils';
-import { PopupKey } from '../../const';
-import { Popup, CoachCertificates } from '../index';
+import { MetroLocation, PopupKey } from '../../const';
+import { Popup, CoachCertificates, LocationMap, MarkerType } from '../index';
 
 function UserInfo(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -51,7 +51,13 @@ function UserInfo(): JSX.Element {
           <h2 className="user-card__title">{name}</h2>
         </div>
         <div className="user-card__label">
-          <a href="">
+          <button
+            className="btn-flat user-card__location"
+            type="button"
+            onClick={() => {
+              dispatch(setActivePopup(PopupKey.Location));
+            }}
+          >
             <svg
               className="user-card__icon-location"
               width={12}
@@ -61,7 +67,7 @@ function UserInfo(): JSX.Element {
               <use xlinkHref="#icon-location" />
             </svg>
             <span>{location}</span>
-          </a>
+          </button>
         </div>
         <div className="user-card__status-container">
           {isRoleCoach ? (
@@ -140,6 +146,16 @@ function UserInfo(): JSX.Element {
       </div>
       <Popup type={PopupKey.Certificates} title="Сертификаты">
         <CoachCertificates />
+      </Popup>
+      <Popup
+        type={PopupKey.Location}
+        title={name}
+        extraLabel={`м. ${location}`}
+      >
+        <LocationMap
+          location={MetroLocation[location]}
+          markerType={MarkerType.User}
+        />
       </Popup>
     </div>
   );

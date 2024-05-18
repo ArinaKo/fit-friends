@@ -9,9 +9,10 @@ type PopupProps = {
   type: PopupKey;
   title: string;
   children: JSX.Element;
+  extraLabel?: string;
 };
 
-function Popup({ type, title, children }: PopupProps): JSX.Element {
+function Popup({ type, title, children, extraLabel }: PopupProps): JSX.Element {
   const dispatch = useAppDispatch();
   const activePopup = useAppSelector(getActivePopup);
   const isActive = activePopup === type;
@@ -48,6 +49,19 @@ function Popup({ type, title, children }: PopupProps): JSX.Element {
           <div className="popup__wrapper">
             <div className="popup-head">
               <h2 className="popup-head__header">{title}</h2>
+              {extraLabel ? (
+                <p className="popup-head__extra-label">
+                  <svg
+                    className="popup-head__icon-location"
+                    width="12"
+                    height="14"
+                    aria-hidden="true"
+                  >
+                    <use xlinkHref="#icon-location"></use>
+                  </svg>
+                  <span>{extraLabel}</span>
+                </p>
+              ) : undefined}
               <button
                 className="btn-icon btn-icon--outlined btn-icon--big"
                 type="button"
