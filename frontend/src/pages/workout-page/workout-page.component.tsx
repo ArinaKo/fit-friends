@@ -12,7 +12,14 @@ import {
   setActivePopup,
 } from '../../store';
 import { useEffect } from 'react';
-import { CommentsList, Popup, UIBlocker, WorkoutInfo } from '../../components';
+import {
+  CommentForm,
+  CommentsList,
+  OrderForm,
+  Popup,
+  UIBlocker,
+  WorkoutInfo,
+} from '../../components';
 
 function WorkoutPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -79,8 +86,12 @@ function WorkoutPage(): JSX.Element {
           <WorkoutInfo />
         </div>
       </div>
-      <Popup type={PopupKey.Comment} />
-      <Popup type={PopupKey.Order} />
+      <Popup type={PopupKey.Comment} title="Оставить отзыв">
+        <CommentForm />
+      </Popup>
+      <Popup type={PopupKey.Order} title="Купить тренировку">
+        <OrderForm />
+      </Popup>
     </section>
   );
 }

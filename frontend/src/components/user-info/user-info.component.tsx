@@ -18,6 +18,7 @@ import {
 import cn from 'classnames';
 import { getFileUrl } from '../../utils';
 import { PopupKey } from '../../const';
+import { Popup, CoachCertificates } from '../index';
 
 function UserInfo(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -137,6 +138,9 @@ function UserInfo(): JSX.Element {
           ))}
         </ul>
       </div>
+      <Popup type={PopupKey.Certificates} title="Сертификаты">
+        <CoachCertificates />
+      </Popup>
     </div>
   );
 }

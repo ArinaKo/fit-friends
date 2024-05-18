@@ -1,19 +1,20 @@
 import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActivePopup } from '../../store';
+import { getActivePopup, setActivePopup } from '../../store';
+import { PopupKey } from '../../const';
 import FocusLock from 'react-focus-lock';
 import cn from 'classnames';
-import { PopupTypeDiffs } from './popup';
-import { PopupKey } from '../../const';
 
 type PopupProps = {
   type: PopupKey;
+  title: string;
+  children: JSX.Element;
 };
 
-function Popup({ type }: PopupProps): JSX.Element {
-  const { title, innerElement, isActiveSelector } = PopupTypeDiffs[type];
+function Popup({ type, title, children }: PopupProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isActive = useAppSelector(isActiveSelector);
+  const activePopup = useAppSelector(getActivePopup);
+  const isActive = activePopup === type;
 
   const handleKeydownEvent = useCallback(
     (evt: KeyboardEvent) => {
@@ -60,7 +61,7 @@ function Popup({ type }: PopupProps): JSX.Element {
                 </svg>
               </button>
             </div>
-            {innerElement ? innerElement() : undefined}
+            {children}
           </div>
         </section>
       </div>
