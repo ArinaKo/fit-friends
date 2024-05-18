@@ -53,7 +53,12 @@ function generateUsers(
     const avatar = getRandomItem(avatarsIds);
     const isMale = index % 2 === 0;
     const isCoach = index < GeneratedDataAmount.Coaches;
-    const certificates = isCoach ? [getRandomItem(certificateIds)] : undefined;
+    const certificates = isCoach
+      ? getRandomItems(
+          certificateIds,
+          generateRandomValue(1, certificateIds.length),
+        )
+      : undefined;
     return Object.assign(generateUser(isMale, isCoach), {
       email: Emails[index],
       avatar,
