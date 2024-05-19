@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthUser, FileData, UserFiles } from '../../types';
 import { APIRoute } from '../../const';
-import { getUpdateUserData } from '../../utils';
+import { getUpdateUserData, getUpdateUserDataWithAvatar } from '../../utils';
 import { AsyncThunkConfig } from './async-thunk-config';
 
 export const getAuthUserAction = createAsyncThunk<
@@ -18,7 +18,9 @@ export const updateUserAction = createAsyncThunk<
   UserFiles,
   AsyncThunkConfig
 >('account/update', async (files, { getState, extra: api }) => {
-  const formData = getUpdateUserData(getState(), files.avatar);
+  const formData = files.avatar
+    ? getUpdateUserDataWithAvatar(getState(), files.avatar)
+    : getUpdateUserData(getState());
   const { data } = await api.patch<AuthUser>(APIRoute.UpdateUser, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',

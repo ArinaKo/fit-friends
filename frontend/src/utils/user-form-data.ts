@@ -20,7 +20,7 @@ export function getRegisterData(state: State, avatar?: Blob): FormData {
   return formData;
 }
 
-export function getCustomerQuestionaryData(state: State): FormData {
+export function getCustomerQuestionaryData(state: State) {
   const {
     level,
     workoutTypes,
@@ -28,18 +28,16 @@ export function getCustomerQuestionaryData(state: State): FormData {
     caloriesPerDay,
     caloriesToLose,
   } = state.USER_FORM;
-  const formData = new FormData();
   if (!workoutTypes.length || !caloriesPerDay || !caloriesToLose) {
     throw new Error('Not enough data for customer questionary');
   }
-  formData.append('level', level);
-  formData.append('timeForWorkout', timeForWorkout);
-  formData.append('caloriesPerDay', caloriesPerDay.toString());
-  formData.append('caloriesToLose', caloriesToLose.toString());
-  workoutTypes.forEach((type) => {
-    formData.append('workoutTypes[]', type);
-  });
-  return formData;
+  return {
+    level,
+    timeForWorkout,
+    caloriesPerDay: Number(caloriesPerDay),
+    caloriesToLose: Number(caloriesToLose),
+    workoutTypes,
+  };
 }
 
 export function getCoachQuestionaryData(
@@ -63,7 +61,10 @@ export function getCoachQuestionaryData(
   return formData;
 }
 
-export function getUpdateUserData(state: State, newAvatar?: Blob): FormData {
+export function getUpdateUserDataWithAvatar(
+  state: State,
+  newAvatar: Blob,
+): FormData {
   const { name, sex, isReady, level, workoutTypes, location, description } =
     state.USER_DATA;
   const {
@@ -95,9 +96,10 @@ export function getUpdateUserData(state: State, newAvatar?: Blob): FormData {
   if (newDescription !== description) {
     formData.append('description', newDescription);
   }
-  if (workoutTypes.length !== newWorkoutTypes.length ||
+  if (
+    workoutTypes.length !== newWorkoutTypes.length ||
     workoutTypes.length !==
-    [...new Set(workoutTypes.concat(newWorkoutTypes))].length
+      [...new Set(workoutTypes.concat(newWorkoutTypes))].length
   ) {
     newWorkoutTypes.forEach((type) => {
       formData.append('workoutTypes[]', type);
@@ -106,8 +108,36 @@ export function getUpdateUserData(state: State, newAvatar?: Blob): FormData {
   if (!avatar) {
     formData.append('avatar', String(null));
   }
-  if (newAvatar) {
-    formData.append('avatar', newAvatar);
-  }
+  formData.append('avatar', newAvatar);
   return formData;
+}
+
+export function getUpdateUserData(state: State) {
+  const { name, sex, isReady, level, workoutTypes, location, description } =
+    state.USER_DATA;
+  const {
+    name: newName,
+    sex: newSex,
+    status,
+    level: newLevel,
+    workoutTypes: newWorkoutTypes,
+    location: newLocation,
+    description: newDescription,
+    avatar,
+  } = state.USER_FORM;
+  return {
+    name: newName !== name ? newName : undefined,
+    sex: newSex !== sex ? newSex : undefined,
+    isReady: status !== isReady ? status : undefined,
+    level: newLevel !== level ? newLevel : undefined,
+    location: newLocation && newLocation !== location ? newLocation : undefined,
+    description: newDescription !== description ? newDescription : undefined,
+    workoutTypes:
+      workoutTypes.length !== newWorkoutTypes.length ||
+      workoutTypes.length !==
+        [...new Set(workoutTypes.concat(newWorkoutTypes))].length
+        ? newWorkoutTypes
+        : undefined,
+    avatar: avatar === null ? null : undefined,
+  };
 }

@@ -43,7 +43,7 @@ export const userData = createSlice({
         state.level = action.payload.level;
         state.sex = action.payload.sex;
         state.isReady = action.payload.isReady;
-        state.description = action.payload.description;
+        state.description = action.payload.description ?? '';
         state.workoutTypes = action.payload.workoutTypes;
         if (action.payload.caloriesToLose) {
           state.caloriesToLose = action.payload.caloriesToLose;
