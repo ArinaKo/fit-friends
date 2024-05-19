@@ -5,11 +5,13 @@ import { UIBlocker, UserInfo, UserInfoWorkouts } from '../../components';
 import {
   getUserAction,
   getUserId,
+  isUserInfoHasError,
   isUserLoading,
   isUserRoleCoach,
   setActiveRoute,
 } from '../../store';
 import { AppRoute } from '../../const';
+import NotFoundPage from '../not-found-page/not-found-page.component';
 
 function UserPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -18,6 +20,7 @@ function UserPage(): JSX.Element {
   const currentUserId = useAppSelector(getUserId);
   const isUserCoach = useAppSelector(isUserRoleCoach);
   const isDataLoading = useAppSelector(isUserLoading);
+  const hasError = useAppSelector(isUserInfoHasError);
 
   useEffect(() => {
     if (currentUserId !== userId && !isDataLoading) {
@@ -28,6 +31,10 @@ function UserPage(): JSX.Element {
 
   if (isDataLoading) {
     return <UIBlocker />;
+  }
+
+  if (hasError) {
+    return <NotFoundPage />;
   }
 
   return (

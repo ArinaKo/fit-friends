@@ -29,6 +29,7 @@ const initialState: WorkoutInfo = {
   comments: [],
   isDataLoading: false,
   isDataEditing: false,
+  hasError: false,
 };
 
 export const workoutInfo = createSlice({
@@ -43,9 +44,11 @@ export const workoutInfo = createSlice({
     builder
       .addCase(getWorkoutAction.pending, (state) => {
         state.isDataLoading = true;
+        state.hasError = false;
       })
       .addCase(getWorkoutAction.rejected, (state) => {
         state.isDataLoading = false;
+        state.hasError = true;
       })
       .addCase(getWorkoutAction.fulfilled, (state, action) => {
         state.id = action.payload.id;
@@ -65,6 +68,7 @@ export const workoutInfo = createSlice({
         state.balance = action.payload.balance;
         state.comments = action.payload.comments;
         state.isDataLoading = false;
+        state.hasError = false;
       })
       .addCase(decreaseWorkoutBalanceAction.fulfilled, (state, action) => {
         state.balance = action.payload.count;

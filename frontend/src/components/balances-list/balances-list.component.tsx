@@ -6,11 +6,7 @@ import {
   isBalancesListLoading,
   isOnlyActiveBalances,
 } from '../../store';
-import {
-  CatalogButtons,
-  UIBlocker,
-  WorkoutCard,
-} from '../index';
+import { CatalogButtons, UIBlocker, WorkoutCard } from '../index';
 import { getUserBalancesAction } from '../../store/api-actions';
 
 function BalancesList(): JSX.Element {
@@ -28,13 +24,23 @@ function BalancesList(): JSX.Element {
     return <UIBlocker />;
   }
 
+  if (!balances.length) {
+    return (
+      <p className="empty-list-text">
+        {onlyActive
+          ? 'У вас нет активных купленных тренировок'
+          : 'У вас нет купленных тренировок'}
+      </p>
+    );
+  }
+
   return (
     <>
       <ul className="my-purchases__list">
         {balances.map((balance) => (
           <WorkoutCard
             workout={balance.workout}
-            styleClass='my-purchases__item'
+            styleClass="my-purchases__item"
             key={`workout-${balance.workout.id}`}
           />
         ))}

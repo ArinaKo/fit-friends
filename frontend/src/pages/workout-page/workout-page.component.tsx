@@ -10,6 +10,7 @@ import {
   setActiveRoute,
   setCommentForm,
   setActivePopup,
+  isWorkoutInfoHasError,
 } from '../../store';
 import { useEffect } from 'react';
 import {
@@ -20,6 +21,7 @@ import {
   UIBlocker,
   WorkoutInfo,
 } from '../../components';
+import NotFoundPage from '../not-found-page/not-found-page.component';
 
 function WorkoutPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -29,6 +31,7 @@ function WorkoutPage(): JSX.Element {
   const isBalanceExists = useAppSelector(isWorkoutBalanceExists);
   const currentWorkoutId = useAppSelector(getWorkoutId);
   const isDataLoading = useAppSelector(isWorkoutInfoLoading);
+  const hasError = useAppSelector(isWorkoutInfoHasError);
 
   useEffect(() => {
     if (currentWorkoutId !== workoutId && !isDataLoading) {
@@ -54,6 +57,10 @@ function WorkoutPage(): JSX.Element {
 
   if (isDataLoading) {
     return <UIBlocker />;
+  }
+
+  if (hasError) {
+    return <NotFoundPage />;
   }
 
   return (

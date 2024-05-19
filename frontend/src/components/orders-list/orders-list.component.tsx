@@ -26,6 +26,10 @@ function OrdersList(): JSX.Element {
     return <UIBlocker />;
   }
 
+  if (!orders.length) {
+    return <p className="empty-list-text">У вас нет купленных тренировок</p>;
+  }
+
   return (
     <>
       <ul className="my-orders__list">

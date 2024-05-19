@@ -10108,6 +10108,22 @@ input:active + .custom-textarea__text {
   align-self: center;
 }
 
+.empty-list-text {
+  margin: 0 auto;
+  margin-top: 150px;
+  font-size: 20px;
+}
+
+.not-found-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 600;
+}
+
 /* @mixin hover-focus {
     @media (hover: hover) {
       &:hover:not(.focus-visible) {

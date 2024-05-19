@@ -66,6 +66,14 @@ function WorkoutsList({ type }: WorkoutsListProps): JSX.Element {
     return <UIBlocker />;
   }
 
+  if (!workouts.length) {
+    return (
+      <p className="empty-list-text">
+        Тренировок с выбранными характеристиками не найдено
+      </p>
+    );
+  }
+
   return (
     <>
       <ul className={`${styleClass}__list`}>

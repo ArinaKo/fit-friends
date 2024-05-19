@@ -56,6 +56,9 @@ export const isWorkoutInfoLoading = (state: State): boolean =>
 export const isWorkoutInfoEditing = (state: State): boolean =>
   state[NameSpace.WorkoutInfo].isDataEditing;
 
+export const isWorkoutInfoHasError = (state: State): boolean =>
+  state[NameSpace.WorkoutInfo].hasError;
+
 export const isUserHaveAccessToWorkout = (state: State): boolean =>
   state[NameSpace.AppData].userRole === UserRole.Default ||
   state[NameSpace.WorkoutInfo].coachId === state[NameSpace.AppData].userId;

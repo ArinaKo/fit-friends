@@ -51,6 +51,9 @@ export const isUserStatus = (state: State): boolean =>
 export const isUserLoading = (state: State): boolean =>
   state[NameSpace.UserInfo].isDataLoading;
 
+export const isUserInfoHasError = (state: State): boolean =>
+  state[NameSpace.UserInfo].hasError;
+
 export const isCoachInfoActual = (state: State): boolean =>
   state[NameSpace.UserInfo].isCoachInfoActual;
 

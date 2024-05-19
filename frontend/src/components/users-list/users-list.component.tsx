@@ -51,6 +51,14 @@ function UsersList({ type }: UsersListProps): JSX.Element {
     return <UIBlocker />;
   }
 
+  if (!users.length) {
+    return (
+      <p className="empty-list-text">
+        Пользователей с выбранными характеристиками не найдено
+      </p>
+    );
+  }
+
   return (
     <>
       <ul className={`${styleClass}__list`}>

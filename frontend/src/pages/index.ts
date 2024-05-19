@@ -13,3 +13,4 @@ export { default as WorkoutsCatalogPage } from './workouts-catalog-page/workouts
 export { default as WorkoutPage } from './workout-page/workout-page.component';
 export { default as UsersCatalogPage } from './users-catalog-page/users-catalog-page.component';
 export { default as UserPage } from './user-page/user-page.component';
+export { default as NotFoundPage } from './not-found-page/not-found-page.component';

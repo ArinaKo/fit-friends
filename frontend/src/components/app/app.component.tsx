@@ -12,6 +12,7 @@ import {
   IntroPage,
   LoginPage,
   MainPage,
+  NotFoundPage,
   OrdersPage,
   QuestionaryPage,
   RegisterPage,
@@ -77,8 +78,8 @@ function App(): JSX.Element {
               path={`${AppRoute.Workouts}/:workoutId`}
               element={<WorkoutPage />}
             />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
-          <Route path="*" element={<div>Not implemented - 404 page</div>} />
         </Routes>
       </HistoryRouter>
     </HelmetProvider>

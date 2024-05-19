@@ -27,6 +27,7 @@ const initialState: UserInfo = {
   isDataLoading: false,
   isCoachInfoActual: true,
   isWorkoutsLoading: false,
+  hasError: false,
 };
 
 export const userInfo = createSlice({
@@ -37,9 +38,11 @@ export const userInfo = createSlice({
     builder
       .addCase(getUserAction.pending, (state) => {
         state.isDataLoading = true;
+        state.hasError = false;
       })
       .addCase(getUserAction.rejected, (state) => {
         state.isDataLoading = false;
+        state.hasError = true;
       })
       .addCase(getUserAction.fulfilled, (state, action) => {
         state.id = action.payload.id;
@@ -59,6 +62,7 @@ export const userInfo = createSlice({
           state.isCoachInfoActual = false;
         }
         state.isDataLoading = false;
+        state.hasError = false;
       })
       .addCase(getCoachDataAction.pending, (state) => {
         state.isWorkoutsLoading = true;

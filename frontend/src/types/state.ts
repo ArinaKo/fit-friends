@@ -207,6 +207,7 @@ export type WorkoutInfo = {
   comments: Comment[];
   isDataLoading: boolean;
   isDataEditing: boolean;
+  hasError: boolean;
 };
 
 export type UserInfo = {
@@ -226,6 +227,7 @@ export type UserInfo = {
   isDataLoading: boolean;
   isCoachInfoActual: boolean;
   isWorkoutsLoading: boolean;
+  hasError: boolean;
 };
 
 export type CommentForm = {
