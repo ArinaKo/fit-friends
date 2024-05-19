@@ -63,7 +63,7 @@ function EditUserForm(): JSX.Element {
       <div className="user-info-edit__header">
         <AvatarInput
           setFile={setFile}
-          originalValue={avatar ? getFileUrl(avatar) : undefined}
+          originalValue={avatar ? getFileUrl(avatar) : ''}
           isActive={isEdited}
           withControls
         />

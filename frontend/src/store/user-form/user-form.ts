@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UserForm } from '../../types';
 import {
-  EmptyUserForm,
   NameSpace,
   REQUIRED_INPUT_MESSAGE,
+  UserLevel,
   UserRole,
+  UserSex,
+  WorkoutDuration,
   WorkoutType,
 } from '../../const';
 import {
@@ -16,24 +18,39 @@ import {
 } from '../api-actions';
 
 const initialState: UserForm = {
-  email: EmptyUserForm.Email,
-  password: EmptyUserForm.Password,
-  name: EmptyUserForm.Name,
-  sex: EmptyUserForm.Sex,
-  dateOfBirth: EmptyUserForm.DateOfBirth,
-  role: EmptyUserForm.Role,
-  location: EmptyUserForm.Location,
-  avatar: EmptyUserForm.Avatar,
-  level: EmptyUserForm.Level,
-  status: EmptyUserForm.Status,
-  workoutTypes: EmptyUserForm.WorkoutTypes,
-  timeForWorkout: EmptyUserForm.TimeForWorkout,
-  caloriesToLose: EmptyUserForm.CaloriesToLose,
-  caloriesPerDay: EmptyUserForm.CaloriesPerDay,
-  certificatesAmount: EmptyUserForm.CertificatesAmount,
-  achievements: EmptyUserForm.Achievements,
-  description: EmptyUserForm.Description,
-  validationErrors: EmptyUserForm.ValidationsErrors,
+  email: '',
+  password: '',
+  name: '',
+  sex: UserSex.Female,
+  dateOfBirth: '',
+  role: UserRole.Coach,
+  location: undefined,
+  avatar: undefined,
+  level: UserLevel.Amateur,
+  status: true,
+  workoutTypes: [],
+  timeForWorkout: WorkoutDuration.Medium,
+  caloriesToLose: '',
+  caloriesPerDay: '',
+  certificatesAmount: 0,
+  achievements: '',
+  description: '',
+  validationErrors: {
+    email: undefined,
+    password: undefined,
+    name: undefined,
+    sex: undefined,
+    dateOfBirth: undefined,
+    location: undefined,
+    avatar: undefined,
+    level: undefined,
+    workoutTypes: undefined,
+    caloriesToLose: undefined,
+    caloriesPerDay: undefined,
+    certificatesAmount: undefined,
+    achievements: undefined,
+    description: undefined,
+  },
   isSending: false,
 };
 
@@ -72,7 +89,10 @@ export const userForm = createSlice({
     setStatus: (state, action: PayloadAction<boolean>) => {
       state.status = action.payload;
     },
-    setWorkoutTypes: (state, action: PayloadAction<WorkoutType | WorkoutType[]>) => {
+    setWorkoutTypes: (
+      state,
+      action: PayloadAction<WorkoutType | WorkoutType[]>,
+    ) => {
       if (typeof action.payload === 'object') {
         state.workoutTypes = action.payload;
         return;

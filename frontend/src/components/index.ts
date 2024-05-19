@@ -12,7 +12,7 @@ export * from './slider-buttons/buttons-icon-type';
 export { default as CommentForm } from './comment-form/comment-form.component';
 export { default as OrderForm } from './order-form/order-form.component';
 export { default as CoachCertificates } from './coach-certificates/coach-certificates.component';
-export { default as LocationMap } from './location-map/location-map';
+export { default as LocationMap } from './location-map/location-map.component';
 export * from './location-map/marker-icon';
 export { default as Popup } from './popup/popup.component';
 export { default as LoginForm } from './login-form/login-form.component';

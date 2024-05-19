@@ -1,5 +1,5 @@
 import { Comment } from '../../types';
-import { AppRoute } from '../../const';
+import { AppRoute, IMAGE_PLACEHOLDER } from '../../const';
 import { getFileUrl } from '../../utils';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ function CommentCard({ comment }: CommentCardProps): JSX.Element {
         <div className="review__user-info">
           <div className="review__user-photo">
             <img
-              src={getFileUrl(avatar)}
+              src={avatar ? getFileUrl(avatar) : IMAGE_PLACEHOLDER}
               width={64}
               height={64}
               alt="Изображение пользователя"

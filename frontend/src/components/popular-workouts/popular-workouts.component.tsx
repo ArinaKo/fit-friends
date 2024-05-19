@@ -46,7 +46,7 @@ function PopularWorkouts(): JSX.Element {
               <WorkoutCard
                 workout={workout}
                 styleClass="popular-trainings__item"
-                key={`workout-${workout.id}`}
+                key={`popular-${workout.id}`}
               />
             ))}
           </Slider>

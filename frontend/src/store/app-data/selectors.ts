@@ -23,15 +23,3 @@ export const hasNotifications = (state: State): boolean =>
 export const getActivePopup = (state: State): PopupKey | undefined =>
   state[NameSpace.AppData].activePopup;
 
-export const isCommentPopupActive = (state: State): boolean =>
-  state[NameSpace.AppData].activePopup === PopupKey.Comment;
-
-export const isOrderPopupActive = (state: State): boolean =>
-  state[NameSpace.AppData].activePopup === PopupKey.Order;
-
-export const isCertificatesPopupActive = (state: State): boolean =>
-  state[NameSpace.AppData].activePopup === PopupKey.Certificates;
-
-export const isLocationPopupActive = (state: State): boolean =>
-  state[NameSpace.AppData].activePopup === PopupKey.Location;
-

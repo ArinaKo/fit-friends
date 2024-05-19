@@ -11,6 +11,8 @@ import { validateDateOfBirth } from '../../../utils';
 import cn from 'classnames';
 import dayjs from 'dayjs';
 
+const DATA_FORMAT = 'YYYY-MM-DD';
+
 function DateOfBirthInput(): JSX.Element {
   const dispatch = useAppDispatch();
   const dateOfBirth = useAppSelector(getUserFormDateOfBirth);
@@ -30,7 +32,7 @@ function DateOfBirthInput(): JSX.Element {
             type="date"
             name="dateOfBirth"
             value={
-              dateOfBirth ? String(dayjs(dateOfBirth).format('YYYY-MM-DD')) : ''
+              dateOfBirth ? String(dayjs(dateOfBirth).format(DATA_FORMAT)) : ''
             }
             max="2099-12-31"
             disabled={isDisabled}

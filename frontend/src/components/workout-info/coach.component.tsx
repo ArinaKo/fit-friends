@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { getWorkoutCoach } from '../../store';
 import { getFileUrl } from '../../utils';
-import { AppRoute } from '../../const';
+import { AppRoute, IMAGE_PLACEHOLDER } from '../../const';
 
 function Coach(): JSX.Element {
   const coach = useAppSelector(getWorkoutCoach);
@@ -12,7 +12,7 @@ function Coach(): JSX.Element {
       <div className="training-info__photo">
         <picture>
           <img
-            src={coach ? getFileUrl(coach.avatar) : ''}
+            src={coach && coach.avatar ? getFileUrl(coach.avatar) : IMAGE_PLACEHOLDER}
             width={64}
             height={64}
             alt="Изображение тренера"

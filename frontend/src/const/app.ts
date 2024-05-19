@@ -6,6 +6,10 @@ export const REQUIRED_INPUT_MESSAGE = 'Поле обязательно для з
 
 export const SALE_PERCENT = 10;
 
+export const MAP_ZOOM = 17;
+
+export const IMAGE_PLACEHOLDER = 'https://placehold.co/600x600.png';
+
 export const ListItemsPortion = {
   Default: 6,
   CoachWorkouts: 6,

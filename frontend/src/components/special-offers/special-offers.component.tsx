@@ -23,7 +23,7 @@ function SpecialOffers(): JSX.Element {
               {workouts.map((workout) => (
                 <WorkoutPromo
                   workout={workout}
-                  key={`workout-${workout.id}`}
+                  key={`special-${workout.id}`}
                 />
               ))}
             </Slider>

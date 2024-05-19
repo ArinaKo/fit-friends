@@ -1,6 +1,7 @@
 import { Map, TileLayer } from 'leaflet';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Location } from '../types';
+import { MAP_ZOOM } from '../const';
 
 function useMap(
   containerRef: MutableRefObject<HTMLElement | null>,
@@ -13,7 +14,7 @@ function useMap(
     if (containerRef.current !== null && !isRendered.current) {
       const instance = new Map(containerRef.current).setView(
         [location.latitude, location.longitude],
-        17
+        MAP_ZOOM
       );
 
       const layer = new TileLayer(

@@ -30,7 +30,7 @@ export const dropTokens = (): void => {
 
 export const getPendingStatus = (): boolean => {
   const status = localStorage.getItem(REFRESH_PENDING_KEY_NAME);
-  return status ? true : false;
+  return Boolean(status);
 };
 
 export const setPendingStatus = (): void => {

@@ -1,5 +1,5 @@
 import { User } from '../../types';
-import { AppRoute } from '../../const';
+import { AppRoute, IMAGE_PLACEHOLDER } from '../../const';
 import { getFileUrl } from '../../utils';
 import { Link } from 'react-router-dom';
 import { UserCardType, UserCardTypeDiffs } from './user-card';
@@ -15,7 +15,7 @@ function UserCardInner({ type, user }: UserCardInnerProps): JSX.Element {
   const { id, avatar, name, location, workoutTypes } = user;
 
   const userLink = `${AppRoute.Users}/${id}`;
-  const avatarUrl = getFileUrl(avatar);
+  const avatarUrl = avatar ? getFileUrl(avatar) : IMAGE_PLACEHOLDER;
 
   const getAvatarImage = () =>
     type === UserCardType.Friend ? (

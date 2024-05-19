@@ -48,10 +48,10 @@ export enum RequestStatus {
   Accepted = 'принят',
 }
 
-export const RequestStatusText = {
-  ForUser: 'Запрос на совместную тренировку',
-  ForCoach: 'Запрос на персональную тренировку',
-} as const;
+export enum RequestStatusText {
+  ForUser = 'Запрос на совместную тренировку',
+  ForCoach = 'Запрос на персональную тренировку',
+}
 
 export enum UserStatus {
   Ready = 'Готов к тренировке',

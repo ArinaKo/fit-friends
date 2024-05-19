@@ -15,7 +15,7 @@ export type WorkoutRequest = {
 
 export type User = {
   id: string;
-  avatar: FileData;
+  avatar?: FileData;
   name: string;
   role: UserRole;
   sex: UserSex;

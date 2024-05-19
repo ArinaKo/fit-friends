@@ -1,25 +1,38 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { WorkoutForm } from '../../types';
 import {
-  EmptyWorkoutForm,
   NameSpace,
   REQUIRED_INPUT_MESSAGE,
   SALE_PERCENT,
+  WorkoutSexFor,
 } from '../../const';
-import { createWorkoutAction, updateWorkoutAction, updateWorkoutVideoAction } from '../api-actions';
+import {
+  createWorkoutAction,
+  updateWorkoutAction,
+  updateWorkoutVideoAction,
+} from '../api-actions';
 
 const initialState: WorkoutForm = {
-  title: EmptyWorkoutForm.Title,
-  type: EmptyWorkoutForm.Type,
-  duration: EmptyWorkoutForm.Duration,
-  level: EmptyWorkoutForm.Level,
-  calories: EmptyWorkoutForm.Calories,
-  price: EmptyWorkoutForm.Price,
-  userSex: EmptyWorkoutForm.UserSex,
-  description: EmptyWorkoutForm.Description,
-  hasVideo: EmptyWorkoutForm.HasVideo,
-  isSpecial: EmptyWorkoutForm.IsSpecial,
-  validationErrors: EmptyWorkoutForm.ValidationErrors,
+  title: '',
+  type: undefined,
+  duration: undefined,
+  level: undefined,
+  calories: '',
+  price: '',
+  userSex: WorkoutSexFor.Female,
+  description: '',
+  hasVideo: false,
+  isSpecial: false,
+  validationErrors: {
+    title: undefined,
+    type: undefined,
+    duration: undefined,
+    level: undefined,
+    calories: undefined,
+    price: undefined,
+    description: undefined,
+    video: undefined,
+  },
   isSending: false,
 };
 

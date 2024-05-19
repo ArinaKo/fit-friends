@@ -36,7 +36,7 @@ function WorkoutInfo(): JSX.Element {
 
   const [file, setFile] = useState<Blob | null>(null);
 
-  const handleUploadFile = () => {
+  const handleFileUpload = () => {
     if (file) {
       dispatch(updateWorkoutVideoAction({ workoutId, video: file })).then(
         () => {
@@ -57,7 +57,7 @@ function WorkoutInfo(): JSX.Element {
     dispatch(setUpdateWorkoutRequiredFields());
     if (!isFormHaveError) {
       if (file) {
-        handleUploadFile();
+        handleFileUpload();
       }
       dispatch(updateWorkoutAction(workoutId));
     }
@@ -140,7 +140,7 @@ function WorkoutInfo(): JSX.Element {
       <WorkoutVideo
         newVideo={file}
         setFile={setFile}
-        onSave={handleUploadFile}
+        onSave={handleFileUpload}
       />
     </div>
   );

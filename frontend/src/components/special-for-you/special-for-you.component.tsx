@@ -36,7 +36,7 @@ function SpecialForYou(): JSX.Element {
               <WorkoutPreview
                 workout={workout}
                 styleClass="special-for-you__item"
-                key={`workout-${workout.id}`}
+                key={`special-for-you-${workout.id}`}
               />
             ))}
           </Slider>
