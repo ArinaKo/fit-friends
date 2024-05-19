@@ -15,6 +15,17 @@ import {
 } from './token';
 import { StatusCodes } from 'http-status-codes';
 import { LoggedUser } from '../types';
+import { toast } from 'react-toastify';
+
+const StatusCodeMapping: Record<number, boolean> = {
+  [StatusCodes.BAD_REQUEST]: true,
+  [StatusCodes.NOT_FOUND]: true,
+};
+
+type DetailMessageType = {
+  type: string;
+  message: string;
+};
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -32,12 +43,12 @@ export const createAPI = (): AxiosInstance => {
 
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 
   api.interceptors.response.use(
     (response) => response,
-    async (error: AxiosError) => {
+    async (error: AxiosError<DetailMessageType>) => {
       const originalRequest = error.config as AxiosRequestConfig;
       const isPending = getPendingStatus();
 
@@ -55,7 +66,7 @@ export const createAPI = (): AxiosInstance => {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-            }
+            },
           );
           const { accessToken, refreshToken } = response.data;
           saveTokens(accessToken, refreshToken);
@@ -70,8 +81,13 @@ export const createAPI = (): AxiosInstance => {
         }
       }
 
+      if (error.response && StatusCodeMapping[error.response.status]) {
+        const detailMessage = error.response.data;
+        toast.warn(detailMessage.message);
+      }
+
       return Promise.reject(error);
-    }
+    },
   );
 
   return api;
