@@ -1,20 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { MainNavigation } from '../index';
+import { Logo, MainNavigation } from '../index';
 
 function Layout(): JSX.Element {
   return (
     <div className="wrapper">
       <header className="header">
         <div className="container">
-          <a
-            className="header__logo"
-            href="index.html"
-            aria-label="Переход на главную"
-          >
-            <svg width={187} height={70} aria-hidden="true">
-              <use xlinkHref="#logo" />
-            </svg>
-          </a>
+          <Logo />
           <MainNavigation />
           <div className="search">
             <form action="#" method="get">
