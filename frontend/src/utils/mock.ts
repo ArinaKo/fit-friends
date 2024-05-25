@@ -1,11 +1,12 @@
 import {
+  FileData,
   Notification,
   User,
   Workout,
   WorkoutBalance,
   WorkoutOrders,
 } from '../types';
-import { datatype, image, internet, lorem } from 'faker';
+import { datatype, image, internet, lorem, system } from 'faker';
 import { randomUUID } from 'node:crypto';
 import {
   MetroStation,
@@ -67,4 +68,14 @@ export const makeFakeWorkoutOrders = (): WorkoutOrders => ({
   workout: makeFakeWorkout(),
   count: datatype.number(),
   sum: datatype.number(),
+});
+
+export const makeFakeFileData = (): FileData => ({
+  id: randomUUID(),
+  originalName: system.commonFileName(),
+  subDirectory: lorem.word(),
+  size: datatype.number(),
+  mimetype: system.mimeType(),
+  hashName: lorem.word(),
+  path: image.imageUrl(),
 });
