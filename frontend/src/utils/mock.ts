@@ -1,4 +1,10 @@
-import { Notification, User, Workout, WorkoutBalance } from '../types';
+import {
+  Notification,
+  User,
+  Workout,
+  WorkoutBalance,
+  WorkoutOrders,
+} from '../types';
 import { datatype, image, internet, lorem } from 'faker';
 import { randomUUID } from 'node:crypto';
 import {
@@ -55,4 +61,10 @@ export const makeFakeUser = (): User => ({
   level: getRandomItem(Object.values(UserLevel)),
   workoutTypes: [getRandomItem(Object.values(WorkoutType))],
   isReady: datatype.boolean(),
+});
+
+export const makeFakeWorkoutOrders = (): WorkoutOrders => ({
+  workout: makeFakeWorkout(),
+  count: datatype.number(),
+  sum: datatype.number(),
 });
