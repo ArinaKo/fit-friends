@@ -1,4 +1,5 @@
 import {
+  Comment,
   FileData,
   Notification,
   User,
@@ -78,4 +79,11 @@ export const makeFakeFileData = (): FileData => ({
   mimetype: system.mimeType(),
   hashName: lorem.word(),
   path: image.imageUrl(),
+});
+
+export const makeFakeComment = (): Comment => ({
+  id: randomUUID(),
+  user: makeFakeUser(),
+  rating: datatype.number(),
+  text: lorem.lines(1),
 });
