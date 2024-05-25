@@ -16,6 +16,7 @@ const initialState: CatalogData = {
   totalItems: 0,
   currentPage: 1,
   itemsPerPage: 0,
+  isDataLoading: false,
 };
 
 export const catalogData = createSlice({
@@ -38,41 +39,83 @@ export const catalogData = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(getAllWorkoutsAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(getCoachWorkoutsAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(getCoachOrdersAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(getUserBalancesAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(getUserFriendsAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(getAllUsersAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
       .addCase(getAllWorkoutsAction.fulfilled, (state, action) => {
         const { itemsPerPage, totalItems, totalPages } = action.payload;
         state.itemsPerPage = itemsPerPage;
         state.totalPages = totalPages;
         state.totalItems = totalItems;
+        state.isDataLoading = false;
       })
       .addCase(getCoachWorkoutsAction.fulfilled, (state, action) => {
         const { itemsPerPage, totalItems, totalPages } = action.payload;
         state.itemsPerPage = itemsPerPage;
         state.totalPages = totalPages;
         state.totalItems = totalItems;
+        state.isDataLoading = false;
       })
       .addCase(getCoachOrdersAction.fulfilled, (state, action) => {
         const { itemsPerPage, totalItems, totalPages } = action.payload;
         state.itemsPerPage = itemsPerPage;
         state.totalPages = totalPages;
         state.totalItems = totalItems;
+        state.isDataLoading = false;
       })
       .addCase(getUserBalancesAction.fulfilled, (state, action) => {
         const { itemsPerPage, totalItems, totalPages } = action.payload;
         state.itemsPerPage = itemsPerPage;
         state.totalPages = totalPages;
         state.totalItems = totalItems;
+        state.isDataLoading = false;
       })
       .addCase(getUserFriendsAction.fulfilled, (state, action) => {
         const { itemsPerPage, totalItems, totalPages } = action.payload;
         state.itemsPerPage = itemsPerPage;
         state.totalPages = totalPages;
         state.totalItems = totalItems;
+        state.isDataLoading = false;
       })
       .addCase(getAllUsersAction.fulfilled, (state, action) => {
         const { itemsPerPage, totalItems, totalPages } = action.payload;
         state.itemsPerPage = itemsPerPage;
         state.totalPages = totalPages;
         state.totalItems = totalItems;
+        state.isDataLoading = false;
+      })
+      .addCase(getAllWorkoutsAction.rejected, (state) => {
+        state.isDataLoading = false;
+      })
+      .addCase(getCoachWorkoutsAction.rejected, (state) => {
+        state.isDataLoading = false;
+      })
+      .addCase(getCoachOrdersAction.rejected, (state) => {
+        state.isDataLoading = false;
+      })
+      .addCase(getUserBalancesAction.rejected, (state) => {
+        state.isDataLoading = false;
+      })
+      .addCase(getUserFriendsAction.rejected, (state) => {
+        state.isDataLoading = false;
+      })
+      .addCase(getAllUsersAction.rejected, (state) => {
+        state.isDataLoading = false;
       });
   },
 });

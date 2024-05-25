@@ -48,6 +48,7 @@ export type CatalogData = {
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
+  isDataLoading: boolean;
 };
 
 export type UserForm = {
