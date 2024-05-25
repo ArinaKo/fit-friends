@@ -7,55 +7,68 @@ import {
 } from '../../const';
 import { FileData, State, Workout } from '../../types';
 
-export const getUserId = (state: State): string => state[NameSpace.UserInfo].id;
+export const getUserId = (state: Pick<State, NameSpace.UserInfo>): string =>
+  state[NameSpace.UserInfo].id;
 
-export const getUserName = (state: State): string =>
+export const getUserName = (state: Pick<State, NameSpace.UserInfo>): string =>
   state[NameSpace.UserInfo].name;
 
-export const getUserIsReady = (state: State): boolean =>
-  state[NameSpace.UserInfo].isReady;
+export const getUserReadyStatus = (
+  state: Pick<State, NameSpace.UserInfo>,
+): boolean => state[NameSpace.UserInfo].isReady;
 
-export const isUserRoleCoach = (state: State): boolean =>
-  state[NameSpace.UserInfo].role === UserRole.Coach;
+export const isUserRoleCoach = (
+  state: Pick<State, NameSpace.UserInfo>,
+): boolean => state[NameSpace.UserInfo].role === UserRole.Coach;
 
-export const getUserLocation = (state: State): MetroStation =>
-  state[NameSpace.UserInfo].location;
+export const getUserLocation = (
+  state: Pick<State, NameSpace.UserInfo>,
+): MetroStation => state[NameSpace.UserInfo].location;
 
-export const getUserImages = (state: State): FileData[] =>
-  state[NameSpace.UserInfo].images;
+export const getUserImages = (
+  state: Pick<State, NameSpace.UserInfo>,
+): FileData[] => state[NameSpace.UserInfo].images;
 
-export const getUserWorkoutTypes = (state: State): WorkoutType[] =>
-  state[NameSpace.UserInfo].workoutTypes;
+export const getUserWorkoutTypes = (
+  state: Pick<State, NameSpace.UserInfo>,
+): WorkoutType[] => state[NameSpace.UserInfo].workoutTypes;
 
-export const getUserLevel = (state: State): UserLevel =>
-  state[NameSpace.UserInfo].level;
+export const getUserLevel = (
+  state: Pick<State, NameSpace.UserInfo>,
+): UserLevel => state[NameSpace.UserInfo].level;
 
-export const getUserDescription = (state: State): string =>
-  state[NameSpace.UserInfo].description;
+export const getUserDescription = (
+  state: Pick<State, NameSpace.UserInfo>,
+): string => state[NameSpace.UserInfo].description;
 
-export const isUserAFriend = (state: State): boolean =>
-  state[NameSpace.UserInfo].isFriend;
+export const isUserAFriend = (
+  state: Pick<State, NameSpace.UserInfo>,
+): boolean => state[NameSpace.UserInfo].isFriend;
 
-export const getSubscriptionStatus = (state: State): boolean =>
-  state[NameSpace.UserInfo].subscriptionStatus;
+export const getSubscriptionStatus = (
+  state: Pick<State, NameSpace.UserInfo>,
+): boolean => state[NameSpace.UserInfo].subscriptionStatus;
 
-export const getUserCertificates = (state: State): FileData[] =>
-  state[NameSpace.UserInfo].certificates;
+export const getUserCertificates = (
+  state: Pick<State, NameSpace.UserInfo>,
+): FileData[] => state[NameSpace.UserInfo].certificates;
 
-export const getUserWorkouts = (state: State): Workout[] =>
-  state[NameSpace.UserInfo].workouts;
+export const getUserWorkouts = (
+  state: Pick<State, NameSpace.UserInfo>,
+): Workout[] => state[NameSpace.UserInfo].workouts;
 
-export const isUserStatus = (state: State): boolean =>
-  state[NameSpace.UserInfo].isReady;
+export const isUserLoading = (
+  state: Pick<State, NameSpace.UserInfo>,
+): boolean => state[NameSpace.UserInfo].isDataLoading;
 
-export const isUserLoading = (state: State): boolean =>
-  state[NameSpace.UserInfo].isDataLoading;
+export const isUserInfoHasError = (
+  state: Pick<State, NameSpace.UserInfo>,
+): boolean => state[NameSpace.UserInfo].hasError;
 
-export const isUserInfoHasError = (state: State): boolean =>
-  state[NameSpace.UserInfo].hasError;
+export const isCoachInfoReady = (
+  state: Pick<State, NameSpace.UserInfo>,
+): boolean => state[NameSpace.UserInfo].isCoachInfoActual;
 
-export const isCoachInfoActual = (state: State): boolean =>
-  state[NameSpace.UserInfo].isCoachInfoActual;
-
-export const isCoachWorkoutsLoading = (state: State): boolean =>
-  state[NameSpace.UserInfo].isWorkoutsLoading;
+export const isCoachWorkoutsLoading = (
+  state: Pick<State, NameSpace.UserInfo>,
+): boolean => state[NameSpace.UserInfo].isWorkoutsLoading;
