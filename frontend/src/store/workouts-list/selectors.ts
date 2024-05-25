@@ -1,55 +1,70 @@
 import { NameSpace } from '../../const';
 import { State, Workout } from '../../types';
 
-export const getWorkoutsList = (state: State): Workout[] =>
-  state[NameSpace.WorkoutsList].workouts;
+export const getWorkoutsList = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): Workout[] => state[NameSpace.WorkoutsList].workouts;
 
-export const getWorkoutsMinPrice = (state: State): number =>
-  state[NameSpace.WorkoutsList].price.min;
+export const getWorkoutsMinPrice = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number => state[NameSpace.WorkoutsList].price.min;
 
-export const getWorkoutsMaxPrice = (state: State): number =>
-  state[NameSpace.WorkoutsList].price.max;
+export const getWorkoutsMaxPrice = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number => state[NameSpace.WorkoutsList].price.max;
 
-export const getWorkoutsFilterMinPrice = (state: State): number | undefined =>
-  state[NameSpace.WorkoutsList].filter.price.min;
+export const getWorkoutsFilterMinPrice = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number | undefined => state[NameSpace.WorkoutsList].filter.price.min;
 
-export const getWorkoutsFilterMaxPrice = (state: State): number | undefined =>
-  state[NameSpace.WorkoutsList].filter.price.max;
+export const getWorkoutsFilterMaxPrice = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number | undefined => state[NameSpace.WorkoutsList].filter.price.max;
 
-export const getWorkoutsMinCalories = (state: State): number =>
-  state[NameSpace.WorkoutsList].calories.min;
+export const getWorkoutsMinCalories = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number => state[NameSpace.WorkoutsList].calories.min;
 
-export const getWorkoutsMaxCalories = (state: State): number =>
-  state[NameSpace.WorkoutsList].calories.max;
+export const getWorkoutsMaxCalories = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number => state[NameSpace.WorkoutsList].calories.max;
 
 export const getWorkoutsFilterMinCalories = (
-  state: State,
+  state: Pick<State, NameSpace.WorkoutsList>,
 ): number | undefined => state[NameSpace.WorkoutsList].filter.calories.min;
 
 export const getWorkoutsFilterMaxCalories = (
-  state: State,
+  state: Pick<State, NameSpace.WorkoutsList>,
 ): number | undefined => state[NameSpace.WorkoutsList].filter.calories.max;
 
-export const getWorkoutsMinRating = (state: State): number =>
-  state[NameSpace.WorkoutsList].rating.min;
+export const getWorkoutsMinRating = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number => state[NameSpace.WorkoutsList].rating.min;
 
-export const getWorkoutsMaxRating = (state: State): number =>
-  state[NameSpace.WorkoutsList].rating.max;
+export const getWorkoutsMaxRating = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number => state[NameSpace.WorkoutsList].rating.max;
 
-export const getWorkoutsFilterMinRating = (state: State): number =>
-  state[NameSpace.WorkoutsList].filter.rating.min;
+export const getWorkoutsFilterMinRating = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number => state[NameSpace.WorkoutsList].filter.rating.min;
 
-export const getWorkoutsFilterMaxRating = (state: State): number =>
-  state[NameSpace.WorkoutsList].filter.rating.max;
+export const getWorkoutsFilterMaxRating = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): number => state[NameSpace.WorkoutsList].filter.rating.max;
 
-export const getWorkoutsFilterDuration = (state: State): string[] =>
-  state[NameSpace.WorkoutsList].filter.duration;
+export const getWorkoutsFilterDuration = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): string[] => state[NameSpace.WorkoutsList].filter.duration;
 
-export const getWorkoutsFilterTypes = (state: State): string[] =>
-  state[NameSpace.WorkoutsList].filter.types;
+export const getWorkoutsFilterTypes = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): string[] => state[NameSpace.WorkoutsList].filter.types;
 
-export const getWorkoutsSortingType = (state: State): string | undefined =>
-  state[NameSpace.WorkoutsList].filter.sorting;
+export const getWorkoutsSortingType = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): string | undefined => state[NameSpace.WorkoutsList].filter.sorting;
 
-export const isWorkoutsListLoading = (state: State): boolean =>
-  state[NameSpace.WorkoutsList].isDataLoading;
+export const isWorkoutsListLoading = (
+  state: Pick<State, NameSpace.WorkoutsList>,
+): boolean => state[NameSpace.WorkoutsList].isDataLoading;
