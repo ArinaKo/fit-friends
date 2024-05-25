@@ -6,9 +6,9 @@ import {
   getCoachDataAction,
   getSubscriptionStatus,
   getUserId,
-  getUserIsReady,
+  getUserReadyStatus,
   getUserWorkouts,
-  isCoachInfoActual,
+  isCoachInfoReady,
   isCoachWorkoutsLoading,
   isUserAFriend,
   isUserCoach,
@@ -28,10 +28,10 @@ function UserInfoWorkouts(): JSX.Element {
   const isCoach = useAppSelector(isUserCoach);
   const userId = useAppSelector(getUserId);
   const workouts = useAppSelector(getUserWorkouts);
-  const isReady = useAppSelector(getUserIsReady);
+  const isReady = useAppSelector(getUserReadyStatus);
   const isFriend = useAppSelector(isUserAFriend);
   const subscriptionStatus = useAppSelector(getSubscriptionStatus);
-  const isDataActual = useAppSelector(isCoachInfoActual);
+  const isDataActual = useAppSelector(isCoachInfoReady);
   const isDataLoading = useAppSelector(isCoachWorkoutsLoading);
   const sliderRef = useRef<Slider>(null);
   const settings = {

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getUserDescription,
-  getUserIsReady,
+  getUserReadyStatus,
   getUserLocation,
   getUserName,
   getUserWorkoutTypes,
@@ -27,7 +27,7 @@ function UserInfo(): JSX.Element {
   const isCoach = useAppSelector(isUserCoach);
   const location = useAppSelector(getUserLocation);
   const isRoleCoach = useAppSelector(isUserRoleCoach);
-  const isReady = useAppSelector(getUserIsReady);
+  const isReady = useAppSelector(getUserReadyStatus);
   const description = useAppSelector(getUserDescription);
   const workoutTypes = useAppSelector(getUserWorkoutTypes);
   const level = useAppSelector(getUserLevel);
