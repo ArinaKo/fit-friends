@@ -52,7 +52,7 @@ export const createWorkoutRequestAction = createAsyncThunk<
   void,
   string,
   AsyncThunkConfig
->('friends/update-request', async (userId, { extra: api }) => {
+>('friends/create-request', async (userId, { extra: api }) => {
   await api.post(APIRoute.CreateWorkoutRequest, {
     userToId: userId,
   });
