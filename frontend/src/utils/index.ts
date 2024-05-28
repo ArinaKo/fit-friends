@@ -6,3 +6,4 @@ export * from './order-form-data';
 export * from './query';
 export * from './common';
 export * from './mock';
+export * from './mock-state';

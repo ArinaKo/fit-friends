@@ -2,6 +2,7 @@ import {
   Comment,
   FileData,
   Notification,
+  State,
   User,
   Workout,
   WorkoutBalance,
@@ -18,6 +19,8 @@ import {
   WorkoutSexFor,
   WorkoutType,
 } from '../const';
+import { Action, ThunkDispatch } from '@reduxjs/toolkit';
+import { createAPI } from '../services';
 
 function generateRandomValue(min: number, max: number) {
   return Math.floor(Math.random() * (max + 1 - min) + min);
@@ -87,3 +90,12 @@ export const makeFakeComment = (): Comment => ({
   rating: datatype.number(),
   text: lorem.lines(1),
 });
+
+export type AppThunkDispatch = ThunkDispatch<
+  State,
+  ReturnType<typeof createAPI>,
+  Action
+>;
+
+export const extractActionsTypes = (actions: Action<string>[]) =>
+  actions.map(({ type }) => type);
