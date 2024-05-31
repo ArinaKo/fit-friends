@@ -12,6 +12,7 @@ function Logo(): JSX.Element {
       to={activePage === link ? '#' : link}
       className="header__logo"
       aria-label="Переход на главную"
+      data-testid="Logo"
     >
       <svg width={187} height={70} aria-hidden="true">
         <use xlinkHref="#logo" />
