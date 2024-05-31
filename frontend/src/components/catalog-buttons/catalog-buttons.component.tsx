@@ -26,6 +26,7 @@ function CatalogButtons({ styleClass }: CatalogButtonsProps) {
         type="button"
         disabled={isDisabled}
         onClick={() => dispatch(increaseCatalogPage())}
+        data-testid="showMoreButton"
       >
         Показать еще
       </button>
@@ -35,6 +36,7 @@ function CatalogButtons({ styleClass }: CatalogButtonsProps) {
         })}
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        data-testid="scrollToTopButton"
       >
         Вернуться в начало
       </button>
