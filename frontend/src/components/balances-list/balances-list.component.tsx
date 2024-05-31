@@ -36,7 +36,7 @@ function BalancesList(): JSX.Element {
 
   return (
     <>
-      <ul className="my-purchases__list">
+      <ul className="my-purchases__list" data-testid="balancesList">
         {balances.map((balance) => (
           <WorkoutCard
             workout={balance.workout}
