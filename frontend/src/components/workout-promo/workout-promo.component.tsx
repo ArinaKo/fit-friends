@@ -20,7 +20,7 @@ function WorkoutPromo({ workout }: WorkoutPromoProps): JSX.Element {
             src={`${STATIC_URL}/${backgroundImage}`}
             width={1040}
             height={469}
-            alt="promo-photo"
+            alt="Фотография тренировки"
           />
         </div>
         <div className="promo-slider__header">
