@@ -27,6 +27,7 @@ function BalancesSorting(): JSX.Element {
               dispatch(resetCatalogPage());
               dispatch(setBalancesSorting(!isOnlyActive));
             }}
+            data-testid="sortingCheckbox"
           />
           <span className="custom-toggle__icon">
             <svg width={9} height={6} aria-hidden="true">
