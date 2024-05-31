@@ -36,6 +36,7 @@ function AccountCertificates(): JSX.Element {
           accept="application/pdf"
           ref={fileInput}
           onChange={handleFileUpload}
+          data-testid="uploadInput"
         />
         <button
           className="btn-flat btn-flat--underlined personal-account-coach__button"
