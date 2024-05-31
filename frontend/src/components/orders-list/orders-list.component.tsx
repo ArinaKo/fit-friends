@@ -32,7 +32,7 @@ function OrdersList(): JSX.Element {
 
   return (
     <>
-      <ul className="my-orders__list">
+      <ul className="my-orders__list" data-testid="ordersList">
         {orders.map(({ workout, count, sum }) => (
           <WorkoutCard
             workout={workout}
