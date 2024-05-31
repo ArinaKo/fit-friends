@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { OrdersInfo, Workout } from '../../types';
 import { AppRoute, STATIC_URL } from '../../const';
-import WorkoutOrders from './orders-info.component';
+import WorkoutOrders from './workout-orders.component';
 
 type WorkoutCardProps = {
   workout: Workout;
