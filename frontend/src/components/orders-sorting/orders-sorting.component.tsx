@@ -29,6 +29,7 @@ function OrdersSorting(): JSX.Element {
             dispatch(resetCatalogPage());
             dispatch(setOrdersSorting(OrdersSortType.Sum));
           }}
+          data-testid="sumSorting"
         >
           <span>Сумме</span>
           <svg width={16} height={10} aria-hidden="true">
@@ -51,6 +52,7 @@ function OrdersSorting(): JSX.Element {
             dispatch(resetCatalogPage());
             dispatch(setOrdersSorting(OrdersSortType.Count));
           }}
+          data-testid="countSorting"
         >
           <span>Количеству</span>
           <svg width={16} height={10} aria-hidden="true">
