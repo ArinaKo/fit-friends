@@ -93,7 +93,7 @@ function Layout(): JSX.Element {
           </div>
         </div>
       </header>
-      <main>
+      <main data-testid="mainElement">
         <Outlet />
       </main>
     </div>

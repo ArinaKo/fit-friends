@@ -3,8 +3,8 @@ import { Outlet } from 'react-router-dom';
 function EntryLayout(): JSX.Element {
   return (
     <div className="wrapper">
-      <main>
-        <div className="background-logo">
+      <main data-testid="mainElement">
+        <div className="background-logo" data-testid="backgroundLogo">
           <svg
             className="background-logo__logo"
             width={750}
