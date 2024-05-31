@@ -21,12 +21,12 @@ function UserCardInner({ type, user }: UserCardInnerProps): JSX.Element {
     type === UserCardType.Friend ? (
       <div className="thumbnail-friend__image-status">
         <div className={`${styleClass}__image`}>
-          <img src={avatarUrl} width={78} height={78} />
+          <img src={avatarUrl} width={78} height={78} alt="Аватар пользователя" />
         </div>
       </div>
     ) : (
       <div className={`${styleClass}__image`}>
-        <img src={avatarUrl} width={82} height={82} />
+        <img src={avatarUrl} width={82} height={82} alt="Аватар пользователя" />
       </div>
     );
 

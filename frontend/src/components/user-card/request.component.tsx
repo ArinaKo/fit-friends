@@ -31,6 +31,7 @@ function Request({ request }: RequestProp): JSX.Element {
                 }),
               );
             }}
+            data-testid="acceptButton"
           >
             Принять
           </button>
@@ -45,6 +46,7 @@ function Request({ request }: RequestProp): JSX.Element {
                 }),
               );
             }}
+            data-testid="rejectButton"
           >
             Отклонить
           </button>
