@@ -2,17 +2,17 @@ import { useState } from 'react';
 import Slider from 'react-slick';
 import cn from 'classnames';
 
-type SliderControlsProps = {
+type SliderDotsProps = {
   sliderRef: React.RefObject<Slider>;
   slidesAmount: number;
   styleClass: string;
 };
 
-function SliderControls({
+function SliderDots({
   sliderRef,
   slidesAmount,
   styleClass,
-}: SliderControlsProps): JSX.Element {
+}: SliderDotsProps): JSX.Element {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
@@ -34,4 +34,4 @@ function SliderControls({
   );
 }
 
-export default SliderControls;
+export default SliderDots;
