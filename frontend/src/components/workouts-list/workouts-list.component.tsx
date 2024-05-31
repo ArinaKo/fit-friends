@@ -76,7 +76,7 @@ function WorkoutsList({ type }: WorkoutsListProps): JSX.Element {
 
   return (
     <>
-      <ul className={`${styleClass}__list`}>
+      <ul className={`${styleClass}__list`} data-testid="workoutsList">
         {workouts.map((workout) => (
           <WorkoutCard
             styleClass={cardStyleClass}
