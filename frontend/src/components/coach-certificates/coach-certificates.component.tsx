@@ -16,7 +16,7 @@ function CoachCertificates(): JSX.Element {
   const sliderRef = useRef<Slider>(null);
 
   return (
-    <div className="popup__content popup__content--certificates">
+    <div className="popup__content popup__content--certificates" data-testid="coachCertificates">
       <div className="popup__slider-buttons">
         <SliderButtons
           sliderRef={sliderRef}
