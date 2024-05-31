@@ -19,7 +19,11 @@ function MainNavigation(): JSX.Element {
   const getMainLinks = () => {
     const list = isCoach ? CoachLinks : UserLinks;
     return list.map((link) => (
-      <li className="main-nav__item" key={`link-${link.Icon}`}>
+      <li
+        className="main-nav__item"
+        key={`link-${link.Icon}`}
+        data-testid="mainNavItem"
+      >
         <Link
           to={link.Route}
           className={cn('main-nav__link', {
@@ -40,7 +44,7 @@ function MainNavigation(): JSX.Element {
   };
 
   return (
-    <nav className="main-nav">
+    <nav className="main-nav" data-testid="mainNavContainer">
       <ul className="main-nav__list">
         {getMainLinks()}
         <NotificationsList />
