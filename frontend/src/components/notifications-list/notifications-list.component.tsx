@@ -11,6 +11,7 @@ function NotificationsList(): JSX.Element {
       className={cn('main-nav__item main-nav__item--notifications', {
         'is-notifications': notifications.length !== 0,
       })}
+      data-testid="notificationsContainer"
     >
       <button className="main-nav__link" aria-label="Уведомления">
         <svg width={14} height={18} aria-hidden="true">

@@ -45,6 +45,7 @@ function NotificationCard({
         className="notification is-active"
         type="button"
         onClick={handleNotificationClick}
+        data-testid="notification"
       >
         <p className="notification__text">{text}</p>
         <time className="notification__time" dateTime={date.toString()}>
