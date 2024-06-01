@@ -44,6 +44,7 @@ function Popup({ type, title, children, extraLabel }: PopupProps): JSX.Element {
           'popup-form--active': isActive,
           'visually-hidden': !isActive,
         })}
+        data-testid="popup"
       >
         <section className="popup">
           <div className="popup__wrapper">
@@ -69,6 +70,7 @@ function Popup({ type, title, children, extraLabel }: PopupProps): JSX.Element {
                 onClick={() => {
                   dispatch(setActivePopup());
                 }}
+                data-testid="closeButton"
               >
                 <svg width="20" height="20" aria-hidden="true">
                   <use xlinkHref="#icon-cross"></use>
