@@ -29,9 +29,14 @@ import {
   WorkoutInfo,
   WorkoutsList,
 } from '../types';
-import { datatype, image, lorem } from 'faker';
+import { datatype, image, internet, lorem } from 'faker';
 import { randomUUID } from 'node:crypto';
-import { makeFakeUser, getRandomItem } from './mock';
+import {
+  makeFakeUser,
+  getRandomItem,
+  makeFakeFileData,
+  makeFakeWorkout,
+} from './mock';
 
 export const makeFakeAppDataSlice = (): AppData => ({
   authStatus: AuthorizationStatus.Unknown,
@@ -221,18 +226,18 @@ export const makeFakeWorkoutInfoSlice = (): WorkoutInfo => ({
 });
 
 export const makeFakeUserInfoSlice = (): UserInfo => ({
-  id: 'id',
-  name: '',
-  location: MetroStation.Petrogadskaya,
+  id: randomUUID(),
+  name: internet.userName(),
   role: UserRole.Default,
-  isReady: false,
-  description: '',
-  workoutTypes: [],
-  level: UserLevel.Amateur,
+  location: getRandomItem(Object.values(MetroStation)),
+  level: getRandomItem(Object.values(UserLevel)),
+  workoutTypes: [getRandomItem(Object.values(WorkoutType))],
+  isReady: datatype.boolean(),
+  description: lorem.lines(1),
   isFriend: false,
-  images: [],
-  certificates: [],
-  workouts: [],
+  images: [makeFakeFileData()],
+  certificates: [makeFakeFileData()],
+  workouts: [makeFakeWorkout()],
   subscriptionStatus: false,
   isDataLoading: false,
   isCoachInfoActual: true,

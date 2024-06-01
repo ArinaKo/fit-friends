@@ -57,6 +57,7 @@ function UserInfo(): JSX.Element {
             onClick={() => {
               dispatch(setActivePopup(PopupKey.Location));
             }}
+            data-testid="mapButton"
           >
             <svg
               className="user-card__icon-location"
@@ -105,6 +106,7 @@ function UserInfo(): JSX.Element {
             onClick={() => {
               dispatch(setActivePopup(PopupKey.Certificates));
             }}
+            data-testid="certificatesButton"
           >
             <svg width={12} height={13} aria-hidden="true">
               <use xlinkHref="#icon-teacher" />
@@ -126,6 +128,7 @@ function UserInfo(): JSX.Element {
           type="button"
           disabled={isCoach && !isFriend}
           onClick={handleFriendButtonClick}
+          data-testid="friendButton"
         >
           {isFriend ? 'Удалить из друзей' : 'Добавить в друзья'}
         </button>
