@@ -73,6 +73,7 @@ function CertificateCard({
             }#toolbar=0&nopageaction=1&nozoom=1&nosidebar=1&navpanes=0&statusbar=0&view=fit`}
             width="auto"
             height="100%"
+            data-testid="image"
           />
         )}
       </div>
@@ -83,6 +84,7 @@ function CertificateCard({
               className="btn-flat btn-flat--underlined certificate-card__button certificate-card__button--save"
               type="button"
               onClick={handleEditButtonClick}
+              data-testid="saveButton"
             >
               <svg width={12} height={12} aria-hidden="true">
                 <use xlinkHref="#icon-edit" />
@@ -96,6 +98,7 @@ function CertificateCard({
                 accept="application/pdf"
                 ref={fileInput}
                 onChange={handleFileChange}
+                data-testid="fileInput"
               />
               <button
                 className="btn-icon certificate-card__control"
@@ -115,6 +118,7 @@ function CertificateCard({
                   setToDelete(true);
                   setCertificate(null);
                 }}
+                data-testid='deleteButton'
               >
                 <svg width={14} height={16} aria-hidden="true">
                   <use xlinkHref="#icon-trash" />
@@ -127,6 +131,7 @@ function CertificateCard({
             className="btn-flat btn-flat--underlined certificate-card__button certificate-card__button--edit"
             type="button"
             onClick={() => setActive(certificate.id)}
+            data-testid="editButton"
           >
             <svg width={12} height={12} aria-hidden="true">
               <use xlinkHref="#icon-edit" />
