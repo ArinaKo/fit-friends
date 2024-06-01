@@ -16,7 +16,7 @@ function LocationMap({ location, markerType }: LocationMapProps): JSX.Element {
   useMapMarker(map, location, MarkerIcon[markerType]);
   return (
     <div className="popup__content-map">
-      <div ref={mapRef} className="popup__map" />
+      <div ref={mapRef} className="popup__map" data-testid="locationMap" />
     </div>
   );
 }
