@@ -55,6 +55,7 @@ function WorkoutVideo({
         'training-video--load': isEdited && !hasVideo,
         'training-video--stop': isWorkoutActive,
       })}
+      data-testid="videoBlock"
     >
       <h2 className="training-video__title">Видео</h2>
       <div className="training-video__video">
@@ -69,12 +70,13 @@ function WorkoutVideo({
                 ? URL.createObjectURL(newVideo)
                 : getFileUrl(video)
             }
+            data-testid="video"
           />
         </div>
         {isPlaying ? undefined : <PlayButton onClick={handlePlayButtonClick} />}
       </div>
       <div className="training-video__drop-files">
-        <form action="#" method="post">
+        <form action="#" method="post" role='form'>
           <div className="training-video__form-wrapper">
             <WorkoutVideoInput setFile={setFile} />
           </div>
@@ -90,6 +92,7 @@ function WorkoutVideo({
               onClick={() => {
                 onSave();
               }}
+              data-testid="saveButton"
             >
               Сохранить
             </button>
@@ -101,6 +104,7 @@ function WorkoutVideo({
                 dispatch(setVideoPresence(false));
                 setFile(null);
               }}
+              data-testid="deleteButton"
             >
               Удалить
             </button>

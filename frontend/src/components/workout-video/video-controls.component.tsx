@@ -20,6 +20,7 @@ function VideoControls(): JSX.Element {
         onClick={() => {
           dispatch(decreaseWorkoutBalanceAction(workoutId));
         }}
+        data-testid="startButton"
       >
         Приступить
       </button>
@@ -29,6 +30,7 @@ function VideoControls(): JSX.Element {
         onClick={() => {
           dispatch(setActiveWorkout());
         }}
+        data-testid="finishButton"
       >
         Закончить
       </button>

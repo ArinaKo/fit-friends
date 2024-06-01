@@ -17,6 +17,7 @@ function PlayButton({ onClick }: PlayButtonProps): JSX.Element {
       })}
       onClick={onClick}
       disabled={!isWorkoutActive && !isCoach}
+      data-testid="playButton"
     >
       <svg width={18} height={30} aria-hidden="true">
         <use xlinkHref="#icon-arrow" />

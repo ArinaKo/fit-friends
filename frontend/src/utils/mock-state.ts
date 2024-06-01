@@ -216,7 +216,7 @@ export const makeFakeWorkoutInfoSlice = (): WorkoutInfo => ({
   userSex: getRandomItem(Object.values(WorkoutSexFor)),
   isSpecial: datatype.boolean(),
   rating: datatype.number(),
-  video: undefined,
+  video: makeFakeFileData(),
   coach: makeFakeUser(),
   balance: null,
   comments: [],
