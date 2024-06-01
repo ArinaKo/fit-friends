@@ -7,3 +7,4 @@ export * from './query';
 export * from './common';
 export * from './mock';
 export * from './mock-state';
+export * from './mock-component';
