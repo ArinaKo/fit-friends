@@ -26,7 +26,7 @@ function generateRandomValue(min: number, max: number) {
   return Math.floor(Math.random() * (max + 1 - min) + min);
 }
 
-function getRandomItem<T>(items: T[]): T {
+export function getRandomItem<T>(items: T[]): T {
   return items[generateRandomValue(0, items.length - 1)];
 }
 

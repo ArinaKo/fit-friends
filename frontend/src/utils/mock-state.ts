@@ -29,10 +29,13 @@ import {
   WorkoutInfo,
   WorkoutsList,
 } from '../types';
+import { datatype, image, lorem } from 'faker';
+import { randomUUID } from 'node:crypto';
+import { makeFakeUser, getRandomItem } from './mock';
 
 export const makeFakeAppDataSlice = (): AppData => ({
   authStatus: AuthorizationStatus.Unknown,
-  userRole: undefined,
+  userRole: UserRole.Default,
   userId: '',
   notifications: [],
   activeWorkout: undefined,
@@ -196,20 +199,20 @@ export const makeFakeUsersListSlice = (): UsersList => ({
 });
 
 export const makeFakeWorkoutInfoSlice = (): WorkoutInfo => ({
-  id: '',
-  coachId: '',
-  title: '',
-  price: '',
-  description: '',
-  isSpecial: false,
+  id: randomUUID(),
+  coachId: randomUUID(),
+  title: lorem.word(),
+  price: String(datatype.number()),
+  description: lorem.lines(1),
+  backgroundImage: image.imageUrl(),
+  type: getRandomItem(Object.values(WorkoutType)),
+  duration: getRandomItem(Object.values(WorkoutDuration)),
+  calories: datatype.number(),
+  userSex: getRandomItem(Object.values(WorkoutSexFor)),
+  isSpecial: datatype.boolean(),
+  rating: datatype.number(),
   video: undefined,
-  backgroundImage: '',
-  rating: 0,
-  type: '',
-  calories: 0,
-  userSex: '',
-  duration: '',
-  coach: undefined,
+  coach: makeFakeUser(),
   balance: null,
   comments: [],
   isDataLoading: false,

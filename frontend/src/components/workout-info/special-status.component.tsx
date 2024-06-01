@@ -13,6 +13,7 @@ function SpecialStatus(): JSX.Element {
       onClick={() => {
         dispatch(setIsSpecial());
       }}
+      data-testid="discountButton"
     >
       <svg width="14" height="14" aria-hidden="true">
         <use xlinkHref="#icon-discount"></use>

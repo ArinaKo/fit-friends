@@ -91,6 +91,7 @@ function WorkoutInfo(): JSX.Element {
               type="button"
               aria-label={isEdited ? 'Сохранить' : 'Редактировать'}
               onClick={handleEditButtonClick}
+              data-testid="editButton"
             >
               <svg width="12" height="12" aria-hidden="true">
                 <use xlinkHref="#icon-edit"></use>
@@ -128,6 +129,7 @@ function WorkoutInfo(): JSX.Element {
                     type="button"
                     disabled={isBalanceActive}
                     onClick={handleBuyButtonClick}
+                    data-testid="buyButton"
                   >
                     Купить
                   </button>
