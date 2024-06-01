@@ -71,7 +71,7 @@ function UserInfoWorkouts(): JSX.Element {
             sliderRef={sliderRef}
             slidesAmount={workouts.length}
             slidesToShow={SlidesAmount.CoachWorkouts}
-            styleClass='user-card__training-btn'
+            styleClass="user-card__training-btn"
             iconType={ButtonsIconType.Small}
           />
         </div>
@@ -80,7 +80,7 @@ function UserInfoWorkouts(): JSX.Element {
         {workouts.map((workout) => (
           <WorkoutCard
             workout={workout}
-            styleClass='user-card__training-item'
+            styleClass="user-card__training-item"
             key={`workout-${workout.id}`}
           />
         ))}
@@ -91,6 +91,7 @@ function UserInfoWorkouts(): JSX.Element {
             className="btn user-card__btn-training"
             type="button"
             onClick={handleRequestButtonClick}
+            data-testid="requestButton"
           >
             Хочу персональную тренировку
           </button>
@@ -104,6 +105,7 @@ function UserInfoWorkouts(): JSX.Element {
                   name="subscription"
                   checked={subscriptionStatus}
                   onChange={handleSubscribeButtonClick}
+                  data-testid="subscribeInput"
                 />
                 <span className="custom-toggle__icon">
                   <svg width={9} height={6} aria-hidden="true">
