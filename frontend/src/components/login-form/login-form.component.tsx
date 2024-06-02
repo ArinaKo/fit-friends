@@ -32,6 +32,7 @@ function LoginForm(): JSX.Element {
           className="btn sign-in__button"
           type="submit"
           disabled={isSending}
+          data-testid="submitButton"
         >
           Продолжить
         </button>
