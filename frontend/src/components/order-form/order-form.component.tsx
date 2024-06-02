@@ -74,6 +74,7 @@ function OrderForm(): JSX.Element {
           type="button"
           disabled={isDisabled}
           onClick={handleBuyButtonClick}
+          data-testid="submitButton"
         >
           Купить
         </button>

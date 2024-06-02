@@ -25,6 +25,7 @@ function CountInput(): JSX.Element {
         onClick={() => {
           dispatch(decreaseCount());
         }}
+        data-testid="decreaseButton"
       >
         <svg width={12} height={12} aria-hidden="true">
           <use xlinkHref="#icon-minus" />
@@ -45,6 +46,7 @@ function CountInput(): JSX.Element {
         onClick={() => {
           dispatch(increaseCount());
         }}
+        data-testid="increaseButton"
       >
         <svg width={12} height={12} aria-hidden="true">
           <use xlinkHref="#icon-plus" />

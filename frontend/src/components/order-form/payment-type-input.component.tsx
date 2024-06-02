@@ -29,6 +29,7 @@ function PaymentTypeInput(): JSX.Element {
                   onChange={() => {
                     dispatch(setPaymentType(value));
                   }}
+                  data-testid="paymentType"
                 />
                 <span className="btn-radio-image__image">
                   <svg width={iconWidth} height={iconHeight} aria-hidden="true">
