@@ -38,6 +38,7 @@ function SortingInput({ type, styleClass }: SortingInputProps): JSX.Element {
               dispatch(resetCatalogPage());
               dispatch(setSorting(option));
             }}
+            data-testid="sorting"
           />
           <span className="btn-radio-sort__label">{optionsLabels[option]}</span>
         </label>
