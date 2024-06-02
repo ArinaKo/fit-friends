@@ -68,6 +68,7 @@ function WorkoutInput({
             value={isActive ? editedValue : `${value}${inputSymbol ?? ''}`}
             disabled={isDisabled || !isActive}
             onChange={handleInputChange}
+            data-testid="workoutInput"
           />
         ) : (
           <textarea
@@ -76,6 +77,7 @@ function WorkoutInput({
             value={isActive ? editedValue : value}
             disabled={isDisabled || !isActive}
             onInput={handleTextareaChange}
+            data-testid="workoutInput"
           />
         )}
         {valueError ? (
