@@ -63,6 +63,7 @@ function WorkoutTypesInput({
                   dispatch(setUserFormError(['workoutTypes', undefined]));
                 }
               }}
+              data-testid="workoutTypes"
             />
             <span className="btn-checkbox__btn">{lodash.capitalize(type)}</span>
           </label>
