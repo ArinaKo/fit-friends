@@ -66,6 +66,7 @@ function CustomInput({
                 dispatch(setError(validationFunction(target.value)));
               }
             }}
+            data-testid="customInput"
           />
           {inputSymbol ? (
             <span className="custom-input__text">{inputSymbol}</span>
