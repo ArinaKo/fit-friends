@@ -77,6 +77,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
                   dispatch(setMinFilter(value));
                 }
               }}
+              data-testid="inputMinValue"
             />
             <label htmlFor={`${name}-min`}>от</label>
           </div>
@@ -101,6 +102,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
                   dispatch(setMaxFilter(value));
                 }
               }}
+              data-testid="inputMaxValue"
             />
             <label htmlFor={`${name}-max`}>до</label>
           </div>
@@ -133,6 +135,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
                 ? { zIndex: '5' }
                 : undefined
             }
+            data-testid="toggleMinValue"
           />
           <input
             type="range"
@@ -149,6 +152,7 @@ function RangeInput({ type }: RangeInputProps): JSX.Element {
               dispatch(setMaxFilter(value));
             }}
             className="thumb thumb--right"
+            data-testid="toggleMaxValue"
           />
           {withFields ? undefined : (
             <>
