@@ -47,6 +47,7 @@ function DateOfBirthInput(): JSX.Element {
                 );
               }
             }}
+            data-testid="dateInput"
           />
         </span>
         {dateOfBirthError && (
