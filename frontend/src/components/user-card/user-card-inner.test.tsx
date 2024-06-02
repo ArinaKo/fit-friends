@@ -10,12 +10,6 @@ vi.mock('../index', () => ({
   ),
 }));
 
-vi.mock('react-slick', () => ({
-  default: ({ children }: { children: JSX.Element }) => (
-    <div data-testid="slider">{children}</div>
-  ),
-}));
-
 describe('Component: UserCardInner', () => {
   it('should render correct', () => {
     const expectedAltText = 'Аватар пользователя';

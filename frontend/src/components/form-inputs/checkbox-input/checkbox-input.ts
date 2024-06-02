@@ -28,7 +28,7 @@ type CheckboxInputTypeDiff = {
   isDisabledSelector: (state: State) => boolean;
   setFilter: ActionCreatorWithPayload<string>;
   optionsArray: string[];
-  optionsLabels?: string[];
+  labelFunction: (value: string) => string;
   withButton: boolean;
 };
 
@@ -43,10 +43,10 @@ export const CheckboxInputTypeDiffs: CheckboxInputTypeDiffs = {
     isDisabledSelector: isWorkoutsListLoading,
     setFilter: setWorkoutsDurationFilter,
     optionsArray: Object.values(WorkoutDuration),
-    optionsLabels: Object.values(WorkoutDuration).map((option) => {
-      const [from, to] = option.split('-');
+    labelFunction: (value) => {
+      const [from, to] = value.split('-');
       return `${from} мин - ${to} мин`;
-    }),
+    },
     withButton: false,
   },
   [CheckboxInputType.TypeOfWorkout]: {
@@ -55,6 +55,7 @@ export const CheckboxInputTypeDiffs: CheckboxInputTypeDiffs = {
     isDisabledSelector: isWorkoutsListLoading,
     setFilter: setWorkoutsTypesFilter,
     optionsArray: Object.values(WorkoutType),
+    labelFunction: (value) => value,
     withButton: false,
   },
   [CheckboxInputType.UserLocation]: {
@@ -63,6 +64,7 @@ export const CheckboxInputTypeDiffs: CheckboxInputTypeDiffs = {
     isDisabledSelector: isUsersListLoading,
     setFilter: setUsersLocationsFilter,
     optionsArray: Object.values(MetroStation),
+    labelFunction: (value) => value,
     withButton: true,
   },
   [CheckboxInputType.UserWorkoutTypes]: {
@@ -71,9 +73,7 @@ export const CheckboxInputTypeDiffs: CheckboxInputTypeDiffs = {
     isDisabledSelector: isUsersListLoading,
     setFilter: setUsersTypesFilter,
     optionsArray: Object.values(WorkoutType),
-    optionsLabels: Object.values(WorkoutType).map((type) =>
-      lodash.capitalize(type),
-    ),
+    labelFunction: (value) => lodash.capitalize(value),
     withButton: true,
   },
 };

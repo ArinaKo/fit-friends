@@ -4,12 +4,6 @@ import SliderDots from './slider-dots.component';
 import React from 'react';
 import Slider from 'react-slick';
 
-vi.mock('react-slick', () => ({
-  default: ({ children }: { children: JSX.Element }) => (
-    <div data-testid="slider">{children}</div>
-  ),
-}));
-
 describe('Component: SliderDots', () => {
   const activeClass = 'dots__slider-dot--active';
 

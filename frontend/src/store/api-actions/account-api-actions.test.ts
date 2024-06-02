@@ -38,7 +38,7 @@ describe('Account async actions', () => {
     backgroundImage: makeFakeFileData(),
   };
   const fakeFile = new File([], '');
-  const otherFakeFile = new File([], '1');
+  const fakeFileData = makeFakeFileData();
 
   beforeEach(() => {
     store = mockStoreCreator(makeFakeState());
@@ -141,7 +141,7 @@ describe('Account async actions', () => {
     it('should dispatch "deleteCertificateAction.pending" and "deleteCertificateAction.fulfilled" with thunk "Action', async () => {
       mockAxiosAdapter
         .onPatch(APIRoute.DeleteCertificate)
-        .reply(200, [fakeFile]);
+        .reply(200, [fakeFileData]);
       const certificateId = 'certificateId';
 
       await store.dispatch(deleteCertificateAction(certificateId));
@@ -174,14 +174,16 @@ describe('Account async actions', () => {
 
   describe('updateCertificateAction', () => {
     it('should dispatch "updateCertificateAction.pending" and "updateCertificateAction.fulfilled" with thunk "Action', async () => {
-      mockAxiosAdapter.onPatch(APIRoute.UpdateCertificate).reply(200, fakeFile);
+      mockAxiosAdapter
+        .onPatch(APIRoute.UpdateCertificate)
+        .reply(200, fakeFileData);
       const actionPayload = {
         certificateId: 'id',
         newCertificate: fakeFile,
       };
       const expectedPayload = {
         oldCertificateId: actionPayload.certificateId,
-        newCertificate: otherFakeFile,
+        newCertificate: fakeFileData,
       };
 
       await store.dispatch(updateCertificateAction(actionPayload));
@@ -218,7 +220,6 @@ describe('Account async actions', () => {
 
   describe('uploadCertificateAction', () => {
     it('should dispatch "uploadCertificateAction.pending" and "uploadCertificateAction.fulfilled" with thunk "Action', async () => {
-      const fakeFileData = makeFakeFileData();
       mockAxiosAdapter
         .onPatch(APIRoute.UploadCertificate)
         .reply(200, fakeFileData);

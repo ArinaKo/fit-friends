@@ -18,7 +18,7 @@ function CheckboxInput({ type, styleClass }: CheckboxInputProps): JSX.Element {
     isDisabledSelector,
     setFilter,
     optionsArray,
-    optionsLabels,
+    labelFunction,
     withButton,
   } = CheckboxInputTypeDiffs[type];
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ function CheckboxInput({ type, styleClass }: CheckboxInputProps): JSX.Element {
           'filter__check-list--open': isOpen,
         })}
       >
-        {optionsArray.map((option, index) => (
+        {optionsArray.map((option) => (
           <li
             className={`${styleClass}__check-list-item`}
             key={`option-${option}`}
@@ -58,7 +58,7 @@ function CheckboxInput({ type, styleClass }: CheckboxInputProps): JSX.Element {
                   </svg>
                 </span>
                 <span className="custom-toggle__label">
-                  {optionsLabels ? optionsLabels[index] : option}
+                  {labelFunction(option)}
                 </span>
               </label>
             </div>

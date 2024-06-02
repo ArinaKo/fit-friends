@@ -13,7 +13,7 @@ import { UserRole, WorkoutsSortType } from '../../../const';
 const WorkoutsSortingText = {
   [WorkoutsSortType.PriceUp]: 'Дешевле',
   [WorkoutsSortType.PriceDown]: 'Дороже',
-  [WorkoutsSortType.Free]: 'Бесплатные',
+  [WorkoutsSortType.Free]: 'Бесплатно',
 };
 
 const UsersSortingText = {

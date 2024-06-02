@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { useEffect, useState } from 'react';
 import { SelectInputType, SelectInputTypeDiffs } from './select-input';
 import cn from 'classnames';
-import lodash from 'lodash';
 
 type SelectInputProps = {
   type: SelectInputType;
@@ -23,7 +22,7 @@ function SelectInput({
     valueSelector,
     setValue,
     optionsArray,
-    optionsLabels,
+    labelFunction,
     errorSelector,
     setError,
     formStatusSelector,
@@ -45,11 +44,7 @@ function SelectInput({
   const getPlaceholder = () => {
     const text = !isActive ? originalValue : value;
     return text ? (
-      <div className="custom-select__placeholder">
-        {type === SelectInputType.Location
-          ? `ст. м. ${lodash.capitalize(text)}`
-          : lodash.capitalize(text)}
-      </div>
+      <div className="custom-select__placeholder">{labelFunction(text)}</div>
     ) : undefined;
   };
 
@@ -80,7 +75,7 @@ function SelectInput({
         </span>
       </button>
       <ul className="custom-select__list" role="listbox">
-        {optionsArray.map((option, index) => (
+        {optionsArray.map((option) => (
           <li
             key={`option-${option}`}
             onClick={() => {
@@ -90,7 +85,7 @@ function SelectInput({
             }}
             className="custom-select__item"
           >
-            {optionsLabels ? optionsLabels[index] : lodash.capitalize(option)}
+            {labelFunction(option)}
           </li>
         ))}
       </ul>

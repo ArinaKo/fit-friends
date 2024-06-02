@@ -46,7 +46,7 @@ type SelectInputTypeDiff = {
   valueSelector: (state: State) => string | undefined;
   setValue: ActionCreatorWithPayload<string>;
   optionsArray: string[];
-  optionsLabels?: string[];
+  labelFunction: (value: string) => string;
   errorSelector: (state: State) => string | undefined;
   setError: (value: string | undefined) => {
     payload: [string, string | undefined];
@@ -65,7 +65,7 @@ export const SelectInputTypeDiffs: SelectInputTypeDiffs = {
     valueSelector: getUserFormLocation,
     setValue: setLocation,
     optionsArray: Object.values(MetroStation),
-    optionsLabels: Object.values(MetroStation).map((option) => `ст. м. ${lodash.capitalize(option)}`),
+    labelFunction: (value) => `ст. м. ${lodash.capitalize(value)}`,
     errorSelector: getUserFormLocationError,
     setError: (value: string | undefined) =>
       setUserFormError(['location', value]),
@@ -76,9 +76,9 @@ export const SelectInputTypeDiffs: SelectInputTypeDiffs = {
     valueSelector: getUserFormSex,
     setValue: setSex,
     optionsArray: Object.values(UserSex),
+    labelFunction: (value) => lodash.capitalize(value),
     errorSelector: getUserFormSexError,
-    setError: (value: string | undefined) =>
-      setUserFormError(['sex', value]),
+    setError: (value: string | undefined) => setUserFormError(['sex', value]),
     formStatusSelector: isUserFormDataSending,
     labelText: 'Пол',
   },
@@ -86,9 +86,9 @@ export const SelectInputTypeDiffs: SelectInputTypeDiffs = {
     valueSelector: getUserFormLevel,
     setValue: setLevel,
     optionsArray: Object.values(UserLevel),
+    labelFunction: (value) => lodash.capitalize(value),
     errorSelector: getUserFormLevelError,
-    setError: (value: string | undefined) =>
-      setUserFormError(['level', value]),
+    setError: (value: string | undefined) => setUserFormError(['level', value]),
     formStatusSelector: isUserFormDataSending,
     labelText: 'Уровень',
   },
@@ -96,6 +96,7 @@ export const SelectInputTypeDiffs: SelectInputTypeDiffs = {
     valueSelector: getWorkoutFormType,
     setValue: setType,
     optionsArray: Object.values(WorkoutType),
+    labelFunction: (value) => lodash.capitalize(value),
     errorSelector: getWorkoutFormTypeError,
     setError: (value: string | undefined) =>
       setWorkoutFormError(['type', value]),
@@ -106,7 +107,7 @@ export const SelectInputTypeDiffs: SelectInputTypeDiffs = {
     valueSelector: getWorkoutFormDuration,
     setValue: setDuration,
     optionsArray: Object.values(WorkoutDuration),
-    optionsLabels: Object.values(WorkoutDuration).map((option) => `${option} мин`),
+    labelFunction: (value) => `${value} мин`,
     errorSelector: getWorkoutFormDurationError,
     setError: (value: string | undefined) =>
       setWorkoutFormError(['duration', value]),
@@ -117,6 +118,7 @@ export const SelectInputTypeDiffs: SelectInputTypeDiffs = {
     valueSelector: getWorkoutFormLevel,
     setValue: setWorkoutLevel,
     optionsArray: Object.values(UserLevel),
+    labelFunction: (value) => lodash.capitalize(value),
     errorSelector: getWorkoutFormLevelError,
     setError: (value: string | undefined) =>
       setWorkoutFormError(['level', value]),
