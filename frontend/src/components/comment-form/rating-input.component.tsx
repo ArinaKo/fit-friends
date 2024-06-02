@@ -27,6 +27,7 @@ function RatingInput(): JSX.Element {
                 onChange={() => {
                   dispatch(setRating(value));
                 }}
+                data-testid="ratingInput"
               />
               <span className="popup__rate-number">{value}</span>
             </label>

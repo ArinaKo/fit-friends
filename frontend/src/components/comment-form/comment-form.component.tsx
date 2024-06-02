@@ -43,6 +43,7 @@ function CommentForm(): JSX.Element {
           type="button"
           disabled={isDisabled}
           onClick={handleNextButtonClick}
+          data-testid="submitButton"
         >
           Продолжить
         </button>
