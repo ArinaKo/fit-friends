@@ -41,7 +41,7 @@ function RegisterForm(): JSX.Element {
   };
 
   return (
-    <form method="post" onSubmit={handleFormSubmit}>
+    <form method="post" onSubmit={handleFormSubmit} role="form">
       <div className="sign-up">
         <div className="sign-up__load-photo">
           <AvatarInput setFile={setFile} />
@@ -94,6 +94,7 @@ function RegisterForm(): JSX.Element {
           className="btn sign-up__button"
           type="submit"
           disabled={isSending || !isAgree}
+          data-testid="submitButton"
         >
           Продолжить
         </button>
