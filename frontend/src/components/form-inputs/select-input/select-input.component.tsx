@@ -84,6 +84,7 @@ function SelectInput({
               setIsOpen(false);
             }}
             className="custom-select__item"
+            data-testid="selectValue"
           >
             {labelFunction(option)}
           </li>
