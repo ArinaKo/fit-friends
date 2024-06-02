@@ -51,6 +51,7 @@ function CheckboxInput({ type, styleClass }: CheckboxInputProps): JSX.Element {
                     dispatch(resetCatalogPage());
                     dispatch(setFilter(option));
                   }}
+                  data-testid="checkbox"
                 />
                 <span className="custom-toggle__icon">
                   <svg width={9} height={6} aria-hidden="true">
