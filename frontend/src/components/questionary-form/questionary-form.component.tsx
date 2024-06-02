@@ -120,6 +120,7 @@ function QuestionaryForm(): JSX.Element {
           className="btn questionnaire-user__button"
           type="submit"
           disabled={isSending}
+          data-testid="submitButton"
         >
           Продолжить
         </button>

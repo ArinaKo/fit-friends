@@ -64,6 +64,7 @@ function CertificatesInput({ setFiles }: CertificateInputProps): JSX.Element {
           multiple
           disabled={isDisabled}
           onChange={handleFileChange}
+          data-testid="filesInput"
         />
         {certificatesError && (
           <span className="custom-input__error">{certificatesError}</span>
