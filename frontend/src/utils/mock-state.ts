@@ -124,10 +124,10 @@ export const makeFakeWorkoutFormSlice = (): WorkoutForm => ({
   type: WorkoutType.Aerobic,
   duration: WorkoutDuration.Extra,
   level: UserLevel.Amateur,
-  calories: '',
-  price: '',
+  calories: '1000',
+  price: '500',
   userSex: WorkoutSexFor.Female,
-  description: '',
+  description: 'description text',
   hasVideo: true,
   isSpecial: false,
   validationErrors: {

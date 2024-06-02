@@ -53,6 +53,7 @@ function WorkoutVideoInput({ setFile, styleClass }: WorkoutVideoInputProps): JSX
           accept=".mov, .avi, .mp4"
           disabled={isDisabled}
           onChange={handleFileChange}
+          data-testid="fileInput"
         />
         {videoError && (
           <span className="custom-input__error">{videoError}</span>

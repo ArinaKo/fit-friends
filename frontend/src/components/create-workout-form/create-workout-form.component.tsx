@@ -82,6 +82,7 @@ function CreateWorkoutForm(): JSX.Element {
           className="btn create-training__button"
           type="submit"
           disabled={isSending}
+          data-testid="submitButton"
         >
           Опубликовать
         </button>
