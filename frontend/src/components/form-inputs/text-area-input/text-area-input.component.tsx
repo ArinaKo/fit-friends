@@ -58,6 +58,7 @@ function TextAreaInput({
               dispatch(setError(validationFunction(target.value)));
             }
           }}
+          data-testid="textAreaInput"
         />
         {valueError && (
           <span className="custom-textarea__error">{valueError}</span>
