@@ -103,14 +103,14 @@ export const makeFakeUserFormSlice = (): UserForm => ({
 });
 
 export const makeFakeUserDataSlice = (): UserData => ({
-  name: '',
+  name: 'John',
   location: MetroStation.Petrogadskaya,
-  avatar: undefined,
-  sex: UserSex.Other,
+  avatar: makeFakeFileData(),
+  sex: UserSex.Male,
   level: UserLevel.Amateur,
-  description: '',
+  description: 'description text',
   isReady: false,
-  workoutTypes: [],
+  workoutTypes: [WorkoutType.Box],
   caloriesToLose: 0,
   caloriesPerDay: 0,
   certificates: [],

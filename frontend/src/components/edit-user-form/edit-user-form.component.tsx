@@ -78,6 +78,7 @@ function EditUserForm(): JSX.Element {
           type="submit"
           aria-label={isEdited ? 'Сохранить' : 'Редактировать'}
           disabled={isSending}
+          data-testid="editButton"
         >
           <svg width="12" height="12" aria-hidden="true">
             <use xlinkHref="#icon-edit"></use>
