@@ -69,6 +69,7 @@ function AvatarInput({
         width="98"
         height="98"
         alt="user photo"
+        role="img"
       />
     ) : (
       <span className="input-load-avatar__btn">
@@ -91,6 +92,7 @@ function AvatarInput({
             ref={fileInput}
             disabled={isDisabled || !isActive}
             onChange={handleFileChange}
+            data-testid="fileInput"
           />
           {getImageBlock()}
         </label>
@@ -102,6 +104,7 @@ function AvatarInput({
             aria-label="обновить"
             disabled={isDisabled || !isActive}
             onClick={() => fileInput.current?.click()}
+            data-testid="changeButton"
           >
             <svg width={16} height={16} aria-hidden="true">
               <use xlinkHref="#icon-change" />
@@ -112,6 +115,7 @@ function AvatarInput({
             aria-label="удалить"
             disabled={isDisabled || !isActive}
             onClick={handleDeleteButtonClick}
+            data-testid="deleteButton"
           >
             <svg width={14} height={16} aria-hidden="true">
               <use xlinkHref="#icon-trash" />
