@@ -41,6 +41,7 @@ function StatusInput({
           onChange={() => {
             dispatch(setStatus(!status));
           }}
+          data-testid="statusCheckbox"
         />
         <span className={iconStyleClass}>
           <svg width={9} height={6} aria-hidden="true">
