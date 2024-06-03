@@ -7,9 +7,10 @@ import {
   makeFakeWorkoutInfoSlice,
   extractActionsTypes,
 } from '../../utils';
-import { WorkoutInfo } from '../../types';
+import { AppData, WorkoutInfo } from '../../types';
 import userEvent from '@testing-library/user-event';
-import { setActivePopup, setCommentForm } from '../../store';
+import { setActivePopup, setActiveRoute, setCommentForm } from '../../store';
+import { UserRole } from '../../const';
 
 vi.mock('../../components', () => ({
   default: vi.fn(),
@@ -21,17 +22,35 @@ vi.mock('../../components', () => ({
   UIBlocker: () => <div>Загрузка</div>,
 }));
 
+vi.mock('react-router-dom', async () => {
+  const mod = await vi.importActual('react-router-dom');
+  return {
+    ...mod,
+    useParams: () => ({
+      workoutId: 'id',
+    }),
+  };
+});
+
 describe('Component: WorkoutPage', () => {
   const commentButtonTestId = 'commentButton';
+  const mockAppDataSlice: AppData = {
+    ...makeFakeAppDataSlice(),
+    userRole: UserRole.Default,
+  };
+  const mockWorkoutInfoSlice: WorkoutInfo = {
+    ...makeFakeWorkoutInfoSlice(),
+    id: 'id',
+  };
 
   it('should render correct', () => {
     const mockSlice: WorkoutInfo = {
-      ...makeFakeWorkoutInfoSlice(),
+      ...mockWorkoutInfoSlice,
       isDataLoading: false,
       balance: null,
     };
     const { withStoreComponent } = withStore(<WorkoutPage />, {
-      APP_DATA: makeFakeAppDataSlice(),
+      APP_DATA: mockAppDataSlice,
       WORKOUT_INFO: mockSlice,
     });
     const preparedComponent = withHistory(withStoreComponent);
@@ -52,12 +71,12 @@ describe('Component: WorkoutPage', () => {
 
   it('comment button should be active when balance is not "null"', () => {
     const mockSlice: WorkoutInfo = {
-      ...makeFakeWorkoutInfoSlice(),
+      ...mockWorkoutInfoSlice,
       isDataLoading: false,
       balance: 4,
     };
     const { withStoreComponent } = withStore(<WorkoutPage />, {
-      APP_DATA: makeFakeAppDataSlice(),
+      APP_DATA: mockAppDataSlice,
       WORKOUT_INFO: mockSlice,
     });
     const preparedComponent = withHistory(withStoreComponent);
@@ -69,11 +88,11 @@ describe('Component: WorkoutPage', () => {
 
   it('should render ui blocker when data is loading', () => {
     const mockSlice: WorkoutInfo = {
-      ...makeFakeWorkoutInfoSlice(),
+      ...mockWorkoutInfoSlice,
       isDataLoading: true,
     };
     const { withStoreComponent } = withStore(<WorkoutPage />, {
-      APP_DATA: makeFakeAppDataSlice(),
+      APP_DATA: mockAppDataSlice,
       WORKOUT_INFO: mockSlice,
     });
     const preparedComponent = withHistory(withStoreComponent);
@@ -85,11 +104,11 @@ describe('Component: WorkoutPage', () => {
 
   it('should render NotFoundPage when data has error', () => {
     const mockSlice: WorkoutInfo = {
-      ...makeFakeWorkoutInfoSlice(),
+      ...mockWorkoutInfoSlice,
       hasError: true,
     };
     const { withStoreComponent } = withStore(<WorkoutPage />, {
-      APP_DATA: makeFakeAppDataSlice(),
+      APP_DATA: mockAppDataSlice,
       WORKOUT_INFO: mockSlice,
     });
     const preparedComponent = withHistory(withStoreComponent);
@@ -101,12 +120,12 @@ describe('Component: WorkoutPage', () => {
 
   it('should dispatch "setCommentForm" and "setActivePopup" when user click add comment button', async () => {
     const mockSlice: WorkoutInfo = {
-      ...makeFakeWorkoutInfoSlice(),
+      ...mockWorkoutInfoSlice,
       isDataLoading: false,
       balance: 4,
     };
     const { withStoreComponent, mockStore } = withStore(<WorkoutPage />, {
-      APP_DATA: makeFakeAppDataSlice(),
+      APP_DATA: mockAppDataSlice,
       WORKOUT_INFO: mockSlice,
     });
     const preparedComponent = withHistory(withStoreComponent);
@@ -115,6 +134,10 @@ describe('Component: WorkoutPage', () => {
     await userEvent.click(screen.getByTestId(commentButtonTestId));
     const actionsTypes = extractActionsTypes(mockStore.getActions());
 
-    expect(actionsTypes).toEqual([setCommentForm.type, setActivePopup.type]);
+    expect(actionsTypes).toEqual([
+      setActiveRoute.type,
+      setCommentForm.type,
+      setActivePopup.type,
+    ]);
   });
 });

@@ -14,7 +14,6 @@ describe('Component: AvatarInput', () => {
   const changeButtonTestId = 'changeButton';
   const deleteButtonTestId = 'deleteButton';
   const mockUserFormSlice = makeFakeUserFormSlice();
-  const mockSetFile = vi.fn();
   const mockFile = new File([], '');
 
   it('should render correct when empty', () => {
@@ -23,7 +22,7 @@ describe('Component: AvatarInput', () => {
       avatar: undefined,
     };
     const { withStoreComponent } = withStore(
-      <AvatarInput setFile={mockSetFile} withControls isActive />,
+      <AvatarInput setFile={vi.fn()} withControls isActive />,
       {
         USER_FORM: mockSlice,
       },
@@ -43,7 +42,7 @@ describe('Component: AvatarInput', () => {
       avatar: 'image.jpg',
     };
     const { withStoreComponent } = withStore(
-      <AvatarInput setFile={mockSetFile} withControls isActive />,
+      <AvatarInput setFile={vi.fn()} withControls isActive />,
       {
         USER_FORM: mockSlice,
       },
@@ -59,6 +58,7 @@ describe('Component: AvatarInput', () => {
 
   it('should call "setFile" and dispatch "setAvatar" and "setUserFormError" when file uploaded', () => {
     global.URL.createObjectURL = vi.fn(() => 'image.jpg');
+    const mockSetFile = vi.fn();
     const mockSlice: UserForm = {
       ...mockUserFormSlice,
       avatar: undefined,
@@ -83,6 +83,7 @@ describe('Component: AvatarInput', () => {
 
   it('should call "setFile" and dispatch "setAvatar" when user click delete button', async () => {
     global.URL.createObjectURL = vi.fn(() => 'image.jpg');
+    const mockSetFile = vi.fn();
     const mockSlice: UserForm = {
       ...mockUserFormSlice,
       avatar: 'image.jpg',
