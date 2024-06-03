@@ -9,7 +9,6 @@ import {
   WorkoutOrders,
 } from '../types';
 import { datatype, image, internet, lorem, system } from 'faker';
-import { randomUUID } from 'node:crypto';
 import {
   MetroStation,
   UserLevel,
@@ -31,14 +30,14 @@ export function getRandomItem<T>(items: T[]): T {
 }
 
 export const makeFakeNotification = (): Notification => ({
-  id: randomUUID(),
+  id: datatype.uuid(),
   text: lorem.lines(1),
   date: new Date(),
 });
 
 export const makeFakeWorkout = (): Workout => ({
-  id: randomUUID(),
-  coachId: randomUUID(),
+  id: datatype.uuid(),
+  coachId: datatype.uuid(),
   title: lorem.word(),
   backgroundImage: image.imageUrl(),
   level: getRandomItem(Object.values(UserLevel)),
@@ -58,7 +57,7 @@ export const makeFakeBalance = (): WorkoutBalance => ({
 });
 
 export const makeFakeUser = (): User => ({
-  id: randomUUID(),
+  id: datatype.uuid(),
   name: internet.userName(),
   sex: UserSex.Male,
   role: UserRole.Default,
@@ -75,7 +74,7 @@ export const makeFakeWorkoutOrders = (): WorkoutOrders => ({
 });
 
 export const makeFakeFileData = (): FileData => ({
-  id: randomUUID(),
+  id: datatype.uuid(),
   originalName: system.commonFileName(),
   subDirectory: lorem.word(),
   size: datatype.number(),
@@ -85,7 +84,7 @@ export const makeFakeFileData = (): FileData => ({
 });
 
 export const makeFakeComment = (): Comment => ({
-  id: randomUUID(),
+  id: datatype.uuid(),
   user: makeFakeUser(),
   rating: datatype.number(),
   text: lorem.lines(1),

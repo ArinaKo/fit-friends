@@ -30,7 +30,6 @@ import {
   WorkoutsList,
 } from '../types';
 import { datatype, image, internet, lorem } from 'faker';
-import { randomUUID } from 'node:crypto';
 import {
   makeFakeUser,
   getRandomItem,
@@ -114,7 +113,7 @@ export const makeFakeUserDataSlice = (): UserData => ({
   caloriesToLose: 0,
   caloriesPerDay: 0,
   certificates: [],
-  isDataReady: false,
+  isDataReady: true,
   isDataUpdating: false,
   isDataEditing: false,
 });
@@ -204,8 +203,8 @@ export const makeFakeUsersListSlice = (): UsersList => ({
 });
 
 export const makeFakeWorkoutInfoSlice = (): WorkoutInfo => ({
-  id: randomUUID(),
-  coachId: randomUUID(),
+  id: datatype.uuid(),
+  coachId: datatype.uuid(),
   title: lorem.word(),
   price: String(datatype.number()),
   description: lorem.lines(1),
@@ -226,7 +225,7 @@ export const makeFakeWorkoutInfoSlice = (): WorkoutInfo => ({
 });
 
 export const makeFakeUserInfoSlice = (): UserInfo => ({
-  id: randomUUID(),
+  id: datatype.uuid(),
   name: internet.userName(),
   role: UserRole.Default,
   location: getRandomItem(Object.values(MetroStation)),
