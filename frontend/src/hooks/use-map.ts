@@ -1,4 +1,4 @@
-import { Map, TileLayer } from 'leaflet';
+import { DivIcon, Map, Marker, TileLayer } from 'leaflet';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Location } from '../types';
 import { MAP_ZOOM } from '../const';
@@ -6,6 +6,7 @@ import { MAP_ZOOM } from '../const';
 function useMap(
   containerRef: MutableRefObject<HTMLElement | null>,
   location: Location,
+  icon: DivIcon,
 ): null | Map {
   const [map, setMap] = useState<null | Map>(null);
   const isRendered = useRef<boolean>(false);
@@ -26,10 +27,15 @@ function useMap(
       );
       instance.addLayer(layer);
 
+      const marker = new Marker([
+        location.latitude,
+        location.longitude], {icon});
+      marker.addTo(instance);
+
       setMap(instance);
       isRendered.current = true;
     }
-  }, [containerRef, location]);
+  }, [containerRef, location, icon]);
 
   return map;
 }
