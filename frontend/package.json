@@ -7,7 +7,10 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "container:build": "docker build --file ./Dockerfile . --tag fit-friends.frontend --no-cache",
+    "container:up": "docker compose --file ./docker-compose.stage.yml --env-file ./.env --project-name fit-friends.frontend up -d",
+    "stage": "npm run build && npm run container:build && npm run container:up"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.5",

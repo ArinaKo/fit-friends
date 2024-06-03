@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  fit-friends_frontend:
+    container_name: fit-friends.frontend
+    restart: always
+    image: fit-friends_frontend:latest
+    environment:
+      PORT: 5173
+    ports:
+      - '5173:5173'
+    networks:
+      - fit-friends
+
+networks:
+  fit-friends:
+    driver: bridge

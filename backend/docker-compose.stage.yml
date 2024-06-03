@@ -22,24 +22,31 @@ services:
       timeout: 10s
       retries: 5
 
-  fit-friends_mongo_ui:
-    image: mongo-express
-    restart: always
-    container_name: fit-friends_mongo_ui
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@fit-friends_mongo:${MONGO_PORT}/
-
   fit-friends_fakesmtp:
     image: gessnerfl/fake-smtp-server:2.2.0
-    container_name: fit-friends_fakesmtp
-    hostname: fit-friends_fakesmtp
+    container_name: "fit-friends.fakesmtp"
+    hostname: "fit-friends.fakesmtp"
     ports:
       - "${MAIL_SMTP_PORT}:8025"
       - "1083:8080"
 
+  fit_friends_backend:
+      container_name: fit-friends.backend
+      depends_on:
+        - fit-friends_mongo
+        - fit_friends_fakesmtp
+      restart: always
+      image: ${IMAGE}
+      env_file:
+        - .stage.env
+      ports:
+        - ${BACKEND_PORT}:${BACKEND_PORT}
+      networks:
+        - fit_friends
+
 volumes:
   fit-friends_mongo:
+
+networks:
+  fit-friends:
+    driver: bridge

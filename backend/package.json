@@ -17,7 +17,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "db": "docker compose --file ./docker-compose.dev.yml --env-file ./.env --project-name \"fit-friends\" up -d"
+    "db": "docker compose --file ./docker-compose.dev.yml --env-file ./.env --project-name \"fit-friends\" up -d",
+    "container:build": "docker build --file ./dockerfile . --tag fit-friends.backend --no-cache",
+    "container:up": "docker compose --file ./docker-compose.stage.yml --env-file ./.env --project-name fit-friends.backend up -d",
+    "stage": "npm run build && npm run container:build && npm run container:up"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "1.11.2",
