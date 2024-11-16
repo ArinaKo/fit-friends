@@ -150,7 +150,7 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
       this.model
         .aggregate<UserModel>([
           { $match: filter },
-          { $sort: { createdAt: sortDirection } },
+          { $sort: { createdAt: sortDirection, _id: 1 } },
           { $skip: skip },
           { $limit: limit },
           PipelineStage.AddStringId,
